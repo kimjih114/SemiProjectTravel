@@ -54,8 +54,8 @@
 
  $("select[name^=sido]").each(function() {
   $selsido = $(this);
-  $.each(eval(area0), function() {
-   $selsido.append("<option value='"+this+"'>"+this+"</option>");
+  $.each(eval(area0), function(idx) {
+   $selsido.append("<option value='"+idx+"'>"+this+"</option>");
   });
   $selsido.next().append("<option value=''>구/군 선택</option>");
  });
@@ -72,8 +72,8 @@
   if(area == "area0")
    $gugun.append("<option value=''>구/군 선택</option>");
   else {
-   $.each(eval(area), function() {
-    $gugun.append("<option value='"+this+"'>"+this+"</option>");
+   $.each(eval(area), function(idx) {
+    $gugun.append("<option value='"+(idx+1)+"'>"+this+"</option>");
    });
   }
  });
