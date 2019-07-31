@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-import user.vo.User;
-import user.vo.service.UserService;
-
 /**
  * Servlet implementation class UserLoginServlet
  */
@@ -26,13 +23,16 @@ public class UserLoginFrmServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+  
+	
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		
-		request.getRequestDispatcher("/WEB-INF/views/login/userLoginFrm.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/user/userLogin.jsp").forward(request, response);
 	}
 
 	/**
