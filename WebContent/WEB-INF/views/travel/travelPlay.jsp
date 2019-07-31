@@ -24,7 +24,7 @@ function contentPage(){
 
 $(function(){
 	$.ajax({
-		url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=12&areaCode=<%=sido%>&sigunguCode=<%=gugun%>&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=100&pageNo=1",
+		url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=28&areaCode=<%=sido%>&sigunguCode=<%=gugun%>&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=100&pageNo=1",
 		type: "get",
 		dataType: "xml",
 		success:function(data){
@@ -130,7 +130,7 @@ function conMore(){
 			</h1>
 		</form>
 		<br />
-		<h3>여행지</h3>
+		<h3>놀거리</h3>
 		<br />
 		<h3></h3>
 		<hr class="mt-2 mb-5">

@@ -60,12 +60,11 @@
   $selsido.next().append("<option value=''>구/군 선택</option>");
  });
 
- 
 
  // 시/도 선택시 구/군 설정
 
  $("select[name^=sido]").change(function() {
-  var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // 선택지역의 구군 Array
+  var area = "area"+$("option",$(this)).index($("option:selected",$(this)));
   var $gugun = $(this).next(); // 선택영역 군구 객체
   $("option",$gugun).remove(); // 구군 초기화
 
@@ -93,13 +92,13 @@
     </div>
   </header>
 	<br>
+	<div align="center">
 	<form action="<%=request.getContextPath() %>/travel/travelView" method="get">
 		<select name="sido1" id="sido1"></select>
 		<select name="gugun1" id="gugun1"></select>
 		<input type="submit" value="이동"/>
 	</form>
-	
-	
+	</div>
 	<br>
 	</body>
 </html>
