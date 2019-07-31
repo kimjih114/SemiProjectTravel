@@ -4,7 +4,6 @@
 <%
 
 User userLoggedIn = new User("abcde", "1234", "김지현", "F", null, null, null, null, null, "D", null, null, null, null, null);
-//User userLoggedIn = null;
 
 %>
 <!DOCTYPE html>
