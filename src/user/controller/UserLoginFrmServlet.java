@@ -31,51 +31,6 @@ public class UserLoginFrmServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//01.인코딩 
-		request.setCharacterEncoding("utf-8");
-		
-		//1.파라미터 핸들링 
-		String userId = request.getParameter("userId"); 
-		String userPassword =  request.getParameter("password"); 
-	
-		
-		User user = new User(); 
-		user.setUserId(userId);
-		user.setUserPassword(userPassword);
-		
-		int result = new UserService().loginCheck(user);
-		
-		System.out.println("UserLogin@servlet="+user);
-		
-		String view ="";
-		String loc = "/";
-		
-		
-		if (result == UserService.LOGIN_OK) {
-			
-			
-			
-			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		request.getRequestDispatcher("/WEB-INF/views/login/userLoginFrm.jsp").forward(request, response);
 	}
