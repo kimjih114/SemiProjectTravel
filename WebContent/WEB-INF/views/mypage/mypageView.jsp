@@ -30,9 +30,8 @@
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
   <style>
 .page-top{
-	min-width: 1024px;
-	min-height: 768px;
-}  
+	width: 1024px;
+}
   
 #profile-header{
 	padding-bottom: 20px;
@@ -51,11 +50,10 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 22%;
-	min-width: 250px;
+	width: 230px;
     /*height: 100vh;*/
     background: #fed136; 
-    min-width: 250px;
+
 }
 .profile-circle{
 	max-width: 10rem;
@@ -116,15 +114,24 @@ section#page-top{
 	position: relative;
 }
 
-article{
+.myPost{
 	position: absolute;
 	top:0;
+	left: 240px;
 	border:1px solid;
-	width: 52%;
-	top:10px;
-	left:23%;
+	width: 544px;
 	height: 500px;
 }
+
+.right-side{
+	position: absolute;
+	top:0;
+	left: 794px;
+	border:1px solid;
+	width: 230px;
+	height: 500px;
+}
+
 
 
 </style>
@@ -186,10 +193,17 @@ article{
     </tr> 	
 	</table>
   </nav>   
-  	<article class="myPost">
+  <article class="myPost">
   	
-	</article> 
+  </article> 
+ <!--  <nav class="right-side">
+  
+  
+  </nav>
+	 -->
+	
  </section>
+ 
  
  
 
