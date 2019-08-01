@@ -12,22 +12,21 @@ public class User implements Serializable ,HttpSessionBindingListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+
 	private String userId;
+	private String usernickName;
 	private String userPassword;
 	private String userName;
 	private String userGender;
 	private Date userBirth;
 	private String userEmail;
 	private String userPhone;
-	private String userOldFileName;
-	private String useeNewFileName;
-	
+	private String fileName; 
 	private String userType;
+	
 	
 	private String userDefaultPlace;
 	private String userDefaultActivity;
-	private String userSellerPlace;
-	private String userSellerProductType;
 	
 	private Date ueserEnrollDate;
 
@@ -36,28 +35,26 @@ public class User implements Serializable ,HttpSessionBindingListener{
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String userId, String userPassword, String userName, String userGender, Date userBirth,
-			String userEmail, String userPhone, String userOldFileName, String useeNewFileName, String userType,
-			String userDefaultPlace, String userDefaultActivity, String userSellerPlace, String userSellerProductType,
-			Date ueserEnrollDate) {
+	public User(String userId, String usernickName, String userPassword, String userName, String userGender,
+			Date userBirth, String userEmail, String userPhone, String fileName, String userType,
+			String userDefaultPlace, String userDefaultActivity, Date ueserEnrollDate) {
 		super();
 		this.userId = userId;
+		this.usernickName = usernickName;
 		this.userPassword = userPassword;
 		this.userName = userName;
 		this.userGender = userGender;
 		this.userBirth = userBirth;
 		this.userEmail = userEmail;
 		this.userPhone = userPhone;
-		this.userOldFileName = userOldFileName;
-		this.useeNewFileName = useeNewFileName;
+		this.fileName = fileName;
 		this.userType = userType;
 		this.userDefaultPlace = userDefaultPlace;
 		this.userDefaultActivity = userDefaultActivity;
-		this.userSellerPlace = userSellerPlace;
-		this.userSellerProductType = userSellerProductType;
 		this.ueserEnrollDate = ueserEnrollDate;
 	}
 
+	
 	
 	
 	public String getUserId() {
@@ -66,6 +63,14 @@ public class User implements Serializable ,HttpSessionBindingListener{
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUsernickName() {
+		return usernickName;
+	}
+
+	public void setUsernickName(String usernickName) {
+		this.usernickName = usernickName;
 	}
 
 	public String getUserPassword() {
@@ -116,20 +121,12 @@ public class User implements Serializable ,HttpSessionBindingListener{
 		this.userPhone = userPhone;
 	}
 
-	public String getUserOldFileName() {
-		return userOldFileName;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setUserOldFileName(String userOldFileName) {
-		this.userOldFileName = userOldFileName;
-	}
-
-	public String getUseeNewFileName() {
-		return useeNewFileName;
-	}
-
-	public void setUseeNewFileName(String useeNewFileName) {
-		this.useeNewFileName = useeNewFileName;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	public String getUserType() {
@@ -156,22 +153,6 @@ public class User implements Serializable ,HttpSessionBindingListener{
 		this.userDefaultActivity = userDefaultActivity;
 	}
 
-	public String getUserSellerPlace() {
-		return userSellerPlace;
-	}
-
-	public void setUserSellerPlace(String userSellerPlace) {
-		this.userSellerPlace = userSellerPlace;
-	}
-
-	public String getUserSellerProductType() {
-		return userSellerProductType;
-	}
-
-	public void setUserSellerProductType(String userSellerProductType) {
-		this.userSellerProductType = userSellerProductType;
-	}
-
 	public Date getUeserEnrollDate() {
 		return ueserEnrollDate;
 	}
@@ -180,27 +161,32 @@ public class User implements Serializable ,HttpSessionBindingListener{
 		this.ueserEnrollDate = ueserEnrollDate;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 	@Override
 	public String toString() {
-		return "Member [userId=" + userId + ", userPassword=" + userPassword + ", userName=" + userName
-				+ ", userGender=" + userGender + ", userBirth=" + userBirth + ", userEmail=" + userEmail
-				+ ", userPhone=" + userPhone + ", userOldFileName=" + userOldFileName + ", useeNewFileName="
-				+ useeNewFileName + ", userType=" + userType + ", userDefaultPlace=" + userDefaultPlace
-				+ ", userDefaultActivity=" + userDefaultActivity + ", userSellerPlace=" + userSellerPlace
-				+ ", userSellerProductType=" + userSellerProductType + ", ueserEnrollDate=" + ueserEnrollDate + "]";
+		return "User [userId=" + userId + ", usernickName=" + usernickName + ", userPassword=" + userPassword
+				+ ", userName=" + userName + ", userGender=" + userGender + ", userBirth=" + userBirth + ", userEmail="
+				+ userEmail + ", userPhone=" + userPhone + ", fileName=" + fileName + ", userType=" + userType
+				+ ", userDefaultPlace=" + userDefaultPlace + ", userDefaultActivity=" + userDefaultActivity
+				+ ", ueserEnrollDate=" + ueserEnrollDate + "]";
 	}
 
 	@Override
 	public void valueBound(HttpSessionBindingEvent event) {
-		System.out.println(userName+"["+userName+"]님이 로그인했습니다!");
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void valueUnbound(HttpSessionBindingEvent event) {
-		System.out.println(userName+"["+userName+"]님이 로그아웃했습니다!");
+		// TODO Auto-generated method stub
 		
 	}
-	
-	
+
 }
+	
+

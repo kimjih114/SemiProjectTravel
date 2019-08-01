@@ -53,15 +53,18 @@ public class UserDAO {
 				u = new User(); 
 				
 				u.setUserId(rset.getString("user_id"));//db에 사용자 정보를 가져오기    
+				u.setUsernickName(rset.getString("user_nickname"));
 				u.setUserPassword(rset.getString("user_password"));
 				u.setUserName(rset.getString("user_name"));
 				u.setUserGender(rset.getString("user_gender"));
 				u.setUserBirth(rset.getDate("user_birth"));
 				u.setUserEmail(rset.getString("user_email"));
 				u.setUserPhone(rset.getString("user_phone"));
-				u.setUserOldFileName(rset.getString("user_oldprofilename"));
+				u.setFileName(rset.getString("user_filename"));
 				u.setUserType(rset.getString("user_type"));
-				
+				u.setUserDefaultPlace(rset.getString("user_default_place"));
+				u.setUserDefaultActivity(rset.getString("user_default_activity"));
+			
 				System.out.println("userdao @ user selectOne="+u);
 				
 			}
