@@ -31,31 +31,7 @@ public class UserDAO {
 	}
 	
 	
-	public int loginCheck(Connection conn, User user) {
-		int result = -1; 
-		PreparedStatement pstmt = null; 
-		ResultSet rset = null; 
-		String sql = prop.getProperty("loginCheck");
-		try {
-			pstmt =conn.prepareStatement(sql);
-			pstmt.setString(1, user.getUserId());
-			pstmt.setString(2, user.getUserPassword());
-			pstmt.setString(3, user.getUserId());
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				result = rset.getInt("login_check");
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rset); 
-			close(pstmt);
-		}
-		return result;
-	}
+	
 
 
 	public User selectOne(Connection conn, String userId) {
@@ -99,6 +75,34 @@ public class UserDAO {
 		}
 		
 		return u;
+	}
+
+
+
+	public int loginCheck(Connection conn, User user) {
+		int result = -1; 
+		PreparedStatement pstmt = null; 
+		ResultSet rset = null; 
+		String sql = prop.getProperty("loginCheck");
+		try {
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUserId());
+			pstmt.setString(2, user.getUserPassword());
+			pstmt.setString(3, user.getUserId());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt("login_check");
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset); 
+			close(pstmt);
+		}
+		return result;
 	}
 
 }
