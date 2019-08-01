@@ -43,6 +43,7 @@ $(()=>{
 </script>
   <style>
 .page-top{
+    letter-spacing: 1px;
 	width: 1024px;
 }
   
@@ -131,13 +132,28 @@ section#page-top{
 	position: absolute;
 	top:0;
 	left: 260px;
-	border:1px solid;
+	/*border:1px solid;*/
 	padding: 10px;
 	
 }
 
 p.userprofile-userId{
 	margin-bottom: 40px;
+}
+
+.reservation{
+	padding: 30px;
+	    letter-spacing: 1px;
+}
+
+.reservation input{
+	margin-left: 30px;
+	  
+}
+
+p#rechk{
+	font-size: 14px;
+	color: gray;
 }
 
 
@@ -201,7 +217,28 @@ p.userprofile-userId{
   </nav>   
   <article class="myPost">
   	<div class="reservation">
-  		
+  		<p id="rechk">회원정보 수정을 위해<br />
+  		다시 한 번 로그인 해주세요.<p>
+  		<form>
+		  <div class="form-group row">
+		    <label for="inputEmail3" class="col-sm-2 col-form-label">ID</label>
+		    <div class="col-sm-10">
+		      <input type="email" class="form-control" id="inputEmail3" placeholder="ID">
+		    </div>
+		  </div>
+		  <div class="form-group row">
+		    <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+		    <div class="col-sm-10">
+		      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+		    </div>
+		  </div>
+		 
+		  <div class="form-group row">
+		    <div class="col-sm-10">
+		      <button type="submit" class="btn btn-primary">확인</button>
+		    </div>
+		  </div>
+		</form>
   	</div>
   </article> 
  </section>
