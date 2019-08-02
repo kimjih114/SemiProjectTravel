@@ -8,7 +8,14 @@
 
 %>
 
-
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
 
 <style>
 /*전체컨테이너 */
@@ -287,7 +294,7 @@ body, input, button {
 
 								document.write(res.properties.nickname+ "님 환영합니다.");
 								
-								document.write("<input type='button' onclick='logoutWithKakao();' value='로그아웃' />");
+								document.write("<input type='button' onclick='logoutWithKakao();'  value='로그아웃' />");
 
 								
 								
@@ -301,10 +308,25 @@ body, input, button {
 		});
 		
 		
+		<%-- Kakao.Auth.logout(
+		function(authObj) {
+		if(authObj==true){}else{}
+		 location.href="<%=request.getContextPath()%>";
+		 }
+		); --%>
 		
 		
 		
+		
+	
 		function logoutWithKakao(){
+		
+		<%--  Kakao.Auth.logout(
+		function(authObj) {
+		if(authObj==true){}else{}
+		 location.href="<%=request.getContextPath()%>";
+		 } --%>
+		
 			Kakao.Auth.logout();
 			alert("카카오 로그아웃 완료");
 			 //setCookie("kakao_login","",-1);

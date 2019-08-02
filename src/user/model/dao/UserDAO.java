@@ -19,7 +19,7 @@ public class UserDAO {
 	private Properties prop = new Properties();
 	
 	public UserDAO() {
-		String fileName = UserDAO.class.getResource("/sql/users/user-query.properties").getPath();  
+		String fileName = UserDAO.class.getResource("/sql/member/member-query.properties").getPath();  
 		try {
 			prop.load(new FileReader(fileName));
 			System.out.println("[[prop loading 완료:"+fileName+"]]");
@@ -29,7 +29,6 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	
 
@@ -94,9 +93,10 @@ public class UserDAO {
 			pstmt.setString(3, user.getUserId());
 			
 			rset = pstmt.executeQuery();
-			
+		
 			if(rset.next()) {
 				result = rset.getInt("login_check");
+				 
 			}
 			
 		}catch(SQLException e) {

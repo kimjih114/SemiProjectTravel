@@ -1,0 +1,193 @@
+semi테이블     
+
+
+--drop table users;
+--유저들 테이블 만들기 
+create table users (
+    user_id varchar2(15), --아이디
+    user_nickname varchar2(50),
+    user_password varchar2(300), --비밀번호
+    user_name varchar2(20) not null, --이름
+    user_gender char(1), --성별
+    user_birth Date, --생일
+    user_email varchar2(30) not null, --이메일
+    user_phone char(11) not null, --핸드폰
+    user_filename varchar2(100),
+    user_renamefilename varchar2(100) --파일명 바꾸게  
+    
+    
+    user_type char(1) not null, --일반유저(D)/사업자(S)/관리자(A)
+    
+    
+    --일반유저일경우
+    user_default_place varchar2(100) default null, --관심여행지
+    user_default_activity varchar2(100) default null, --관심상품(야외활동, 쇼핑, 맛집..)
+    
+
+    user_enrolldate date default sysdate,
+    
+    constraint pk_userid primary key(user_id),
+    constraint ck_user_gender check(user_gender in ('M','F')),
+    constraint ck_user_type check(user_type in ('D','S','A')),
+    constraint uk_user_email unique(user_email),
+    constraint uk_user_phone unique(user_phone)
+);
+
+
+
+insert into users values('admin','admin','1234','관리자','M',null,'admin@gmail.com','01011111111',null,'A',null,null,null,null,null );
+
+
+select * from users where user_id='admin';
+
+
+select case (select count(*) from users where user_id = 'admin' and user_password = '1234') when 1 then 1 else (case (select count(*) from users where user_id = 'admin') when 1 then 0 else -1 end) end as login_check from dual;
+
+select * from users;
+
+--문의게시판
+create table board_q(
+   board_qno number,
+   board_qtitle varchar2(50),
+   board_qwriter varchar2(15), 
+   board_qcontent varchar2(2000), 
+   board_qoriginal_filename varchar2(100),
+   board_qrenamed_filename varchar2(100),
+   board_qdate date default sysdate, 
+   board_qreadcount number default 0, 
+   constraint pk_board_qno primary key(board_qno), 
+   constraint fk_board_qwriter foreign key(board_qwriter) 
+                                        references users(user_id)
+                                        on delete set null 
+
+);
+
+
+
+comment on table board_q is '게시판 테이블';
+comment on column board_q.board_qno is '게시글 번호';
+comment on column board_q.board_qtitle is '게시글 제목';
+comment on column board_q.board_qwriter is '게시글 작성자';
+comment on column board_q.board_qcontent is '게시글 내용';
+comment on column board_q.board_qoriginal_filename is '첨부파일 사용자 업로드파일명';
+comment on column board_q.board_qrenamed_filename is '첨부파일 저장된 파일명';
+comment on column board_q.board_qdate is '게시글 등록일';
+comment on column board_q.board_qreadcount is '게시글 조회수';
+
+--문의 게시글 입력 
+Insert into SEMI.BOARD_Q(BOARD_QNO,BOARD_QTITLE,BOARD_QWRITER,BOARD_QCONTENT,BOARD_QORIGINAL_FILENAME,BOARD_QRENAMED_FILENAME,BOARD_QDATE,BOARD_QREADCOUNT) values (SEQ_BOARD_QNO.nextval,'안녕하세요, 문의게시판입니다 - 1','admin','반갑습니다','hi','hi',to_date('18/04/10','RR/MM/DD'),0);
+
+--게시글 시퀀스 
+create sequence seq_board_qno 
+start with 1 
+increment by 1 
+nominvalue
+nomaxvalue 
+nocycle
+nocache; 
+
+select * from board_q;
+
+
+
+
+
+
+--문의 댓글 게시판 
+--------------------------------------------------------
+--  파일이 생성됨 - 금요일-7월-26-2019   
+--------------------------------------------------------
+DROP SEQUENCE "SEMI"."SEQ_BOARD_QCOMMENT_NO";
+DROP SEQUENCE "SEMI"."SEQ_BOARD_QNO";
+DROP TABLE "SEMI"."BOARD" cascade constraints;
+DROP TABLE "SEMI"."BOARD_COMMENT" cascade constraints;
+DROP TABLE "SEMI"."MEMBER" cascade constraints;
+--------------------------------------------------------
+--  DDL for Sequence SEQ_BOARD_COMMENT_NO
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "SEMI"."SEQ_BOARD_COMMENT_NO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence SEQ_BOARD_NO
+--------------------------------------------------------
+​
+   CREATE SEQUENCE  "SEMI"."SEQ_BOARD_NO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 46 NOCACHE  NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Table BOARD
+--------------------------------------------------------
+​
+  CREATE TABLE "SEMI"."BOARD" 
+   (	"BOARD_NO" NUMBER, 
+	"BOARD_TITLE" VARCHAR2(50 BYTE), 
+	"BOARD_WRITER" VARCHAR2(15 BYTE), 
+	"BOARD_CONTENT" VARCHAR2(2000 BYTE), 
+	"BOARD_ORIGINAL_FILENAME" VARCHAR2(100 BYTE), 
+	"BOARD_RENAMED_FILENAME" VARCHAR2(100 BYTE), 
+	"BOARD_DATE" DATE DEFAULT sysdate, 
+	"BOARD_READCOUNT" NUMBER DEFAULT 0
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+​
+   COMMENT ON COLUMN "SEMI"."BOARD"."BOARD_NO" IS '게시글 번호';
+   COMMENT ON COLUMN "SEMI"."BOARD"."BOARD_TITLE" IS '게시글 제목';
+   COMMENT ON COLUMN "SEMI"."BOARD"."BOARD_WRITER" IS '게시글 작성자';
+   COMMENT ON COLUMN "SEMI"."BOARD"."BOARD_CONTENT" IS '게시글 내용';
+   COMMENT ON COLUMN "SEMI"."BOARD"."BOARD_ORIGINAL_FILENAME" IS '첨부파일 사용자 업로드파일명';
+   COMMENT ON COLUMN "SEMI"."BOARD"."BOARD_RENAMED_FILENAME" IS '첨부파일 저장된 파일명';
+   COMMENT ON COLUMN "SEMI"."BOARD"."BOARD_DATE" IS '게시글 등록일';
+   COMMENT ON COLUMN "SEMI"."BOARD"."BOARD_READCOUNT" IS '게시글 조회수';
+   COMMENT ON TABLE "SEMI"."BOARD"  IS '게시판 테이블';
+--------------------------------------------------------
+--  DDL for Table BOARD_COMMENT
+--------------------------------------------------------
+
+  CREATE TABLE "WEB"."BOARD_COMMENT" 
+   (	"BOARD_COMMENT_NO" NUMBER, 
+	"BOARD_COMMENT_LEVEL" NUMBER DEFAULT 1, 
+	"BOARD_COMMENT_WRITER" VARCHAR2(15 BYTE), 
+	"BOARD_COMMENT_CONTENT" VARCHAR2(2000 BYTE), 
+	"BOARD_REF" NUMBER, 
+	"BOARD_COMMENT_REF" NUMBER, 
+	"BOARD_COMMENT_DATE" DATE DEFAULT sysdate
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+​
+   COMMENT ON COLUMN "WEB"."BOARD_COMMENT"."BOARD_COMMENT_NO" IS '게시판댓글 고유번호';
+   COMMENT ON COLUMN "WEB"."BOARD_COMMENT"."BOARD_COMMENT_LEVEL" IS '댓글/대댓글여부[댓글:1, 대댓글:2]';
+   COMMENT ON COLUMN "WEB"."BOARD_COMMENT"."BOARD_COMMENT_WRITER" IS '댓글 작성자';
+   COMMENT ON COLUMN "WEB"."BOARD_COMMENT"."BOARD_COMMENT_CONTENT" IS '게시판댓글내용';
+   COMMENT ON COLUMN "WEB"."BOARD_COMMENT"."BOARD_REF" IS '게시글 참조번호';
+   COMMENT ON COLUMN "WEB"."BOARD_COMMENT"."BOARD_COMMENT_REF" IS '게시판댓글 참조번호(대댓글인 경우)';
+   COMMENT ON COLUMN "WEB"."BOARD_COMMENT"."BOARD_COMMENT_DATE" IS '게시판댓글 작성일';
+   COMMENT ON TABLE "WEB"."BOARD_COMMENT"  IS '게시판 댓글 테이블';
+--------------------------------------------------------
+--  DDL for Table MEMBER
+--------------------------------------------------------
+​
+  CREATE TABLE "WEB"."MEMBER" 
+   (	"MEMBERID" VARCHAR2(15 BYTE), 
+	"PASSWORD" VARCHAR2(300 BYTE), 
+	"MEMBERNAME" VARCHAR2(20 BYTE), 
+	"GENDER" CHAR(1 BYTE), 
+	"AGE" NUMBER, 
+	"EMAIL" VARCHAR2(30 BYTE), 
+	"PHONE" CHAR(11 BYTE), 
+	"ADDRESS" VARCHAR2(100 BYTE), 
+	"HOBBY" VARCHAR2(50 BYTE), 
+	"ENROLLDATE" DATE DEFAULT sysdate
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+REM INSERTING into WEB.BOARD
+SET DEFINE OFF;
+
+
+

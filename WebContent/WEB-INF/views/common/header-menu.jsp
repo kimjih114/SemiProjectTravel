@@ -5,8 +5,8 @@
 <html lang="ko">
 <%
 
-User userLoggedIn = new User();
-	
+//User userLoggedIn = new User();
+	User userLoggedIn = null;
 %>
 <head>
   <meta charset="utf-8">
