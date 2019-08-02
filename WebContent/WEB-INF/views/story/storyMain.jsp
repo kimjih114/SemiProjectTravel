@@ -178,7 +178,7 @@ div#profile-header{
 	   			<td>스크랩</td>
 	   		</tr>
 	   		<tr>
-	   			<td>쪽지</td>
+	   			<td>메시지</td>
 	   		</tr>
 	   		
 	   	</table>

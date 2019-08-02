@@ -33,12 +33,21 @@
 
 $(()=>{
 	$("#modifyUserInfo").click(function(){
-		
-		$.ajax()
-		
-		location.href='<%=request.getContextPath()%>/user/userModifyFrmChk';
+		$.ajax({
+	        type : "GET",
+	        url : "<%=request.getContextPath() %>/my",
+	        dataType : "text",
+	        error : function() {
+	          alert('통신실패!!');
+	        },
+	        success : function(data) {
+	          $('#Context').html(data);
+	        }
+	 
+	      });
+
 	})
-	
+			
 })
 
 
@@ -160,6 +169,7 @@ p.userprofile-userId{
 	<div id="profile-header">
       <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/img/profile.jpg" alt="">
       <p class="userprofile-userId"><span style="font-weight: 700;">@닉네임</span>님, 환영합니다!
+      <button>여행이야기 홈</button>
    </div>
 
    <table id="tbl-usermenu0">
@@ -167,7 +177,7 @@ p.userprofile-userId{
    		<td id="modifyUserInfo">회원정보수정</td>
    	</tr>
 	<tr>
-   		<td>쪽지함</td>
+   		<td>메시지</td>
    	</tr>
    	<table id="tbl-usermenu1">
    		<tr>
@@ -180,12 +190,6 @@ p.userprofile-userId{
    			<td>위시리스트</td>
    		</tr>
    	</table>
-	
-    <table id="tbl-usermenu3">
-    <tr>
-   		<td>설정</td>
-   	</tr>
-	</table>
 
 	<table id="tbl-usermenu4" style="margin-bottom:0px; !important">
     <tr>
@@ -202,7 +206,7 @@ p.userprofile-userId{
 	</table>
   </nav>   
   <article class="myPost">
-  	<div class="reservation">
+  	<div class="content">
   		
   	</div>
   </article> 
