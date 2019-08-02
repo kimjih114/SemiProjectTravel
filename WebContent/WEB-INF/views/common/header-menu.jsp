@@ -1,12 +1,12 @@
-<%@page import="user.vo.User"%>
+<%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <%
 
-	User userLoggedIn = new User("abcde", "1234", "김지현", "F", null, null, null, null, null, "D", null, null, null, null, null);
-//	User userLoggedIn = null; 
+User userLoggedIn = new User();
+	
 %>
 <head>
   <meta charset="utf-8">

@@ -57,10 +57,7 @@ public class UserLoginEndServlet extends HttpServlet {
 		int result = new UserService().loginCheck(user);
 		
 		
-		
 		//view단 처리 
-		
-		
 		
 		
 		

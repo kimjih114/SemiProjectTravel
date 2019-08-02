@@ -7,7 +7,7 @@
       <div class="intro-text">
         <div class="intro-heading text-uppercase">지금 다양한 국내 여행지를 검색하세요.</div>
          <form class="IndexsearchFrm" method="get">
-       		<input type="text" size="50" style="height:50px;" placeholder="서촌" />
+       		<input type="search" size="50" style="height:50px;" placeholder="서촌" />
        		<br>
        		<span class="intro-lead-in">7월의 추천검색어 : <a href='#' style='color: orangered'>#해운대</a> <a href='#' style='color: orangered'>#강릉</a>  <a href='#' style='color: orangered'>#정선</a></span>	
        	</form>

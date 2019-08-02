@@ -221,9 +221,9 @@ p#rechk{
   		다시 한 번 로그인 해주세요.<p>
   		<form>
 		  <div class="form-group row">
-		    <label for="inputEmail3" class="col-sm-2 col-form-label">ID</label>
+		    <label for="inputId3" class="col-sm-2 col-form-label">ID</label>
 		    <div class="col-sm-10">
-		      <input type="email" class="form-control" id="inputEmail3" placeholder="ID">
+		      <input type="text" class="form-control" id="inputId3" placeholder="ID">
 		    </div>
 		  </div>
 		  <div class="form-group row">
@@ -232,10 +232,9 @@ p#rechk{
 		      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
 		    </div>
 		  </div>
-		 
 		  <div class="form-group row">
 		    <div class="col-sm-10">
-		      <button type="submit" class="btn btn-primary">확인</button>
+		      <button type="submit" class="btn btn-primary" onclick="return goModifyFrm();">확인</button>
 		    </div>
 		  </div>
 		</form>
@@ -245,6 +244,17 @@ p#rechk{
  
  
  
+<script>
+function goModifyFrm(){
+	
+	if($("#inputId3").val()==<%=userLoggedIn.getUserId() %>){
+		
+		location.href='<%=request.get';
+	}
+	
+	
+}
 
+</script>
 </body>
 </html>
