@@ -34,7 +34,9 @@
 $(()=>{
 	$("#modifyUserInfo").click(function(){
 		
-		location.href='<%=request.getContextPath()%>/user/userModifyFrm';
+		$.ajax()
+		
+		location.href='<%=request.getContextPath()%>/user/userModifyFrmChk';
 	})
 	
 })

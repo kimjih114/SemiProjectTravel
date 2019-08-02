@@ -249,7 +249,7 @@ function goModifyFrm(){
 	
 	if($("#inputId3").val()==<%=userLoggedIn.getUserId() %>){
 		
-		location.href='<%=request.get';
+		location.href='<%=request.getContextPath() %>/user/userModifyFrm';
 	}
 	
 	
