@@ -6,11 +6,10 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import user.model.service.UserService;
 import user.model.vo.User;
@@ -48,8 +47,7 @@ public class UserLoginEndServlet extends HttpServlet {
 		String userId = request.getParameter("userId"); 
 		String userPassword = request.getParameter("userPassword");  
 		
-		
-		
+	
 		User user = new User();
 		user.setUserId(userId);
 		user.setUserPassword(userPassword);
@@ -73,6 +71,10 @@ public class UserLoginEndServlet extends HttpServlet {
 			User userLoggedIn = new UserService().selectOne(userId);
 			System.out.println("로그인 성공시 index페이지로");
 			userLoggedIn.getUserName();
+			HttpSession session =  request.getSession(true);
+			session.setMaxInactiveInterval(10*60);
+			session.setAttribute("userLoggedIn", userLoggedIn);
+			
 			request.setAttribute("userLoggedIn", userLoggedIn);
 			
 			System.out.println("UserLoginEndServlet@userLoggedIn="+userLoggedIn);

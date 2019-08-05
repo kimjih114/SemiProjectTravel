@@ -5,8 +5,9 @@
 <html lang="ko">
 <%
 
-User userLoggedIn = new User();
-//	User userLoggedIn = null;
+	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
+
+	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 %>
 <head>
   <meta charset="utf-8">
@@ -87,7 +88,7 @@ User userLoggedIn = new User();
           <% }
           	else if(userLoggedIn!=null){ %>
           	 <li class="nav-item">
-            	<a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/story/storyMain">로그아웃</a>
+            	<a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/user/userLogout">로그아웃</a>
          	</li>
           	 <li class="nav-item">
 	           <a class="nav-link js-scroll-trigger" style="padding-top: 5px !important" href='<%=request.getContextPath() %>/mypage/mypageView'>

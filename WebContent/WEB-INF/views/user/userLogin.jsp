@@ -1,13 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp"%>
-<%
-	//User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 
-	//System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
-
-	
-%>
 
 <!-- Bootstrap core CSS -->
 <link
@@ -49,6 +43,15 @@
 <!-- Custom scripts for this template -->
 <script src="<%=request.getContextPath()%>/js/agency.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
 
 <style>
 /*전체컨테이너 */
@@ -57,21 +60,22 @@ div#container {
 	width: 960px;
 	margin: 0 auto;
 }
+div.login-container{
 
-form { 
+marign-top:100px;
 
-        margin: 0 auto; 
+padding-bottom:100px;
 
-        width:250px;
+}
 
-    }  
-
-
-
-
+form {
+	margin: 0 auto;
+	width: 250px;
+}
 </style>
 <script>
 	function validate() {
+	
 		if ($("#userId").val().trim.length == 0) {
 			alert("아이디를 입력하세요");
 			$("#userId").focus();
@@ -103,51 +107,34 @@ form {
 
 
 <!-- 로그인메뉴 -->
-			<div class="login-container">
-			<% if(userLoggedIn == null){ %>
-				<form action="<%=request.getContextPath() %>/user/loginEnd"
-					  id="loginEndFrm" method="post" onsubmit="return validate();">
-					<table>
-						<tr>
-							<td>
-								<input type="text" 
-									   name="userId"
-									   id="userId"
-									   placeholder="아이디"
-									   tabindex="1" 
-									  <%--  value="<%=saveId?userId:""%>" --%>/>
-							</td>
-							
-						</tr>
-						<tr>
-							<td>
-								<input type="password" 
-									   name="userPassword" 
-									   id="userPassword"
-									   placeholder="비밀번호" 
-									   tabindex="2"/>
-							</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td colspan="2">
-								<%-- <input type="checkbox" 
-									   name="saveId" 
-									   id="saveId" 
-									   <%=saveId?"checked":""%>/> --%>
-								<label for="saveId">아이디저장</label>
-								<input type="button" 
-									   value="회원가입"
-									   onclick="goEnroll();" />
-								
-							</td>
-						</tr>
-					</table>
-				
-					<input type="submit" value="로그인" tabindex="3" />
-						
-				</form>	
-			<% }  %>	
-			</div>
-</body>
-</html>
+
+
+<div class="login-container">
+	<% if(userLoggedIn == null){ %>
+	<form action="<%=request.getContextPath() %>/user/loginEnd"
+		id="loginEndFrm" method="post" onsubmit="return validate();">
+		<div class="form-group">
+			<label for="exampleInputEmail1">ID</label> <input type=text
+				class="form-control" id="exampleInputEmail1" name="userId"
+				aria-describedby="emailHelp" placeholder="Enter ID"> <small
+				id="emailHelp" class="form-text text-muted">아이디를 입력하세요</small>
+		</div>
+		<div class="form-group">
+			<label for="exampleInputPassword1">Password</label> <input
+				type="password" class="form-control" name="userPassword" id="exampleInputPassword1"
+				placeholder="Enter Password">
+		</div>
+		<div class="form-group form-check">
+			<input type="checkbox" class="form-check-input" id="exampleCheck1" name="" >
+			<label class="form-check-label" for="exampleCheck1" >아이디 저장</label>
+		</div>
+		<button type="submit" class="btn btn-primary" >Login</button>
+		<input type="button" class="enrollbtn" value="회원가입" >
+	</form>
+
+		<% }  %>
+</div>
+
+
+	</body>
+	</html>
