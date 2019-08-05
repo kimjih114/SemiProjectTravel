@@ -28,7 +28,7 @@ public class User implements Serializable ,HttpSessionBindingListener{
 	private String userDefaultPlace;
 	private String userDefaultActivity;
 	
-	private Date ueserEnrollDate;
+	private Date userEnrollDate;
 
 	public User() {
 		super();
@@ -37,7 +37,7 @@ public class User implements Serializable ,HttpSessionBindingListener{
 
 	public User(String userId, String usernickName, String userPassword, String userName, String userGender,
 			Date userBirth, String userEmail, String userPhone, String fileName, String userType,
-			String userDefaultPlace, String userDefaultActivity, Date ueserEnrollDate) {
+			String userDefaultPlace, String userDefaultActivity, Date userEnrollDate) {
 		super();
 		this.userId = userId;
 		this.usernickName = usernickName;
@@ -51,7 +51,7 @@ public class User implements Serializable ,HttpSessionBindingListener{
 		this.userType = userType;
 		this.userDefaultPlace = userDefaultPlace;
 		this.userDefaultActivity = userDefaultActivity;
-		this.ueserEnrollDate = ueserEnrollDate;
+		this.userEnrollDate = userEnrollDate;
 	}
 
 	
@@ -154,11 +154,11 @@ public class User implements Serializable ,HttpSessionBindingListener{
 	}
 
 	public Date getUeserEnrollDate() {
-		return ueserEnrollDate;
+		return userEnrollDate;
 	}
 
 	public void setUeserEnrollDate(Date ueserEnrollDate) {
-		this.ueserEnrollDate = ueserEnrollDate;
+		this.userEnrollDate = ueserEnrollDate;
 	}
 
 	public static long getSerialversionuid() {
@@ -172,7 +172,7 @@ public class User implements Serializable ,HttpSessionBindingListener{
 				+ ", userName=" + userName + ", userGender=" + userGender + ", userBirth=" + userBirth + ", userEmail="
 				+ userEmail + ", userPhone=" + userPhone + ", fileName=" + fileName + ", userType=" + userType
 				+ ", userDefaultPlace=" + userDefaultPlace + ", userDefaultActivity=" + userDefaultActivity
-				+ ", ueserEnrollDate=" + ueserEnrollDate + "]";
+				+ ", uSserEnrollDate=" + userEnrollDate + "]";
 	}
 
 	@Override
