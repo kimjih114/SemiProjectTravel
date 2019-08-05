@@ -51,7 +51,7 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 22%;
+    width: 230px;
     /*height: 100vh;*/
     background: #fed136; 
     /*min-width: 250px;*/
@@ -78,18 +78,18 @@ a .nav-link js-scroll-trigger{
     background-color: transparent;
 
 }
-table{
+.tbl-usermenu{
 	margin: 10 auto;
 	margin-bottom: 30px;
 }
 
-table tr :hover{
+.tbl-usermenu tr :hover{
 	cursor: pointer;
 	color: orangered;
 	
 }
 
-table td{
+.tbl-usermenu td{
 	padding: 10px;
 	border-bottom: 1px solid #212529;
 	border-collapse: collapse;
@@ -127,32 +127,25 @@ div#profile-header{
     /*min-width: 800px;*/
 	
 }
-.sideDiv{
-	text-align: center;
-    top: 0;
-    right: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: fixed;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    width: 300px;
-    /*height: 100vh;*/
-    background: red; 
-    /*min-width: 250px;*/
-    position: fixed;
-}
+
 
 #tab-container {
 	width:550px;
 	margin:0 auto;
 	text-align:center;
 	position: absolute;
-	top:10px;
 	left:240px;
+	transition: 0.5s;
 }
+
+.post-unpushed{
+	top:50px;
+}
+
+.post-pushed{
+	top: 500px;
+}
+
 #tab-container .tab {
 	list-style: none;
 	margin: 0;
@@ -197,8 +190,30 @@ div#profile-header{
 	border-top: 0px;
 	
 }
-#boardFrm{
-	margin-bottom: 10px;
+#postFrm{
+	width:550px;
+	margin:0 auto;
+	text-align:center;
+	position: absolute;
+	left:240px;
+	top: 50px;
+	border:1px solid;
+}
+#post{
+	position: absolute;
+	top:10px;
+	left: 730px;
+}
+
+#timline-sns{
+	border:1px solid;
+}
+
+#timeline-board-sns{
+	border:1px solid;
+}
+
+#timeline-board-sns td {
 	padding: 10px;
 }
 
@@ -213,19 +228,19 @@ div#profile-header{
      </div>
   </header>
   
-<section class="page-top" style="padding:0px; !important; overflow-x: auto">
+<section class="page-top" style="padding:0px; !important;">
 	  <nav id="sideNav">
 		<div id="profile-header">
 	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/img/profile.jpg" alt="">
 	      <p class="userprofile-userId">@userId <button>edit</button></p>
 	      <p class="userIntroduce" style="margin-bottom: 50px;">안녕하세요. 저는 userId입니다. 좋아하는 여행지는 #서촌입니다.<button>edit</button></p>
 	   </div>
-	   <table id="tbl-usermenu1">
+	   <table class="tbl-usermenu">
 	   		<tr>
 	   			<td>알림 (new가 반짝반짝)</td>
 	   		</tr>
 	   	</table>
-	   	<table id="tbl-usermenu2">
+	   	<table class="tbl-usermenu">
 	   		<tr>
 	   			<td>팔로워</td>
 	   		</tr>
@@ -235,13 +250,13 @@ div#profile-header{
 	   		
 	   	</table>
 	   	
-	    <table id="tbl-usermenu3">
+	    <table class="tbl-usermenu">
 	    <tr>
 	   		<td>설정</td>
 	   	</tr>
 		</table>
 	
-		<table id="tbl-usermenu4" style="margin-bottom:0px; !important">
+		<table class="tbl-usermenu" style="margin-bottom:0px; !important">
 	    <tr>
 	    	<td>FAQ</td>
 	    </tr>
@@ -255,42 +270,40 @@ div#profile-header{
 	    </tr> 	
 		</table>
 	  </nav>
-		<div id="tab-container">
-			<form action="" id="boardFrm">
-				<textarea name="boardContent" id="boardContent" cols="55" rows="3"></textarea>
-			
-			</form>
-			<ul class="tab">
-				<li class="current" data-tab="tab1"><a>타임라인</a></li>
-				<li data-tab="tab2"><a>좋아요</a></li>
-				<li data-tab="tab3"><a>스크랩</a></li>
-			</ul>
+	  <button id="post">post</button>
+	  <div id="postFrm">
+					  	
+	  </div>
+
+	  <div id="tab-container" class="post-unpushed">
+		<ul class="tab">
+			<li class="current" data-tab="tab1"><a>타임라인</a></li>
+			<li data-tab="tab2"><a>좋아요</a></li>
+			<li data-tab="tab3"><a>스크랩</a></li>
+		</ul>
 	
-			<div id="tab1" class="tabcontent current">
-				<div class="timeline">
-				
-				
-					<div id="timeline-list">
-						
-					</div>
-	    		</div>
-			</div>
+		<div id="tab1" class="tabcontent current">
+			<div class="timeline-sns">
+				<table id="timeline-board-sns">
+					<tr>
+						<td><img src="<%=request.getContextPath() %>/img/profile.jpg" class="header-profile-circle"  width="40" height="40" />
+						    <span style="font-weight:600">@닉네임</span>님이 리뷰를 남기셨습니다.</td>
+					</tr>
+				</table>
+	    	</div>
+		</div>
 	
-			<div id="tab2" class="tabcontent">
-				<h3>좋아요</h3>
-				<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
-			</div>
+		<div id="tab2" class="tabcontent">
+			<h3>좋아요</h3>
+			<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+		</div>
 	
-			<div id="tab3" class="tabcontent">
-				<h3>스크랩</h3>
+		<div id="tab3" class="tabcontent">
+			<h3>스크랩</h3>
 				<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
 			</div>
 	</div>
 	  	
-		<div class="sideDiv">
-			<div class="search-trend">ㅎ</div>
-			<div class="recommend">ㅎ </div>
-		</div>
  </section>
  <script>
 		$(function() {
@@ -302,6 +315,11 @@ div#profile-header{
 				$('#' + activeTab).addClass('current');
 			})
 		});
+		
+		$("#post").click(function(){
+			$("#tab-container").removeClass('post-unpushed');
+			$("#tab-container").addClass('post-pushed');
+		})
 </script>
 </body>
 </html>
