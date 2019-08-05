@@ -75,6 +75,7 @@ public class UserLoginEndServlet extends HttpServlet {
 			userLoggedIn.getUserName();
 			request.setAttribute("userLoggedIn", userLoggedIn);
 			
+			System.out.println("UserLoginEndServlet@userLoggedIn="+userLoggedIn);
 			
 		}else {
 			
