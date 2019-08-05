@@ -1,6 +1,6 @@
 package user.model.service;
 
-import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.*;
 import static common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
@@ -28,6 +28,18 @@ public class UserService {
 		System.out.println("service@u="+u);
 		
 		return u;
+	}
+
+	public int insertUser(User u) {
+		Connection conn = getConnection();
+		int result =new UserDAO().insertMember(conn,u);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		
+		return result;
 	}
 
 }

@@ -108,4 +108,37 @@ public class UserDAO {
 		return result;
 	}
 
+
+
+
+	public int insertMember(Connection conn, User u) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("insertUser");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, u.getUserId());
+			pstmt.setString(2, u.getUsernickName());
+			pstmt.setString(3, u.getUserPassword());
+			pstmt.setString(4, u.getUserName());
+			pstmt.setDate(5, u.getUserBirth());
+			pstmt.setString(6, u.getUserEmail());
+			pstmt.setString(7, u.getUserPhone());
+			pstmt.setString(8, u.getUserGender());
+			pstmt.setString(9, u.getUserType());
+			pstmt.setString(10,u.getFileName());
+			pstmt.setString(11, u.getUserDefaultPlace());
+			pstmt.setString(12, u.getUserDefaultActivity());
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+
+	}
+
 }
