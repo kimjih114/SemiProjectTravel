@@ -17,7 +17,7 @@ import user.model.vo.User;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-@WebFilter(servletNames= {"user/user"}, urlPatterns= {"UserViewServlet" })  //회원 상세보기페이지랑 ,,,등등!!!!!     
+@WebFilter(servletNames= {"UserViewServlet" })  //회원 상세보기페이지랑 ,,,등등!!!!!     
 public class LoginFilter implements Filter {
 
     /**
