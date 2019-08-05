@@ -31,8 +31,7 @@
   <style>
   /*@media (min-width: 992px)*/
 .page-top{
-	min-width: 1024px;
-	min-height: 768px;
+	position: relative;
 }
 
 #profile-header{
@@ -139,14 +138,70 @@ div#profile-header{
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 22%;
+    width: 300px;
     /*height: 100vh;*/
     background: red; 
     /*min-width: 250px;*/
     position: fixed;
 }
 
-.page-top
+#tab-container {
+	width:550px;
+	margin:0 auto;
+	text-align:center;
+	position: absolute;
+	top:10px;
+	left:240px;
+}
+#tab-container .tab {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+/* Float the list items side by side */
+#tab-container .tab li {
+	float: left;
+	width: 33.3333%;
+	border-bottom: 1px solid;
+}
+/* Style the links inside the list items */
+#tab-container .tab li a {
+	display: inline-block;
+	color: #000;
+	text-align: center;
+	text-decoration: none;
+	padding: 14px 16px;
+	font-size: 17px;
+	transition:0.3s;
+	cursor: pointer;
+}
+/* Style the tab content */
+#tab-container .tabcontent {
+	display: none;
+	background-color:black;
+	padding: 6px 12px;
+	color:#fff;
+}
+#tab-container ul.tab li.current{
+	background-color: #fed136;
+	color: #222;
+	border:1px solid;
+	border-bottom: 0;
+}
+#tab-container .tabcontent.current {
+	display: block;
+	background-color: white;
+	color: black;
+	border: 1px solid;
+	border-top: 0px;
+	
+}
+#boardFrm{
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
 
 </style>
   
@@ -175,9 +230,6 @@ div#profile-header{
 	   			<td>팔로워</td>
 	   		</tr>
 	   		<tr>
-	   			<td>스크랩</td>
-	   		</tr>
-	   		<tr>
 	   			<td>메시지</td>
 	   		</tr>
 	   		
@@ -185,7 +237,7 @@ div#profile-header{
 	   	
 	    <table id="tbl-usermenu3">
 	    <tr>
-	   		<td>설정(블랙리스트포함)</td>
+	   		<td>설정</td>
 	   	</tr>
 		</table>
 	
@@ -203,15 +255,53 @@ div#profile-header{
 	    </tr> 	
 		</table>
 	  </nav>
-		<div class="main-section">
-			타임라인/미디어/좋아요
-		</div>
+		<div id="tab-container">
+			<form action="" id="boardFrm">
+				<textarea name="boardContent" id="boardContent" cols="55" rows="3"></textarea>
+			
+			</form>
+			<ul class="tab">
+				<li class="current" data-tab="tab1"><a>타임라인</a></li>
+				<li data-tab="tab2"><a>좋아요</a></li>
+				<li data-tab="tab3"><a>스크랩</a></li>
+			</ul>
+	
+			<div id="tab1" class="tabcontent current">
+				<div class="timeline">
+				
+				
+					<div id="timeline-list">
+						
+					</div>
+	    		</div>
+			</div>
+	
+			<div id="tab2" class="tabcontent">
+				<h3>좋아요</h3>
+				<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+			</div>
+	
+			<div id="tab3" class="tabcontent">
+				<h3>스크랩</h3>
+				<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+			</div>
+	</div>
 	  	
 		<div class="sideDiv">
 			<div class="search-trend">ㅎ</div>
 			<div class="recommend">ㅎ </div>
 		</div>
  </section>
- 
+ <script>
+		$(function() {
+			$('ul.tab li').click(function() {
+				var activeTab = $(this).attr('data-tab');
+				$('ul.tab li').removeClass('current');
+				$('.tabcontent').removeClass('current');
+				$(this).addClass('current');
+				$('#' + activeTab).addClass('current');
+			})
+		});
+</script>
 </body>
 </html>
