@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header-menu.jsp"%>
+<%-- <%@ include file="/WEB-INF/views/common/header-menu.jsp"%> --%>
 
 <link
 	href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css"
@@ -84,7 +84,7 @@ function idValidator(){
 		return false;
 	} */
 
-	/* var regExp = /^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$/;
+	var regExp = /^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$/;
 	if(regExp.test($('#userId').val())==false){
 		console.log("2");
 		alert("영어,숫자로 구성된 5~12자를 입력하세요.(영문으로 시작)");
@@ -95,8 +95,8 @@ function idValidator(){
 	else{
 		console.log("3");
 		return true;
-	} */
-	return false;
+	} 
+	return true;	
 }
 function usernickNameValidator(){
 	
@@ -140,7 +140,7 @@ function birthValidator(){
 		alert("생일을 입력하세요.");
 		return false;
 	}
-	var dayRegExp = /^(19|20)\d{2}/(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[0-1])$/
+	var dayRegExp = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/
 	if(dayRegExp.test(birth)==true){	
 	}
 	else{
@@ -216,7 +216,7 @@ table{
 			  id="userEnrollFrm"
 			  method="post"
 			  enctype="multipart/form-data"
-			  onsubmit="return idValidator();">
+			  onsubmit="return enrollValidate();">
 			 
 			<table>
 				<input type="text" name="userType" id="userType"
@@ -226,8 +226,8 @@ table{
 				<td>
 					<input type="text" name="userId" id="userId" 
 							placeholder="아이디 4글자 이상" required/>
-					<!-- <!-- <input type="button" value="중복검사"
-						 onclick="checkIdDuplicate();"/> -->
+					<input type="button" value="중복검사"
+						 onclick="checkIdDuplicate();"/>
 					<label for="idCheck"></label>
 					<input type="hidden" name="idValid"
 					value="1"/>
