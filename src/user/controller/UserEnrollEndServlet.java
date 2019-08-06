@@ -40,7 +40,8 @@ public class UserEnrollEndServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String root = getServletContext().getRealPath("/");
-		String saveDirectory = root + "upload"+File.separator+"enroll";
+			
+		String saveDirectory = root +"WebContent"+File.separator+"upload"+File.separator+"enroll";
 		System.out.println("saveDirectory => "+saveDirectory);
 
 		int maxPostSize = 1024 * 1024 * 10;
@@ -68,8 +69,8 @@ public class UserEnrollEndServlet extends HttpServlet {
 		String gender = mrequest.getParameter("userGender");
 		String userType = mrequest.getParameter("userType");
 		
-		String fileName = mrequest.getFilesystemName("fileName");
-		File f = mrequest.getFile("fileName");
+		String fileName_ = mrequest.getFilesystemName("fileName");
+		File f = mrequest.getFile("fileName_");
 		
 		
 		
@@ -103,7 +104,7 @@ public class UserEnrollEndServlet extends HttpServlet {
 		u.setUserPhone(phone);
 		u.setUserGender(gender);
 		u.setUserType(userType);
-		u.setFileName(fileName);
+		u.setFileName(fileName_);
 		u.setUserDefaultPlace(user_default_place);
 		u.setUserDefaultActivity(user_default_activity);
 		

@@ -132,6 +132,7 @@ public class UserDAO {
 			pstmt.setString(12, u.getUserDefaultActivity());
 			
 			result = pstmt.executeUpdate();
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

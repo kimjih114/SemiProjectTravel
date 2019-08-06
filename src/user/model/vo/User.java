@@ -172,7 +172,7 @@ public class User implements Serializable ,HttpSessionBindingListener{
 				+ ", userName=" + userName + ", userGender=" + userGender + ", userBirth=" + userBirth + ", userEmail="
 				+ userEmail + ", userPhone=" + userPhone + ", fileName=" + fileName + ", userType=" + userType
 				+ ", userDefaultPlace=" + userDefaultPlace + ", userDefaultActivity=" + userDefaultActivity
-				+ ", uSserEnrollDate=" + userEnrollDate + "]";
+				+ ", userEnrollDate=" + userEnrollDate + "]";
 	}
 
 	@Override
