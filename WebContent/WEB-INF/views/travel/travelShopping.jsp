@@ -7,9 +7,7 @@
 	int gugun=Integer.parseInt(request.getParameter("gugun1"));
 	
 %>
-
-<link rel="stylesheet" href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" />
-<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.js"></script>
+<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <script>
 
 var hiddenCount=0;
@@ -283,6 +281,16 @@ function searchList(e){
 </style>
 </head>
 <body>
+
+	<header class="masthead" style="height:300px;">
+    <div class="container">
+      <div class="intro-text" style="padding-top:140px; !important">
+        <div class="intro-heading text-uppercase">
+       		
+        </div>
+     </div>
+    </div>
+  </header>
 	<div class="container">
 
 		<h1 class="font-weight-light text-center text-lg-left mt-4 mb-0" id="header">

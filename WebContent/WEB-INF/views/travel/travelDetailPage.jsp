@@ -6,6 +6,9 @@
 
 <link rel="stylesheet" href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" />
 <script src="<%=request.getContextPath()%>/vendor/jquery/jquery.js"></script>
+  <!-- Custom styles for this template -->
+ 
+ <link href="css/small-business.css" rel="stylesheet">
 <script>
 	$(function(){
 		$.ajax({

@@ -4,7 +4,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 <%
+
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
+
 	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 %>
 <head>
@@ -16,8 +18,8 @@
   <title>유람</title>
 	
   <!-- Bootstrap core JavaScript -->
-  <script src="<%=request.getContextPath() %>/vendor/jquery/jquery.min.js"></script>
-  <script src="<%=request.getContextPath() %>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ <script src="<%=request.getContextPath() %>/vendor/jquery/jquery.min.js"></script>
+ <script src="<%=request.getContextPath() %>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Plugin JavaScript -->
   <script src="<%=request.getContextPath() %>/vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -26,8 +28,18 @@
   <script src="<%=request.getContextPath() %>/js/jqBootstrapValidation.js"></script>
   <script src="<%=request.getContextPath() %>/js/contact_me.js"></script>
 
-  <!-- Custom scripts for this template -->
-  <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
+<style>
+
+.header-profile-circle{
+    border: 0px;
+    border-radius: 100%;
+}
+
+.header-menu-container{
+
+}
+</style>
+
 	
   <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -41,17 +53,13 @@
 
   <!-- Custom styles for this template -->
   <link href="<%=request.getContextPath() %>/css/agency.min.css" rel="stylesheet">
-
-<style>
-.header-profile-circle{
-    border: 0px;
-    border-radius: 100%;
-}
-
-</style>
+  
+   <%-- <!-- Custom scripts for this template -->
+  <script src="<%=request.getContextPath() %>/js/agency.min.js"></script> --%>
 </head>
 
 <body id="page-top">
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">
@@ -93,3 +101,4 @@
       </div>
     </div>
   </nav>
+  
