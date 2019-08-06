@@ -227,13 +227,16 @@ div#profile-header{
 	padding:0px;
 }
 
+.nick_sns{
+	font-weight: 700;
+}
 
 </style>
   
  <header class="masthead" style="height:300px;">
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
-       		@userId의 페이지입니다.(유저가설정가능)
+       		@닉네임의 페이지입니다.(유저가설정가능)
         </div>
      </div>
   </header>
@@ -300,7 +303,8 @@ div#profile-header{
 				<table class="timeline-board-sns">
 					<tr>
 						<td class="timeline-boardcontent-sns"><img src="<%=request.getContextPath() %>/img/profile.jpg" class="header-profile-circle"  width="30" height="30" />
-						    <span style="font-weight:600">@닉네임</span>님이 리뷰를 남기셨습니다.</td>
+						    <span style="font-weight:600">@닉네임</span>님이 리뷰를 남기셨습니다.
+						  	<span style="float:right;">메뉴</span>
 					</tr>
 					<tr>
 						<td class="timeline-boardcontent-sns" id="boardcontent_img">
@@ -328,7 +332,33 @@ div#profile-header{
 						</td>
 					</tr>
 					<tr>
-						<td></td>
+						<td>
+							<table style="border: 1px solid;">
+								<tr>
+									<td style="width: 157.3px; height: 157.3px; border:1px solid;">관련여행지 1</td>
+									<td style="width: 157.3px; height: 157.3px; border:1px solid;">관련여행지 2</td>
+									<td style="width: 157.3px; height: 157.3px; border:1px solid;">관련여행지 3</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td class="timeline-boardcontent-sns">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A tempore labore atque tenetur dolore recusandae nemo sunt commodi aliquid aut voluptatum hic nostrum velit aperiam consectetur temporibus eius harum cumque?</td>
+					</tr>
+					<tr>
+						<td class="timeline-boardcontent-sns"><span style="float:right;">좋아요(12)&nbsp;&nbsp;스크랩(2)</span></td>
+					</tr>
+					<tr>
+						<td class="timeline-boardcontent-sns">댓글(0)</td>
+					</tr>
+					<tr>
+						<td class="timeline-boardcontent-sns"><span class="nick_sns">@abcde</span>&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus necessitatibus sequi dignissimos obcaecati non harum laudantium sed delectus at alias ducimus porro odio aut dolores vel totam aperiam ex eaque. <span style="float:right;">&nbsp;&nbsp;좋아요&nbsp;&nbsp;팔로잉&nbsp;&nbsp;블랙리스트</span></td>		
+					</tr>
+					<tr>
+						<td class="timeline-boardcontent-sns"><span class="nick_sns">@qwerty</span>&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum enim reprehenderit delectus itaque distinctio maxime optio nobis impedit magnam repellendus incidunt quaerat ex architecto nemo quod dolore officia amet accusantium.</td>
+					</tr>
+					<tr>
+						<td class="timeline-boardcontent-sns"><span class="nick_sns">@seulgi</span>&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae magni minus a quos non veritatis ut omnis praesentium hic repellat suscipit libero voluptatem iste totam impedit id necessitatibus et tenetur.</td>
 					</tr>
 				</table>
 	    	</div>

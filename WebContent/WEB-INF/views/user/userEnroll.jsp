@@ -20,8 +20,8 @@
 	rel='stylesheet' type='text/css'>
 <link href="<%=request.getContextPath()%>/css/agency.min.css"
 	rel="stylesheet">
-<script>
-function checkIdDuplicate(){
+<!--<script>
+<%-- function checkIdDuplicate(){
 	var userId_ = $("#userId").val().trim();
 	
 	if(userId_.length < 4){
@@ -42,33 +42,18 @@ function checkIdDuplicate(){
 	frm.method = "post";
 	frm.submit();
 	
-}
+} --%>
 
-function enrollValidate(){
+/* function enrollValidate(){
 	if($("#idValid").val()==1){
 		alert("아이디 중복검사를 해주세요.");
 		return false;
 	}
 	return true;
-}
+} */
 
 
-<%-- $("#userId").keyup(function(){
-	
-	var userId_ = $("#userId").val().trim();
-	
-	
-	if(userId_==<%=u.getUserId() %>){
-		$("#idCheck").css("color","red");
-		document.querySelector("#idCheck").innerHTML = "조건 불충족";
-	}
-	else{
-		$("#idCheck").css("color","black");
-		document.querySelector("#idCheck").innerHTML = "조건 충족";
-	}
-}) --%>
-
-</script>
+</script>  -->
 <script>
 
 $("#test").click(function(){
@@ -76,7 +61,6 @@ $("#test").click(function(){
 })
 
 function idValidator(){
-	console.log("1");
 	/* var Id = $('#userId').val();
 	console.log(Id); */
 	/* if($("#idValid").val()==1){
@@ -84,7 +68,9 @@ function idValidator(){
 		return false;
 	} */
 
+	console.log(regExp.test($('#userId').val()));
 	var regExp = /^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$/;
+	
 	if(regExp.test($('#userId').val())==false){
 		console.log("2");
 		alert("영어,숫자로 구성된 5~12자를 입력하세요.(영문으로 시작)");
@@ -92,13 +78,10 @@ function idValidator(){
 		return false;
 		
 	}
-	else{
-		console.log("3");
-		return true;
-	} 
+
 	return true;	
 }
-function usernickNameValidator(){
+/* function usernickNameValidator(){
 	
 	var nick = $('#usernickName').val();
 	if(nick.trim().length ==0){
@@ -165,14 +148,14 @@ function phoneValidator(){
 		return false;
 	}
 	return true;
-}	
+}	 */
 function validate2(){
 
 	if(!idValidator()){
 		return false;
 	}
 
-	if(!usernickNameValidator()){
+	/* if(!usernickNameValidator()){
 		return false;
 	}
 	if(!passwordValidator()){
@@ -184,8 +167,8 @@ function validate2(){
 	
 	if(!phoneValidator()){
 		return false;
-	}
-	return false;
+	} */
+	return true;
 }
 </script>
 <header class="masthead">

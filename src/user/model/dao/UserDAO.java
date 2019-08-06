@@ -118,6 +118,7 @@ public class UserDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
+			
 			pstmt.setString(1, u.getUserId());
 			pstmt.setString(2, u.getUsernickName());
 			pstmt.setString(3, u.getUserPassword());
