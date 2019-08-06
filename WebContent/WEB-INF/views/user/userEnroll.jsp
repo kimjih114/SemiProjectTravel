@@ -20,7 +20,6 @@
 	rel='stylesheet' type='text/css'>
 <link href="<%=request.getContextPath()%>/css/agency.min.css"
 	rel="stylesheet">
-<script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
 <script>
 function checkIdDuplicate(){
 	var userId_ = $("#userId").val().trim();
@@ -70,6 +69,125 @@ function enrollValidate(){
 }) --%>
 
 </script>
+<script>
+
+$("#test").click(function(){
+	console.log($("#userId").val());
+})
+
+function idValidator(){
+	console.log("1");
+	/* var Id = $('#userId').val();
+	console.log(Id); */
+	/* if($("#idValid").val()==1){
+		alert("아이디 중복검사를 해주세요.");
+		return false;
+	} */
+
+	/* var regExp = /^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$/;
+	if(regExp.test($('#userId').val())==false){
+		console.log("2");
+		alert("영어,숫자로 구성된 5~12자를 입력하세요.(영문으로 시작)");
+		userId.focus();
+		return false;
+		
+	}
+	else{
+		console.log("3");
+		return true;
+	} */
+	return false;
+}
+function usernickNameValidator(){
+	
+	var nick = $('#usernickName').val();
+	if(nick.trim().length ==0){
+		alert("닉네임을 입력하세요.");
+		usernickName.focus();
+		return false;
+	}else{
+		return true;
+	}
+}
+function passwordValidator(){
+	
+	var password = $('#userPassword').val();
+	var password2 = $('#password-chk').val();
+	if(password.trim().length==0){
+		alert("비밀번호를 입력하세요.");
+		return false;
+	}
+	var regExp = /^....+$/;
+	if(regExp.test(password)==true){
+	}
+	else{
+		alert("비밀번호는 4자리 이상 입력해주세요.")
+		return false;
+	}
+	if(password !=password2){
+		alert("비밀번호가 다릅니다.");
+		password = "";
+		password2 = "";
+		userPassword.focus();
+		return false;
+	}
+	return true;
+}
+function birthValidator(){
+	var birth = $('#userBirth').val();
+	
+	if(birth.trim().length==0){
+		alert("생일을 입력하세요.");
+		return false;
+	}
+	var dayRegExp = /^(19|20)\d{2}/(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[0-1])$/
+	if(dayRegExp.test(birth)==true){	
+	}
+	else{
+		alert("생일을 정확히 입력해주세요.");
+		userBirth.focus();
+		return false;
+	}
+	return true;
+	}
+function phoneValidator(){
+	var phone = $('#userPhone').val();
+	if(phone.trim().length==0){
+	alert("핸드폰 번호를 입력하세요.");
+	return false;
+	}
+	var regExp= /(\d{3}).*(\d{3}).*(\d{4})/
+	if(regExp.test(phone)==true){
+	}
+	else{
+		alert("정확한 전화번호를 입력하세요.");
+		userPhone.focus();
+		return false;
+	}
+	return true;
+}	
+function validate2(){
+
+	if(!idValidator()){
+		return false;
+	}
+
+	if(!usernickNameValidator()){
+		return false;
+	}
+	if(!passwordValidator()){
+		return false;
+	}
+	if(!birthValidator()){
+		return false;
+	}
+	
+	if(!phoneValidator()){
+		return false;
+	}
+	return false;
+}
+</script>
 <header class="masthead">
 	<div class="container">
 		<div class="intro-text">
@@ -89,7 +207,7 @@ table{
 }
 </style>
 <form action="" name="CheckIdDuplicateFrm">
-	<input type="hidden" name="userId" />
+	<input type="hidden" name="userId__" />
 </form>
 
 		<section id="enroll-container">
@@ -98,7 +216,8 @@ table{
 			  id="userEnrollFrm"
 			  method="post"
 			  enctype="multipart/form-data"
-			  onsubmit="return enrollValidate();">
+			  onsubmit="return idValidator();">
+			 
 			<table>
 				<input type="text" name="userType" id="userType"
 				style="display:none;" value="D" />
@@ -108,7 +227,7 @@ table{
 					<input type="text" name="userId" id="userId" 
 							placeholder="아이디 4글자 이상" required/>
 					<!-- <!-- <input type="button" value="중복검사"
-						 onclick="checkIdDuplicate();"/> --> -->
+						 onclick="checkIdDuplicate();"/> -->
 					<label for="idCheck"></label>
 					<input type="hidden" name="idValid"
 					value="1"/>
@@ -129,7 +248,8 @@ table{
 			<tr>
 				<th>비밀번호</th>
 				<td>
-					<input type="password" name="userPassword" id="userPassword" required/>
+					<input type="password" name="userPassword" id="userPassword" 
+					placeholder="4자리 이상" required/>
 				</td>
 			</tr>
 			<tr>
@@ -147,7 +267,8 @@ table{
 			<tr>
 				<th>생일</th>
 				<td>
-					<input type="text" name="userBirth" id="userBirth" />
+					<input type="text" name="userBirth" id="userBirth" 
+					placeholder="2000/01/01"/>
 				</td>
 			</tr>
 			<tr>
@@ -204,10 +325,11 @@ table{
 				</td>
 			</tr>
 			</table>	
-			  	<input type="submit" value="회원가입" />
+			  	<input type="submit" value="회원가입"/>
 			  	<input type="reset" value="초기화" />
+			  
 		</form>
-		
+			
 		</section>
 
 

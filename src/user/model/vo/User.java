@@ -22,8 +22,9 @@ public class User implements Serializable ,HttpSessionBindingListener{
 	private String userEmail;
 	private String userPhone;
 	private String fileName; 
-	private String userType;
+	private String renamedFileName;
 	
+	private String userType;
 	
 	private String userDefaultPlace;
 	private String userDefaultActivity;
@@ -36,7 +37,7 @@ public class User implements Serializable ,HttpSessionBindingListener{
 	}
 
 	public User(String userId, String usernickName, String userPassword, String userName, String userGender,
-			Date userBirth, String userEmail, String userPhone, String fileName, String userType,
+			Date userBirth, String userEmail, String userPhone, String fileName, String renamedFileName, String userType,
 			String userDefaultPlace, String userDefaultActivity, Date userEnrollDate) {
 		super();
 		this.userId = userId;
@@ -48,6 +49,7 @@ public class User implements Serializable ,HttpSessionBindingListener{
 		this.userEmail = userEmail;
 		this.userPhone = userPhone;
 		this.fileName = fileName;
+		this.renamedFileName = renamedFileName;
 		this.userType = userType;
 		this.userDefaultPlace = userDefaultPlace;
 		this.userDefaultActivity = userDefaultActivity;
@@ -128,6 +130,16 @@ public class User implements Serializable ,HttpSessionBindingListener{
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+	
+	
+
+	public String getRenamedFileName() {
+		return renamedFileName;
+	}
+
+	public void setRenamedFileName(String renamedFileName) {
+		this.renamedFileName = renamedFileName;
+	}
 
 	public String getUserType() {
 		return userType;
@@ -170,7 +182,7 @@ public class User implements Serializable ,HttpSessionBindingListener{
 	public String toString() {
 		return "User [userId=" + userId + ", usernickName=" + usernickName + ", userPassword=" + userPassword
 				+ ", userName=" + userName + ", userGender=" + userGender + ", userBirth=" + userBirth + ", userEmail="
-				+ userEmail + ", userPhone=" + userPhone + ", fileName=" + fileName + ", userType=" + userType
+				+ userEmail + ", userPhone=" + userPhone + ", fileName=" + fileName +", renamedFileName= "+renamedFileName+ ", userType=" + userType
 				+ ", userDefaultPlace=" + userDefaultPlace + ", userDefaultActivity=" + userDefaultActivity
 				+ ", userEnrollDate=" + userEnrollDate + "]";
 	}

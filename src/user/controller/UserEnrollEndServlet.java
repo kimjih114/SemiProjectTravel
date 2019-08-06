@@ -25,9 +25,7 @@ import user.model.vo.User;
 public class UserEnrollEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public UserEnrollEndServlet() {
         super();
         // TODO Auto-generated constructor stub
@@ -38,14 +36,16 @@ public class UserEnrollEndServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+
+//		String root = "C:"+File.separator+"Workspaces"+File.separator+"webserver_workspace"+File.separator+"SemiProjectTravel";
+		String root =  getServletContext().getRealPath("/");
+//		String root  ="C:\\Workspaces\\webserver_workspace\\SemiProjectTravel\\WebContent"+File.separator;
 		
-		String root = getServletContext().getRealPath("/");
-			
-		String saveDirectory = root +"WebContent"+File.separator+"upload"+File.separator+"enroll";
+		String saveDirectory = root +"upload"+File.separator+"enroll";
 		System.out.println("saveDirectory => "+saveDirectory);
 
 		int maxPostSize = 1024 * 1024 * 10;
-
+		
 		FileRenamePolicy policy
 			= new MVCRenamePolicy();
 
