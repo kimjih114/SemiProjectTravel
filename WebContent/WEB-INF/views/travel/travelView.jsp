@@ -2,25 +2,16 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
+
 <%
 	int sido=Integer.parseInt(request.getParameter("sido1"));
 	int gugun=Integer.parseInt(request.getParameter("gugun1"));
 	
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>여행지</title>
-<link rel="stylesheet" href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" />
-<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.js"></script>
+
 <script>
-
 var hiddenCount=0;
-
-function contentPage(){
-	location.href="<%=request.getContextPath()%>/travel/contentPage";
-}
 
 $(function(){
 	$.ajax({
@@ -52,7 +43,7 @@ $(function(){
 					if(i<=8){
 						html+="<div class='col-lg-4 col-sm-6 mb-4'>";
 						html+="<div class='card h-100'>";
-						html+="<a href='#'><img class='card-img-top' src='"+src+"'></a>";
+						html+="<a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"'><img class='card-img-top' src='"+src+"'></a>";
 						html+="<div class='card-body'>";
 						html+="<h4 class='card-title'>";
 						html+="<a href='#'>"+$(m).find("title").text()+"</a>";
@@ -135,6 +126,40 @@ function searchList(e){
 		$(e.target).val($sel.text());
 		
 		$("#autoComplete").hide().children().remove();
+		
+		$.ajax({
+			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=12&areaCode=<%=sido%>&sigunguCode=<%=gugun%>&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=100&pageNo=1",
+			type: "get",
+			dataType: "xml",
+			success:function(data){			
+				var $root=$(data).find(":root");				
+				var $items=$root.find("item");
+				var html = "";
+				$items.each(function(i,m){
+					
+					if($(m).find("title").text()==$sel.text()){
+						html+="<div class='col-lg-4 col-sm-6 mb-4'>";
+						html+="<div class='card h-100'>";
+						html+="<a href='#'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+						html+="<div class='card-body'>";
+						html+="<h4 class='card-title'>";
+						html+="<a href='#'>"+$(m).find("title").text()+"</a>";
+						html+="</h4>";
+						html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
+						html+="</div>";
+						html+="</div>";
+						html+="</div>";		
+					}	
+	
+				});
+				$("#contents").html(html);
+				$("#contentsMore").html("");
+			},
+			error:function(jqxhr,textStatus,errorThrown){
+				
+			}
+		});
+		
 	}
 	else{
 		var search = $("#search").val().trim();
@@ -169,6 +194,41 @@ function searchList(e){
 						$("#search").val($(e.target).text());
 						//#autoComplete 감춤
 						$("#autoComplete").hide().children().remove();
+						
+						$.ajax({
+							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=12&areaCode=<%=sido%>&sigunguCode=<%=gugun%>&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=100&pageNo=1",
+							type: "get",
+							dataType: "xml",
+							success:function(data){			
+								var $root=$(data).find(":root");				
+								var $items=$root.find("item");
+								var html = "";
+								$items.each(function(i,m){
+									if($(m).find("title").text()==$(e.target).text()){
+										html+="<div class='col-lg-4 col-sm-6 mb-4'>";
+										html+="<div class='card h-100'>";
+										html+="<a href='#'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+										html+="<div class='card-body'>";
+										html+="<h4 class='card-title'>";
+										html+="<a href='#'>"+$(m).find("title").text()+"</a>";
+										html+="</h4>";
+										html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
+										html+="</div>";
+										html+="</div>";
+										html+="</div>";		
+									}	
+					
+								});
+								$("#contents").html(html);
+								$("#contentsMore").html("");
+							},
+							error:function(jqxhr,textStatus,errorThrown){
+								
+							}
+						});
+						
+						
+						
 					}).hover(e=>{
 						$(e.target).addClass("sel").siblings().removeClass("sel");			
 					}, e=>{
@@ -216,8 +276,7 @@ function searchList(e){
 	color: white;
 }
 </style>
-</head>
-<body>
+
 	<div class="container">
 
 		<h1 class="font-weight-light text-center text-lg-left mt-4 mb-0" id="header">
@@ -238,8 +297,10 @@ function searchList(e){
 					<ul id="autoComplete">
 					
 					</ul>	
-				<img src="<%=request.getContextPath() %>/img/travel/검색.png" alt="검색"
-					style="cursor: pointer;"/>		
+				
+				<%-- <img src="<%=request.getContextPath() %>/img/travel/검색.png" alt="검색"
+					style="cursor: pointer;"/>	 --%>	
+				
 				</h1>
 	
 		<br />
