@@ -46,7 +46,7 @@ $(function(){
 					if(i<=8){
 						html+="<div class='col-lg-4 col-sm-6 mb-4'>";
 						html+="<div class='card h-100'>";
-						html+="<a href='#'><img class='card-img-top' src='"+src+"'></a>";
+						html+="<a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find("contentTypeId").text()+"'><img class='card-img-top' src='"+src+"'></a>";
 						html+="<div class='card-body'>";
 						html+="<h4 class='card-title'>";
 						html+="<a href='#'>"+$(m).find("title").text()+"</a>";
@@ -63,7 +63,7 @@ $(function(){
 						
 						html+="<div class='col-lg-4 col-sm-6 mb-4' id='hiddenContents"+hiddenCount+"' style='display: none'>";
 						html+="<div class='card h-100'>";
-						html+="<a href='#'><img class='card-img-top' src='"+src+"'></a>";
+						html+="<a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find("contentTypeId").text()+"'><img class='card-img-top' src='"+src+"'></a>";
 						html+="<div class='card-body'>";
 						html+="<h4 class='card-title'>";
 						html+="<a href='#'>"+$(m).find("title").text()+"</a>";
@@ -143,7 +143,7 @@ function searchList(e){
 					if($(m).find("title").text()==$sel.text()){
 						html+="<div class='col-lg-4 col-sm-6 mb-4'>";
 						html+="<div class='card h-100'>";
-						html+="<a href='#'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+						html+="<a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find("contentTypeId").text()+"' src='"+$(m).find("firstimage").text()+"'></a>";
 						html+="<div class='card-body'>";
 						html+="<h4 class='card-title'>";
 						html+="<a href='#'>"+$(m).find("title").text()+"</a>";
@@ -210,7 +210,7 @@ function searchList(e){
 									if($(m).find("title").text()==$(e.target).text()){
 										html+="<div class='col-lg-4 col-sm-6 mb-4'>";
 										html+="<div class='card h-100'>";
-										html+="<a href='#'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+										html+="<a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find("contentTypeId").text()+"'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
 										html+="<div class='card-body'>";
 										html+="<h4 class='card-title'>";
 										html+="<a href='#'>"+$(m).find("title").text()+"</a>";
@@ -265,7 +265,7 @@ function searchList(e){
 	min-width: 159px;
 	border: 1px solid gray;
 	position: absolute;
-	top: 175px;
+	top: 475px;
 	padding: 0;
 	margin: 0;
 }
