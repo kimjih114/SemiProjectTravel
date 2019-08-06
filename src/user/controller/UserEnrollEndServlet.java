@@ -66,7 +66,7 @@ public class UserEnrollEndServlet extends HttpServlet {
 		String email = mrequest.getParameter("userEmail");
 		String phone = mrequest.getParameter("userPhone");
 		String gender = mrequest.getParameter("userGender");
-		String userType = mrequest.getParameter("memberType");
+		String userType = mrequest.getParameter("userType");
 		
 		String fileName = mrequest.getFilesystemName("fileName");
 		File f = mrequest.getFile("fileName");

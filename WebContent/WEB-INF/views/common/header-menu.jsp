@@ -83,7 +83,7 @@
 	            <a class="nav-link js-scroll-trigger" href='<%=request.getContextPath() %>/user/userLoginFrm'>로그인</a> <!-- userLogin.jsp로 이동하는 서블릿 -->
 	          </li> 
 		      <li class="nav-item">
-		        <a class="nav-link js-scroll-trigger" href="#contact">회원가입</a>
+		        <a class="nav-link js-scroll-trigger" href="<%=request.getContextPath()%>/user/userEnrollFrm">회원가입</a>
 		      </li>
           <% }
           	else if(userLoggedIn!=null){ %>

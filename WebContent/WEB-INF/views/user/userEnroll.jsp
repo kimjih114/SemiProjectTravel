@@ -100,7 +100,8 @@ table{
 			  enctype="multipart/form-data"
 			  onsubmit="return enrollValidate();">
 			<table>
-				
+				<input type="text" name="userType" id="userType"
+				style="display:none;" value="D" />
 			<tr>
 				<th>아이디</th>
 				<td>

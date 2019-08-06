@@ -153,12 +153,12 @@ public class User implements Serializable ,HttpSessionBindingListener{
 		this.userDefaultActivity = userDefaultActivity;
 	}
 
-	public Date getUeserEnrollDate() {
+	public Date getUserEnrollDate() {
 		return userEnrollDate;
 	}
 
-	public void setUeserEnrollDate(Date ueserEnrollDate) {
-		this.userEnrollDate = ueserEnrollDate;
+	public void setUserEnrollDate(Date userEnrollDate) {
+		this.userEnrollDate = userEnrollDate;
 	}
 
 	public static long getSerialversionuid() {
