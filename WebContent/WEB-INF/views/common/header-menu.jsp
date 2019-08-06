@@ -4,9 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <%
-
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
-
 	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 %>
 <head>
@@ -45,20 +43,15 @@
   <link href="<%=request.getContextPath() %>/css/agency.min.css" rel="stylesheet">
 
 <style>
-
 .header-profile-circle{
     border: 0px;
     border-radius: 100%;
 }
 
-.header-menu-container{
-
-}
 </style>
 </head>
 
 <body id="page-top">
-
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <div class="container">

@@ -28,6 +28,7 @@
 
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
+
   <style>
   /*@media (min-width: 992px)*/
 .page-top{
@@ -130,7 +131,7 @@ div#profile-header{
 
 
 #tab-container {
-	width:550px;
+	width:500px;
 	margin:0 auto;
 	text-align:center;
 	position: absolute;
@@ -191,18 +192,19 @@ div#profile-header{
 	
 }
 #postFrm{
-	width:550px;
+	width:500px;
 	margin:0 auto;
 	text-align:center;
 	position: absolute;
 	left:240px;
 	top: 50px;
 	border:1px solid;
+	display:none;
 }
 #post{
 	position: absolute;
 	top:10px;
-	left: 730px;
+	left: 690px;
 }
 
 #timline-sns{
@@ -213,8 +215,16 @@ div#profile-header{
 	border:1px solid;
 }
 
-#timeline-board-sns td {
+
+.timeline-boardcontent-sns{
 	padding: 10px;
+	width: 540px;
+	text-align:left;
+		border:1px solid;
+}
+
+#boardcontent_img{
+	padding:0px;
 }
 
 
@@ -232,8 +242,8 @@ div#profile-header{
 	  <nav id="sideNav">
 		<div id="profile-header">
 	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/img/profile.jpg" alt="">
-	      <p class="userprofile-userId">@userId <button>edit</button></p>
-	      <p class="userIntroduce" style="margin-bottom: 50px;">안녕하세요. 저는 userId입니다. 좋아하는 여행지는 #서촌입니다.<button>edit</button></p>
+	      <p class="userprofile-userId">@닉네임 <button>edit</button></p>
+	      <p class="userIntroduce" style="margin-bottom: 50px;">안녕하세요. 저는 @닉네임입니다. 좋아하는 여행지는 #서촌입니다.<button>edit</button></p>
 	   </div>
 	   <table class="tbl-usermenu">
 	   		<tr>
@@ -242,12 +252,15 @@ div#profile-header{
 	   	</table>
 	   	<table class="tbl-usermenu">
 	   		<tr>
-	   			<td>팔로워</td>
-	   		</tr>
-	   		<tr>
 	   			<td>메시지</td>
 	   		</tr>
-	   		
+	   		<tr>
+	   			<td>검색</td>
+	   		</tr>
+	   		<tr>
+	   			<td>팔로워</td>
+	   		</tr>
+
 	   	</table>
 	   	
 	    <table class="tbl-usermenu">
@@ -284,10 +297,38 @@ div#profile-header{
 	
 		<div id="tab1" class="tabcontent current">
 			<div class="timeline-sns">
-				<table id="timeline-board-sns">
+				<table class="timeline-board-sns">
 					<tr>
-						<td><img src="<%=request.getContextPath() %>/img/profile.jpg" class="header-profile-circle"  width="40" height="40" />
+						<td class="timeline-boardcontent-sns"><img src="<%=request.getContextPath() %>/img/profile.jpg" class="header-profile-circle"  width="30" height="30" />
 						    <span style="font-weight:600">@닉네임</span>님이 리뷰를 남기셨습니다.</td>
+					</tr>
+					<tr>
+						<td class="timeline-boardcontent-sns" id="boardcontent_img">
+							<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+							  <div class="carousel-inner">
+							    <div class="carousel-item active">
+							      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
+							    </div>
+							    <div class="carousel-item">
+							      <img src="<%=request.getContextPath() %>/img/profile.jpg" class="d-block w-100" alt="...">
+							    </div>
+							    <div class="carousel-item">
+							      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
+							    </div>
+							  </div>
+							  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Previous</span>
+							  </a>
+							  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Next</span>
+							  </a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
 					</tr>
 				</table>
 	    	</div>
@@ -319,6 +360,8 @@ div#profile-header{
 		$("#post").click(function(){
 			$("#tab-container").removeClass('post-unpushed');
 			$("#tab-container").addClass('post-pushed');
+			
+			$("#postFrm").css('display', 'block');
 		})
 </script>
 </body>
