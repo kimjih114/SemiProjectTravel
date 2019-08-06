@@ -3,7 +3,7 @@
 <%
 	String contentId=request.getParameter("contentId");
 %>
-<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
+
 <link rel="stylesheet" href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" />
 <script src="<%=request.getContextPath()%>/vendor/jquery/jquery.js"></script>
 <script>

@@ -2,14 +2,15 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
+
 
 <%
 	int sido=Integer.parseInt(request.getParameter("sido1"));
 	int gugun=Integer.parseInt(request.getParameter("gugun1"));
 	
 %>
-
+<link rel="stylesheet" href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" />
+<script src="<%=request.getContextPath()%>/vendor/jquery/jquery.js"></script>
 <script>
 var hiddenCount=0;
 
