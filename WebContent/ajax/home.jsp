@@ -27,32 +27,55 @@
 	/* border:1px solid;
 	border-collpase: collapse; */
 }
-
+#postFrm td.review-img{
+	padding-top: 0px;
+	width: 50px;
+	height: 50px;
+	
+}
+.img-review{
+border:1px solid; width: 50px; height: 50px;
+}
 </style>
     
 <div id="post">post</div>
+<form action="">
 	<table id="postFrm">
 		<tr>
-			<td>소중한 여행후기를 공유해주세요.</td>
+			<td style="font-weight: 700;">소중한 여행후기를 공유해주세요!</td>
 		</tr>
 		<tr>
-			<td>여행지
-			<div id="travelsrch"></div>
+			<td style="font-weight: 700;">여행지
+				<div class="travelsrch"></div>
+				<table>
+						<tr>
+							<td style="padding:0px;">
+								<div class="img-review" style="border:1px solid; width: 50px; height: 50px;"></div>
+							</td>
+						</tr>
+				</table>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<label for="reviewContent">어떤 여행을 하셨나요?</label>
+				<label for="reviewContent" style="font-weight: 700;">어떤 여행을 하셨나요?</label>
 				<textarea name="reviewContent" id="reviewContent" cols="55" rows="5"></textarea>
+				<table>
+					<tr>
+						<td style="padding:0px;">
+							<div class="img-review" style="border:1px solid; width: 50px; height: 50px;"></div>
+						</td>
+					</tr>
+				</table>
 			</td>
 		</tr>
 		<tr>
-			<td style="text-align:right;">
-				첨부파일 이미지
+			<td>
+				<button type="button" style="float:right;">포스트 등록</button>
 			</td>
 		</tr>
 	</table>
-	
+</form>	
 		  <div id="tab-container" class="post-unpushed">
 			<ul class="tab">
 				<li class="current" data-tab="tab1"><a>타임라인</a></li>
@@ -162,7 +185,7 @@ $("#post").click(function(){
 		type: "get",
 		dataType: "html",
 		success: function(data){
-			$("#travelsrch").html(data);
+			$(".travelsrch").html(data);
 		},
 		error: function(jqxhr, textStatus, errorThrown){
 			console.log("ajax처리실패!");
