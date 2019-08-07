@@ -129,6 +129,7 @@ public class UserDAO {
 			pstmt.setString(8, u.getUserGender());
 			pstmt.setString(9, u.getUserType());
 			pstmt.setString(10,u.getFileName());
+			pstmt.setString(11, u.getOriginalFileName());
 			pstmt.setString(11, u.getUserDefaultPlace());
 			pstmt.setString(12, u.getUserDefaultActivity());
 			

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import common.util.MVCRenamePolicy;
+import common.util.MVCUtils;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
@@ -58,7 +60,9 @@ public class UserEnrollEndServlet extends HttpServlet {
 	
 		String userId = mrequest.getParameter("userId");
 		String nickName = mrequest.getParameter("usernickName");
-		String password = mrequest.getParameter("userPassword");
+		
+		String password_ = mrequest.getParameter("userPassword");
+		String password = MVCUtils.getSha512(password_);
 		String userName = mrequest.getParameter("userName");
 		
 		java.sql.Date userBirth = java.sql.Date.valueOf(mrequest.getParameter("userBirth"));
@@ -68,6 +72,8 @@ public class UserEnrollEndServlet extends HttpServlet {
 		String phone = mrequest.getParameter("userPhone");
 		String gender = mrequest.getParameter("userGender");
 		String userType = mrequest.getParameter("userType");
+		
+		String originalFileName = mrequest.getOriginalFileName("fileName");
 		
 		String fileName_ = mrequest.getFilesystemName("fileName");
 		File f = mrequest.getFile("fileName_");
@@ -104,6 +110,7 @@ public class UserEnrollEndServlet extends HttpServlet {
 		u.setUserPhone(phone);
 		u.setUserGender(gender);
 		u.setUserType(userType);
+		u.setOriginalFileName(originalFileName);
 		u.setFileName(fileName_);
 		u.setUserDefaultPlace(user_default_place);
 		u.setUserDefaultActivity(user_default_activity);
