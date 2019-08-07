@@ -1,5 +1,13 @@
+<%@page import="board.model.vo.Board_Question"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+  List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
+ 
+ //페이지 바       
+%>
+
 
 <style>
 #q-container {
@@ -132,12 +140,16 @@ border-radius: 10px;
 
 ul.post_con{
 padding-left: 20px;
-padding-bottom: 25px;
+/* padding-bottom: 25px; */
 padding-right: 20px;
+height: 241px;
 }
 
 hr{
 border: 3px solid rgb(00,00,66);
+}
+li.post-font{
+text-align:left;
 }
 </style>
 
@@ -163,23 +175,22 @@ $(function() {
 <!-- 메뉴폼 -->
 
  <div id="q-container">
- 
- 
- 
- 
+
 	<form action="" id="board_containerfrm">
  		<div class="sub_content">
                             <hr />
                         <div class="postscript_area">
                             <ul class="post_con">
-                                <li class="post_title">업무와 관련 문의 및 요청사항을 작성하는 게시판입니다.</li>
-                                <li class="post_font">글을 남겨주시면 빠른 시일내에 답변해드리겠습니다. 여러분의 소중한 의견을 기다립니다.<br />
+                                <li class="post_title"><h4>1:1문의</h4></li>
+                                <li class="post_font">
+                                		업무와 관련 문의 및 요청사항을 작성하는 게시판입니다. <br />
+                                		1:1 문의는 타인에게 내용이 공개되지 않으므로 더 자세한 답변을 받을 수 있습니다. <br /> <br />
+                                		회원은 <a href="<%=request.getContextPath()%>/user/userLoginFrm">로그인</a>후 문의가 가능합니다. <br />
+                                		<br />유람은 고객님의 목소리를 소중히 여깁니다. <br />
+                                		문의주신 내용은 확인 즉시 , 빠르게 답변 드리겠습니다.  <br />
+                                		답변은 전화상담이 아닌 온라인으로만 진행됩니다.<br />
                                     <br />
-                                    해당 게시판의 게시물은 사이트를 방문하는 모든 방문자가 확인할 수 있으므로 문의 및 요청사항 작성시 개인 정보가 포함되지 않도록 주의
-                            바랍니다.<br />
-                                    <br />
-                                    게시판의 효과적인 운영을 위하여 비방, 욕설, 음란한 표현, 상업적인 광고, 동일한 내용 반복게시, 특정인의 개인정보 유출 등 홈페이지의
-                            정상적인 운영을 저해하는 내용은 게시자에게 통보하지 않고 삭제될 수 있음을 알려드립니다.
+           							
                                 </li>
                             </ul>
             
@@ -227,19 +238,20 @@ $(function() {
 				</tr>
 
 				<tbody>
-
+					<% for(Board_Question bq: list){ %>
+					
 					<tr class="tr_notice">
-						<td>번호넣</td>
-						<td>제목넣</td>
-						<td>작성자넣</td>
+						<td><%=bq.getQboardNo() %></td>
+						<td><%=bq.getQboardContent() %></td>
+						<td><%=bq.getQboardWriter() %></td>
 			
-						<td>작성일 넣</td>
-						<td>진행상태넣</td>
+						<td><%=bq.getQboardDate() %></td>  <!-- 작성일 넣 -->
+						<td><%=bq.getQboardStatus() %></td> <!-- 진행상태넣 -->
 					</tr>
 
 
 
-
+	<% } %>
 				</tbody>
 			</table>
 
