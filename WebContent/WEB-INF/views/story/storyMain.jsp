@@ -278,7 +278,7 @@ div#profile-header{
 	    </tr>
 	    
 	    <tr>
-	    	<td>1:1문의</td>
+	    	<td><a href='<%=request.getContextPath()%>/board/boardQuestionList'>1:1문의</a></td>
 	    </tr>
 	    
 	    <tr>

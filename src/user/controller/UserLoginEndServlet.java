@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import common.util.MVCUtils;
 import user.model.service.UserService;
 import user.model.vo.User;
 
@@ -45,8 +46,9 @@ public class UserLoginEndServlet extends HttpServlet {
 		
 		//파라미터 핸들링 
 		String userId = request.getParameter("userId"); 
-		String userPassword = request.getParameter("userPassword");  
-		
+		String userPassword_ = request.getParameter("userPassword");  
+		String userPassword = MVCUtils.getSha512(userPassword_);
+		System.out.println("userPassword_"+userPassword);
 	
 		User user = new User();
 		user.setUserId(userId);
