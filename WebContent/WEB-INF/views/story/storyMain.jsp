@@ -386,6 +386,20 @@ $("#post").click(function(){
 	$("#tab-container").addClass('post-pushed');
 		
 	$("#postFrm").css('display', 'block');
+	
+	$.ajax({
+		url: "<%=request.getContextPath() %>/ajax/travelsrch.jsp", 
+		type: "get",
+		dataType: "html",
+		success: function(data){
+			$("#travelsrch").html(data);
+		},
+		error: function(jqxhr, textStatus, errorThrown){
+			console.log("ajax처리실패!");
+			console.log(jqxhr, textStatus, errorThrown);
+		}
+	});
+	
 })
 	
 	

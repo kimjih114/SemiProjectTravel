@@ -1,8 +1,14 @@
 package sns.model.vo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class BoardSNS {
+public class BoardSNS implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int board_no;
 	private String board_writer;
 	private String board_content;

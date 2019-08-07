@@ -128,6 +128,10 @@
 				</div>
 		</div>
 <script>
+$(()=>{
+	location.href="#"
+})
+
 $(function() {
 	$('ul.tab li').click(function() {
 		var activeTab = $(this).attr('data-tab');

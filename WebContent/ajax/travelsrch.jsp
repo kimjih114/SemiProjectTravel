@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	int sido=Integer.parseInt(request.getParameter("sido1"));
-	int gugun=Integer.parseInt(request.getParameter("gugun1"));
-	
-%>
+
  <script type="text/javascript">
-   $('document').ready(function() {
+  $('document').ready(function() {
 	   var area0 = ["시/도 선택","서울특별시","인천광역시","대전광역시","대구광역시","광주광역시","부산광역시","울산광역시","세종특별자치시","경기도","강원도","충청북도","충청남도","경상북도","경상남도","전라북도","전라남도","제주도"];
 	   var area1 = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
 	   var area2 = ["강화군","계양구","미추홀구","남동구","동구","부평구","서구","연수구","옹진군","중구"];
@@ -294,6 +290,7 @@
 	<form action="">
 		<select name="sido1" id="sido1"></select>
 		<select name="gugun1" id="gugun1"></select>
+		<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" /> 
 	</form>
 </div>
 <style>
