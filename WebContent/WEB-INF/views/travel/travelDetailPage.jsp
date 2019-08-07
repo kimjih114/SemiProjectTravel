@@ -4,6 +4,7 @@
 <%
 	String contentId=request.getParameter("contentId");
 	String contentTypeId=request.getParameter("contentTypeId");
+	
 %>
 
 <script>
@@ -22,7 +23,7 @@
 				var $items=$root.find("item");
 				var html1 = "";
 				var html2 = "";
-				$items.each(function(i,m){					
+				$items.each(function(i,m){						
 						html1+="<div class='col-lg-7'>";
 						html1+="<img class='img-fluid rounded mb-4 mb-lg-0' src='"+$(m).find("firstimage").text()+"' alt=''>";
 						html1+="</div>";
@@ -43,6 +44,10 @@
 			}
 		});
 	});
+	
+	function reservationForm(){
+		location.href="<%=request.getContextPath()%>/travel/reservationForm?contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
+	}
 </script>
 </head>
 <body>
@@ -59,11 +64,14 @@
 
   <!-- Page Content -->
   <div class="container">
-
+	
+	<%if(contentTypeId.equals("32")){%>
+		<button type="button" onclick="reservationForm();">예약하러가기</button>
+	 <%} %>  
+    
     <!-- Heading Row -->
     <div class="row align-items-center my-5" id="content1">
-     
-      
+        
     </div>
     <!-- /.row -->
 
