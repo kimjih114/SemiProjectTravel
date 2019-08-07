@@ -191,22 +191,6 @@ div#profile-header{
 	border-top: 0px;
 	
 }
-#postFrm{
-	width:500px;
-	margin:0 auto;
-	text-align:center;
-	position: absolute;
-	left:240px;
-	top: 50px;
-	display:none;
-	border : 1px solid;
-	border-collapse: collapse;
-}
-
-#postFrm tr{
-	border : 1px solid;
-	border-collapse: collapse;
-}
 
 #post{
 	position: absolute;

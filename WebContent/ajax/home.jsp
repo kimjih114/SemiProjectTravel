@@ -16,8 +16,8 @@
 }
 
 #postFrm tr{
-	border : 1px solid;
-	border-collapse: collapse;
+	/* border : 1px solid;
+	border-collapse: collapse; */
 }
 
 #postFrm td{
@@ -39,8 +39,17 @@
 			<td>여행지
 			<div id="travelsrch"></div>
 			</td>
-				
-			
+		</tr>
+		<tr>
+			<td>
+				<label for="reviewContent">어떤 여행을 하셨나요?</label>
+				<textarea name="reviewContent" id="reviewContent" cols="55" rows="5"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:right;">
+				첨부파일 이미지
+			</td>
 		</tr>
 	</table>
 	
