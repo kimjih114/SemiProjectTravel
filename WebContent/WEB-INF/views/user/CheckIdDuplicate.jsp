@@ -65,10 +65,8 @@ function checkIdDuplicate(){
 <script>
 function setMemberId(){
 	var frm = opener.document.userEnrollFrm;
-	
 	frm.userId.value = '<%=userId%>';
 	frm.idValid.value = 0;
-	frm.password.focus();
 	self.close();
 }
 
