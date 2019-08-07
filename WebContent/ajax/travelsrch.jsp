@@ -58,78 +58,6 @@
 });
    var hiddenCount=0;
 
-   $(function(){
-	 
-   	$.ajax({
-   		url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=12&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=100&pageNo=1",
-   		type: "get",
-   		dataType: "xml",
-   		success:function(data){
-   			
-   			var $root=$(data).find(":root");
-   			
-   			var $items=$root.find("item");
-   			var html="";
-   			var pageMore="";
-   			var totalContents=0;
-   			
-   			$items.each(function(i,m){
-   				totalContents++;
-   			});
-   			
-   			$items.each(function(i,m){							
-   					
-   				var src="";
-   					if($(m).find("firstimage").text()!=""){
-   						src=$(m).find("firstimage").text();
-   					}else{
-   						src="http://placehold.it/700x400";
-   					}
-   					
-   					if(i<=8){
-   						html+="<div class='col-lg-4 col-sm-6 mb-4'>";
-   						html+="<div class='card h-100'>";
-   						html+="<a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"'><img class='card-img-top' src='"+src+"'></a>";
-   						html+="<div class='card-body'>";
-   						html+="<h4 class='card-title'>";
-   						html+="<a href='#'>"+$(m).find("title").text()+"</a>";
-   						html+="</h4>";
-   						html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
-   						html+="</div>";
-   						html+="</div>";
-   						html+="</div>";
-   						
-   					}else{
-   						if(i==9){
-   							pageMore+="<input type='button' value='더보기' onclick='conMore();'/>";
-   						}
-   						
-   						html+="<div class='col-lg-4 col-sm-6 mb-4' id='hiddenContents"+hiddenCount+"' style='display: none'>";
-   						html+="<div class='card h-100'>";
-   						html+="<a href='#'><img class='card-img-top' src='"+src+"'></a>";
-   						html+="<div class='card-body'>";
-   						html+="<h4 class='card-title'>";
-   						html+="<a href='#'>"+$(m).find("title").text()+"</a>";
-   						html+="</h4>";
-   						html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
-   						html+="</div>";
-   						html+="</div>";
-   						html+="</div>";
-   						hiddenCount++;
-   					}
-   				
-   			});
-   			
-   			$("#contents").html(html);
-   			$("#contentsMore").html(pageMore);
-   			
-   		},
-   		error:function(jqxhr,textStatus,errorThrown){
-   			
-   		}
-   	});
-   });
-
    function conMore(){
    	for(var i=0;i<=hiddenCount;i++){
    		$("#hiddenContents"+i).removeAttr("style");
@@ -174,7 +102,7 @@
    		$("#autoComplete").hide().children().remove();
    		
    		$.ajax({
-   			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=12&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=100&pageNo=1",
+   			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    			type: "get",
    			dataType: "xml",
    			success:function(data){			
@@ -199,7 +127,7 @@
    	
    				});
    				$("#contents").html(html);
-   				$("#contentsMore").html("");
+   				
    			},
    			error:function(jqxhr,textStatus,errorThrown){
    				
@@ -214,7 +142,7 @@
    			return;
    		}else{
    			$.ajax({
-   				url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=12&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=100&pageNo=1",
+   				url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    				type: "get",
    				dataType: "xml",
    				success:function(data){
@@ -242,7 +170,7 @@
    						$("#autoComplete").hide().children().remove();
    						
    						$.ajax({
-   							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=12&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=100&pageNo=1",
+   							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    							type: "get",
    							dataType: "xml",
    							success:function(data){			
@@ -296,15 +224,17 @@
    
 </script>
 	<div align="center">
-	<form action="">
 		<select name="sido1" id="sido1"></select>
 		<select name="gugun1" id="gugun1"></select>
 		<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="15" /> 
 		<ul id="autoComplete">
 					
 		</ul>
-	</form>
 </div>
+
+	<div class="row" id="contents">
+		<!-- ajax 내용 들어가는곳 -->									
+		</div>
 <style>
 #header>a{margin-left: 45px;}
 .card-img-top{
@@ -321,7 +251,8 @@
 	min-width: 159px;
 	border: 1px solid gray;
 	position: absolute;
-	top: 475px;
+	top: 110px;
+	right: 50px;
 	padding: 0;
 	margin: 0;
 }
