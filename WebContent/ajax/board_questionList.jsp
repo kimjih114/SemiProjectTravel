@@ -1,11 +1,19 @@
+<%@page import="user.model.vo.User"%>
+<%@page import="user.controller.UserLoginEndServlet"%>
+<%@page import="user.controller.UserLogoutServlet"%>
 <%@page import="board.model.vo.Board_Question"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+
+User userLoggedIn = (User)session.getAttribute("userLoggedIn");
+
+System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
   List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
- 
- //페이지 바       
+  System.out.println("board_question.jsp list="+list);
+ //페이지 바 
+ String pageBar = (String)request.getAttribute("pageBar"); 
 %>
 
 
@@ -154,11 +162,11 @@ text-align:left;
 </style>
 
 <script>
-$(()=>{
+ $(()=>{
 	location.href="#"
 })
 
-$(function() {
+/* $(function() {
 	  var select = $("select#color");
 
 	  select.change(function() {
@@ -166,6 +174,10 @@ $(function() {
 	    $(this).siblings("label").text(select_name);
 	  });
 	});
+
+ */
+
+
 
 
 </script>
@@ -202,7 +214,7 @@ $(function() {
 			<fieldset style="padding-right:10px;">
 	
 			<%
-				if (true) {
+				 if(userLoggedIn != null) { 
 			%>
 			<input type="button" class="btn btn-secondary btn-sm" id="btn-add" onclick="goBoardQuestionForm();" value="글쓰기">				
 			<!-- 로그인한 경우 글쓰기 가능하게 하기  -->

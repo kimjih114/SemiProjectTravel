@@ -5,7 +5,7 @@
 
    <div id="container-sns"></div>
 	  
- </section>
+
  <script>
 	$(function() {
 	$('ul.tab li').click(function() {

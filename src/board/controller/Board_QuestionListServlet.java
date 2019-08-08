@@ -1,11 +1,16 @@
 package board.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import board.model.service.Board_QuestionService;
+import board.model.vo.Board_Question;
 
 /**
  * Servlet implementation class BoardQuestionListServlet
@@ -26,7 +31,60 @@ public class Board_QuestionListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/board/board_questionList.jsp").forward(request, response);
+		
+		final int numPerPage = 5; 
+		int cPage = 1; 
+		try{
+			cPage = Integer.parseInt(request.getParameter("cPage"));
+		} catch(NumberFormatException e){
+		
+		}
+		List<Board_Question> list = new Board_QuestionService().selectBoardQuestionList(cPage, numPerPage); 
+		System.out.println("boardQuestion@list="+list);
+		
+		int totalqBoardCount = new Board_QuestionService().selectBoardQuestionCount(); 
+		
+		int totalqPage = (int)Math.ceil((double)totalqBoardCount/numPerPage); 
+		System.out.println("totalBoardQuestion="+totalqBoardCount+", totalqPage="+totalqPage);
+		
+		String pageBar = ""; 
+		int pageBarSize = 5; 
+		
+		int pageStart = ((cPage-1)/pageBarSize)*pageBarSize+1; 
+		
+		int pageEnd =pageStart+pageBarSize-1; 
+		int pageNo = pageStart; 
+		//[이전] section
+				if(pageNo == 1 ){
+					//pageBar += "<span>[이전]</span>"; 
+				}
+				else {
+					pageBar += "<a href='"+request.getContextPath()+"/board/boardList?cPage="+(pageNo-1)+"'>[이전]</a> ";
+				}
+					
+				// pageNo section
+				// 보통 !(빠져나가는 조건식)으로 많이 쓴다.
+				while(!(pageNo>pageEnd || pageNo > totalqPage)){
+					
+					if(cPage == pageNo ){
+						pageBar += "<span class='cPage'>"+pageNo+"</span> ";
+					} 
+					else {
+						pageBar += "<a href='"+request.getContextPath()+"/board/boardList?cPage="+pageNo+"'>"+pageNo+"</a> ";
+					}
+					pageNo++;
+				}
+				
+				//[다음] section
+				if(pageNo > totalqPage){
+					//pageBar += "<span>[다음]</span>";
+				} else {
+					pageBar += "<a href='"+request.getContextPath()+"/board/boardList?cPage="+pageNo+"'>[다음]</a>";
+				}
+				request.setAttribute("list", list);
+				request.setAttribute("pageBar", pageBar);
+				
+				request.getRequestDispatcher("/WEB-INF/views/board/board_questionList.jsp").forward(request, response);
 	}
 
 	/**

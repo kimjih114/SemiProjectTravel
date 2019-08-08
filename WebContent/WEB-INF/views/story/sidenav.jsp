@@ -88,7 +88,7 @@
 	    </tr> 	
 		</table>
 	  </nav>
-	  
+	</section>  
  <style>	 
 	  .page-top{
 	position: relative;
@@ -351,7 +351,7 @@ div#profile-header{
 				console.log(jqxhr, textStatus, errorThrown);
 			}
 		});
-	})
+	});
 
 	</script>
 	  
