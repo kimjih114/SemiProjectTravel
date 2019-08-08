@@ -54,36 +54,50 @@
 
 
 <style>
+header{
+height: 200px;
+}
+.intro-text{
+padding-top:50px;
+} 
 /*전체컨테이너 */
 div#container {
 	background: background-color:#F0F0F0;
 	width: 960px;
 	margin: 0 auto;
+
 }
 div.login-container{
+margin-top: 50px;
 
-marign-top:100px;
-
-padding-bottom:100px;
-
+}
+input.form-control {
+    height: 30px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 form {
 	margin: 0 auto;
 	width: 250px;
+	height: 20px;
+}
+.form-group{
+margin-bottom: 0px;
 }
 </style>
 <script>
 	function validate() {
 	
-		if ($("#userId").val().trim.length == 0) {
+			console.log($("#exampleInputEmail1".val().trim));
+		if ($("#exampleInputEmail1").val().trim.length == 0) {
 			alert("아이디를 입력하세요");
-			$("#userId").focus();
+			$("#exampleInputEmail1").focus();
 			return false;
 		}
-		if ($("#userPassword").val().trim().length == 0) {
+		if ($(".userPassword").val().trim().length == 0) {
 			alert("비밀번호를 입력하세요.");
-			$("#userPassword").focus();
+			$(".userPassword").focus();
 			return false;
 		}
 
@@ -97,7 +111,7 @@ form {
 
 <header class="masthead">
 	<div class="container">
-		<div class="intro-text">
+		<div class="intro-text" style="padding-top:100px;">
 			<h1>LOGIN</h1>
 			<!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"> -->
 		</div>
@@ -114,15 +128,16 @@ form {
 	<form action="<%=request.getContextPath() %>/user/loginEnd"
 		id="loginEndFrm" method="post" onsubmit="return validate();">
 		<div class="form-group">
-			<label for="exampleInputEmail1">ID</label> <input type=text
-				class="form-control" id="exampleInputEmail1" name="userId"
-				aria-describedby="emailHelp" placeholder="Enter ID"> <small
-				id="emailHelp" class="form-text text-muted">아이디를 입력하세요</small>
+			<img src="<%=request.getContextPath() %>/img/login/사용자.png" alt="" />
+			<input type=text class="form-control" id="exampleInputEmail1" name="userId"
+				aria-describedby="emailHelp" placeholder="Enter ID">
+			 <small id="emailHelp" class="form-text text-muted">아이디를 입력하세요</small>
 		</div>
 		<div class="form-group">
-			<label for="exampleInputPassword1">Password</label> <input
-				type="password" class="form-control" name="userPassword" id="exampleInputPassword1"
+			<label for="exampleInputPassword1">Password</label>
+			 <input type="password" class="form-control" name="userPassword" id="exampleInputPassword1"
 				placeholder="Enter Password">
+			<small id="emailHelp" class="form-text text-muted">비밀번호를 입력하세요</small>
 		</div>
 		<div class="form-group form-check">
 			<input type="checkbox" class="form-check-input" id="exampleCheck1" name="" >
