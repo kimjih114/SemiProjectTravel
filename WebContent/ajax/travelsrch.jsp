@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
 
  <script type="text/javascript">
+
+	$(".card-img-top").hover(function(){
+		$(".caption").css("display", "block");
+	}, function(){
+		$(".caption").css("display", "block");
+	})
+
+ 
  	var sido1;
  	var gugun1;
  
@@ -111,20 +119,19 @@
    				var html = "";
    				$items.each(function(i,m){
    					
-   					if($(m).find("title").text()==$sel.text()){
-   						html+="<div class='col-lg-4 col-sm-6 mb-4'>";
-   						html+="<div class='card h-100'>";
-   						html+="<a href='#'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
-   						html+="<div class='card-body'>";
-   						html+="<h4 class='card-title'>";
-   						html+="<a href='#'>"+$(m).find("title").text()+"</a>";
-   						html+="</h4>";
-   						html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
-   						html+="</div>";
-   						html+="</div>";
-   						html+="</div>";		
-   					}	
-   	
+   					if($(m).find("title").text()==$(e.target).text()){
+							html+="<div class='col-lg-4 col-sm-6 mb-4'>";
+								html+="<div class='card h-100'>";
+										html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+											html+="<div class='caption'>"
+												html+="<a href='#'>"+$(m).find("title").text()+"</a>";
+											html+="</h4>";
+											html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
+		   									html+="</div>"
+										html+="</div>";
+							html+="</div>";		
+							
+   					}
    				});
    				$("#contents").html(html);
    				
@@ -223,7 +230,6 @@
    }
    
    
-   
 </script>
 	<div align="center">
 		여행지
@@ -283,23 +289,20 @@ position: relative;
 width: 175.67px;
 }
 div.caption{
-display:none;
-width: 175.67px; height: 175.67px;
+	display:block;
+	width: 175.67px; height: 175.67px;
 	position: absolute;
     top:0px;
     padding: 0px;
-    opacity: 1; 
+    opacity: 0; 
     background: rgb(0, 0, 0, 0.5);
     transition: 0.5s;
 }
+
 p.card-text{
 	color: white;
 }
 
 </style>
 
-<script>
-$(".goInfo").mouseover(function(){
-	$(".caption").css("display", "block")   			
-});
-</script>
+
