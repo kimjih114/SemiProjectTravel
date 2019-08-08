@@ -44,7 +44,7 @@ public class UserEnrollEndServlet extends HttpServlet {
 //		String root  ="C:\\Workspaces\\webserver_workspace\\SemiProjectTravel\\WebContent"+File.separator;
 		
 		String saveDirectory = root +"upload"+File.separator+"enroll";
-		System.out.println("saveDirectory => "+saveDirectory);
+	
 
 		int maxPostSize = 1024 * 1024 * 10;
 		
@@ -66,7 +66,6 @@ public class UserEnrollEndServlet extends HttpServlet {
 		String userName = mrequest.getParameter("userName");
 		
 		java.sql.Date userBirth = java.sql.Date.valueOf(mrequest.getParameter("userBirth"));
-		System.out.println("birthDate@servlet="+mrequest.getParameter("userBirth"));
 		
 		String email = mrequest.getParameter("userEmail");
 		String phone = mrequest.getParameter("userPhone");

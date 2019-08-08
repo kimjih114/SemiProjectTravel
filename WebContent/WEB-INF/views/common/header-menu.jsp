@@ -90,6 +90,16 @@
 		      <li class="nav-item">
 		        <a class="nav-link js-scroll-trigger" href="<%=request.getContextPath()%>/user/userEnrollFrm">회원가입</a>
 		      </li>
+         <% }
+          	else if(userLoggedIn!=null && "A".equals(userLoggedIn.getUserType())){%>
+          	<li class="nav-item">
+            	<a class="nav-link js-scroll-trigger" href="<%=request.getContextPath() %>/user/userLogout">로그아웃</a>
+         	</li>
+          	 <li class="nav-item">
+	           <a class="nav-link js-scroll-trigger" style="padding-top: 5px !important" href='<%=request.getContextPath() %>/admin/adminView'>
+	           		<img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="header-profile-circle"  width="40" height="40" />
+	           </a> <!-- userLogin.jsp로 이동하는 서블릿 -->
+	         </li> 
           <% }
           	else if(userLoggedIn!=null){ %>
           	 <li class="nav-item">
@@ -100,7 +110,8 @@
 	           		<img src="<%=request.getContextPath() %>/img/profile.jpg" class="header-profile-circle"  width="40" height="40" />
 	           </a> <!-- userLogin.jsp로 이동하는 서블릿 -->
 	         </li> 
-         <% }%>
+         <%} %>
+         
         </ul>
       </div>
     </div>
