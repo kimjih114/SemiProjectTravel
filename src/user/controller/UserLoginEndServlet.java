@@ -6,6 +6,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,6 +51,8 @@ public class UserLoginEndServlet extends HttpServlet {
 		String userPassword = MVCUtils.getSha512(userPassword_);
 		System.out.println("userPassword_"+userPassword);
 	
+		String saveId = request.getParameter("saveId");
+		
 		User user = new User();
 		user.setUserId(userId);
 		user.setUserPassword(userPassword);
@@ -76,6 +79,21 @@ public class UserLoginEndServlet extends HttpServlet {
 			HttpSession session =  request.getSession(true);
 			session.setMaxInactiveInterval(10*60);
 			session.setAttribute("userLoggedIn", userLoggedIn);
+			
+			if(saveId !=null) {
+				
+				Cookie c = new Cookie("saveId", userId); 
+				c.setMaxAge(7*24*60*60);
+				c.setPath("/");
+				response.addCookie(c);
+			}else {
+				Cookie c = new Cookie("saveId", userId);
+				c.setMaxAge(0);
+				c.setPath("/");
+				response.addCookie(c);
+			}
+			
+			
 			
 			request.setAttribute("userLoggedIn", userLoggedIn);
 			

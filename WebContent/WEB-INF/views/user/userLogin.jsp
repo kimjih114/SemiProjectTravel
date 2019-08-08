@@ -2,6 +2,30 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp"%>
 
+<%
+
+	userLoggedIn = (User)session.getAttribute("userLoggedIn"); 
+	
+	Cookie[] cookies = request.getCookies();
+	boolean saveId = false; 
+	String userId = ""; 
+	if(cookies !=null){
+		System.out.println("-------------------------");
+		for(Cookie c:cookies ){
+			String key = c.getName();
+			String value = c.getValue(); 
+			System.out.println(key+":"+value);
+			
+			if("saveId".equals(key)){
+				saveId = true; 
+				userId =value;
+			}
+		}
+		System.out.println("-------------------------");
+	} 
+
+
+%>
 
 <!-- Bootstrap core CSS -->
 <link
@@ -72,19 +96,48 @@ margin-top: 50px;
 
 }
 input.form-control {
-    height: 30px;
+    height: 32px;
     padding-top: 2px;
-    padding-bottom: 2px;
+    padding-bottom: 5px;
+    
+    padding-left: 4px;
+    padding-right: 0px;
+    margin-left: 46px;
+}
+.form-check{
+margin-top: 6px;
+margin-bottom:6px;
 }
 
 form {
 	margin: 0 auto;
 	width: 250px;
-	height: 20px;
+
 }
 .form-group{
 margin-bottom: 0px;
+height: 65px;
 }
+img{
+width:35px;
+height: 35px;
+position:absolute;
+}
+.form-check>a.enroll {
+    width: 100px;
+    text-decoration: underline;
+    margin-left: 120px;
+}
+.form-check> a.enroll:hover {
+    width: 100px;
+    color: blue  !important;
+    text-decoration: underline;
+
+}
+.btn.btn-primary{
+width: 294px;
+}
+
 </style>
 <script>
 	function validate() {
@@ -130,22 +183,25 @@ margin-bottom: 0px;
 		<div class="form-group">
 			<img src="<%=request.getContextPath() %>/img/login/사용자.png" alt="" />
 			<input type=text class="form-control" id="exampleInputEmail1" name="userId"
-				aria-describedby="emailHelp" placeholder="Enter ID">
+				aria-describedby="emailHelp" placeholder="Enter ID" value="<%=saveId?userId:"" %>" />
 			 <small id="emailHelp" class="form-text text-muted">아이디를 입력하세요</small>
 		</div>
 		<div class="form-group">
-			<label for="exampleInputPassword1">Password</label>
+<img src="<%=request.getContextPath() %>/img/login/비밀번호.png" alt="" />
 			 <input type="password" class="form-control" name="userPassword" id="exampleInputPassword1"
 				placeholder="Enter Password">
 			<small id="emailHelp" class="form-text text-muted">비밀번호를 입력하세요</small>
+		
 		</div>
-		<div class="form-group form-check">
-			<input type="checkbox" class="form-check-input" id="exampleCheck1" name="" >
-			<label class="form-check-label" for="exampleCheck1" >아이디 저장</label>
+
+		<div class="form-check">
+			<input type="checkbox" name="saveId"
+			 id="saveId" <%=saveId?"checked":""%>/>
+			<label for="saveId">아이디저장</label>
 		</div>
 		<button type="submit" class="btn btn-primary" >Login</button>
-		<input type="button" class="enrollbtn" value="회원가입" >
-	</form>
+		<a style="color: orange; margin-left: 120px; "  class="enroll" href="<%=request.getContextPath()%>/user/userEnrollFrm">회원가입</a>
+	</form>  
 
 		<% }  %>
 </div>
