@@ -110,30 +110,35 @@
    		$("#autoComplete").hide().children().remove();
    		
    		$.ajax({
-   			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jFP9G99tDC%2BCNqVlP6%2BQ8z8JdQdPDnxnLWoa4KGZY5KExkD6cfWlqm92uXoCPscjDDIyEOmCZ1MKbflo3ooJRg%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    			type: "get",
    			dataType: "xml",
    			success:function(data){			
    				var $root=$(data).find(":root");				
    				var $items=$root.find("item");
    				var html = "";
+   				
+   				if($(".h-100").length>=3){
+						alert("여행지는 3개까지 등록 가능합니다.");
+						return;
+					}
+   				
    				$items.each(function(i,m){
-   					
    					if($(m).find("title").text()==$(e.target).text()){
-							html+="<div class='col-lg-4 col-sm-6 mb-4'>";
-								html+="<div class='card h-100'>";
-										html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
-											html+="<div class='caption'>"
-												html+="<a href='#'>"+$(m).find("title").text()+"</a>";
-											html+="</h4>";
-											html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
-		   									html+="</div>"
-										html+="</div>";
-							html+="</div>";		
-							
-   					}
-   				});
-   				$("#contents").html(html);
+						
+						html+="<div class='card h-100'>";
+								html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+									html+="<div class='caption'>"
+										html+="<a href='#'>"+$(m).find("title").text()+"</a>";
+									html+="</h4>";
+									html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
+  									html+="</div>"
+								html+="</div>";
+								
+				}	
+
+			});
+			$("#contents").append(html);
    				
    			},
    			error:function(jqxhr,textStatus,errorThrown){
@@ -149,7 +154,7 @@
    			return;
    		}else{
    			$.ajax({
-   				url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   				url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jFP9G99tDC%2BCNqVlP6%2BQ8z8JdQdPDnxnLWoa4KGZY5KExkD6cfWlqm92uXoCPscjDDIyEOmCZ1MKbflo3ooJRg%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    				type: "get",
    				dataType: "xml",
    				success:function(data){
@@ -170,39 +175,39 @@
    						
    					});
    					
-   					$("#autoComplete li").click(e=>{
-   						
+   					$("#autoComplete li").click(e=>{						
    						$("#search").val($(e.target).text());
    						//#autoComplete 감춤
    						$("#autoComplete").hide().children().remove();
    						
    						$.ajax({
-   							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jFP9G99tDC%2BCNqVlP6%2BQ8z8JdQdPDnxnLWoa4KGZY5KExkD6cfWlqm92uXoCPscjDDIyEOmCZ1MKbflo3ooJRg%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    							type: "get",
    							dataType: "xml",
    							success:function(data){			
    								var $root=$(data).find(":root");				
    								var $items=$root.find("item");
    								var html = "";
+   								
+   								if($(".h-100").length>=3){
+   									alert("여행지는 3개까지 등록 가능합니다.");
+   									return;
+   								}
    								$items.each(function(i,m){
    									if($(m).find("title").text()==$(e.target).text()){
-   										html+="<div class='col-lg-4 col-sm-6 mb-4'>";
-    											html+="<div class='card h-100'>";
-   													html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
-	   													html+="<div class='caption'>"
-	   														html+="<a href='#'>"+$(m).find("title").text()+"</a>";
-															html+="</h4>";
-															html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
+    										html+="<div class='card h-100'>";
+   												html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+	   												html+="<div class='caption'>"
+	   													html+="<a href='#'>"+$(m).find("title").text()+"</a>";
+														html+="</h4>";
+														html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
 	   				   									html+="</div>"
    													html+="</div>";
-   										html+="</div>";		
-   										
-   										
+   											
    									}	
    					
    								});
-   								/* $("#contents").html(html); */
-   								$("#contents").html(html);
+   								$("#contents").append(html);
    								$("#contentsMore").html("");
    							},
    							error:function(jqxhr,textStatus,errorThrown){
@@ -231,24 +236,24 @@
    
    
 </script>
-	<div align="center">
-		여행지
+
+	<div align="left">
+		<label for="" style="font-weight: 700;">여행지</label>
 		<select name="sido1" id="sido1"></select>
 		<select name="gugun1" id="gugun1"></select>
-		<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="22" /> 
-		<ul id="autoComplete">
+		<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="24" style="font-size: 0.8em;" /> 
+		<ul id="autoComplete" style="z-index:99;">
 					
 		</ul>
-</div>
-	<div class="row" id="contents">
-		<!-- ajax 내용 들어가는곳 -->									
+	</div>
+
+		<div class="row" id="contents" style="margin: 0 auto;">
+			<!-- ajax 내용 들어가는곳 -->									
 		</div>
+
 <style>
 #header>a{margin-left: 45px;}
-.card-img-top{
-	width: 175.67px;
-	height: 175.67px;
-}
+
 
 .wrapper{
 	position:relative;
@@ -273,35 +278,50 @@
 	background: gray;
 	color: white;
 }
-select{
-	display: inline;
-}
+
 #search{
 	margin-bottom: 5px;
 }
 
 #contents .card-img-top, .goInfo{
-width: 175.67px; height:  175.67px;
+width: 165px; height:  165px;
 position: relative;
+}
+.card-img-top{
+	border: 1px black solid;
+	width: 165px;
+	height: 165px;
 }
 
 .h-100{
-width: 175.67px;
+width: 165px;
 }
+
 div.caption{
 	display:block;
-	width: 175.67px; height: 175.67px;
+	width: 165px; height: 165px;
 	position: absolute;
     top:0px;
     padding: 0px;
     opacity: 0; 
     background: rgb(0, 0, 0, 0.5);
-    transition: 0.5s;
+    cursor: pointer;   
 }
 
+.h-100:hover .caption{
+	opacity: 1;
+}
 p.card-text{
 	color: white;
 }
+.row{
+	display: table;
+}
+.row div{
+    display: table-cell;
+    vertical-align: middle;
+}
+
 
 </style>
 

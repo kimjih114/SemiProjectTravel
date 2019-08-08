@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 
 <style>
+#post{
+	cursor: pointer;
+}
 #postFrm{
 	width:540px;
 	margin:0 auto;
@@ -33,6 +36,13 @@
 	height: 50px;
 }
 
+.post-unpushed{
+	top:50px;
+}
+
+.post-pushed{
+	top: 700px;
+}
 
 
 </style>
@@ -51,7 +61,7 @@
 		<tr>
 			<td>
 				<label for="reviewContent" style="font-weight: 700;">어떤 여행을 하셨나요?</label>
-				<textarea name="reviewContent" id="reviewContent" cols="55" rows="5"></textarea>
+				<textarea name="reviewContent" id="reviewContent" cols="59" rows="5"></textarea>
 				<!-- <table>
 					<tr>
 						<td style="padding:0px;">
@@ -59,6 +69,17 @@
 						</td>
 					</tr>
 				</table> -->
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="image-insert" style="float: left;">
+					<label for="" style="font-weight: 700;">첨부이미지</label>
+					<form action=""></form>
+				</div>
+				<div class="row" id="contents" style="margin: 0 auto;">
+					<!-- ajax 내용 들어가는곳 -->									
+				</div>
 			</td>
 		</tr>
 		<tr>

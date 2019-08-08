@@ -24,8 +24,9 @@
   <script src="/trav/js/jqBootstrapValidation.js"></script>
   <script src="/trav/js/contact_me.js"></script>
 
+
   <!-- Custom scripts for this template -->
-  <script src="/trav/js/agency.min.js"></script>
+ <!--  <script src="/trav/js/agency.min.js"></script> -->
 
 
   
@@ -88,7 +89,7 @@
 	    </tr> 	
 		</table>
 	  </nav>
-	</section>  
+	  
  <style>	 
 	  .page-top{
 	position: relative;
@@ -198,13 +199,6 @@ div#profile-header{
 	transition: 0.5s;
 }
 
-.post-unpushed{
-	top:50px;
-}
-
-.post-pushed{
-	top: 500px;
-}
 
 #tab-container .tab {
 	list-style: none;
@@ -291,7 +285,6 @@ div#profile-header{
 		$.ajax({
 			url: "<%=request.getContextPath() %>/ajax/home.jsp",
 			success: function(data){
-				console.log(data);
 				$("#container-sns").html(data);
 			},
 			error: function(jqxhr, textStatus, errorThrown){
@@ -351,7 +344,7 @@ div#profile-header{
 				console.log(jqxhr, textStatus, errorThrown);
 			}
 		});
-	});
+	})
 
 	</script>
 	  
