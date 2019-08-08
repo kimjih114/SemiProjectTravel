@@ -255,7 +255,7 @@ text-align:left;
 					<tr class="tr_notice">
 						<td><%=bq.getQboardNo() %></td>
 						<td>
-							<%=bq.getQboardContent() %>
+							<%-- <%=bq.gt() %> --%>
 						</td>
 						<td><%=bq.getQboardWriter() %></td>
 			

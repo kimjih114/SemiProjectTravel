@@ -55,6 +55,7 @@ public class Board_QuestionDAO {
 				
 				qb.setQboardNo(rset.getInt("qboard_no"));
 				qb.setQboardWriter(rset.getString("qboard_writer"));
+				qb.setQboardTitle(rset.getString("qboard_title"));
 				qb.setQboardContent(rset.getString("qboard_content"));
 				qb.setQboardDate(rset.getDate("qboard_date"));
 				qb.setQboardReadcnt(rset.getInt("qboard_readcnt"));

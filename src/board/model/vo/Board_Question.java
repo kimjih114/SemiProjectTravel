@@ -8,6 +8,7 @@ public class Board_Question implements Serializable{
 	private int qboardNo ; 
 	private String qboardWriter; 
 	private String qboardContent; 
+	private String qboardTitle;
 	private Date qboardDate; 
 	private int qboardReadcnt; 
 	private int qboardTravle_ref; 
@@ -20,12 +21,14 @@ public class Board_Question implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Board_Question(int qboardNo, String qboardWriter, String qboardContent, Date qboardDate, int qboardReadcnt,
-			int qboardTravle_ref, String qboardFileName, String qboardNewFileName, int qboardStatus) {
+	public Board_Question(int qboardNo, String qboardWriter, String qboardContent, String qboardTitle, Date qboardDate,
+			int qboardReadcnt, int qboardTravle_ref, String qboardFileName, String qboardNewFileName,
+			int qboardStatus) {
 		super();
 		this.qboardNo = qboardNo;
 		this.qboardWriter = qboardWriter;
 		this.qboardContent = qboardContent;
+		this.qboardTitle = qboardTitle;
 		this.qboardDate = qboardDate;
 		this.qboardReadcnt = qboardReadcnt;
 		this.qboardTravle_ref = qboardTravle_ref;
@@ -56,6 +59,14 @@ public class Board_Question implements Serializable{
 
 	public void setQboardContent(String qboardContent) {
 		this.qboardContent = qboardContent;
+	}
+
+	public String getQboardTitle() {
+		return qboardTitle;
+	}
+
+	public void setQboardTitle(String qboardTitle) {
+		this.qboardTitle = qboardTitle;
 	}
 
 	public Date getQboardDate() {
@@ -110,13 +121,11 @@ public class Board_Question implements Serializable{
 	@Override
 	public String toString() {
 		return "Board_Question [qboardNo=" + qboardNo + ", qboardWriter=" + qboardWriter + ", qboardContent="
-				+ qboardContent + ", qboardDate=" + qboardDate + ", qboardReadcnt=" + qboardReadcnt
-				+ ", qboardTravle_ref=" + qboardTravle_ref + ", qboardFileName=" + qboardFileName
+				+ qboardContent + ", qboardTitle=" + qboardTitle + ", qboardDate=" + qboardDate + ", qboardReadcnt="
+				+ qboardReadcnt + ", qboardTravle_ref=" + qboardTravle_ref + ", qboardFileName=" + qboardFileName
 				+ ", qboardNewFileName=" + qboardNewFileName + ", qboardStatus=" + qboardStatus + "]";
 	}
-	
-	
-	
+
 	
 	
 	

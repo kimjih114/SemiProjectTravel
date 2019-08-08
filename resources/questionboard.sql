@@ -12,6 +12,7 @@ create sequence seq_qboard_no;
 create table qboard (
         qboard_no number,
         qboard_writer varchar2(15),
+        qboard_title varchar2(100),
         qboard_content varchar2(2000),
         qboard_date date default sysdate,
         qboard_readcnt number default 0,
@@ -21,17 +22,26 @@ create table qboard (
         qboard_state number,  --나의 계획은   0이면 진행중....   / 1 이면 진행완료
         
         constraint pk_qboard_no primary key(qboard_no),
-        constraint fk_qboard_writer foreign key(qboard_writer) references users(user_id) on delete cascade      
+        constraint fk_qboard_writer foreign key(qboard_writer) references users(user_id) on delete cascade
+    
 );
 
+--drop table qboard;
 --문의 게시판 insert 
-insert into qboard values(1,'admin','안녕하세요,관리자 입니다.',sysdate,0,0,null,null,0);
+insert into qboard values(1,'admin','안녕하세요','안녕하세요,관리자 입니다.',sysdate,0,0,null,null,0);
+insert into qboard values(seq_qboard_no.nextval,?,?,?,sysdate,0,?,?,?,?);
+
+
+SELECT * FROM ( SELECT ROWNUM AS RNUM, V.* FROM( SELECT * FROM QBOARD ORDER BY QBOARD_DATE DESC) V ) V WHERE RNUM BETWEEN ? AND ?;
+
+
 
 select *from qboard;
 --삭제게시글테이블
 create table qboard_deleted(
         qboard_no number,
         qboard_writer varchar2(15),
+        qboard_title varchar2(100),
         qboard_content varchar2(2000),
         qboard_date date,
         qboard_readcnt number,
@@ -48,5 +58,3 @@ begin
         insert into qboard_deleted
         values(:old.qboard_no, :old.qboard_writer, :old.qboard_content, :old.qboard_date, :old.qboard_readcnt, :old.qboard_travel_ref);
 end;
-
-
