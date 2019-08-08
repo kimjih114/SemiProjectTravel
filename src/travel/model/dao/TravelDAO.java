@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import travel.model.vo.RoomReservation;
 import travel.model.vo.Travel;
 import travel.model.vo.TravelFood;
 
@@ -165,6 +167,38 @@ public class TravelDAO {
 		}
 		
 		return totalTravelFood;
+	}
+
+	public List<RoomReservation> roomSearch(Connection conn, String startDate, String endDate, String contentId) {
+		List<RoomReservation> room=new ArrayList<RoomReservation>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("roomSearch");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, contentId);
+			pstmt.setString(2, "%"+startDate+"%");
+			pstmt.setString(3, "%"+endDate+"%");
+			rset=pstmt.executeQuery();
+			
+			while (rset.next()) {
+				String userId=rset.getString("user_id");
+				String roomName=rset.getString("room_name");
+				String reservationDate=rset.getString("reservation_date");
+				String friendId=rset.getString("friend_id");
+				RoomReservation r=new RoomReservation(userId, contentId, roomName, reservationDate, friendId);
+				room.add(r);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return room;
 	}
 
 }

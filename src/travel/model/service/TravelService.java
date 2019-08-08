@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import travel.model.dao.TravelDAO;
+import travel.model.vo.RoomReservation;
 import travel.model.vo.Travel;
 import travel.model.vo.TravelFood;
 
@@ -36,6 +37,13 @@ public class TravelService {
 		int totalTravelFood=new TravelDAO().travelFoodTotalCount(conn,searchAddress);
 		close(conn);
 		return totalTravelFood;
+	}
+
+	public List<RoomReservation> roomSearch(String startDate, String endDate, String contentId) {
+		Connection conn=getConnection();
+		List<RoomReservation> room=new TravelDAO().roomSearch(conn,startDate,endDate,contentId);
+		close(conn);
+		return room;
 	}
 
 }
