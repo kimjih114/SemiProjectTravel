@@ -254,7 +254,9 @@ text-align:left;
 					
 					<tr class="tr_notice">
 						<td><%=bq.getQboardNo() %></td>
-						<td><%=bq.getQboardContent() %></td>
+						<td>
+							<%=bq.getQboardContent() %>
+						</td>
 						<td><%=bq.getQboardWriter() %></td>
 			
 						<td><%=bq.getQboardDate() %></td>  <!-- 작성일 넣 -->
