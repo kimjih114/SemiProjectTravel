@@ -52,7 +52,7 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 230px;
+    width: 210px;
     /*height: 100vh;*/
     background: #fed136; 
     /*min-width: 250px;*/
@@ -131,11 +131,11 @@ div#profile-header{
 
 
 #tab-container {
-	width:500px;
+	width:540px;
 	margin:0 auto;
 	text-align:center;
 	position: absolute;
-	left:240px;
+	left:220px;
 	transition: 0.5s;
 }
 
@@ -174,7 +174,7 @@ div#profile-header{
 #tab-container .tabcontent {
 	display: none;
 	background-color:black;
-	padding: 6px 12px;
+	padding: 6px 5px;
 	color:#fff;
 }
 #tab-container ul.tab li.current{
@@ -189,13 +189,14 @@ div#profile-header{
 	color: black;
 	border: 1px solid;
 	border-top: 0px;
+	border-collapse: collapse;
 	
 }
 
 #post{
 	position: absolute;
 	top:10px;
-	left: 680px;
+	left: 705px;
 	border: 1px solid;
 	padding: 0px 10px;
 }
@@ -211,7 +212,7 @@ div#profile-header{
 
 .timeline-boardcontent-sns{
 	padding: 10px;
-	width: 540px;
+	width: 580px;
 	text-align:left;
 	border:1px solid;
 }

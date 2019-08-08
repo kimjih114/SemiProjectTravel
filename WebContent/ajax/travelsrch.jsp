@@ -180,19 +180,21 @@
    								$items.each(function(i,m){
    									if($(m).find("title").text()==$(e.target).text()){
    										html+="<div class='col-lg-4 col-sm-6 mb-4'>";
-   										html+="<div class='card h-100'>";
-   										html+="<a href='#'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
-   										html+="<div class='card-body'>";
-   										html+="<h4 class='card-title'>";
-   										html+="<a href='#'>"+$(m).find("title").text()+"</a>";
-   										html+="</h4>";
-   										html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
-   										html+="</div>";
-   										html+="</div>";
+    											html+="<div class='card h-100'>";
+   													html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+	   													html+="<div class='caption'>"
+	   														html+="<a href='#'>"+$(m).find("title").text()+"</a>";
+															html+="</h4>";
+															html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
+	   				   									html+="</div>"
+   													html+="</div>";
    										html+="</div>";		
+   										
+   										
    									}	
    					
    								});
+   								/* $("#contents").html(html); */
    								$("#contents").html(html);
    								$("#contentsMore").html("");
    							},
@@ -224,22 +226,22 @@
    
 </script>
 	<div align="center">
+		여행지
 		<select name="sido1" id="sido1"></select>
 		<select name="gugun1" id="gugun1"></select>
-		<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="15" /> 
+		<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="22" /> 
 		<ul id="autoComplete">
 					
 		</ul>
 </div>
-
 	<div class="row" id="contents">
 		<!-- ajax 내용 들어가는곳 -->									
 		</div>
 <style>
 #header>a{margin-left: 45px;}
 .card-img-top{
-	width: 349px;
-	height: 300px;
+	width: 175.67px;
+	height: 175.67px;
 }
 
 .wrapper{
@@ -265,11 +267,39 @@
 	background: gray;
 	color: white;
 }
-</style>
-
-<style>
 select{
 	display: inline;
 }
+#search{
+	margin-bottom: 5px;
+}
+
+#contents .card-img-top, .goInfo{
+width: 175.67px; height:  175.67px;
+position: relative;
+}
+
+.h-100{
+width: 175.67px;
+}
+div.caption{
+display:none;
+width: 175.67px; height: 175.67px;
+	position: absolute;
+    top:0px;
+    padding: 0px;
+    opacity: 1; 
+    background: rgb(0, 0, 0, 0.5);
+    transition: 0.5s;
+}
+p.card-text{
+	color: white;
+}
 
 </style>
+
+<script>
+$(".goInfo").mouseover(function(){
+	$(".caption").css("display", "block")   			
+});
+</script>

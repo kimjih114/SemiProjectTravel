@@ -3,11 +3,11 @@
 
 <style>
 #postFrm{
-	width:500px;
+	width:540px;
 	margin:0 auto;
 	text-align:center;
 	position: absolute;
-	left:240px;
+	left:220px;
 	top: 50px;
 	display:none;
 	border : 1px solid;
@@ -22,7 +22,7 @@
 
 #postFrm td{
 	padding: 10px;
-	width: 497px;
+	width: 520px;
 	text-align:left;
 	/* border:1px solid;
 	border-collpase: collapse; */
@@ -31,42 +31,34 @@
 	padding-top: 0px;
 	width: 50px;
 	height: 50px;
-	
 }
-.img-review{
-border:1px solid; width: 50px; height: 50px;
-}
+
+
+
 </style>
     
 <div id="post">post</div>
-<form action="">
+
 	<table id="postFrm">
 		<tr>
 			<td style="font-weight: 700;">소중한 여행후기를 공유해주세요!</td>
 		</tr>
 		<tr>
-			<td style="font-weight: 700;">여행지
-				<div class="travelsrch"></div>
-				<table>
-						<tr>
-							<td style="padding:0px;">
-								<div class="img-review" style="border:1px solid; width: 50px; height: 50px;"></div>
-							</td>
-						</tr>
-				</table>
+			<td style="font-weight: 700;">
+				<div class="travelsrch" style="float: left;"></div>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<label for="reviewContent" style="font-weight: 700;">어떤 여행을 하셨나요?</label>
 				<textarea name="reviewContent" id="reviewContent" cols="55" rows="5"></textarea>
-				<table>
+				<!-- <table>
 					<tr>
 						<td style="padding:0px;">
 							<div class="img-review" style="border:1px solid; width: 50px; height: 50px;"></div>
 						</td>
 					</tr>
-				</table>
+				</table> -->
 			</td>
 		</tr>
 		<tr>
@@ -75,7 +67,6 @@ border:1px solid; width: 50px; height: 50px;
 			</td>
 		</tr>
 	</table>
-</form>	
 		  <div id="tab-container" class="post-unpushed">
 			<ul class="tab">
 				<li class="current" data-tab="tab1"><a>타임라인</a></li>
@@ -120,9 +111,9 @@ border:1px solid; width: 50px; height: 50px;
 							<td>
 								<table style="border: 1px solid;">
 									<tr>
-										<td style="width: 157.3px; height: 157.3px; border:1px solid;">관련여행지 1</td>
-										<td style="width: 157.3px; height: 157.3px; border:1px solid;">관련여행지 2</td>
-										<td style="width: 157.3px; height: 157.3px; border:1px solid;">관련여행지 3</td>
+										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 1</td>
+										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 2</td>
+										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 3</td>
 									</tr>
 								</table>
 							</td>
