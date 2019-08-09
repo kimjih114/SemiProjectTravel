@@ -3,107 +3,157 @@ package travel.model.vo;
 import java.sql.Date;
 
 public class Travel {
-	private int travelNo;
-	private String userId;
+
+	private String contentId;
 	private String travelName;
-	private String oldProfileName;
-	private String newProfileName;
+	private String travelLocation;
+	private String thumbnailOriginalFilename;
+	private String thumbnailRenamedFilename;
+	private Date travelDate;
 	private String travelContent;
-	private Date travelEnrolldate;
-	private int viewCount;
-	private int like;
-	private int grade;
-	private String travelAddress;
+	private String travelOfficierName;
+	private String travelOfficierphone;
+	private String travelType;
+	
 	public Travel() {
 		super();
-		// TODO Auto-generated constructor stub
+	
 	}
-	public Travel(int travelNo, String userId, String travelName, String oldProfileName, String newProfileName,
-			String travelContent, Date travelEnrolldate, int viewCount, int like, int grade, String travelAddress) {
+
+	public Travel(String contentId, String travelName, String travelLocation, String thumbnailOriginalFilename,
+			String thumbnailRenamedFilename, Date travelDate, String travelContent, String travelOfficierName,
+			String travelOfficierphone, String travelType) {
 		super();
-		this.travelNo = travelNo;
-		this.userId = userId;
+		this.contentId = contentId;
 		this.travelName = travelName;
-		this.oldProfileName = oldProfileName;
-		this.newProfileName = newProfileName;
+		this.travelLocation = travelLocation;
+		this.thumbnailOriginalFilename = thumbnailOriginalFilename;
+		this.thumbnailRenamedFilename = thumbnailRenamedFilename;
+		this.travelDate = travelDate;
 		this.travelContent = travelContent;
-		this.travelEnrolldate = travelEnrolldate;
-		this.viewCount = viewCount;
-		this.like = like;
-		this.grade = grade;
-		this.travelAddress = travelAddress;
+		this.travelOfficierName = travelOfficierName;
+		this.travelOfficierphone = travelOfficierphone;
+		this.travelType = travelType;
 	}
-	public int getTravelNo() {
-		return travelNo;
+
+	
+	
+	public Travel(String contentId, String travelLocation, String thumbnailOriginalFilename,
+			String thumbnailRenamedFilename, Date travelDate) {
+		super();
+		this.contentId = contentId;
+		this.travelLocation = travelLocation;
+		this.thumbnailOriginalFilename = thumbnailOriginalFilename;
+		this.thumbnailRenamedFilename = thumbnailRenamedFilename;
+		this.travelDate = travelDate;
 	}
-	public void setTravelNo(int travelNo) {
-		this.travelNo = travelNo;
+
+	
+	
+	public Travel(String contentId, String travelContent, String travelOfficierName, String travelOfficierphone) {
+		super();
+		this.contentId = contentId;
+		this.travelContent = travelContent;
+		this.travelOfficierName = travelOfficierName;
+		this.travelOfficierphone = travelOfficierphone;
 	}
-	public String getUserId() {
-		return userId;
+
+	
+	public Travel(String contentId, String travelType) {
+		super();
+		this.contentId = contentId;
+		this.travelType = travelType;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+
+	public String getContentId() {
+		return contentId;
 	}
+
+	public void setContentId(String contentId) {
+		this.contentId = contentId;
+	}
+
+	
 	public String getTravelName() {
 		return travelName;
 	}
+
 	public void setTravelName(String travelName) {
 		this.travelName = travelName;
 	}
-	public String getOldProfileName() {
-		return oldProfileName;
+
+	public String getTravelLocation() {
+		return travelLocation;
 	}
-	public void setOldProfileName(String oldProfileName) {
-		this.oldProfileName = oldProfileName;
+
+	public void setTravelLocation(String travelLocation) {
+		this.travelLocation = travelLocation;
 	}
-	public String getNewProfileName() {
-		return newProfileName;
+
+	public String getThumbnailOriginalFilename() {
+		return thumbnailOriginalFilename;
 	}
-	public void setNewProfileName(String newProfileName) {
-		this.newProfileName = newProfileName;
+
+	public void setThumbnailOriginalFilename(String thumbnailOriginalFilename) {
+		this.thumbnailOriginalFilename = thumbnailOriginalFilename;
 	}
+
+	public String getThumbnailRenamedFilename() {
+		return thumbnailRenamedFilename;
+	}
+
+	public void setThumbnailRenamedFilename(String thumbnailRenamedFilename) {
+		this.thumbnailRenamedFilename = thumbnailRenamedFilename;
+	}
+
+	public Date getTravelDate() {
+		return travelDate;
+	}
+
+	public void setTravelDate(Date travelDate) {
+		this.travelDate = travelDate;
+	}
+
 	public String getTravelContent() {
 		return travelContent;
 	}
+
 	public void setTravelContent(String travelContent) {
 		this.travelContent = travelContent;
 	}
-	public Date getTravelEnrolldate() {
-		return travelEnrolldate;
+
+	public String getTravelOfficierName() {
+		return travelOfficierName;
 	}
-	public void setTravelEnrolldate(Date travelEnrolldate) {
-		this.travelEnrolldate = travelEnrolldate;
+
+	public void setTravelOfficierName(String travelOfficierName) {
+		this.travelOfficierName = travelOfficierName;
 	}
-	public int getViewCount() {
-		return viewCount;
+
+	public String getTravelOfficierphone() {
+		return travelOfficierphone;
 	}
-	public void setViewCount(int viewCount) {
-		this.viewCount = viewCount;
+
+	public void setTravelOfficierphone(String travelOfficierphone) {
+		this.travelOfficierphone = travelOfficierphone;
 	}
-	public int getLike() {
-		return like;
+
+	public String getTravelType() {
+		return travelType;
 	}
-	public void setLike(int like) {
-		this.like = like;
+
+	public void setTravelType(String travelType) {
+		this.travelType = travelType;
 	}
-	public int getGrade() {
-		return grade;
-	}
-	public void setGrade(int grade) {
-		this.grade = grade;
-	}
-	public String getTravelAddress() {
-		return travelAddress;
-	}
-	public void setTravelAddress(String travelAddress) {
-		this.travelAddress = travelAddress;
-	}
+
 	@Override
 	public String toString() {
-		return "Travel [travelNo=" + travelNo + ", userId=" + userId + ", travelName=" + travelName
-				+ ", oldProfileName=" + oldProfileName + ", newProfileName=" + newProfileName + ", travelContent="
-				+ travelContent + ", travelEnrolldate=" + travelEnrolldate + ", viewCount=" + viewCount + ", like="
-				+ like + ", grade=" + grade + ", travelAddress=" + travelAddress + "]";
+		return "Travel [contentId=" + contentId + ", travelName="+travelName+", travelLocation=" + travelLocation + ", thumbnailOriginalFilename="
+				+ thumbnailOriginalFilename + ", thumbnailRenamedFilename=" + thumbnailRenamedFilename + ", travelDate="
+				+ travelDate + ", travelContent=" + travelContent + ", travelOfficierName=" + travelOfficierName
+				+ ", travelOfficierphone=" + travelOfficierphone + ", travelType=" + travelType + "]";
 	}
+	
+	
+	
 }

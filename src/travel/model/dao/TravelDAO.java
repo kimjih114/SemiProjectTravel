@@ -1,5 +1,7 @@
 package travel.model.dao;
 
+import static common.JDBCTemplate.close;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,8 +17,6 @@ import java.util.Properties;
 import travel.model.vo.RoomReservation;
 import travel.model.vo.Travel;
 import travel.model.vo.TravelFood;
-
-import static common.JDBCTemplate.*;
 
 public class TravelDAO {
 
@@ -201,4 +201,68 @@ public class TravelDAO {
 		return room;
 	}
 
+	public int insertTravel(Connection conn,Travel travel) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("insertTravel");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			
+			pstmt.setString(1, travel.getTravelLocation());
+			pstmt.setString(2, travel.getTravelName());
+			pstmt.setString(3, travel.getThumbnailOriginalFilename());
+			pstmt.setString(4, travel.getThumbnailRenamedFilename());
+			pstmt.setDate(5, travel.getTravelDate());
+			pstmt.setString(6,travel.getTravelContent());
+			pstmt.setString(7, travel.getTravelOfficierName());
+			pstmt.setString(8, travel.getTravelOfficierphone());
+			pstmt.setString(9, travel.getTravelType());
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public List<Travel> selectTravelList(Connection conn) {
+		List<Travel> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectTravelList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Travel t = new Travel();
+				t.setContentId(rset.getString("content_id"));
+				t.setTravelName(rset.getString("travel_name"));
+				t.setTravelLocation(rset.getString("travel_location"));
+				t.setThumbnailOriginalFilename(rset.getString("thumbnail_original_filename"));
+				t.setThumbnailRenamedFilename(rset.getString("thumbnail_renamed_filename"));
+				t.setTravelDate(rset.getDate("travel_date"));
+				t.setTravelContent(rset.getString("travel_content"));
+				t.setTravelOfficierName(rset.getString("travel_officier_name"));
+				t.setTravelOfficierphone(rset.getString("travel_officier_phone"));
+				t.setTravelType(rset.getString("travel_type"));
+				list.add(t);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		
+		return list;
+	}
 }

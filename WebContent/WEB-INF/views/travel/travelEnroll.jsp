@@ -28,29 +28,7 @@
 
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
-
-<script>
-
-$(()=>{
-	$("#modifyUserInfo").click(function(){
-		$.ajax({
-	        type : "GET",
-	        url : "<%=request.getContextPath() %>/my",
-	        dataType : "text",
-	        error : function() {
-	          alert('통신실패!!');
-	        },
-	        success : function(data) {
-	          $('#Context').html(data);
-	        }
-	 
-	      });
-	})
-})
-
-
-</script>
-  <style>
+<style>
 .page-top{
 	width: 1024px;
 	position : relative;
@@ -213,12 +191,60 @@ section#page-top{
   </nav>   
  
   	<div id="content">
-  	
-  	</div>
+  	<form action="<%=request.getContextPath()%>/travel/travelEnrollEnd"
+  		  name="travelEnrollFrm"
+  		  id="travelEnrollFrm"
+  		  method = "post"
+  		  enctype="multipart/form-data">
+  	 <div class="form-group">
+     <label for="exampleInputEmail1">시설 명칭 입력</label>
+    <input type="text" class="form-control" id="travelName" aria-describedby="emailHelp" placeholder="Name" name="travelName" required>
+    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+  </div>
+  <div class="form-group">
+   <label for="exampleInputEmail1">상세 주소 입력</label>
+    <input type="text" class="form-control" id="travelLocation" aria-describedby="emailHelp" placeholder="Location" name="travelLocation" required>
+    <small id="emailHelp" class="form-text text-muted">도로명 주소를 적어주세요.</small>
+  </div>
+	<div class="form-group">
+    <label for="exampleInputEmail1">사진등록</label><br />
+    <input type="file" name="fileName" id="fileName" style="text-align:center;"/>
+  </div>
+  <div class="form-group">
+  <label for="exampleInputEmail1">사업 등록자 이름</label>
+    <input type="text" class="form-control" id="officierName" aria-describedby="emailHelp" placeholder="Officier" name="officierName" required>
+  </div>
+  <div class="form-group">
+  	<label for="exampleInputEmail1">사업 등록자 전화번호</label>
+    <input type="text" class="form-control" id="officierPhone" aria-describedby="emailHelp" placeholder="Location" name="officierPhone" required>
+  </div>
+  	<div class="form-group">
+    <label for="exampleInputEmail1" id="userDefaultActivity">여행 타입</label><br />
+    <input type="checkbox" name="program" id="program1" value="프로그램1" />
+					<label for="program1">프로그램1</label>
+					<input type="checkbox" name="program" id="program2" value="프로그램2" />
+					<label for="program2">프로그램2</label>
+					<input type="checkbox" name="program" id="program3" value="프로그램3" />
+					<label for="program3">프로그램3</label>
+					<input type="checkbox" name="program" id="program4" value="프로그램4" />
+					<label for="program4">프로그램4</label>
+					<input type="checkbox" name="program" id="program5" value="프로그램5" />
+					<label for="program5">프로그램5</label>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">시설 소개 내용</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="7"></textarea>
+  </div>
 
+	<div id="putt" style="text-align:center;">
+
+  <button type="submit" class="btn btn-primary" >등록</button>
+  <button type="reset" class="btn btn-primary" >초기화</button>
+ </div>
+ </form>
+   	</div>
  </section>
 
- 
 <script>
 $("#userList").click(()=>{
 	$.ajax({
@@ -256,42 +282,7 @@ $("#userList").click(()=>{
 		}
 	});
 });
-
-<%-- 
-$("#business_registration").click(()=>{
-	$.ajax({
-		url:"<%=request.getContextPath()%>/jquery/gson/admin/insertTravel.do",
-		type: "get",
-		dataType: "json",
-		success: function(data){
-			console.log(data);
-			
-			var html = "<input type='text' id='travelName' placeholder='시설명칭 입력'/><br>"
-			html +="<input type='text' id='travelLocation' placeholder='상세주소 입력'/><br>"
-			html +="<input type='file' id='thumbnailFile' /><br>"
-			html +="<input type='text' id='officierName' placeholder='사업 등록자 이름'/><br>"
-			html +="<input type='text' id='officierPhone' placeholder='사업 등록자 전화번호'/><br>"
-			html +="<textarea name='travelContent' cols='40' rows='8' ></textarea>"
-		
-			$("#content").html(html);
-			
-		
-			
-		},
-		error: function(jqxhr, textStatus, errorThrown){
-			console.log("ajax 처리 실패!");
-			console.log(jqxhr, textStatus, errorThrown);
-		}
-	});
-}); --%>
-
-
-
 </script>
-<style>
-#travelName{
-text-align : center;
-}
-</style>
+
 </body>
 </html>

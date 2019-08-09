@@ -46,4 +46,23 @@ public class TravelService {
 		return room;
 	}
 
+	public int insertTravel(Travel travel) {
+		Connection conn = getConnection();
+		int result = new TravelDAO().insertTravel(conn, travel);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public List<Travel> selectTravelList() {
+		Connection conn = getConnection();
+		List<Travel> list 
+				= new TravelDAO().selectTravelList(conn);
+		close(conn);
+		return list;
+		
+	}
 }
