@@ -1,3 +1,4 @@
+
 <%@page import="user.model.vo.User"%>
 <%@page import="user.controller.UserLoginEndServlet"%>
 <%@page import="user.controller.UserLogoutServlet"%>
@@ -11,9 +12,14 @@ User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 
 System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
   List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
-  System.out.println("board_question.jsp list="+list);
- //페이지 바 
- String pageBar = (String)request.getAttribute("pageBar"); 
+ 
+ Board_Question qb = new Board_Question();
+ System.out.println();
+
+	
+ /*//페이지 바 
+ String pageBar = (String)request.getAttribute("pageBar");  */
+ 
 %>
 
 
@@ -159,6 +165,21 @@ border: 3px solid rgb(00,00,66);
 li.post-font{
 text-align:left;
 }
+
+
+tbl-board, td{
+
+width:700px;
+
+
+}
+/* table#tbl-table, td {
+border: 1px solid;
+}
+table#tbl-table{
+width: 700px;
+} */
+
 </style>
 
 <script>
@@ -166,7 +187,7 @@ text-align:left;
 	location.href="#"
 })
 
-/* $(function() {
+$(function() {
 	  var select = $("select#color");
 
 	  select.change(function() {
@@ -175,10 +196,40 @@ text-align:left;
 	  });
 	});
 
- */
+ 
 
-
-
+ $(function(){
+		$.ajax({
+			url: "<%=request.getContextPath() %>/board/controller/board/boardList.do", 
+			type: "get",
+			dataType: "json",
+			success: function(data){
+				console.log(data);
+				
+				var $table = $("<table></table>"); 
+					
+					$(data).each((i,qb)=>{
+						var html ="<tr>"; 
+						html +="<td>"+qb.qboardNo+"</td>"; //번호 
+						html +="<td>"+qb.qboardTitle+"</td>"; //제목
+						html +="<td>"+qb.qboardWriter+"</td>"; //작성자
+						html +="<td>"+qb.qboardDate+"</td>"; //작성일 
+						html +="<td>"+qb.qboardStatus+"</td>"; //진행상태
+						html +="</tr>"; 
+						console.log(html); 
+						$table.append(html); 
+					}); 
+					$("#tbl-board").html($table); 
+					
+				
+			},
+			error: function(jqxhr, textStatus, errorThrown){
+				console.log("ajax처리실패!");
+				console.log(jqxhr, textStatus, errorThrown);
+			}
+		});
+	});
+ 
 
 </script>
 
@@ -237,37 +288,11 @@ text-align:left;
 
 			<!-- //게시판 검색폼 -->
 			<!-- board s -->
-
-			<table id="tbl-board">
-
-				<tr>
-					<th>번호</th>
-					<th>제목</th> <!-- 첨부파일 같이 넣 -->
-					<th>작성자</th>
-
-					<th>작성일</th>
-					<th>진행상태</th>
-				</tr>
-
-				<tbody>
-					<% for(Board_Question bq: list){ %>
-					
-					<tr class="tr_notice">
-						<td><%=bq.getQboardNo() %></td>
-						<td>
-							<%-- <%=bq.gt() %> --%>
-						</td>
-						<td><%=bq.getQboardWriter() %></td>
+				<div id="tbl-board">
+				<tr><td>번호</td><td>제목</td><td>작성자</td><td>작성일</td><td>진행상태</td></tr>
+				
+				</div>
 			
-						<td><%=bq.getQboardDate() %></td>  <!-- 작성일 넣 -->
-						<td><%=bq.getQboardStatus() %></td> <!-- 진행상태넣 -->
-					</tr>
-
-
-
-	<% } %>
-				</tbody>
-			</table>
 
 	</div>
 			
