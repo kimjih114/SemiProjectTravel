@@ -65,7 +65,7 @@
   <!-- Page Content -->
   <div class="container">
 	
-	<%if(contentTypeId.equals("32")){%>
+	<%if(contentTypeId.equals("32")&&userLoggedIn!=null){%>
 		<button type="button" onclick="reservationForm();">예약하러가기</button>
 	 <%} %>  
     

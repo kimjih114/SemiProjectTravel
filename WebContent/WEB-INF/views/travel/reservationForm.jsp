@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
@@ -8,54 +10,11 @@
 
 <%
 	String contentId=request.getParameter("contentId");
-	String contentTypeId=request.getParameter("contentTypeId");	
+	String contentTypeId=request.getParameter("contentTypeId");
 %>
 <script>
-	$(function(){
-		$.ajax({
-			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=<%=contentTypeId%>&contentId=<%=contentId%>&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y",
-			type: "get",
-			dataType: "xml",
-			success:function(data){
-				var $root=$(data).find(":root");
-				
-				var $items=$root.find("item");
-				var html="";
-				
-				var $root=$(data).find(":root");				
-				var $items=$root.find("item");
-				var html1 = "";
-				$items.each(function(i,m){						
 	
-						html1+="<h1 class='my-4'></h1>";
-						html1+="<div class='row'>";
-						html1+="<div class='col-md-8'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></div>";
-						html1+="<div class='col-md-4'>";
-						html1+="<h3 class='my-3'>"+$(m).find("roomtitle").text()+"</h3>";
-						html1+="<p>객실크기:"+$(m).find("roomsize1").text()+"</p>";
-						html1+="<p>기준인원:"+$(m).find("roommaxcount").text()+"</p>";
-						html1+="<p>객실소개:"+$(m).find("roomintro").text()+"</p>";
-						html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
-						html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";
-						html1+="<h3 class='my-3'><button type='button'>예약하기</button></h3>";
-						html1+="<h5>같이 숙박할 친구 id<input type='text'></h5>";
-						html1+="</div></div>";
-						html1+="<h3 class='my-4'></h3>";	
-						html1+="<div class='row'>";
-						html1+="<div class='col-md-3 col-sm-6 mb-4'>";
-						html1+="<a href='#'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></a>";
-						html1+="</div>";
-						html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg2").text()+"' alt=''></a></div>";
-						html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg3").text()+"' alt=''></a></div>";
-						html1+=" </div>";
-				});
-				$("#contents").html(html1);
-				
-			},
-			error:function(jqxhr,textStatus,errorThrown){
-				
-			}
-		});
+	$(function(){
 		//달력
 		 $.datepicker.regional['ko'] = {
 			        closeText: '닫기',
@@ -86,16 +45,14 @@
 			    };
 			    $.datepicker.setDefaults($.datepicker.regional['ko']);
  
-			    $('#sdate').datepicker();
-			    $('#sdate').datepicker('setDate', 'today');
+			    $('#sdate').datepicker();		    
 			    $('#sdate').datepicker("option", "maxDate", $("#edate").val());
 			    $('#sdate').datepicker("option", "onClose", function ( selectedDate ) {
 			        $("#edate").datepicker( "option", "minDate", selectedDate );
 			        
 			    });
 			    
-			    $('#edate').datepicker();
-			    $('#edate').datepicker('setDate', '+1D');
+			    $('#edate').datepicker();			    
 			    $('#edate').datepicker("option", "minDate",$("#sdate").val());
 			    $('#edate').datepicker("option", "onClose", function ( selectedDate ) {
 			        $("#sdate").datepicker( "option", "maxDate", selectedDate );
@@ -114,9 +71,9 @@
 			    
 		
 	});
-
+	
 	function search(){
-		
+		var roomList=new Array;
 		var queryString = $("form[name=searchForm]").serialize();
 		
 		$.ajax({
@@ -126,8 +83,8 @@
 			dataType : "json",
 			success:function(data){
 				
-				$(data).each((i,u)=>{
-					console.log(u.roomName);				
+				$(data).each((i,u)=>{		
+					roomList.push(u.roomName);			
 				});
 			},
 			error:function(jqxhr,textStatus,errorThrown){
@@ -136,8 +93,200 @@
 			
 		});
 		
+		$.ajax({
+			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=<%=contentTypeId%>&contentId=<%=contentId%>&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y",
+			type: "get",
+			dataType: "xml",
+			success:function(data){
+				var $root=$(data).find(":root");
+				
+				var $items=$root.find("item");
+				var html="";
+				
+				var $root=$(data).find(":root");				
+				var $items=$root.find("item");
+				var html1 = "";
+				
+				$items.each(function(i,m){						
+						
+						for(var i=0;i<roomList.length;i++){
+							if(roomList[i]==$(m).find("roomtitle").text()){								
+								html1+="<h1 class='my-4'></h1>";
+								html1+="<div class='row'>";
+								html1+="<div class='col-md-8'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></div>";
+								html1+="<div class='col-md-4'>";
+								html1+="<h3 class='my-3'>"+$(m).find("roomtitle").text()+"</h3>";
+								html1+="<p>객실크기:"+$(m).find("roomsize1").text()+"</p>";
+								html1+="<p>기준인원:"+$(m).find("roommaxcount").text()+"</p>";
+								html1+="<p>객실소개:"+$(m).find("roomintro").text()+"</p>";
+								html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
+								html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";
+								html1+="<h3 class='my-3'>예약불가</h3>";
+								html1+="</div></div>";
+								html1+="<h3 class='my-4'></h3>";	
+								html1+="<div class='row'>";
+								html1+="<div class='col-md-3 col-sm-6 mb-4'>";
+								html1+="<a href='#'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></a>";
+								html1+="</div>";
+								html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg2").text()+"' alt=''></a></div>";
+								html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg3").text()+"' alt=''></a></div>";
+								html1+=" </div>";						
+							}else{
+								html1+="<h1 class='my-4'></h1>";
+								html1+="<div class='row'>";
+								html1+="<div class='col-md-8'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></div>";
+								html1+="<div class='col-md-4'>";
+								html1+="<h3 class='my-3'>"+$(m).find("roomtitle").text()+"</h3>";
+								html1+="<p>객실크기:"+$(m).find("roomsize1").text()+"</p>";
+								html1+="<p>기준인원:"+$(m).find("roommaxcount").text()+"</p>";
+								html1+="<p>객실소개:"+$(m).find("roomintro").text()+"</p>";
+								html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
+								html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";
+								html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck();'>예약하기</button></h3>";
+								html1+="<h5>같이 숙박할 친구 id<input type='search' name='search' id='search' placeholder='친구아이디입력' onkeyup='searchList(event);' /></h5>";
+								html1+="<ul id='autoComplete'></ul>";
+								html1+="</div></div>";
+								html1+="<h3 class='my-4'></h3>";	
+								html1+="<div class='row'>";
+								html1+="<div class='col-md-3 col-sm-6 mb-4'>";
+								html1+="<a href='#'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></a>";
+								html1+="</div>";
+								html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg2").text()+"' alt=''></a></div>";
+								html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg3").text()+"' alt=''></a></div>";
+								html1+=" </div>";
+							}
+						}
+
+				});
+				$("#contents").html(html1);
+				
+			},
+			error:function(jqxhr,textStatus,errorThrown){
+				
+			}
+		});
+		
+		
+	}
+	
+	function searchList(e){
+		
+		console.log(e.key);
+		console.log($("#search").val().trim());
+		var $sel = $(".sel");
+		var $li = $("#autoComplete li");
+		
+		if(e.key == "ArrowDown"){
+			if($sel.length == 0){
+				$li.eq(0).addClass("sel");
+			}	
+			else if($sel.is($li.last())){
+				
+			}
+			else{
+				$sel.removeClass("sel").next().addClass("sel");
+			}
+		}
+		else if(e.key == "ArrowUp"){
+			if($sel.length == 0){
+				
+			}	
+			else if($sel.is($li.first())){
+				$sel.removeClass("sel");
+			}
+			else{
+				$sel.removeClass("sel").prev().addClass("sel");
+			}
+		}
+		else if(e.key == "Enter"){
+			
+			$(e.target).val($sel.text());
+			
+			$("#autoComplete").hide().children().remove();
+			
+			
+		}
+		else{
+			var search = $("#search").val().trim();
+			
+			if(search.length == 0){
+				return;
+			}else{
+				$.ajax({
+					url: "<%=request.getContextPath()%>/sns/followSNS.do",
+					type: "get",
+					data:"search="+search+"&userId=<%=userLoggedIn.getUserId()%>",
+					dataType: "json",
+					success:function(data){
+						
+						if(!data.length){							
+							$("#autoComplete").hide();
+						}
+						
+						var html = "";
+						$.each(data,function(i,m){																			
+								html += "<li>"+m+"</li>";															
+								$("#autoComplete").html(html)
+												  .fadeIn(200);	
+						});
+						
+						$("#autoComplete li").click(e=>{
+							
+							$("#search").val($(e.target).text());
+							//#autoComplete 감춤
+							$("#autoComplete").hide().children().remove();
+			
+						}).hover(e=>{
+							$(e.target).addClass("sel").siblings().removeClass("sel");			
+						}, e=>{
+							$(e.target).removeClass("sel");
+						}); 
+						
+					},
+					error:function(){
+						
+					}
+				
+				});	
+			}
+		}
+
+	}
+	
+	function rsvCheck(){
+		console.log('들어옴?');
 	}
 </script>
+<style>
+#header>a{margin-left: 45px;}
+.card-img-top{
+	width: 349px;
+	height: 300px;
+}
+
+.wrapper{
+	position:relative;
+}
+#autoComplete{
+	display: none;
+	background: white;
+	min-width: 159px;
+	border: 1px solid gray;
+	position: absolute;
+	top: 475px;
+	padding: 0;
+	margin: 0;
+}
+#autoComplete li{
+	padding: 0 10px;
+	list-style: none;
+	cursor: pointer;
+}
+#autoComplete li.sel{
+	background: gray;
+	color: white;
+}
+</style>
 <body>
 	
 	<header class="masthead" style="height:300px;">
