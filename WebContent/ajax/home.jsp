@@ -41,20 +41,38 @@
 }
 
 .post-pushed{
-	top: 700px;
+	top: 900px;
 }
 
+.imgs_wrap{
+	display:none;
+	text-align: center;
+    vertical-align: middle;
+}
+
+.imgs_wrap img{
+	width: 165px;
+	height: 165px;
+}
+
+.imgs{
+	display: table-cell;
+}
 
 </style>
     
 <div id="post">post</div>
-
+	<form action="" name="snsImageUpload1"
+					id="snsImageUpload1"
+					method="post"
+					enctype="multipart/form-data"
+					onsubmit="return false;">
 	<table id="postFrm">
 		<tr>
 			<td style="font-weight: 700;">소중한 여행후기를 공유해주세요!</td>
 		</tr>
 		<tr>
-			<td style="font-weight: 700;">
+			<td style="padding-bottom: 0px;">
 				<div class="travelsrch" style="float: left;"></div>
 			</td>
 		</tr>
@@ -72,22 +90,24 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
-				<div class="image-insert" style="float: left;">
+			<td style="margin-bottom:3px;">
 					<label for="" style="font-weight: 700;">첨부이미지</label>
-					<form action=""></form>
-				</div>
-				<div class="row" id="contents" style="margin: 0 auto;">
-					<!-- ajax 내용 들어가는곳 -->									
-				</div>
+					<span style="font-size:0.5em; color:gray;">최대 3개까지 등록 가능합니다.</span>
+					<input name="files" id="fileupload" type="file" style="margin-bottom:10px;" multiple />
+					<div>
+						<div class="imgs_wrap">
+						
+						</div>
+					</div>	
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<button type="button" style="float:right;">포스트 등록</button>
+				<input type="submit" value="포스트 등록" style="float:right; margin-top : 10px;">
 			</td>
 		</tr>
 	</table>
+	</form>	
 		  <div id="tab-container" class="post-unpushed">
 			<ul class="tab">
 				<li class="current" data-tab="tab1"><a>타임라인</a></li>
@@ -207,6 +227,46 @@ $("#post").click(function(){
 	
 })
 
+var sel_files=[];
+
+$(document).ready(function(){
+	if($(".imgs").length==0){
+		$(".imgs_wrap").css("display", "none");
+	}
+	$("#fileupload").on("change", handleImgsFilesSelect);
+});
+
+function handleImgsFilesSelect(e){
+	if($(".imgs").length>0){
+		$(".imgs").each(function(){
+			$(this).remove();
+		})
+	};
+		$(".imgs_wrap").css("display", "block");
+	
+	var files = e.target.files;
+	var filesArr = Array.prototype.slice.call(files);
+
+	
+	filesArr.forEach(function(f){
+		if(!f.type.match("image.*")){
+			alert("확장자는 이미지 확장자만 가능합니다.");
+			return;
+		}
+		
+		sel_files.push(f);
+		
+		var reader = new FileReader();
+		reader.onload = function(e){
+			var html = "<div class='imgs'><img src=\""+e.target.result+"\" />";
+			html += "<div><span>"+f.name+"</span><br>";
+			html += "<span>("+f.size+")</span><div></div>";
+			$(".imgs_wrap").append(html);
+			
+		}
+		reader.readAsDataURL(f);
+	});
+}
 
 	
 	

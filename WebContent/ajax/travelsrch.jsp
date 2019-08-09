@@ -2,13 +2,6 @@
     pageEncoding="UTF-8"%>
 
  <script type="text/javascript">
-
-	$(".card-img-top").hover(function(){
-		$(".caption").css("display", "block");
-	}, function(){
-		$(".caption").css("display", "block");
-	})
-
  
  	var sido1;
  	var gugun1;
@@ -52,7 +45,9 @@
   var area = "area"+$("option",$(this)).index($("option:selected",$(this)));
   var $gugun = $(this).next(); // 선택영역 군구 객체
   $("option",$gugun).remove(); // 구군 초기화
-
+  $("#search").val('');
+  
+  
   if(area == "area0")
    $gugun.append("<option value=''>구/군 선택</option>");
   else {
@@ -110,7 +105,7 @@
    		$("#autoComplete").hide().children().remove();
    		
    		$.ajax({
-   			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jFP9G99tDC%2BCNqVlP6%2BQ8z8JdQdPDnxnLWoa4KGZY5KExkD6cfWlqm92uXoCPscjDDIyEOmCZ1MKbflo3ooJRg%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jWiKAPxBpn0qOOLnL20GeajuioDso%2F0J9VPTot4BJC%2BV44P3Jxti0EMMDoZYTm3W%2F6mEHG5D8%2BqWl9MxwJF0Gg%3D%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    			type: "get",
    			dataType: "xml",
    			success:function(data){			
@@ -124,22 +119,23 @@
 					}
    				
    				$items.each(function(i,m){
-   					if($(m).find("title").text()==$(e.target).text()){
-						
-						html+="<div class='card h-100'>";
-								html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
-									html+="<div class='caption'>"
-										html+="<a href='#'>"+$(m).find("title").text()+"</a>";
-									html+="</h4>";
-									html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
-  									html+="</div>"
-								html+="</div>";
+						if($(m).find("title").text()==$sel.text().replace('+', '')){
+							html+="<div class='card h-100'>";
+							html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+								html+="<div class='caption'>"
 								
+									html+="<div class='caption-text'><a href='#'>"+$(m).find("title").text()+"</a>";
+								html+="</h4>";
+								html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p></div>";
+	   								html+="<span class='cancel'>x</span>"
+								html+="</div>"
+								html+="</div>";
+				
 				}	
 
 			});
 			$("#contents").append(html);
-   				
+			 $("#search").val('');
    			},
    			error:function(jqxhr,textStatus,errorThrown){
    				
@@ -154,7 +150,7 @@
    			return;
    		}else{
    			$.ajax({
-   				url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jFP9G99tDC%2BCNqVlP6%2BQ8z8JdQdPDnxnLWoa4KGZY5KExkD6cfWlqm92uXoCPscjDDIyEOmCZ1MKbflo3ooJRg%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   				url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jWiKAPxBpn0qOOLnL20GeajuioDso%2F0J9VPTot4BJC%2BV44P3Jxti0EMMDoZYTm3W%2F6mEHG5D8%2BqWl9MxwJF0Gg%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    				type: "get",
    				dataType: "xml",
    				success:function(data){
@@ -167,7 +163,7 @@
    						if($(m).find("title").text().indexOf(search)==-1){						
    								$("#autoComplete").hide();							
    						}else{							
-   								html += "<li>"+$(m).find("title").text()+"</li>";
+   								html += "<li><span style='float:left; color:orange' padding:10px;>+</span>"+$(m).find("title").text()+"</li>";
    														
    							$("#autoComplete").html(html)
    											  .fadeIn(200);
@@ -175,13 +171,13 @@
    						
    					});
    					
-   					$("#autoComplete li").click(e=>{						
-   						$("#search").val($(e.target).text());
+   					$("#autoComplete li").unbind("click").bind("click", (e=>{						
+   						$("#search").val($(e.target).text().replace('+', ''));
    						//#autoComplete 감춤
    						$("#autoComplete").hide().children().remove();
    						
    						$.ajax({
-   							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jFP9G99tDC%2BCNqVlP6%2BQ8z8JdQdPDnxnLWoa4KGZY5KExkD6cfWlqm92uXoCPscjDDIyEOmCZ1MKbflo3ooJRg%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jWiKAPxBpn0qOOLnL20GeajuioDso%2F0J9VPTot4BJC%2BV44P3Jxti0EMMDoZYTm3W%2F6mEHG5D8%2BqWl9MxwJF0Gg%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    							type: "get",
    							dataType: "xml",
    							success:function(data){			
@@ -194,21 +190,23 @@
    									return;
    								}
    								$items.each(function(i,m){
-   									if($(m).find("title").text()==$(e.target).text()){
+   									if($(m).find("title").text()==$(e.target).text().replace('+', '')){
     										html+="<div class='card h-100'>";
+    										
    												html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
 	   												html+="<div class='caption'>"
-	   													html+="<a href='#'>"+$(m).find("title").text()+"</a>";
-														html+="</h4>";
-														html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>";
-	   				   									html+="</div>"
+	   													html+="<span class='cc'>x</span>"
+	   													html+="<div class='caption-text'><a href='#'>"+$(m).find("title").text()+"</a>";
+															html+="</h4>";
+															html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p></div>";
+														html+="</div>"
    													html+="</div>";
-   											
+   					
    									}	
    					
    								});
    								$("#contents").append(html);
-   								$("#contentsMore").html("");
+   							 $("#search").val('');
    							},
    							error:function(jqxhr,textStatus,errorThrown){
    								
@@ -217,7 +215,7 @@
    						
    						
    						
-   					}).hover(e=>{
+   					})).hover(e=>{
    						$(e.target).addClass("sel").siblings().removeClass("sel");			
    					}, e=>{
    						$(e.target).removeClass("sel");
@@ -238,13 +236,17 @@
 </script>
 
 	<div align="left">
-		<label for="" style="font-weight: 700;">여행지</label>
+		<label for="" style="font-weight: 700;">여행지</label><span style="font-size:0.5em; color:gray;">최대 3개까지 등록 가능합니다.</span>
+		<br />
 		<select name="sido1" id="sido1"></select>
 		<select name="gugun1" id="gugun1"></select>
-		<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="24" style="font-size: 0.8em;" /> 
-		<ul id="autoComplete" style="z-index:99;">
-					
-		</ul>
+		<div id="searchFrm">
+			<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="27" /> 
+			<ul id="autoComplete" style="z-index:99;">
+						
+			</ul>
+		</div>
+		
 	</div>
 
 		<div class="row" id="contents" style="margin: 0 auto;">
@@ -261,11 +263,11 @@
 #autoComplete{
 	display: none;
 	background: white;
-	min-width: 159px;
+	min-width: 222px;
 	border: 1px solid gray;
 	position: absolute;
-	top: 110px;
-	right: 50px;
+	top: 22px;
+	left: 0px;
 	padding: 0;
 	margin: 0;
 }
@@ -282,7 +284,10 @@
 #search{
 	margin-bottom: 5px;
 }
-
+#searchFrm{
+	display: inline;
+	position: relative;
+}
 #contents .card-img-top, .goInfo{
 width: 165px; height:  165px;
 position: relative;
@@ -306,6 +311,8 @@ div.caption{
     opacity: 0; 
     background: rgb(0, 0, 0, 0.5);
     cursor: pointer;   
+    text-align: center;
+    vertical-align: middle;
 }
 
 .h-100:hover .caption{
@@ -319,10 +326,25 @@ p.card-text{
 }
 .row div{
     display: table-cell;
-    vertical-align: middle;
+
 }
 
+.caption-text{
+	width: 165px;
+	height: 165px;
+	text-align: center;
+	display:table-cell;
+	vertical-align: middle;
+}
+
+.cc{
+	position: absolute;
+	color:#fec503;
+	top:2px;
+	left:146px;
+	curser:pointer;
+	
+}
 
 </style>
-
 

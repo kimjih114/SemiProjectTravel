@@ -1,4 +1,4 @@
-package story.controller;
+package sns.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class StoryMainServlet
  */
 @WebServlet("/story/storyMain")
-public class StoryMainServlet extends HttpServlet {
+public class SnsMainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public StoryMainServlet() {
+    public SnsMainServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
