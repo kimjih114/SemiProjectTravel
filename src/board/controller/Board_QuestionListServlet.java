@@ -35,6 +35,7 @@ public class Board_QuestionListServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+			request.setCharacterEncoding("utf-8");
 		
 		  final int numPerPage = 5; int cPage = 1; try{ cPage =
 		  Integer.parseInt(request.getParameter("cPage")); }
@@ -78,9 +79,14 @@ public class Board_QuestionListServlet extends HttpServlet {
 		  "'>[다음]</a>"; } request.setAttribute("qboardList", qboardList);
 		  request.setAttribute("pageBar", pageBar);
 		 
+		  
+		  
+	
+		  response.setContentType("application/json; charset=UTF-8");
+		  new Gson().toJson(qboardList,response.getWriter());
 				
-				request.getRequestDispatcher("application/json; charset=utf-8");
-				new Gson().toJson(qboardList,response.getWriter());
+				
+				
 	}
 
 	/**

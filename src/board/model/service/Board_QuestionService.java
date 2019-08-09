@@ -28,4 +28,18 @@ public class Board_QuestionService {
 		return totalBoardCount;
 	}
 
+	public int insertQBoard(Board_Question bq) {
+		Connection conn = getConnection(); 
+		int result = new Board_QuestionDAO().insertQBoard(conn, bq); 
+		if(result >0) {
+			result = new Board_QuestionDAO().selectLastSeq(conn); 
+			commit(conn); 
+			
+		}else 
+			rollback(conn);
+		
+		close(conn); 
+		return result;
+	}
+
 }

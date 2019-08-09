@@ -213,40 +213,6 @@ $(function() {
 
 
 
-
- $(function(){
-		$.ajax({
-			url: "<%=request.getContextPath() %>/board/controller/board/boardList.do", 
-			type: "get",
-			dataType: "json",
-			contentType: "application; charset=UTF-8",
-
-			success: function(data){
-				console.log(data);
-				
-				var $table = $("<table><tr><td>번호</td><td>제목</td><td>작성자</td><td>작성일</td><td>진행상태</td></tr></table>"); 
-					
-					$(data).each((i,qb)=>{
-						var html ="<tr>"; 
-						html +="<td>"+qb.qboardNo+"</td>"; //번호 
-						html +="<td>"+qb.qboardTitle+"</td>"; //제목
-						html +="<td>"+qb.qboardWriter+"</td>"; //작성자
-						html +="<td>"+qb.qboardDate+"</td>"; //작성일 
-						html +="<td>"+qb.qboardStatus+"</td>"; //진행상태
-						html +="</tr>"; 
-						console.log(html); 
-						$table.append(html); 
-					}); 
-					$("#tbl-board").html($table); 
-					
-				
-			},
-			error: function(jqxhr, textStatus, errorThrown){
-				console.log("ajax처리실패!");
-				console.log(jqxhr, textStatus, errorThrown);
-			}
-		});
-	});
  
 
 </script>
@@ -279,37 +245,43 @@ $(function() {
                         </div>
  </div>
 		<div class="board_search">
-
-			<fieldset style="padding-right:10px;">
-	
-			<%
-				 if(userLoggedIn != null) { 
-			%>
-			<input type="button" class="btn btn-secondary btn-sm" id="btn-add" value="글쓰기">				
-			<!-- 로그인한 경우 글쓰기 가능하게 하기  -->
-
-			<script>
+			<form action="<%=request.getContextPath() %>/board/boardQuestionFrm"
+	      method="post"
+	      enctype="multipart/form-data">
+		<table id="tbl-board-view">
+			<tr>
+				<th>제목</th>
+				<td><input type="text" name="qboardTitle" required/></td>
+			</tr>		
+			<tr>
+				<th>작성자</th>
+				<td><input type="text" 
+						   name="qboardWriter"
+						   value="<%=userLoggedIn.getUserId()%>"
+						   required readonly/></td>
+			</tr>		
+			<tr>
+				<th>첨부파일</th>
+				<td><input type="file" name="upFile"/></td>
+			</tr>		
+			<tr>
+				<th>내용</th>
+				<td>
+					<textarea name="qboardContent" 
+							  cols="40" rows="5" required></textarea>
+				</td>
+			</tr>		
+			<tr>
+				<th colspan="2">
+					<input type="submit" 
+						   value="등록" 
+						   onclick="return boardValidate();"/>
+				</th>
+			</tr>		
+		
+		</table>
+	</form>
 			
-			$("#btn-add").on("click", function(){
-				$.ajax({
-					url: "<%=request.getContextPath() %>/ajax/board_questionForm.jsp", 
-					type: "get",
-					dataType: "html",
-					success: function(data){
-						$("#container-sns").html(data);
-					}
-					,error:function(request,status,error){
-					    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-
-					}
-				});
-			})
-			</script>
-
-			<%
-				}
-			%>
-				</fieldset>
 			</div>
 			</form>
 

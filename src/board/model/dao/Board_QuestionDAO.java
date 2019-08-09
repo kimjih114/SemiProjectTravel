@@ -105,6 +105,63 @@ public class Board_QuestionDAO {
 		
 		return totalUser;
 	}
+
+	public int insertQBoard(Connection conn, Board_Question bq) {
+		
+		int result = 0; 
+		PreparedStatement pstmt = null; 
+		String sql = prop.getProperty("insertQBoard"); 
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, bq.getQboardTitle());
+			pstmt.setString(2, bq.getQboardWriter());		
+			pstmt.setString(3, bq.getQboardContent());		
+			pstmt.setString(4, bq.getQboardFileName());		
+			pstmt.setString(4, bq.getQboardNewFileName());		
+			
+			result = pstmt.executeUpdate(); 
+			
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); 
+		}
+	
+		
+		return result;
+	}
+
+	public int selectLastSeq(Connection conn) {
+		PreparedStatement pstmt= null; 
+		ResultSet rset = null; 
+		int qboardNo = 0; 
+		
+		String sql = prop.getProperty("selectLastSeq"); 
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery(); 
+			if(rset.next()) {
+				qboardNo = rset.getInt("currval"); 
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset); 
+			close(pstmt); 
+		}
+		
+		
+		return qboardNo;
+	}
 	
 	
 	
