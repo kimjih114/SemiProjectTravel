@@ -11,10 +11,10 @@ import user.model.vo.User;
 
 public class AdminService {
 
-	public List<User> selectMemberList(int cPage, int numPerPage) {
+	public List<User> selectMemberList() {
 		Connection conn = getConnection();
 		List<User> list 
-			= new AdminDAO().selectMemberList(conn, cPage, numPerPage);
+			= new AdminDAO().selectMemberList(conn);
 		close(conn);
 		return list;
 	}

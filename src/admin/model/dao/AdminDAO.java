@@ -33,25 +33,15 @@ public class AdminDAO {
 			e.printStackTrace();
 		}
 	}
-	public List<User> selectMemberList(Connection conn, int cPage, int numPerPage) {
+	public List<User> selectMemberList(Connection conn) {
 		List<User> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectMemberList");
+		String sql = prop.getProperty("selectUserList");
 		
 		try {
 			//미완성쿼리객체생성
 			pstmt = conn.prepareStatement(sql);
-			//(페이징공식1)
-			//cPage=1,numPerPage=10 => 1,10
-			//cPage=2,numPerPage=10 => 11,20
-			//cPage=3,numPerPage=10 => 21,30
-			int start = (cPage-1)*numPerPage+1;
-			int end = cPage * numPerPage;
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
-			
-			
 			//쿼리실행
 			rset = pstmt.executeQuery();
 			
@@ -69,7 +59,7 @@ public class AdminDAO {
 				u.setUserType(rset.getString("user_type"));
 				u.setUserDefaultPlace(rset.getString("user_default_place"));
 				u.setUserDefaultActivity(rset.getString("user_default_activity"));
-				
+				u.setUserEnrollDate(rset.getDate("user_enrolldate"));
 				list.add(u);
 			}
 		}
@@ -80,7 +70,7 @@ public class AdminDAO {
 			close(rset);
 			close(pstmt);
 		}
-		
+		System.out.println("list@dao="+list);
 		
 		return list;
 	}

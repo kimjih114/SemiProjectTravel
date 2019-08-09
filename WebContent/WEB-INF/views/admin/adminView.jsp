@@ -53,6 +53,7 @@ $(()=>{
   <style>
 .page-top{
 	width: 1024px;
+	position : relative;
 }
   
 #profile-header{
@@ -144,6 +145,11 @@ section#page-top{
 	padding: 10px;
 	
 }
+#content{
+	position : absolute;
+	top : 5%;
+	left : 20%;
+}
 
 
 
@@ -189,7 +195,7 @@ section#page-top{
   </nav>   
  
   	<div id="content">
-  		
+  	
   	</div>
 
  </section>
@@ -197,21 +203,43 @@ section#page-top{
  
  
 <script>
-
-$("#userList").on("click", function(){
-		$.ajax({
-			url: "<%=request.getContextPath() %>/admin/userList", 
-			type: "get",
-			dataType: "html",
-			success: function(data){
-				$("#content").html(data);
-			},
-			error: function(jqxhr, textStatus, errorThrown){
-				console.log("ajax처리실패!");
-				console.log(jqxhr, textStatus, errorThrown);
-			}
-		});
+$("#userList").click(()=>{
+	$.ajax({
+		url:"<%=request.getContextPath()%>/jquery/gson/admin/selectAll.do",
+		type: "get",
+		dataType: "json",
+		success: function(data){
+			console.log(data);
+			
+			var $table = $("<table></table>");
+			$(data).each((i,u)=>{
+				
+				var html = "<tr>";
+				html += "<td>"+u.userId+"</td>";
+				html += "<td>"+u.usernickName+"</td>";
+				html += "<td>"+u.userName+"</td>";
+				html += "<td>"+u.userGender+"</td>";
+				html += "<td>"+u.userBirth+"</td>";
+				html += "<td>"+u.userEmail+"</td>";
+				html += "<td>"+u.userDefaultPlace+"</td>";
+				html += "<td>"+u.userDefaultActivity+"</td>";
+				html += "<td>"+u.userEnrollDate+"</td>";
+				html += "</tr>";
+				console.log(html);
+				$table.append(html);
+			});
+			
+			$("#content").html($table);
+			
+			
+		},
+		error: function(jqxhr, textStatus, errorThrown){
+			console.log("ajax 처리 실패!");
+			console.log(jqxhr, textStatus, errorThrown);
+		}
 	});
+});
+
 </script>
 </body>
 </html>
