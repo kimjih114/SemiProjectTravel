@@ -148,11 +148,29 @@ section#page-top{
 #content{
 	position : absolute;
 	top : 5%;
-	left : 20%;
+	left : 22%;
+}
+#content table{
+	border-collapse : collapse;
+	text-align : center;
+	line-height:1.5;
+	border-top : 1px solid #ccc;
+}
+#content table th{
+	font-weight : bold;
+	vertical-align : top;
+	color : #fff;
+	background : orange;
+}
+#content table td{
+	vartical-align : top;
+	border-collapse: collapse;
+	border-bottom : 1px solid orange;
 }
 
-
-
+#content table tr:nth-child(2n){
+	background-color:#f7f2eb;
+}
 </style>
   
  <header class="masthead" style="height:300px;">
@@ -199,8 +217,7 @@ section#page-top{
   	</div>
 
  </section>
- 
- 
+
  
 <script>
 $("#userList").click(()=>{
@@ -211,7 +228,7 @@ $("#userList").click(()=>{
 		success: function(data){
 			console.log(data);
 			
-			var $table = $("<table></table>");
+			var $table = $("<table><th>아이디</th><th>닉네임</th><th>이름</th><th>성별</th><th>생년월일</th><th>이메일</th><th>여행지</th><th>활동</th><th>등록일</th></table>");
 			$(data).each((i,u)=>{
 				
 				var html = "<tr>";
