@@ -2,6 +2,73 @@
     pageEncoding="UTF-8"%>
 
 <style>
+
+
+#tab-container {
+	width:540px;
+	margin:0 auto;
+	text-align:center;
+	position: absolute;
+	left:220px;
+	transition: 0.5s;
+	top:50px;
+}
+
+
+#tab-container .tab {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+/* Float the list items side by side */
+#tab-container .tab li {
+	float: left;
+	width: 33.3333%;
+	border-bottom: 1px solid;
+}
+/* Style the links inside the list items */
+#tab-container .tab li a {
+	display: inline-block;
+	color: #000;
+	text-align: center;
+	text-decoration: none;
+	padding: 14px 16px;
+	font-size: 17px;
+	transition:0.3s;
+	cursor: pointer;
+}
+/* Style the tab content */
+#tab-container .tabcontent {
+	display: none;
+	background-color:black;
+	padding: 6px 5px;
+	color:#fff;
+}
+#tab-container ul.tab li.current{
+	background-color: #fed136;
+	color: #222;
+	border:1px solid;
+	border-bottom: 0;
+}
+#tab-container .tabcontent.current {
+	display: block;
+	background: white;
+	color: black;
+	border: 1px solid;
+	border-top: 0px;
+	border-collapse: collapse;
+	
+}
+
+#post{
+	position: absolute;
+	top:10px;
+	left: 705px;
+	border: 1px solid;
+	padding: 0px 10px;
+}
+
 #post{
 	cursor: pointer;
 }
@@ -11,11 +78,13 @@
 	text-align:center;
 	position: absolute;
 	left:220px;
-	top: 50px;
+	top: 40px;
 	display:none;
 	border : 1px solid;
 	border-collapse: collapse;
 	padding: 10px;
+	z-index: 99;
+	background: white;
 }
 
 #postFrm tr{
@@ -36,13 +105,6 @@
 	height: 50px;
 }
 
-.post-unpushed{
-	top:50px;
-}
-
-.post-pushed{
-	top: 900px;
-}
 
 .imgs_wrap{
 	display:none;
@@ -51,8 +113,8 @@
 }
 
 .imgs_wrap img{
-	width: 165px;
-	height: 165px;
+	width: 80px;
+	height: 80px;
 }
 
 .imgs{
@@ -80,23 +142,15 @@
 			<td>
 				<label for="reviewContent" style="font-weight: 700;">어떤 여행을 하셨나요?</label>
 				<textarea name="reviewContent" id="reviewContent" cols="59" rows="5"></textarea>
-				<!-- <table>
-					<tr>
-						<td style="padding:0px;">
-							<div class="img-review" style="border:1px solid; width: 50px; height: 50px;"></div>
-						</td>
-					</tr>
-				</table> -->
 			</td>
 		</tr>
 		<tr>
 			<td style="margin-bottom:3px;">
 					<label for="" style="font-weight: 700;">첨부이미지</label>
-					<span style="font-size:0.5em; color:gray;">최대 3개까지 등록 가능합니다.</span>
-					<input name="files" id="fileupload" type="file" style="margin-bottom:10px;" multiple />
+					<span style="font-size:0.5em; color:gray;">최대 5개까지 등록 가능합니다.</span>
+					<input name="files" id="fileupload" type="file" accept="image/*" style="margin-bottom:10px;" multiple />
 					<div>
 						<div class="imgs_wrap">
-						
 						</div>
 					</div>	
 			</td>
@@ -108,7 +162,7 @@
 		</tr>
 	</table>
 	</form>	
-		  <div id="tab-container" class="post-unpushed">
+		  <div id="tab-container">
 			<ul class="tab">
 				<li class="current" data-tab="tab1"><a>타임라인</a></li>
 				<li data-tab="tab2"><a>추천</a></li>
@@ -207,11 +261,8 @@ $(function() {
 });
 	
 $("#post").click(function(){
-	$("#tab-container").removeClass('post-unpushed');
-	$("#tab-container").addClass('post-pushed');
-		
 	$("#postFrm").css('display', 'block');
-	
+	$("#tab-container").css("opacity", "0.5");
 	$.ajax({
 		url: "<%=request.getContextPath() %>/ajax/travelsrch.jsp", 
 		type: "get",
@@ -247,13 +298,18 @@ function handleImgsFilesSelect(e){
 	var files = e.target.files;
 	var filesArr = Array.prototype.slice.call(files);
 
-	
+	if(filesArr.length>5){
+		alert("첨부파일은 5개까지만 가능합니다.");
+		$("#fileupload").
+		return;
+	}
+
 	filesArr.forEach(function(f){
 		if(!f.type.match("image.*")){
-			alert("확장자는 이미지 확장자만 가능합니다.");
+			alert(f.name+"은(는) 이미지가 아닙니다.");
 			return;
 		}
-		
+	
 		sel_files.push(f);
 		
 		var reader = new FileReader();
@@ -268,6 +324,9 @@ function handleImgsFilesSelect(e){
 	});
 }
 
+function chk_file_type(obj) {
+	
+	}
 	
 	
 

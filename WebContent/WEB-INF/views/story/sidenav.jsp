@@ -1,3 +1,4 @@
+<%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <!-- Bootstrap core CSS -->
@@ -42,9 +43,9 @@
 <section class="page-top" style="padding:0px; !important;">
 	  <nav id="sideNav">
 		<div id="profile-header">
-	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/img/profile.jpg" alt="">
-	      <p class="userprofile-userId">@닉네임 <button>edit</button></p>
-	      <p class="userIntroduce" style="margin-bottom: 50px;">안녕하세요. 저는 @닉네임입니다. 좋아하는 여행지는 #서촌입니다.<button>edit</button></p>
+	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/enroll/<%=userLoggedIn.getFileName() %>" alt="">
+	      <p class="userprofile-userId"><%=userLoggedIn.getUsernickName() %> <button>edit</button></p>
+	      <p class="userIntroduce" style="margin-bottom: 50px;">테이블필요<button>edit</button></p>
 	   </div>
 	    <table class="tbl-usermenu">
 	   		<tr>
@@ -118,8 +119,8 @@
     /*min-width: 250px;*/
 }
 .profile-circle{
-	max-width: 10rem;
-    max-height: 10rem;
+	width: 150px;
+    height: 150px;
     border: 0.5rem solid #212529;
     border-radius: 100%;
 }
@@ -187,71 +188,6 @@ div#profile-header{
     
     /*min-width: 800px;*/
 	
-}
-
-
-#tab-container {
-	width:540px;
-	margin:0 auto;
-	text-align:center;
-	position: absolute;
-	left:220px;
-	transition: 0.5s;
-}
-
-
-#tab-container .tab {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-}
-/* Float the list items side by side */
-#tab-container .tab li {
-	float: left;
-	width: 33.3333%;
-	border-bottom: 1px solid;
-}
-/* Style the links inside the list items */
-#tab-container .tab li a {
-	display: inline-block;
-	color: #000;
-	text-align: center;
-	text-decoration: none;
-	padding: 14px 16px;
-	font-size: 17px;
-	transition:0.3s;
-	cursor: pointer;
-}
-/* Style the tab content */
-#tab-container .tabcontent {
-	display: none;
-	background-color:black;
-	padding: 6px 5px;
-	color:#fff;
-}
-#tab-container ul.tab li.current{
-	background-color: #fed136;
-	color: #222;
-	border:1px solid;
-	border-bottom: 0;
-}
-#tab-container .tabcontent.current {
-	display: block;
-	background: white;
-	color: black;
-	border: 1px solid;
-	border-top: 0px;
-	border-collapse: collapse;
-	
-}
-
-#post{
-	position: absolute;
-	top:10px;
-	left: 705px;
-	border: 1px solid;
-	padding: 0px 10px;
 }
 
 #timline-sns{

@@ -107,7 +107,7 @@
          	</li>
           	 <li class="nav-item">
 	           <a class="nav-link js-scroll-trigger" style="padding-top: 5px !important" href='<%=request.getContextPath() %>/mypage/mypageView'>
-	           		<img src="<%=request.getContextPath() %>/img/profile.jpg" class="header-profile-circle"  width="40" height="40" />
+	           		<img src="<%=request.getContextPath() %>/upload/enroll/<%=userLoggedIn.getFileName() %>" class="header-profile-circle"  width="40" height="40" />
 	           </a> <!-- userLogin.jsp로 이동하는 서블릿 -->
 	         </li> 
          <%} %>
