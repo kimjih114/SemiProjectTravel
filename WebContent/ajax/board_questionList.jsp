@@ -266,7 +266,9 @@ $(function() {
                                 <li class="post_font">
                                 		업무와 관련 문의 및 요청사항을 작성하는 게시판입니다. <br />
                                 		1:1 문의는 타인에게 내용이 공개되지 않으므로 더 자세한 답변을 받을 수 있습니다. <br /> <br />
-                                		회원은 <a  id="post_font_a"   href="<%=request.getContextPath()%>/user/userLoginFrm">로그인</a>후 문의가 가능합니다. <br />
+                                		<% if(userLoggedIn ==null) {%>
+                                		문의 시 <a  id="post_font_a"   href="<%=request.getContextPath()%>/user/userLoginFrm">로그인</a>이 필요합니다. <br />
+                                		<%} %>
                                 		<br />유람은 고객님의 목소리를 소중히 여깁니다. <br />
                                 		문의주신 내용은 확인 즉시 , 빠르게 답변 드리겠습니다.  <br />
                                 		답변은 전화상담이 아닌 온라인으로만 진행됩니다.<br />
