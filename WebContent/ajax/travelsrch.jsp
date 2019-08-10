@@ -3,6 +3,12 @@
 
  <script type="text/javascript">
  
+ 
+ function closeDiv(div){
+	 $(div).parent().parent().remove();
+ }
+ 
+ 
  	var sido1;
  	var gugun1;
  
@@ -121,14 +127,15 @@
    				$items.each(function(i,m){
 						if($(m).find("title").text()==$sel.text().replace('+', '')){
 							html+="<div class='card h-100'>";
-							html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
-								html+="<div class='caption'>"
-									html+="<div class='caption-text'><a href='#'>"+$(m).find("title").text()+"</a>";
-								html+="</h4>";
-								html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p></div>";
-	   								html+="<span class='cancel'>x</span>"
-								html+="</div>"
-								html+="</div>";
+								html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+									html+="<div class='caption'>"
+										html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
+										html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
+										html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"
+										html+="</h4>";
+										html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p></div>";
+									html+="</div>"
+									html+="</div>";
 							
 				
 				}	
@@ -194,7 +201,7 @@
     										html+="<div class='card h-100'>";
    												html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
 	   												html+="<div class='caption'>"
-	   													html+="<span class='cc'>x</span>"
+	   													html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
 	   													html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
 	   													html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"
 															html+="</h4>";
@@ -345,3 +352,9 @@ p.card-text{
 
 </style>
 
+<script>
+$(".cc").click(function(){
+	console.log("흠..");
+})
+
+</script>

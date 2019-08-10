@@ -27,7 +27,7 @@
   <script src="/trav/js/contact_me.js"></script>
 
   <!-- Custom scripts for this template -->
-	<script src="/trav/js/agency.min.js"></script>
+
 
    <div id="container-sns"></div>
 	  
