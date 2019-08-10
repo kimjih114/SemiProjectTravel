@@ -214,11 +214,10 @@ public class TravelDAO {
 			pstmt.setString(2, travel.getTravelName());
 			pstmt.setString(3, travel.getThumbnailOriginalFilename());
 			pstmt.setString(4, travel.getThumbnailRenamedFilename());
-			pstmt.setDate(5, travel.getTravelDate());
-			pstmt.setString(6,travel.getTravelContent());
-			pstmt.setString(7, travel.getTravelOfficierName());
-			pstmt.setString(8, travel.getTravelOfficierphone());
-			pstmt.setString(9, travel.getTravelType());
+			pstmt.setString(5,travel.getTravelContent());
+			pstmt.setString(6, travel.getTravelOfficierName());
+			pstmt.setString(7, travel.getTravelOfficierphone());
+			pstmt.setString(8, travel.getTravelType());
 			
 			result = pstmt.executeUpdate();
 			

@@ -28,7 +28,7 @@
 
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
-<style>
+ <style>
 .page-top{
 	width: 1024px;
 	position : relative;
@@ -126,7 +126,7 @@ section#page-top{
 #content{
 	position : absolute;
 	top : 5%;
-	left : 22%;
+	left : 28%;
 }
 #content table{
 	border-collapse : collapse;
