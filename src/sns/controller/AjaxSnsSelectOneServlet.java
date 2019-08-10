@@ -9,21 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import sns.model.service.SNSService;
 import sns.model.vo.ProfileSNS;
 import user.model.vo.User;
 
 /**
- * Servlet implementation class StoryMainServlet
+ * Servlet implementation class AjaxSnsSelectOneServlet
  */
-@WebServlet("/story/storyMain")
-public class SnsMainServlet extends HttpServlet {
+@WebServlet("/gson/sns/selectOneProfile.do")
+public class AjaxSnsSelectOneServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SnsMainServlet() {
+    public AjaxSnsSelectOneServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,18 +34,19 @@ public class SnsMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		//0.encoding
+		response.setContentType("application/json; charset=utf-8");
+				
+		//1.parameter handling
 		HttpSession session =  request.getSession(false);
-		User userLoggedIn = (User)session.getAttribute("userLoggedIn");
-		
-		ProfileSNS profileSNS = new SNSService().selectOneProfile(userLoggedIn);
-		System.out.println("profileSNS@servlet="+profileSNS);
-		
-		if(profileSNS!=null) {
-			request.setAttribute("profileSNS", profileSNS);
-		}
-	
-		request.getRequestDispatcher("/WEB-INF/views/story/storyMain.jsp").forward(request, response);
+		String userId= ((User)session.getAttribute("userLoggedIn")).getUserId();
+				
+		//2.business logic
+		ProfileSNS profileSNS = new SNSService().selectOneProfile(userId);
+				
+		//view단 작성
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(profileSNS, response.getWriter());
 	}
 
 	/**

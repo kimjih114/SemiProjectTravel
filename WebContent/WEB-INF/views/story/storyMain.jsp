@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/story/sidenav.jsp" %>
 <!-- Bootstrap core CSS -->
-  <link href="/trav/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <link href="/trav/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
   <link href="/trav/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -27,6 +27,7 @@
   <script src="/trav/js/contact_me.js"></script>
 
   <!-- Custom scripts for this template -->
+  <script src="/trav/js/agency.min.js"></script>
 
 
    <div id="container-sns"></div>

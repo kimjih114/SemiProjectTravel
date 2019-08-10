@@ -7,23 +7,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import sns.model.service.SNSService;
 import sns.model.vo.ProfileSNS;
-import user.model.vo.User;
 
 /**
- * Servlet implementation class StoryMainServlet
+ * Servlet implementation class AjaxSnsIntroModifyServlet
  */
-@WebServlet("/story/storyMain")
-public class SnsMainServlet extends HttpServlet {
+@WebServlet("/gson/sns/introModify.do")
+public class AjaxSnsIntroModifyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SnsMainServlet() {
+    public AjaxSnsIntroModifyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,18 +32,21 @@ public class SnsMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//0.encoding
+		response.setContentType("application/json; charset=utf-8");
+								
+		//1.parameter handling
+		String intro = request.getParameter("intro");
+		String userId= request.getParameter("userid");
+								
+		//2.business logic
+		int result = new SNSService().updateIntro(userId, intro);
 		
-		HttpSession session =  request.getSession(false);
-		User userLoggedIn = (User)session.getAttribute("userLoggedIn");
-		
-		ProfileSNS profileSNS = new SNSService().selectOneProfile(userLoggedIn);
-		System.out.println("profileSNS@servlet="+profileSNS);
-		
-		if(profileSNS!=null) {
-			request.setAttribute("profileSNS", profileSNS);
-		}
-	
-		request.getRequestDispatcher("/WEB-INF/views/story/storyMain.jsp").forward(request, response);
+		//ProfileSNS profileSNS = new SNSService().selectOneProfile(userId);
+								
+		//view단 작성
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(result, response.getWriter());
 	}
 
 	/**

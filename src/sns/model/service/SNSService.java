@@ -25,4 +25,38 @@ public class SNSService {
 		return profileSNS;
 	}
 
+	public ProfileSNS selectOneProfile(String userId) {
+		Connection conn=getConnection();
+		ProfileSNS profileSNS=new SNSDAO().selectOneProfile(conn, userId);
+		close(conn);
+		return profileSNS;
+	}
+
+	public int updateHeaderText(String userId, String headerText) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().updateHeaderText(conn, userId, headerText);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int updateNickName(String userId, String nickname) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().updateNickName(conn, userId, nickname);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int updateIntro(String userId, String intro) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().updateIntro(conn, userId, intro);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
 }

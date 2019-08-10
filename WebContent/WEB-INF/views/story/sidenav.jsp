@@ -8,11 +8,145 @@
 	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
 
 %>
+<script>
+function updateHeaderText(){
+	var headertext = $("#headerBefore").text();
+	console.log(headertext);
+	
+	var html = "<input type='text' id='headerAfter' name='headerAfter' value='"+headertext+"'/>";
+	html += "<button id='headerAfterBtn' onclick='headerTextModify();' style='margin-left:10px;'>edit</button>"
+	$("#headerBeforeBtn").remove();
+	
+	$("#headerFrm").html(html);
+	
+}
+function updateNickName(){
+	var nickname = $("#nickBefore").text();
+	console.log(nickname);
+	
+	var html = "<input type='text' id='nickAfter' name='nickafter' value='"+nickname+"' size='10' />";
+	html += "<button id='nickAfterBtn' onclick='nickNameModify();' style='margin-left:10px;'>edit</button>"
+	$("#nickBeforeBtn").remove();
+	
+	$("#nickFrm").html(html);
+	
+}
+function updateIntroduce(){
+	var intro = $("#introBefore").text();
+	console.log(intro);
+	
+	var html = "<textarea name='introAfter' id='introAfter' cols='20' rows='4'>"+intro+"</textarea>";
+	html += "<button id='introAfterBtn' onclick='introModify();' style='float:right; margin-right: 14px;'>edit</button>"
+	$("#introBeforeBtn").remove();
+	
+	$("#introFrm").html(html);
+	
+}
+
+function headerTextModify(){
+	var headertext = $("#headerAfter").val();
+	var userid = '<%=userLoggedIn.getUserId() %>';
+	var param = {
+			headertext : headertext,
+			userid : userid
+	}
+	
+	$("#headerAfter").remove();
+	$("#headerAfterBtn").remove();
+
+	
+	$.ajax({
+		url : "<%=request.getContextPath()%>/gson/sns/headerTextModify.do",
+		data : param,
+		dataType: "json",
+		type : "post",
+		success : function(data){
+			console.log(data);
+			var html = "<span id='headerBefore'>"+headertext+"</span>";
+			html+="<button id='headerBeforeBtn' onclick='updateHeaderText();'>edit</button>";
+			$("#headerFrm").html(html);
+		},
+		error : function(data){
+			console.log("ajax처리실패");
+		},
+		complete: function(data){
+			
+		}
+	});
+}
+function nickNameModify(){
+	var nickname = $("#nickAfter").val();
+	var userid = '<%=userLoggedIn.getUserId() %>';
+	var param = {
+			nickname : nickname,
+			userid : userid
+	}
+	
+	$("#nickAfter").remove();
+	$("#nickAfterBtn").remove();
+
+	
+	$.ajax({
+		url : "<%=request.getContextPath()%>/gson/sns/nickNameModify.do",
+		data : param,
+		dataType: "json",
+		type : "post",
+		success : function(data){
+			console.log(data);
+			var html = "<span id='nickBefore'>"+nickname+"</span>";
+			html+="<button id='nickBeforeBtn' onclick='updateNickName();'>edit</button>";
+			$("#nickFrm").html(html);
+		},
+		error : function(data){
+			console.log("ajax처리실패");
+		},
+		complete: function(data){
+			
+		}
+	});
+}
+function introModify(){
+	var intro = $("#introAfter").val();
+	console.log(intro);
+	var userid = '<%=userLoggedIn.getUserId() %>';
+	var param = {
+			intro : intro,
+			userid : userid
+	}
+	
+	$("#introAfter").remove();
+	$("#introAfterBtn").remove();
+
+	
+	$.ajax({
+		url : "<%=request.getContextPath()%>/gson/sns/introModify.do",
+		data : param,
+		dataType: "json",
+		type : "post",
+		success : function(data){
+			console.log(data);
+			var html = "<span id='introBefore'>"+intro+"</span>";
+			html+="<button id='introBeforeBtn' onclick='updateIntroduce();'>edit</button>";
+			$("#introFrm").html(html);
+		},
+		error : function(data){
+			console.log("ajax처리실패");
+		},
+		complete: function(data){
+			
+		}
+	});
+}
+
+</script>
+
  <header class="masthead" style="height:300px;">
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
-       		<%=profileSNS.getHeaderText() %>&nbsp;<button>edit</button>
-       		<!-- @닉네임의 페이지입니다.(유저가설정가능) -->
+       		<div id="headerFrm">
+				<span id="headerBefore"><%=profileSNS.getHeaderText() %></span>
+				<button id="headerBeforeBtn" onclick="updateHeaderText();" style='margin-left:10px;'>edit</button>
+			</div>
         </div>
      </div>
   </header>
@@ -21,8 +155,14 @@
 	  <nav id="sideNav">
 		<div id="profile-header">
 	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=userLoggedIn.getFileName() %>" alt="">
-	      <p class="userprofile-userId"><%=profileSNS.getUserNickname() %> <button>edit</button></p>
-	      <p class="userIntroduce" style="margin-bottom: 50px;"> <%=profileSNS.getUserIntroduce() %><button>edit</button></p>
+	      <div id="nickFrm">
+	      	<span id="nickBefore" style="font-weight: 700;"><%=profileSNS.getUserNickname() %></span>
+	      	<button id="nickBeforeBtn" onclick="updateNickName();">edit</button>
+	      </div>
+	      <div id="introFrm" style="margin: 10px 0 50px;">
+				<span id="introBefore"><%=profileSNS.getUserIntroduce() %></span>
+				<button id="introBeforeBtn" onclick="updateIntroduce();">edit</button>
+		 </div>
 	   </div>
 	    <table class="tbl-usermenu">
 	   		<tr>
