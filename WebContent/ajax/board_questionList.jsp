@@ -229,7 +229,7 @@ $(function() {
 					$(data).each((i,qb)=>{
 						var html ="<tr>"; 
 						html +="<td>"+qb.qboardNo+"</td>"; //번호 
-						html +="<td>"+qb.qboardTitle+"</td>"; //제목
+						html +="<td id="td_click">"+qb.qboardTitle+"</td>"; //제목
 						html +="<td>"+qb.qboardWriter+"</td>"; //작성자
 						html +="<td>"+qb.qboardDate+"</td>"; //작성일 
 						html +="<td>"+qb.qboardStatus+"</td>"; //진행상태
@@ -247,6 +247,8 @@ $(function() {
 			}
 		});
 	});
+ 
+ 
  
 
 </script>
@@ -306,6 +308,12 @@ $(function() {
 					}
 				});
 			})
+			
+		<%-- 	$("#td_click").on("click", function(){
+				url:"<%=request.getContextPath()%>/ajax/board_question"
+			}); --%>
+			
+			
 			</script>
 
 			<%
