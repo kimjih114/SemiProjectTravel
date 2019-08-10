@@ -64,7 +64,7 @@ public class UserDAO {
 				u.setUserDefaultPlace(rset.getString("user_default_place"));
 				u.setUserDefaultActivity(rset.getString("user_default_activity"));
 			
-				System.out.println("userdao @ user selectOne="+u);
+			
 				
 			}
 			

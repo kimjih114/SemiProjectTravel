@@ -187,13 +187,11 @@ border : 1px solid gray;
 background:#fed136;}
 
 
-/* table#tbl-table, td {
-border: 1px solid;
+.form-control{
+width: 200px;
+margin-bottom: 10px;
+margin-top: 10px;
 }
-table#tbl-table{
-width: 700px;
-} */
-
 </style>
 
 <script>
@@ -255,20 +253,18 @@ function qboardValidate(){
                         </div>
  </div>
 		<div class="board_search">
-			<form action="<%=request.getContextPath() %>/board/boardQuestionFrm"
-	      method="post"
+		
+			<form action="<%=request.getContextPath() %>/board/boardQuestionFrm" method="post"
 	      enctype="multipart/form-data">
 		<table id="tbl-board-view">
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="qboardTitle" required/></td>
+				<td><input class="form-control" type="text" name="qboardTitle" required/></td>
 			</tr>		
 			<tr>
 				<th>작성자</th>
-				<td><input type="text" 
-						   name="qboardWriter"
-						   value="<%=userLoggedIn.getUserId()%>"
-						   required readonly/></td>
+				<td> <input class="form-control" type="text"  name="qboardWriter"
+					 value="<%=userLoggedIn.getUserId()%>" required readonly> </td>
 			</tr>		
 			<tr>
 				<th>첨부파일</th>
@@ -277,8 +273,13 @@ function qboardValidate(){
 			<tr>
 				<th>내용</th>
 				<td>
-					<textarea name="qboardContent" 
-							  cols="40" rows="5" required></textarea>
+				<div class="input-group">
+  					<div class="input-group-prepend">
+    					<span class="input-group-text">With textarea</span>
+  					</div>
+ 					<textarea class="text-control" aria-label="With textarea" 
+ 					 		name="qboardContent"  required></textarea>	
+					</div>	 	  
 				</td>
 			</tr>		
 			<tr>
@@ -293,7 +294,7 @@ function qboardValidate(){
 	</form>
 			
 			</div>
-			</form>
+	</form>
 
 
 		

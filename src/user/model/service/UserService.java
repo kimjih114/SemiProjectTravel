@@ -25,7 +25,7 @@ public class UserService {
 		Connection conn =getConnection();
 		User u = new UserDAO().selectOne(conn, userId); 
 		close(conn);
-		System.out.println("service@u="+u);
+		
 		
 		return u;
 	}

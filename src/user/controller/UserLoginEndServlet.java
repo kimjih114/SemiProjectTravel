@@ -58,7 +58,7 @@ public class UserLoginEndServlet extends HttpServlet {
 		user.setUserPassword(userPassword);
 		
 		
-		System.out.println("user@loginServlet="+user);
+	
 		
 		
 		//업무로직 
@@ -74,7 +74,7 @@ public class UserLoginEndServlet extends HttpServlet {
 			view = "/index.jsp";   //로그인 성공시      Index페이지로 
 			
 			User userLoggedIn = new UserService().selectOne(userId);
-			System.out.println("로그인 성공시 index페이지로");
+		
 			userLoggedIn.getUserName();
 			HttpSession session =  request.getSession(true);
 			session.setMaxInactiveInterval(10*60);
@@ -97,7 +97,7 @@ public class UserLoginEndServlet extends HttpServlet {
 			
 			request.setAttribute("userLoggedIn", userLoggedIn);
 			
-			System.out.println("UserLoginEndServlet@userLoggedIn="+userLoggedIn);
+		
 			
 		}else {
 			
