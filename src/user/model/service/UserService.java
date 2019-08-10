@@ -1,7 +1,7 @@
 package user.model.service;
 
 import static common.JDBCTemplate.*;
-import static common.JDBCTemplate.getConnection;
+
 
 import java.sql.Connection;
 

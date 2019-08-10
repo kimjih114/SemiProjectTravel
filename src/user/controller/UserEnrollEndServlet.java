@@ -43,7 +43,7 @@ public class UserEnrollEndServlet extends HttpServlet {
 		String root =  getServletContext().getRealPath("/");
 //		String root  ="C:\\Workspaces\\webserver_workspace\\SemiProjectTravel\\WebContent"+File.separator;
 		
-		String saveDirectory = root +"upload"+File.separator+"enroll";
+		String saveDirectory = root +"upload"+File.separator+"profile";
 	
 
 		int maxPostSize = 1024 * 1024 * 10;

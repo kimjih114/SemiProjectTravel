@@ -110,11 +110,14 @@
 	display:none;
 	text-align: center;
     vertical-align: middle;
+    table-layout: fixed;
+    width:100%;
 }
 
 .imgs_wrap img{
-	width: 80px;
-	height: 80px;
+	width: 95px;
+	height: 95px;
+	margin: 0 2px;
 }
 
 .imgs{
@@ -122,7 +125,7 @@
 }
 
 </style>
-    
+    <!-- post폼 -->
 <div id="post">post</div>
 	<form action="" name="snsImageUpload1"
 					id="snsImageUpload1"
@@ -142,26 +145,37 @@
 			<td>
 				<label for="reviewContent" style="font-weight: 700;">어떤 여행을 하셨나요?</label>
 				<textarea name="reviewContent" id="reviewContent" cols="59" rows="5"></textarea>
+				<div id="contentIdList">
+				</div>
 			</td>
 		</tr>
 		<tr>
 			<td style="margin-bottom:3px;">
 					<label for="" style="font-weight: 700;">첨부이미지</label>
-					<span style="font-size:0.5em; color:gray;">최대 5개까지 등록 가능합니다.</span>
-					<input name="files" id="fileupload" type="file" accept="image/*" style="margin-bottom:10px;" multiple />
-					<div>
-						<div class="imgs_wrap">
-						</div>
+					<span style="font-size:0.5em; color:gray;">최대 5개까지 등록 가능합니다.</span><br>
+					<input name="fileupload" id="fileupload" type="file" accept="image/*" style="margin-bottom:10px;" multiple />
+					<div style="display:table;">
+						<div class="imgs_wrap"></div>
 					</div>	
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<input type="submit" value="포스트 등록" style="float:right; margin-top : 10px;">
+				<input type="submit" value="포스트 등록" style="float:right; margin-top : 10px;" onclick="validate();">
 			</td>
 		</tr>
 	</table>
 	</form>	
+
+
+
+
+
+<!-- 게시글 -->
+
+
+
+
 		  <div id="tab-container">
 			<ul class="tab">
 				<li class="current" data-tab="tab1"><a>타임라인</a></li>
@@ -298,14 +312,15 @@ function handleImgsFilesSelect(e){
 	var files = e.target.files;
 	var filesArr = Array.prototype.slice.call(files);
 
-	if(filesArr.length>5){
+	if(filesArr.length>5){	
+		$("#fileupload").val("");
 		alert("첨부파일은 5개까지만 가능합니다.");
-		$("#fileupload").
 		return;
 	}
 
 	filesArr.forEach(function(f){
 		if(!f.type.match("image.*")){
+			$("#fileupload").val("");
 			alert(f.name+"은(는) 이미지가 아닙니다.");
 			return;
 		}
@@ -316,7 +331,7 @@ function handleImgsFilesSelect(e){
 		reader.onload = function(e){
 			var html = "<div class='imgs'><img src=\""+e.target.result+"\" />";
 			html += "<div><span>"+f.name+"</span><br>";
-			html += "<span>("+f.size+")</span><div></div>";
+			html += "<span>("+(f.size)/1000+"kb)</span><div></div>";
 			$(".imgs_wrap").append(html);
 			
 		}
@@ -324,10 +339,23 @@ function handleImgsFilesSelect(e){
 	});
 }
 
-function chk_file_type(obj) {
+
+
+function validate(){
 	
-	}
-	
-	
+ 	var html = '';
+	if($(".contentid").length>0){
+		$(".contentid").each(function(i, elem){
+			    html += "<input type='hidden' name='contentId"+ (i+1) +"' value='"+$(this).text()+"' />";
+			});
+		}
+ 	$("#contentIdList").append(html);
+ 		
+}
+
+
+
+
+
 
 </script>

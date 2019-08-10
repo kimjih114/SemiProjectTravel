@@ -1,41 +1,18 @@
+<%@page import="sns.model.vo.ProfileSNS"%>
 <%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <!-- Bootstrap core CSS -->
-  <link href="/trav/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
+<%
 
-  <!-- Custom fonts for this template -->
-  <link href="/trav/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
 
-  <!-- Custom styles for this template -->
-  <link href="/trav/css/agency.min.css" rel="stylesheet">
-  
-  <!-- Bootstrap core JavaScript -->
-  <script src="/trav/vendor/jquery/jquery.min.js"></script>
-  <script src="/trav/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Plugin JavaScript -->
-  <script src="/trav/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Contact form JavaScript -->
-  <script src="/trav/js/jqBootstrapValidation.js"></script>
-  <script src="/trav/js/contact_me.js"></script>
-
-
-  <!-- Custom scripts for this template -->
- <!--  <script src="/trav/js/agency.min.js"></script> -->
-
-
-  
-
+%>
  <header class="masthead" style="height:300px;">
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
-       		@닉네임의 페이지입니다.(유저가설정가능)
+       		<%=profileSNS.getHeaderText() %>&nbsp;<button>edit</button>
+       		<!-- @닉네임의 페이지입니다.(유저가설정가능) -->
         </div>
      </div>
   </header>
@@ -43,9 +20,9 @@
 <section class="page-top" style="padding:0px; !important;">
 	  <nav id="sideNav">
 		<div id="profile-header">
-	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/enroll/<%=userLoggedIn.getFileName() %>" alt="">
-	      <p class="userprofile-userId"><%=userLoggedIn.getUsernickName() %> <button>edit</button></p>
-	      <p class="userIntroduce" style="margin-bottom: 50px;">테이블필요<button>edit</button></p>
+	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=userLoggedIn.getFileName() %>" alt="">
+	      <p class="userprofile-userId"><%=profileSNS.getUserNickname() %> <button>edit</button></p>
+	      <p class="userIntroduce" style="margin-bottom: 50px;"> <%=profileSNS.getUserIntroduce() %><button>edit</button></p>
 	   </div>
 	    <table class="tbl-usermenu">
 	   		<tr>
@@ -92,15 +69,16 @@
 	  </nav>
 	  
  <style>	 
-	  .page-top{
+.page-top{
 	position: relative;
 }
 
 #profile-header{
 	padding-bottom: 20px;
 	margin: 0;
-	background-color:#fed136;
+	background-color:<%=profileSNS.getThemeColor() %>;
 } 
+  
   
 #sideNav {
     text-align: center;
@@ -115,8 +93,9 @@
     flex-direction: column;
     width: 210px;
     /*height: 100vh;*/
-    background: #fed136; 
+    background:<%=profileSNS.getThemeColor() %>; 
     /*min-width: 250px;*/
+    
 }
 .profile-circle{
 	width: 150px;

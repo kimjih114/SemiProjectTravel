@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.util.List;
 
 import sns.model.dao.SNSDAO;
+import sns.model.vo.ProfileSNS;
+import user.model.vo.User;
 
 import static common.JDBCTemplate.*;
 
@@ -14,6 +16,13 @@ public class SNSService {
 		List<String> friendId=new SNSDAO().friendIdSearch(conn,userId,searchId);
 		close(conn);
 		return friendId;
+	}
+
+	public ProfileSNS selectOneProfile(User userLoggedIn) {
+		Connection conn=getConnection();
+		ProfileSNS profileSNS=new SNSDAO().selectOneProfile(conn, userLoggedIn);
+		close(conn);
+		return profileSNS;
 	}
 
 }

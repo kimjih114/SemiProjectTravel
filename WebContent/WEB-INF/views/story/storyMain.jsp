@@ -1,6 +1,6 @@
+<%@page import="sns.model.vo.ProfileSNS"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <%@ include file="/WEB-INF/views/story/sidenav.jsp" %>
 <!-- Bootstrap core CSS -->
   <link href="/trav/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,6 @@
 
   <!-- Custom scripts for this template -->
 	<script src="/trav/js/agency.min.js"></script>
-
 
    <div id="container-sns"></div>
 	  

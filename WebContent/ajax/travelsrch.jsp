@@ -123,13 +123,13 @@
 							html+="<div class='card h-100'>";
 							html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
 								html+="<div class='caption'>"
-								
 									html+="<div class='caption-text'><a href='#'>"+$(m).find("title").text()+"</a>";
 								html+="</h4>";
 								html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p></div>";
 	   								html+="<span class='cancel'>x</span>"
 								html+="</div>"
 								html+="</div>";
+							
 				
 				}	
 
@@ -192,11 +192,11 @@
    								$items.each(function(i,m){
    									if($(m).find("title").text()==$(e.target).text().replace('+', '')){
     										html+="<div class='card h-100'>";
-    										
    												html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
 	   												html+="<div class='caption'>"
 	   													html+="<span class='cc'>x</span>"
-	   													html+="<div class='caption-text'><a href='#'>"+$(m).find("title").text()+"</a>";
+	   													html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
+	   													html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"
 															html+="</h4>";
 															html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p></div>";
 														html+="</div>"
@@ -229,9 +229,7 @@
    			});	
    		}
    	}
-
    }
-   
    
 </script>
 
@@ -246,13 +244,11 @@
 						
 			</ul>
 		</div>
-		
 	</div>
-
 		<div class="row" id="contents" style="margin: 0 auto;">
 			<!-- ajax 내용 들어가는곳 -->									
 		</div>
-
+		
 <style>
 #header>a{margin-left: 45px;}
 
@@ -345,6 +341,7 @@ p.card-text{
 	curser:pointer;
 	
 }
+
 
 </style>
 
