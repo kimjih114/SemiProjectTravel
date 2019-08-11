@@ -12,14 +12,8 @@
 User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 
 System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
-  List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
  
  Board_Question qb = new Board_Question();
- System.out.println();
-
-	
- /*//페이지 바 
- String pageBar = (String)request.getAttribute("pageBar");  */
  
 %>
 
@@ -32,7 +26,7 @@ System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 	position: absolute;
 	left:265px;
 	transition: 0.5s;
-	top:-344px;
+	top:100px;
 }
 
 #q-container .tab {
@@ -187,13 +181,11 @@ border : 1px solid gray;
 background:#fed136;}
 
 
-/* table#tbl-table, td {
-border: 1px solid;
+.form-control{
+width: 200px;
+margin-bottom: 10px;
+margin-top: 10px;
 }
-table#tbl-table{
-width: 700px;
-} */
-
 </style>
 
 <script>
@@ -211,42 +203,16 @@ $(function() {
 	});
 
 
+function qboardValidate(){
+	var content = $("[name= qboardContent]").val(); 
+	if(content.trim().length==0) {
+		alert("내용을 입력해주세요!"); 
+		return false; 
+	}
+	
+	return true;
+}
 
-
-
- $(function(){
-		$.ajax({
-			url: "<%=request.getContextPath() %>/board/controller/board/boardList.do", 
-			type: "get",
-			dataType: "json",
-			contentType: "application; charset=UTF-8",
-
-			success: function(data){
-				console.log(data);
-				
-				var $table = $("<table><tr><td>번호</td><td>제목</td><td>작성자</td><td>작성일</td><td>진행상태</td></tr></table>"); 
-					
-					$(data).each((i,qb)=>{
-						var html ="<tr>"; 
-						html +="<td>"+qb.qboardNo+"</td>"; //번호 
-						html +="<td>"+qb.qboardTitle+"</td>"; //제목
-						html +="<td>"+qb.qboardWriter+"</td>"; //작성자
-						html +="<td>"+qb.qboardDate+"</td>"; //작성일 
-						html +="<td>"+qb.qboardStatus+"</td>"; //진행상태
-						html +="</tr>"; 
-						console.log(html); 
-						$table.append(html); 
-					}); 
-					$("#tbl-board").html($table); 
-					
-				
-			},
-			error: function(jqxhr, textStatus, errorThrown){
-				console.log("ajax처리실패!");
-				console.log(jqxhr, textStatus, errorThrown);
-			}
-		});
-	});
  
  
  
@@ -259,7 +225,7 @@ $(function() {
 
  <div id="q-container">
 
-	<form action="" id="board_containerfrm">
+	<div  id="board_containerfrm">
  		<div class="sub_content">
                             <hr />
                         <div class="postscript_area">
@@ -268,9 +234,7 @@ $(function() {
                                 <li class="post_font">
                                 		업무와 관련 문의 및 요청사항을 작성하는 게시판입니다. <br />
                                 		1:1 문의는 타인에게 내용이 공개되지 않으므로 더 자세한 답변을 받을 수 있습니다. <br /> <br />
-                                		<% if(userLoggedIn ==null) {%>
-                                		문의 시 <a  id="post_font_a"   href="<%=request.getContextPath()%>/user/userLoginFrm">로그인</a>이 필요합니다. <br />
-                                		<%} %>
+                      
                                 		<br />유람은 고객님의 목소리를 소중히 여깁니다. <br />
                                 		문의주신 내용은 확인 즉시 , 빠르게 답변 드리겠습니다.  <br />
                                 		답변은 전화상담이 아닌 온라인으로만 진행됩니다.<br />
@@ -283,50 +247,53 @@ $(function() {
                         </div>
  </div>
 		<div class="board_search">
-
-			<fieldset style="padding-right:10px;">
-	
-			<%
-				 if(userLoggedIn != null) { 
-			%>
-			<input type="button" class="btn btn-secondary btn-sm" id="btn-add" value="글쓰기">				
-			<!-- 로그인한 경우 글쓰기 가능하게 하기  -->
-
-			<script>
+		
+			<form action="<%=request.getContextPath() %>/board/boardQuestionFrm" method="post"
+	      enctype="multipart/form-data">
+		<table id="tbl-board-view">
+			<tr>
+				<th>제목</th>
+				<td><input class="form-control" type="text" name="qboardTitle" required/></td>
+			</tr>		
+			<tr>
+				<th>작성자</th>
+				<td> <input class="form-control" type="text"  name="qboardWriter"
+					 value="<%=userLoggedIn.getUserId()%>" required readonly> </td>
+			</tr>		
+			<tr>
+				<th>첨부파일</th>
+				<td><input type="file" name="upFile"/></td>
+			</tr>
 			
-			$("#btn-add").on("click", function(){
-				$.ajax({
-					url: "<%=request.getContextPath() %>/ajax/board_questionForm.jsp", 
-					type: "get",
-					dataType: "html",
-					success: function(data){
-						$("#container-sns").html(data);
-					}
-					,error:function(request,status,error){
-					    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-
-					}
-				});
-			})
+					
+			<tr>
+				<th>내용</th>
+				<td>
+				<div class="input-group">
+  					<div class="input-group-prepend">
+    					<span class="input-group-text">With textarea</span>
+  					</div>
+ 					<textarea class="text-control" aria-label="With textarea" 
+ 					 		name="qboardContent"  required></textarea>	
+					</div>	 	  
+				</td>
+			</tr>		
+			<tr>
+				<th colspan="2">
+					<input type="submit" 
+						   value="등록" 
+						   onclick="return qboardValidate();"/>
+				</th>
+			</tr>		
+		
+		</table>
+	</form>
 			
-	
-			
-			</script>
-
-			<%
-				}
-			%>
-				</fieldset>
 			</div>
-			</form>
+	</div>
 
 
-			<!-- //게시판 검색폼 -->
-			<!-- board s -->
-				<div id="tbl-board">
-				
-				
-				</div>
+		
 			
 
 	</div>

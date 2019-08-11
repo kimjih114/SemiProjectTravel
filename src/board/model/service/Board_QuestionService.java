@@ -33,6 +33,7 @@ public class Board_QuestionService {
 		int result = new Board_QuestionDAO().insertQBoard(conn, bq); 
 		if(result >0) {
 			result = new Board_QuestionDAO().selectLastSeq(conn); 
+			System.out.println("insertqboard커밋?");
 			commit(conn); 
 			
 		}else 

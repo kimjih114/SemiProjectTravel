@@ -11,7 +11,7 @@ public class Board_Question implements Serializable{
 	private String qboardTitle;
 	private Date qboardDate; 
 	private int qboardReadcnt; 
-	private int qboardTravle_ref; 
+	private int qboardTravel_ref; 
 	private String qboardFileName; 
 	private String qboardNewFileName;
 	private int qboardStatus;
@@ -22,7 +22,7 @@ public class Board_Question implements Serializable{
 	}
 
 	public Board_Question(int qboardNo, String qboardWriter, String qboardContent, String qboardTitle, Date qboardDate,
-			int qboardReadcnt, int qboardTravle_ref, String qboardFileName, String qboardNewFileName,
+			int qboardReadcnt, int qboardTravel_ref, String qboardFileName, String qboardNewFileName,
 			int qboardStatus) {
 		super();
 		this.qboardNo = qboardNo;
@@ -31,7 +31,7 @@ public class Board_Question implements Serializable{
 		this.qboardTitle = qboardTitle;
 		this.qboardDate = qboardDate;
 		this.qboardReadcnt = qboardReadcnt;
-		this.qboardTravle_ref = qboardTravle_ref;
+		this.qboardTravel_ref = qboardTravel_ref;
 		this.qboardFileName = qboardFileName;
 		this.qboardNewFileName = qboardNewFileName;
 		this.qboardStatus = qboardStatus;
@@ -85,12 +85,12 @@ public class Board_Question implements Serializable{
 		this.qboardReadcnt = qboardReadcnt;
 	}
 
-	public int getQboardTravle_ref() {
-		return qboardTravle_ref;
+	public int getQboardTravel_ref() {
+		return qboardTravel_ref;
 	}
 
-	public void setQboardTravle_ref(int qboardTravle_ref) {
-		this.qboardTravle_ref = qboardTravle_ref;
+	public void setQboardTravel_ref(int qboardTravle_ref) {
+		this.qboardTravel_ref = qboardTravle_ref;
 	}
 
 	public String getQboardFileName() {
@@ -122,7 +122,7 @@ public class Board_Question implements Serializable{
 	public String toString() {
 		return "Board_Question [qboardNo=" + qboardNo + ", qboardWriter=" + qboardWriter + ", qboardContent="
 				+ qboardContent + ", qboardTitle=" + qboardTitle + ", qboardDate=" + qboardDate + ", qboardReadcnt="
-				+ qboardReadcnt + ", qboardTravle_ref=" + qboardTravle_ref + ", qboardFileName=" + qboardFileName
+				+ qboardReadcnt + ", qboardTravel_ref=" + qboardTravel_ref + ", qboardFileName=" + qboardFileName
 				+ ", qboardNewFileName=" + qboardNewFileName + ", qboardStatus=" + qboardStatus + "]";
 	}
 

@@ -57,7 +57,7 @@ public class Board_QuestionDAO {
 				qb.setQboardContent(rset.getString("qboard_content"));
 				qb.setQboardDate(rset.getDate("qboard_date"));
 				qb.setQboardReadcnt(rset.getInt("qboard_readcnt"));
-				qb.setQboardTravle_ref(rset.getInt("qboard_travel_ref"));
+				qb.setQboardTravel_ref(rset.getInt("qboard_travel_ref"));
 				qb.setQboardFileName(rset.getString("qboard_filename"));
 				qb.setQboardNewFileName(rset.getString("qboard_state"));
 				
@@ -115,11 +115,14 @@ public class Board_QuestionDAO {
 		try {
 			pstmt=conn.prepareStatement(sql);
 			
-			pstmt.setString(1, bq.getQboardTitle());
-			pstmt.setString(2, bq.getQboardWriter());		
-			pstmt.setString(3, bq.getQboardContent());		
-			pstmt.setString(4, bq.getQboardFileName());		
-			pstmt.setString(4, bq.getQboardNewFileName());		
+			
+			pstmt.setString(1, bq.getQboardWriter());		
+			pstmt.setString(2, bq.getQboardTitle());
+			pstmt.setString(3, bq.getQboardContent());
+			pstmt.setInt(4,bq.getQboardTravel_ref());
+			pstmt.setString(5, bq.getQboardFileName());		
+			pstmt.setString(6, bq.getQboardNewFileName());		
+			
 			
 			result = pstmt.executeUpdate(); 
 			

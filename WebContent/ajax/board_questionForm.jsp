@@ -32,7 +32,7 @@ System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 	position: absolute;
 	left:265px;
 	transition: 0.5s;
-	top:-344px;
+	top:100px;
 }
 
 #q-container .tab {
@@ -231,7 +231,7 @@ function qboardValidate(){
 
  <div id="q-container">
 
-	<form action="" id="board_containerfrm">
+	<div  id="board_containerfrm">
  		<div class="sub_content">
                             <hr />
                         <div class="postscript_area">
@@ -269,7 +269,9 @@ function qboardValidate(){
 			<tr>
 				<th>첨부파일</th>
 				<td><input type="file" name="upFile"/></td>
-			</tr>		
+			</tr>
+			
+					
 			<tr>
 				<th>내용</th>
 				<td>
@@ -294,7 +296,7 @@ function qboardValidate(){
 	</form>
 			
 			</div>
-	</form>
+	</div>
 
 
 		

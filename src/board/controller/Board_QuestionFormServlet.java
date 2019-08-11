@@ -66,8 +66,11 @@ public class Board_QuestionFormServlet extends HttpServlet {
 		
 		String qboardNewFileName =mReq.getFilesystemName("upFile"); 
 		String originalFileName =mReq.getOriginalFileName("upFile"); 
-		
+		int qboardtravel_ref = 0;/*Integer.parseInt(mReq.getParameter("qboard_travel_ref"));*/
 		String qboardContent=mReq.getParameter("qboardContent"); 
+		
+		int qboard_status = 0;   
+		
 		qboardContent = qboardContent.replaceAll("<", "&lt;"); 
 		qboardContent = qboardContent.replaceAll(">", "&gt;"); 
 		
@@ -76,8 +79,11 @@ public class Board_QuestionFormServlet extends HttpServlet {
 		bq.setQboardTitle(qboardTitle);
 		bq.setQboardWriter(qboardWriter);
 		bq.setQboardContent(qboardContent);
+		bq.setQboardTravel_ref(qboardtravel_ref);
 		bq.setQboardFileName(originalFileName);
 		bq.setQboardNewFileName(qboardNewFileName);
+		bq.setQboardStatus(qboard_status);
+	
 		
 		int result = new Board_QuestionService().insertQBoard(bq); 
 		
@@ -86,7 +92,7 @@ public class Board_QuestionFormServlet extends HttpServlet {
 		
 		if(result >0) {
 			msg ="게시글 등록 성공"; 
-			loc ="/ajax/"+result;   
+			loc = "/";/*"/ajax/"+result;  */  //view로 간다    
 		}else {
 			msg="게시글 등록실패"; 
 		}
