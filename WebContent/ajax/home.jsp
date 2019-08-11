@@ -145,11 +145,10 @@
 </style>
     <!-- post폼 -->
 <div id="post">post</div>
-	<form action="" name="snsImageUpload1"
-					id="snsImageUpload1"
+	<form action="" name="snsUpload"
+					id="snsUpload"
 					method="post"
-					enctype="multipart/form-data"
-					onsubmit="return false;">
+					enctype="multipart/form-data">
 	<table id="postFrm">
 		<tr>
 			<td style="font-weight: 700;">소중한 여행후기를 공유해주세요!</td>
@@ -184,14 +183,57 @@
 					<input type="radio" name="boardtype" id="locked" value="locked" />
 					<label for="locked">비공개</label>
 				<br>
-				<input type="submit" value="포스트 등록" style="float:right; margin-top : 10px;" onclick="validate();">
+				<input type="submit" id="btnSubmit" value="포스트 등록" style="float:right; margin-top : 10px;" onclick="validate();">
 			</td>
 		</tr>
 	</table>
-	</form>	
+<div id="post">post</div>
+	<form action="" name="snsUpload"
+					id="snsUpload"
+					method="post"
+					enctype="multipart/form-data">
+	<table id="postFrm">
+		<tr>
+			<td style="font-weight: 700;">소중한 여행후기를 공유해주세요!</td>
+		</tr>
+		<tr>
+			<td style="padding-bottom: 0px;">
+				<div class="travelsrch"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="reviewContent" style="font-weight: 700;">어떤 여행을 하셨나요?</label>
+				<textarea name="reviewContent" id="reviewContent" cols="59" rows="5"></textarea>
+				<div id="contentIdList">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td style="margin-bottom:3px;">
+					<label for="" style="font-weight: 700;">첨부이미지</label>
+					<span style="font-size:0.5em; color:gray;">최대 5개까지 등록 가능합니다.</span><br>
+					<input name="fileupload" id="fileupload" type="file" accept="image/*" style="margin-bottom:10px;" multiple />
+					<div style="display:table;">
+						<div class="imgs_wrap"></div>
+					</div>	
+			</td>
+		</tr>
+		<tr>
+			<td>
+					<input type="radio" name="boardtype" id="followOnly" value="followOnly" />
+					<label for="followOnly">팔로워공개</label> &nbsp;
+					<input type="radio" name="boardtype" id="locked" value="locked" />
+					<label for="locked">비공개</label>
+				<br>
+				<input type="submit" id="btnSubmit" value="포스트 등록" style="float:right; margin-top : 10px;" onclick="validate();">
+			</td>
+		</tr>
+	</table>
+	</form>		
 
 <!-- 게시글 -->
-
+<!--  
 		  <div id="tab-container">
 			<ul class="tab">
 				<li class="current" data-tab="tab1"><a>타임라인</a></li>
@@ -291,7 +333,7 @@
 				</td>
 			</tr>
 			
-	    </table>
+	    </table>-->
 		
 		
 <script>
@@ -387,27 +429,62 @@ function handleImgsFilesSelect(e){
 
 
 function validate(){
- 	var html = '';
-	if($(".contentid").length>0){
+	
+	$("#btnSubmit").click(function(event){
+		event.preventDefault();
 		
-		$(".contentid").each(function(i, elem){
+		var html = '';
+		/*if($(".contentid").length>0){
 			
-			//console.log($(this).parent().parent().parent().children('.starRev').children('.starR.on').length);
-			var grade = $(this).parent().parent().parent().children('.starRev').children('.starR.on').length;
-			    html += "<input type='hidden' id='contentId"+ (i+1) +"' name='contentId"+ (i+1) +"' value='"+$(this).text()+"' />";
-			    html += "<input type='hidden' id='contentGrade"+ (i+1) +"' name='contentGrade"+ (i+1) +"' value='"+grade+"' />";
-			});
+			$(".contentid").each(function(i, elem){
+				
+				//console.log($(this).parent().parent().parent().children('.starRev').children('.starR.on').length);
+				var grade = $(this).parent().parent().parent().children('.starRev').children('.starR.on').length;
+				    html += "<input type='hidden' id='contentId"+ (i+1) +"' name='contentId"+ (i+1) +"' value='"+$(this).text()+"' />";
+				    html += "<input type='hidden' id='contentGrade"+ (i+1) +"' name='contentGrade"+ (i+1) +"' value='"+grade+"' />";
+				});
+			}
+	 	$("#contentIdList").append(html);*/
+	 	
+	 	contentids = [];
+	 	var boardSNS = {
+				:$("#userId").val(), 
+				name:$("#userName").val(),
+				addr:$("#userAddr").val()
 		}
- 	$("#contentIdList").append(html);
+		var jsonUser = JSON.stringify(user);
+		console.log(jsonUser);
+		
+	 	$.ajax({
+			url : "<%=request.getContextPath()%>/jquery/gson/member/insert.do",
+			data : "user="+jsonUser,
+			type : "post",
+			success : function(data){
+				console.log(data);
+				var html = "<table>";
+				for(var i in data){
+					var user = data[i];						
+					html += "<tr><td>"+user.id+"</td>";
+					html += "<td>"+user.name+"</td>";
+					html += "<td>"+user.addr+"</td></tr>";
+				}
+				html+="</table>";
+				$("#area3").html(html);
+			},
+			error : function(data){
+				console.log("ajax처리실패");
+			},
+			complete: function(data){
+				$("#userId, #userName, #userAddr").val("");
+			}
+		});
+	 	
+	 	
+	 	
+	})
+	
+	
  	
- 	contentids = [];
- 	
- 	console.log($("#contentId1").val());
- 	console.log($("#contentId2").val());
- 	console.log($("#contentId3").val());
- 	console.log($("#contentGrade1").val());
- 	console.log($("#contentGrade2").val());
- 	console.log($("#contentGrade3").val());
  	
 }
 
