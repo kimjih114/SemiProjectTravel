@@ -3,15 +3,23 @@
 
  <script type="text/javascript">
  
+	var sido1;
+	var gugun1;
+	var contentids = new Array();
+
  
  function closeDiv(div){
+	 contentids.pop(contentids.indexOf($(div).next().children().html()));
 	 $(div).parent().parent().remove();
+	 console.log(contentids);
  }
  
- 
- 	var sido1;
- 	var gugun1;
- 
+ function star(span){
+	  $(span).parent().children('span').removeClass('on');
+	  $(span).addClass('on').prevAll('span').addClass('on');
+	  return false;
+ };
+
  	$("#search").on("click", function(){
  		sido1 = $("#sido1").val();
  		gugun1 = $("#gugun1").val();
@@ -104,44 +112,55 @@
    			$sel.removeClass("sel").prev().addClass("sel");
    		}
    	}
+   	
    	else if(e.key == "Enter"){
-   		
    		$(e.target).val($sel.text());
-   		
+   		$("#search").val($(e.target).text().replace('+', ''));
    		$("#autoComplete").hide().children().remove();
-   		
    		$.ajax({
-   			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jWiKAPxBpn0qOOLnL20GeajuioDso%2F0J9VPTot4BJC%2BV44P3Jxti0EMMDoZYTm3W%2F6mEHG5D8%2BqWl9MxwJF0Gg%3D%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
-   			type: "get",
-   			dataType: "xml",
-   			success:function(data){			
-   				var $root=$(data).find(":root");				
-   				var $items=$root.find("item");
-   				var html = "";
-   				
-   				if($(".h-100").length>=3){
+   			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=S0BJm1yXPPy5UgmsERf%2BnJjnz9RkRpbFJVQXS93Ql6%2B1xk5T%2FQa15nogO4%2BOrWRSf0fo7RFFcdGsODeGZ%2BW6dQ%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+				type: "get",
+				dataType: "xml",
+				success:function(data){			
+					var $root=$(data).find(":root");				
+					var $items=$root.find("item");
+					var html = "";
+					
+					
+					if($(".h-100").length>=3){
 						alert("여행지는 3개까지 등록 가능합니다.");
 						return;
 					}
-   				
-   				$items.each(function(i,m){
-						if($(m).find("title").text()==$sel.text().replace('+', '')){
+					$items.each(function(i,m){
+						console.log("작동확인"); //정상
+						
+						if($(m).find("title").text()==$(e.target).text().replace('+', '')){
+							if(contentids.length>0){
+								  if(contentids.indexOf($(m).find("contentid").text())!=-1){
+									  alert("이미 추가된 여행지입니다.");
+									  return;
+								  }
+							}
 							html+="<div class='card h-100'>";
-								html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
-									html+="<div class='caption'>"
-										html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
-										html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
-										html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"
-										html+="</h4>";
-										html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p></div>";
-									html+="</div>"
-									html+="</div>";
-							
+									html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+										html+="<div class='caption'>"
+											html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
+											html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
+											html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"
+											html+="</h4>";
+											html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p></div>";
+										html+="</div>"
+										html+="</div>";
+										
+						
+								contentids.push($(m).find("contentid").text());		
+								console.log($(contentids));
+		
+						}	
 				
-				}	
-
 			});
-			$("#contents").append(html);
+   			
+			 $("#contents").append(html);
 			 $("#search").val('');
    			},
    			error:function(jqxhr,textStatus,errorThrown){
@@ -157,7 +176,7 @@
    			return;
    		}else{
    			$.ajax({
-   				url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jWiKAPxBpn0qOOLnL20GeajuioDso%2F0J9VPTot4BJC%2BV44P3Jxti0EMMDoZYTm3W%2F6mEHG5D8%2BqWl9MxwJF0Gg%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   				url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=S0BJm1yXPPy5UgmsERf%2BnJjnz9RkRpbFJVQXS93Ql6%2B1xk5T%2FQa15nogO4%2BOrWRSf0fo7RFFcdGsODeGZ%2BW6dQ%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    				type: "get",
    				dataType: "xml",
    				success:function(data){
@@ -184,7 +203,7 @@
    						$("#autoComplete").hide().children().remove();
    						
    						$.ajax({
-   							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=jWiKAPxBpn0qOOLnL20GeajuioDso%2F0J9VPTot4BJC%2BV44P3Jxti0EMMDoZYTm3W%2F6mEHG5D8%2BqWl9MxwJF0Gg%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=S0BJm1yXPPy5UgmsERf%2BnJjnz9RkRpbFJVQXS93Ql6%2B1xk5T%2FQa15nogO4%2BOrWRSf0fo7RFFcdGsODeGZ%2BW6dQ%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    							type: "get",
    							dataType: "xml",
    							success:function(data){			
@@ -192,28 +211,49 @@
    								var $items=$root.find("item");
    								var html = "";
    								
+   								console.log($items);
+   								
    								if($(".h-100").length>=3){
    									alert("여행지는 3개까지 등록 가능합니다.");
    									return;
    								}
    								$items.each(function(i,m){
+   									console.log("작동확인"); //정상
+   									
    									if($(m).find("title").text()==$(e.target).text().replace('+', '')){
+   										if(contentids.length>0){
+   	   									  if(contentids.indexOf($(m).find("contentid").text())!=-1){
+   	   										  alert("이미 추가된 여행지입니다.");
+   	   										  return;
+   	   									  }
+   										}
     										html+="<div class='card h-100'>";
    												html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
 	   												html+="<div class='caption'>"
 	   													html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
 	   													html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
-	   													html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"
-															html+="</h4>";
-															html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p></div>";
+	   														html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
+															html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
+														html+="</div>";
+													html+="</div>";
+													html+="<div class='starRev'>";
+														html+="<span class='starR on' onclick='star(this);'>별1</span>";
+														html+="<span class='starR' onclick='star(this);'>별2</span>";
+														html+="<span class='starR' onclick='star(this);'>별3</span>";
+														html+="<span class='starR' onclick='star(this);'>별4</span>";
+														html+="<span class='starR' onclick='star(this);'>별5</span>";
 														html+="</div>"
    													html+="</div>";
+   													
+   									
+   											contentids.push($(m).find("contentid").text());		
+   											console.log($(contentids));
    					
    									}	
    					
    								});
    								$("#contents").append(html);
-   							 $("#search").val('');
+   							    $("#search").val('');
    							},
    							error:function(jqxhr,textStatus,errorThrown){
    								
@@ -246,7 +286,7 @@
 		<select name="sido1" id="sido1"></select>
 		<select name="gugun1" id="gugun1"></select>
 		<div id="searchFrm">
-			<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="27" /> 
+			<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="30" /> 
 			<ul id="autoComplete" style="z-index:99;">
 						
 			</ul>
@@ -257,6 +297,7 @@
 		</div>
 		
 <style>
+
 #header>a{margin-left: 45px;}
 
 
@@ -266,7 +307,7 @@
 #autoComplete{
 	display: none;
 	background: white;
-	min-width: 222px;
+	min-width: 253px;
 	border: 1px solid gray;
 	position: absolute;
 	top: 22px;
@@ -291,23 +332,34 @@
 	display: inline;
 	position: relative;
 }
+#contents{
+padding: 0 10px;
+text-align: center;
+}
 #contents .card-img-top, .goInfo{
-width: 165px; height:  165px;
+width: 150px; height:  150px;
 position: relative;
 }
 .card-img-top{
 	border: 1px black solid;
-	width: 165px;
-	height: 165px;
+	width: 150px;
+	height: 150px;
 }
 
 .h-100{
-width: 165px;
+width: 150px;
+border: 1px solid transparent;
+padding: 0 2px;
+
+}
+
+.card-text{
+	font-size: 0.8em;
 }
 
 div.caption{
 	display:block;
-	width: 165px; height: 165px;
+	width: 150px; height: 150px;
 	position: absolute;
     top:0px;
     padding: 0px;
@@ -333,8 +385,8 @@ p.card-text{
 }
 
 .caption-text{
-	width: 165px;
-	height: 165px;
+	width: 150px;
+	height: 150px;
 	text-align: center;
 	display:table-cell;
 	vertical-align: middle;
@@ -343,18 +395,24 @@ p.card-text{
 .cc{
 	position: absolute;
 	color:#fec503;
-	top:2px;
-	left:146px;
+	top:1px;
+	left:135px;
 	curser:pointer;
 	
 }
+.starR{
+  background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+  background-size: auto 100%;
+  width: 30px;
+  height: 30px;
+  display:table-cell;
+  text-indent: -9999px;
+  cursor: pointer;
+}
+.starR.on{background-position:0 0;}
 
-
+.starRev{
+	margin:0 auto;
+}
 </style>
 
-<script>
-$(".cc").click(function(){
-	console.log("흠..");
-})
-
-</script>

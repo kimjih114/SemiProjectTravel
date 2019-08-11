@@ -141,40 +141,14 @@ public class SNSDAO {
 				
 				profileSNS.setUserId(rset.getString("user_id"));
 				profileSNS.setUserNickname(rset.getString("user_nickname"));
-				if(rset.getString("user_introduce")!=null) {
-					profileSNS.setUserIntroduce(rset.getString("user_introduce"));
-				} else {
-					profileSNS.setUserIntroduce("안녕하세요. 저는 " + rset.getString("user_nickname") +"입니다.");
-					
-				}
-				if(rset.getString("profile_original_filename")!=null) {
-					profileSNS.setProfileOriginalFilename(rset.getString("profile_original_filename"));
-				} else {
-					
-				}
+				profileSNS.setUserIntroduce(rset.getString("user_introduce"));
+				profileSNS.setProfileOriginalFilename(rset.getString("profile_original_filename"));
+				profileSNS.setProfileRenamedFilename(rset.getString("profile_renamed_filename"));
+				profileSNS.setHeaderOriginalFilename(rset.getString("header_original_filename"));
+				profileSNS.setHeaderRenamedFilename(rset.getString("header_renamed_filename"));
+				profileSNS.setHeaderText(rset.getString("header_text"));
+				profileSNS.setThemeColor(rset.getString("theme_color"));
 		
-				if(rset.getString("profile_renamed_filename")!=null) {
-					profileSNS.setProfileRenamedFilename(rset.getString("profile_renamed_filename"));
-				}
-				if(rset.getString("header_original_filename")!=null) {
-					profileSNS.setHeaderOriginalFilename(rset.getString("header_original_filename"));
-				}
-				if(rset.getString("header_renamed_filename")!=null) {
-					profileSNS.setHeaderRenamedFilename(rset.getString("header_renamed_filename"));
-				}
-				
-				if(rset.getString("header_text")!=null) {
-					profileSNS.setHeaderText(rset.getString("header_text"));
-				} else {
-					profileSNS.setHeaderText(rset.getString("user_nickname")+"의 홈");
-				}
-				
-				if(rset.getString("theme_color")!=null) {
-					profileSNS.setThemeColor(rset.getString("theme_color"));
-				} else {
-					profileSNS.setThemeColor("#fed136");
-				}
-				
 			}
 			
 		} catch (SQLException e) {

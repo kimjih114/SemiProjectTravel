@@ -2,7 +2,23 @@
     pageEncoding="UTF-8"%>
 
 <style>
-
+#rightNav {
+    text-align: center;
+    top: 10px;
+    left: 769px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    /*display: fixed;*/
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 230px;
+    /*height: 100vh;*/
+	border: 1px solid;
+ 	position: absolute;
+    
+}
 
 #tab-container {
 	width:540px;
@@ -122,6 +138,8 @@
 
 .imgs{
 	display: table-cell;
+	max-width: 100px;
+	font-size:0.8em;
 }
 
 </style>
@@ -138,7 +156,7 @@
 		</tr>
 		<tr>
 			<td style="padding-bottom: 0px;">
-				<div class="travelsrch" style="float: left;"></div>
+				<div class="travelsrch"></div>
 			</td>
 		</tr>
 		<tr>
@@ -161,20 +179,18 @@
 		</tr>
 		<tr>
 			<td>
+					<input type="radio" name="boardtype" id="followOnly" value="followOnly" />
+					<label for="followOnly">팔로워공개</label> &nbsp;
+					<input type="radio" name="boardtype" id="locked" value="locked" />
+					<label for="locked">비공개</label>
+				<br>
 				<input type="submit" value="포스트 등록" style="float:right; margin-top : 10px;" onclick="validate();">
 			</td>
 		</tr>
 	</table>
 	</form>	
 
-
-
-
-
 <!-- 게시글 -->
-
-
-
 
 		  <div id="tab-container">
 			<ul class="tab">
@@ -188,7 +204,7 @@
 					<table class="timeline-board-sns">
 						<tr>
 							<td class="timeline-boardcontent-sns"><img src="<%=request.getContextPath() %>/img/profile.jpg" class="header-profile-circle"  width="30" height="30" />
-							    <span style="font-weight:600">@닉네임</span>님이 리뷰를 남기셨습니다.
+							    <span style="font-weight:600">@닉네임 </span><span style="font-size:0.8em; color:gray;">2019/08/11</span>
 							  	<span style="float:right;">메뉴</span>
 						</tr>
 						<tr>
@@ -259,6 +275,25 @@
 					<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
 				</div>
 		</div>
+		
+		<table id="rightNav">
+			<tr>
+				<td><input type="search" id="searchSNS" placeholder="검색" onfocus='popupSearchFrm' /></td>
+			</tr>
+			<tr>
+				<td>
+					<span>추천팔로워</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span>추천리뷰</span>
+				</td>
+			</tr>
+			
+	    </table>
+		
+		
 <script>
 $(()=>{
 	location.href="#"
@@ -275,6 +310,16 @@ $(function() {
 });
 	
 $("#post").click(function(){
+
+ 	contentids = [];
+	
+	if($("#postFrm").css('display')=='block'){
+		$("#postFrm").css('display', 'none');
+		$("#tab-container").css("opacity", "1");
+		return;
+	}
+	
+	
 	$("#postFrm").css('display', 'block');
 	$("#tab-container").css("opacity", "0.5");
 	$.ajax({
@@ -342,16 +387,33 @@ function handleImgsFilesSelect(e){
 
 
 function validate(){
-	
  	var html = '';
 	if($(".contentid").length>0){
+		
 		$(".contentid").each(function(i, elem){
-			    html += "<input type='hidden' name='contentId"+ (i+1) +"' value='"+$(this).text()+"' />";
+			
+			//console.log($(this).parent().parent().parent().children('.starRev').children('.starR.on').length);
+			var grade = $(this).parent().parent().parent().children('.starRev').children('.starR.on').length;
+			    html += "<input type='hidden' id='contentId"+ (i+1) +"' name='contentId"+ (i+1) +"' value='"+$(this).text()+"' />";
+			    html += "<input type='hidden' id='contentGrade"+ (i+1) +"' name='contentGrade"+ (i+1) +"' value='"+grade+"' />";
 			});
 		}
  	$("#contentIdList").append(html);
- 		
+ 	
+ 	contentids = [];
+ 	
+ 	console.log($("#contentId1").val());
+ 	console.log($("#contentId2").val());
+ 	console.log($("#contentId3").val());
+ 	console.log($("#contentGrade1").val());
+ 	console.log($("#contentGrade2").val());
+ 	console.log($("#contentGrade3").val());
+ 	
 }
+
+
+
+
 
 
 

@@ -2,8 +2,10 @@
 <%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
-<%
+<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>    
+<!DOCTYPE html>
+<html lang="ko">
+<%   
 
 	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
 
@@ -144,7 +146,7 @@ function introModify(){
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
        		<div id="headerFrm">
-				<span id="headerBefore"><%=profileSNS.getHeaderText() %></span>
+				<span id="headerBefore"><%=profileSNS.getHeaderText()!=null? profileSNS.getHeaderText() : profileSNS.getUserNickname()+"의 홈" %></span>
 				<button id="headerBeforeBtn" onclick="updateHeaderText();" style='margin-left:10px;'>edit</button>
 			</div>
         </div>
@@ -160,18 +162,13 @@ function introModify(){
 	      	<button id="nickBeforeBtn" onclick="updateNickName();">edit</button>
 	      </div>
 	      <div id="introFrm" style="margin: 10px 0 50px;">
-				<span id="introBefore"><%=profileSNS.getUserIntroduce() %></span>
+				<span id="introBefore"><%=profileSNS.getUserIntroduce()!=null? profileSNS.getUserIntroduce(): "안녕하세요. 저는 " + profileSNS.getUserNickname() +"입니다." %></span>
 				<button id="introBeforeBtn" onclick="updateIntroduce();">edit</button>
 		 </div>
 	   </div>
 	    <table class="tbl-usermenu">
 	   		<tr>
 	   			<td id="gohome">홈</td>
-	   		</tr>
-	   	</table>
-	   <table class="tbl-usermenu">
-	   		<tr>
-	   			<td>알림</td>
 	   		</tr>
 	   	</table>
 	   	<table class="tbl-usermenu">
@@ -216,7 +213,7 @@ function introModify(){
 #profile-header{
 	padding-bottom: 20px;
 	margin: 0;
-	background-color:<%=profileSNS.getThemeColor() %>;
+	background-color:<%=profileSNS.getThemeColor()!=null? profileSNS.getThemeColor() : "#fed136" %>;
 } 
   
   
@@ -233,7 +230,7 @@ function introModify(){
     flex-direction: column;
     width: 210px;
     /*height: 100vh;*/
-    background:<%=profileSNS.getThemeColor() %>; 
+    background:<%=profileSNS.getThemeColor()!=null? profileSNS.getThemeColor() : "#fed136" %>; 
     /*min-width: 250px;*/
     
 }

@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/story/sidenav.jsp" %>
+
 <!-- Bootstrap core CSS -->
  <link href="/trav/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -34,26 +35,6 @@
 	  
  </section>
  
- <nav id="rightbar"></nav>
- 
- <style>
- #rightbar{
-   text-align: center;
-    top: 0;
-    left: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    /*display: fixed;*/
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    width: 210px;
-    /*height: 100vh;*/
-    background: #fed136; 
-    /*min-width: 250px;*/
- }
- </style>
  <script>
 	$(function() {
 	$('ul.tab li').click(function() {
