@@ -72,4 +72,15 @@ public class TravelService {
 		close(conn);
 		return room;
 	}
+
+	public int reservationInsert(RoomReservation r) {
+		Connection conn=getConnection();
+		int result=new TravelDAO().reservationInsert(conn,r);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
 }

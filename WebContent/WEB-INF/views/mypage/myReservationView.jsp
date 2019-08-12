@@ -234,7 +234,7 @@ section#page-top{
   						<tr>
   							<td><%=room.get(i).getTravelName() %></td>
   							<td><%=room.get(i).getRoomName() %></td>
-  							<td><%=room.get(i).getReservationStartDate() %></td>
+  							<td><%=room.get(i).getReservationStartDate() %>~<%=room.get(i).getReservationEndDate() %></td>
   							<td><%=room.get(i).getPrice() %></td>
   							<td><%=room.get(i).getPaymentDate()%></td>
   						</tr>

@@ -307,4 +307,29 @@ public class TravelDAO {
 		}
 		return room;
 	}
+
+	public int reservationInsert(Connection conn, RoomReservation r) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("reservationInsert");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, r.getUserId());
+			pstmt.setString(2, r.getContentId());
+			pstmt.setString(3, r.getTravelName());
+			pstmt.setString(4, r.getRoomName());
+			pstmt.setString(5, r.getReservationStartDate());
+			pstmt.setString(6, r.getReservationEndDate());
+			pstmt.setString(7, r.getFriendId());
+			pstmt.setInt(8, r.getPrice());			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

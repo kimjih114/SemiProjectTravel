@@ -14,6 +14,8 @@
 <%
 	String contentId=request.getParameter("contentId");
 	String contentTypeId=request.getParameter("contentTypeId");
+	String title=request.getParameter("title");
+	System.out.println(title);
 	Date date=new Date();
 	System.out.println(date.getMonth()+1); //현재 월
 %>
@@ -164,6 +166,7 @@
 								html1+="<p>객실소개:"+$(m).find("roomintro").text()+"</p>";
 								html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
 								html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";
+								html1+="<input type='hidden' id='roomTitle' value='"+$(m).find("roomtitle").text()+"'>";
 								<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
 								html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()+");'>가격:"+$(m).find("roomoffseasonminfee2").text()+"원 예약하기</button></h3>";
 								<%}else{%>
@@ -193,7 +196,8 @@
 							html1+="<p>기준인원:"+$(m).find("roommaxcount").text()+"</p>";
 							html1+="<p>객실소개:"+$(m).find("roomintro").text()+"</p>";
 							html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
-							html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";
+							html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";							
+							html1+="<input type='hidden' id='roomTitle' value='"+$(m).find("roomtitle").text()+"'>";					
 							<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
 							html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()+");'>가격:"+$(m).find("roomoffseasonminfee2").text()+"원 예약하기</button></h3>";
 							<%}else{%>
@@ -310,11 +314,17 @@
 	}
 	
 	function rsvCheck(price){
-		var IMP = window.IMP;
+		
+		
+		var roomTitle=$("#roomTitle").val();
+		var startDate=$("#sdate").val();
+		var endDate=$("#edate").val();
+		var friendId=$("#search").val();
+
+		location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
+		<%-- var IMP = window.IMP;
 		IMP.init('imp68757717');
-		
-		console.log($("#search").val());
-		
+
 		IMP.request_pay({
 		    pg : 'inicis',
 		    pay_method : 'card',
@@ -339,8 +349,14 @@
 		        msg += '에러내용 : ' + rsp.error_msg;
 		    }
 		    alert(msg);
-		    location.href="<%=request.getContextPath()%>/mypage/myReservationView";
-		});
+		    
+		    var roomTitle=$("#roomTitle").val();
+			var startDate=$("#sdate").val();
+			var endDate=$("#edate").val();
+			var friendId=$("#search").val();
+		    
+		    location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
+		}); --%>
 	}
 </script>
 <style>

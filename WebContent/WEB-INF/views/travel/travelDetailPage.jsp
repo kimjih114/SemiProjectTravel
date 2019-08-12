@@ -29,6 +29,7 @@
 						html1+="</div>";
 						html1+="<div class='col-lg-5'>";
 						html1+="<h1 class='font-weight-light'>"+$(m).find("title").text()+"</h1>";
+						html1+="<input type='hidden' id='title' value='"+$(m).find("title").text()+"'>";
 						html1+="<p>"+$(m).find("addr1").text()+"</p>";
 						html1+="</div>";													
 					
@@ -46,7 +47,9 @@
 	});
 	
 	function reservationForm(){
-		location.href="<%=request.getContextPath()%>/travel/reservationForm?contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
+		var title=$("#title").val();
+		
+		location.href="<%=request.getContextPath()%>/travel/reservationForm?contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>&title="+title;
 	}
 </script>
 </head>
