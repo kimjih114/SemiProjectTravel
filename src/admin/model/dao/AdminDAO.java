@@ -67,7 +67,6 @@ public class AdminDAO {
 				u.setUserDefaultActivity(rset.getString("user_default_activity"));
 				u.setUserEnrollDate(rset.getDate("user_enrolldate"));
 				list.add(u);
-				System.out.println("user"+u);
 			}
 		}
 		catch(Exception e) {
@@ -104,6 +103,193 @@ public class AdminDAO {
 		}
 		
 		return totalContents;
+	}
+	public List<User> selectUserByUserId(Connection conn, String searchKeyword, int cPage, int numPerPage) {
+		List<User> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectPagedUserByUserID");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,"%"+searchKeyword+"%");
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				User u = new User();
+				u.setUserId(rset.getString("user_id"));//db에 사용자 정보를 가져오기    
+				u.setUsernickName(rset.getString("user_nickname"));
+				u.setUserPassword(rset.getString("user_password"));
+				u.setUserName(rset.getString("user_name"));
+				u.setUserGender(rset.getString("user_gender"));
+				u.setUserBirth(rset.getDate("user_birth"));
+				u.setUserEmail(rset.getString("user_email"));
+				u.setUserPhone(rset.getString("user_phone"));
+				u.setFileName(rset.getString("user_filename"));
+				u.setUserType(rset.getString("user_type"));
+				u.setUserDefaultPlace(rset.getString("user_default_place"));
+				u.setUserDefaultActivity(rset.getString("user_default_activity"));
+				u.setUserEnrollDate(rset.getDate("user_enrolldate"));
+				list.add(u);		
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	public List<User> selectUSerByUserName(Connection conn, String searchKeyword, int cPage, int numPerPage) {
+		List<User> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectPagedUserByUserName");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+searchKeyword+"%");
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				User u = new User();
+				u.setUserId(rset.getString("user_id"));//db에 사용자 정보를 가져오기    
+				u.setUsernickName(rset.getString("user_nickname"));
+				u.setUserPassword(rset.getString("user_password"));
+				u.setUserName(rset.getString("user_name"));
+				u.setUserGender(rset.getString("user_gender"));
+				u.setUserBirth(rset.getDate("user_birth"));
+				u.setUserEmail(rset.getString("user_email"));
+				u.setUserPhone(rset.getString("user_phone"));
+				u.setFileName(rset.getString("user_filename"));
+				u.setUserType(rset.getString("user_type"));
+				u.setUserDefaultPlace(rset.getString("user_default_place"));
+				u.setUserDefaultActivity(rset.getString("user_default_activity"));
+				u.setUserEnrollDate(rset.getDate("user_enrolldate"));
+				list.add(u);		
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	public List<User> selectUSerByUserPhone(Connection conn, String searchKeyword, int cPage, int numPerPage) {
+		List<User> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectPagedUserByUserPhone");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+searchKeyword+"%");
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				User u = new User();
+				u.setUserId(rset.getString("user_id"));//db에 사용자 정보를 가져오기    
+				u.setUsernickName(rset.getString("user_nickname"));
+				u.setUserPassword(rset.getString("user_password"));
+				u.setUserName(rset.getString("user_name"));
+				u.setUserGender(rset.getString("user_gender"));
+				u.setUserBirth(rset.getDate("user_birth"));
+				u.setUserEmail(rset.getString("user_email"));
+				u.setUserPhone(rset.getString("user_phone"));
+				u.setFileName(rset.getString("user_filename"));
+				u.setUserType(rset.getString("user_type"));
+				u.setUserDefaultPlace(rset.getString("user_default_place"));
+				u.setUserDefaultActivity(rset.getString("user_default_activity"));
+				u.setUserEnrollDate(rset.getDate("user_enrolldate"));
+				list.add(u);		
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	public int selectUserCountByUserId(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		int totalUser = 0;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectUserCountByUserId");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,"%"+searchKeyword+"%");
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				totalUser = rset.getInt("cnt");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalUser;
+	}
+	public int selectUserCountByUserName(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		int totalUser = 0;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectUserCountByUserName");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,"%"+searchKeyword+"%");
+			
+			rset  = pstmt.executeQuery();
+			while(rset.next()) {
+				totalUser = rset.getInt("cnt");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalUser;
+	}
+	public int selectUserCountByUserPhone(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		int totalUser = 0;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectUserCountByUserPhone");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+searchKeyword+"%");
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				totalUser = rset.getInt("cnt");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalUser;
 	}
 
 }

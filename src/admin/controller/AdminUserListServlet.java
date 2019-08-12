@@ -15,7 +15,7 @@ import user.model.vo.User;
 /**
  * Servlet implementation class AdminUserListServlet
  */
-@WebServlet("/admin/adminuserListView.do")
+@WebServlet("/admin/adminUserList")
 public class AdminUserListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -64,7 +64,7 @@ public class AdminUserListServlet extends HttpServlet {
 			pageBar += "<span>[이전]</span>";
 		}
 		else {
-			pageBar +="<a href='"+request.getContextPath()+"/admin/adminuserListView.do?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'>[이전]</a>";
+			pageBar +="<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'>[이전]</a>";
 		}
 		
 		while(pageNo<=pageEnd && pageNo <= totalPage) {
@@ -72,7 +72,7 @@ public class AdminUserListServlet extends HttpServlet {
 				pageBar +="<span class='cPage'>"+pageNo+"</span>";
 			}
 			else {
-				pageBar +="<a href='"+request.getContextPath()+"/admin/adminuserListView.do?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a>";
+				pageBar +="<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a>";
 			}
 			
 			pageNo++;
@@ -82,8 +82,10 @@ public class AdminUserListServlet extends HttpServlet {
 			pageBar += "<span>[다음]</span>";
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/adminuserListView.do?cPage="+pageNo+"&numPerPage="+numPerPage+"'>[다음]</a>";
+			pageBar += "<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>[다음]</a>";
 		}
+		
+		System.out.println("pageBar="+pageBar);
 		
 		request.setAttribute("list",list);
 		request.setAttribute("pageBar", pageBar);

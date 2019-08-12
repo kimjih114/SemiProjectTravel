@@ -209,9 +209,6 @@ p.userprofile-userId{
   	</div>
   </article> 
  </section>
- 
- 
- 
 
 </body>
 </html>

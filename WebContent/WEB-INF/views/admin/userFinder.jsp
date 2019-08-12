@@ -2,14 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%
-	List<User> list=(List<User>)request.getAttribute("list");
+	List<User> list = (List<User>)request.getAttribute("list");
+	String searchType = request.getParameter("searchType");
+	String searchKeyword = request.getParameter("searchKeyword");
 	String pageBar = (String)request.getAttribute("pageBar");
-	int numPerPage = (int)request.getAttribute("numPerPage");
-	System.out.println("numPerpage"+numPerPage);
 %>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
-<link rel="stylesheet" href="selectbox.min.css">
-<script src="selectbox.min.js"></script>
 
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -40,23 +38,8 @@
 
 <script>
 
-$(()=>{
-	$("#numPerPage").on("change",()=>{
-		$("#numPerPageFrm").submit();
-	});
-	
-	
-	$("#searchType").on("change", (e)=>{
-		var type = $(e.target).val();
-		
-		$(".searchFrm").hide();
-		$("#search-"+type).css('display','inline-block');
-		
-	});
-	
-	
-});
 
+$(()=>{
 	$("#modifyUserInfo").click(function(){
 		$.ajax({
 	        type : "GET",
@@ -69,11 +52,19 @@ $(()=>{
 	          $('#Context').html(data);
 	        }
 	 
-	  });
-	
+	      });
+	})
 })
 
-
+$(()=>{
+	$("#searchType").on("change", (e)=>{
+		var type = $(e.target).val();
+		
+		$(".searchFrm").hide();
+		$("#search-"+type).css('display','inline-block');
+		
+	});
+});
 </script>
   <style>
 .page-top{
@@ -196,17 +187,11 @@ section#page-top{
 #content table tr:nth-child(2n){
 	background-color:#f7f2eb;
 }
-div#search-container{
-	margin : 0 0 10px;
-	padding : 3px;
-}
-div#search-userId{display: inline-block;}
-div#search-userName{display: none;}
-div#search-userPhone{display:none;}
-numPerPage{
-	float : right;
-}
 
+
+div#search-userId{display: <%="userId".equals(searchType)?"inline-block":"none"%>;}
+div#search-userName{display: <%="userName".equals(searchType)?"inline-block":"none"%>;}
+div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"none"%>;}
 </style>
   
  <header class="masthead" style="height:300px;">
@@ -266,6 +251,7 @@ numPerPage{
   				<input type="search"
   					  name="searchKeyword"
   					  size="25"
+  					  value="<%="userId".equals(searchType)?searchKeyword:"" %>"
   					  placeholder="검색할 아이디를 입력하세요."/>
   				<input type="submit" value="검색"/>  
   			</form>
@@ -278,6 +264,7 @@ numPerPage{
   				<input type="search"
   					  name="searchKeyword"
   					  size="25"
+  					   value="<%="userName".equals(searchType)?searchKeyword:"" %>"
   					  placeholder="검색할 회원명을 입력하세요."/>
   				<input type="submit" value="검색"/>  
   			</form>
@@ -290,26 +277,14 @@ numPerPage{
   				<input type="search"
   					  name="searchKeyword"
   					  size="25"
+  					   value="<%="userPhone".equals(searchType)?searchKeyword:"" %>"
   					  placeholder="검색할 핸드폰 번호를 입력하세요."/>
   				<input type="submit" value="검색"/>  
   			</form>
   			</div>
   			</div>
-  		<div id="numPerPage-container" class="wrapper">
-  		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
-  		페이지 당 회원 수 
-  		<select name="numPerPage" id="numPerPage">
-  			<option value="20" <%=numPerPage==20?"selected":"" %>>20</option>
-  			<option value="10" <%=numPerPage==10?"selected":"" %>>10</option>
-  			<option value="5" <%=numPerPage==5?"selected":"" %>>5</option>
-  		</select>
-  		</form>
-  		
-  		
-  		
-  		
   		</div>
-  		</div>
+  		
   		<table id="tbl-user">
   			<thead>
   			<tr>
@@ -333,7 +308,7 @@ numPerPage{
   			%>
   			<tr>
   				<td>
-  					<a href="<%=request.getContextPath()%>/user/userUpdateView?userId=<%=u.getUserId()%>">
+  					<a href="<%=request.getContextPath()%>/user/userView?userId=<%=u.getUserId()%>">
   					<%=u.getUserId() %></a>
   				</td>
   				<td><%=u.getUsernickName() %></td>
@@ -358,15 +333,6 @@ numPerPage{
  
 
 <style>
-
-#numPerPageFrm{
-	text-align : center;
-}
-#numPerPage{
-	border-color : orange;
-	size : 20px;
-}
-
 #travelName{
 text-align : center;
 }

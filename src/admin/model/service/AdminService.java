@@ -1,6 +1,7 @@
 package admin.model.service;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.List;
@@ -24,6 +25,47 @@ public class AdminService {
 		int totalContents = new AdminDAO().selecTotalContents(conn);
 		close(conn);
 		return totalContents;
+	}
+
+	public List<User> selectUserByUserId(String searchKeyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<User> list = new AdminDAO().selectUserByUserId(conn,searchKeyword,cPage,numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<User> selectUserByUserName(String searchKeyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<User> list = new AdminDAO().selectUSerByUserName(conn,searchKeyword, cPage, numPerPage);
+		return list;
+	}
+
+	public List<User> selectUSerByUserPhone(String searchKeyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<User> list = new AdminDAO().selectUSerByUserPhone(conn, searchKeyword, cPage,numPerPage);
+		
+		return list;
+	}
+
+	public int selectUserCountByUserId(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalUser = new AdminDAO().selectUserCountByUserId(conn, searchKeyword);
+		close(conn);
+		return totalUser;
+	}
+
+	public int selectUserCountByUserName(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalUser = new AdminDAO().selectUserCountByUserName(conn, searchKeyword);
+		close(conn);
+		return totalUser;
+	}
+
+	public int selectUserCountByUserPhone(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalUser = new AdminDAO().selectUserCountByUserPhone(conn,searchKeyword);
+		close(conn);
+		return totalUser;
 	}
 
 }
