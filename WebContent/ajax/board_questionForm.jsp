@@ -11,7 +11,6 @@
 
 User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 
-System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
   List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
  
  Board_Question qb = new Board_Question();

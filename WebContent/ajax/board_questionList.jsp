@@ -10,7 +10,7 @@
 
 User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 
-System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
+
   List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
  
  Board_Question qb = new Board_Question();
@@ -225,7 +225,7 @@ $(function() {
 
 
 
-
+ var num; 
 
  $(function(){
 		$.ajax({
@@ -242,12 +242,13 @@ $(function() {
 					$(data).each((i,qb)=>{
 						var html ="<tr>"; 
 						html +="<td>"+qb.qboardNo+"</td>"; //번호 
-						html +="<td><div class='title'>"+qb.qboardTitle+"</div></td>"; //제목
+						html +="<td><a id='go-view'>"+qb.qboardTitle+"</a></td>"; //제목
 						html +="<td>"+qb.qboardWriter+"</td>"; //작성자
 						html +="<td>"+qb.qboardDate+"</td>"; //작성일 
 						html +="<td>"+qb.qboardStatus+"</td>"; //진행상태
 						html +="</tr>"; 
-						console.log(html); 
+						
+						console.log(data[i].qboardNo);
 						$table.append(html); 
 					}); 
 					$("#tbl-board").html($table); 
@@ -261,23 +262,24 @@ $(function() {
 		});
 	});
  
- 
- $('.container').click(function(){
-		
+ $("#go-view").on("click", function(){
 		$.ajax({
-			url: "<%=request.getContextPath() %>/ajax/board_questionView.do?", 
-			type: "get",
+			url:"<%=request.getContextPath() %>/ajax/board_questionView.do?qboardNo=qb.qboardNo", 
+			type: "post",
 			dataType: "html",
 			success: function(data){
 				$("#tbl-board").html(data);
-			},
-			error: function(jqxhr, textStatus, errorThrown){
-				console.log("ajax처리실패!");
-				console.log(jqxhr, textStatus, errorThrown);
+			}
+			,error:function(request,status,error){
+			    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
 			}
 		});
-		
 	})
+	
+ 
+ 
+
  
 	
 	

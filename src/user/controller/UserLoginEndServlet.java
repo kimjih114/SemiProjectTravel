@@ -59,17 +59,12 @@ public class UserLoginEndServlet extends HttpServlet {
 		
 		
 	
-		
-		
 		//업무로직 
 		int result = new UserService().loginCheck(user);
-		System.out.println("result@loginendServlet="+result);
 		
 
-		
-		
 		String view ="";
-		System.out.println("로그인 서블렛");
+	
 		if(result == UserService.LOGIN_OK) {
 			view = "/index.jsp";   //로그인 성공시      Index페이지로 
 			
@@ -93,8 +88,7 @@ public class UserLoginEndServlet extends HttpServlet {
 				response.addCookie(c);
 			}
 			
-			
-			
+		
 			request.setAttribute("userLoggedIn", userLoggedIn);
 			
 		
