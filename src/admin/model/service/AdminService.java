@@ -11,15 +11,15 @@ import user.model.vo.User;
 
 public class AdminService {
 
-	public List<User> selectMemberList() {
+	public List<User> selectUserList(int cPage, int numPerPage) {
 		Connection conn = getConnection();
 		List<User> list 
-			= new AdminDAO().selectMemberList(conn);
+			= new AdminDAO().selectMemberList(conn,cPage, numPerPage);
 		close(conn);
 		return list;
 	}
 
-	public int selecTotalContents() {
+	public int selectTotalContents() {
 		Connection conn = getConnection();
 		int totalContents = new AdminDAO().selecTotalContents(conn);
 		close(conn);

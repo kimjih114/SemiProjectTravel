@@ -33,7 +33,7 @@ public class AdminDAO {
 			e.printStackTrace();
 		}
 	}
-	public List<User> selectMemberList(Connection conn) {
+	public List<User> selectMemberList(Connection conn,int cPage, int numPerPage) {
 		List<User> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -42,6 +42,12 @@ public class AdminDAO {
 		try {
 			//미완성쿼리객체생성
 			pstmt = conn.prepareStatement(sql);
+			
+			int start = (cPage-1)*numPerPage+1;
+			int end = cPage * numPerPage;
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
 			//쿼리실행
 			rset = pstmt.executeQuery();
 			
