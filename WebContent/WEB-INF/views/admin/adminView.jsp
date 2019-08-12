@@ -196,7 +196,7 @@ section#page-top{
    		<td id="modifyUserInfo">관리자 정보 수정</td>
    	</tr>
 	<tr>
-   		<td id="userList" onclick="location.href='<%=request.getContextPath()%>/admin/adminView.do'">회원보기</td>
+   		<td id="userList" onclick="location.href='<%=request.getContextPath()%>/admin/adminuserListView.do'">회원보기</td>
    	</tr>
 
    		<tr>

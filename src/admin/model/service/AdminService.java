@@ -14,7 +14,7 @@ public class AdminService {
 	public List<User> selectUserList(int cPage, int numPerPage) {
 		Connection conn = getConnection();
 		List<User> list 
-			= new AdminDAO().selectMemberList(conn,cPage, numPerPage);
+			= new AdminDAO().selectUserList(conn,cPage, numPerPage);
 		close(conn);
 		return list;
 	}

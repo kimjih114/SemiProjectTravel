@@ -33,7 +33,7 @@ public class AdminDAO {
 			e.printStackTrace();
 		}
 	}
-	public List<User> selectMemberList(Connection conn,int cPage, int numPerPage) {
+	public List<User> selectUserList(Connection conn,int cPage, int numPerPage) {
 		List<User> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -67,6 +67,7 @@ public class AdminDAO {
 				u.setUserDefaultActivity(rset.getString("user_default_activity"));
 				u.setUserEnrollDate(rset.getDate("user_enrolldate"));
 				list.add(u);
+				System.out.println("user"+u);
 			}
 		}
 		catch(Exception e) {
