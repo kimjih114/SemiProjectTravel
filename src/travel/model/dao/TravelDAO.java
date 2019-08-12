@@ -170,6 +170,7 @@ public class TravelDAO {
 	}
 
 	public List<RoomReservation> roomSearch(Connection conn, String startDate, String endDate, String contentId) {
+		
 		List<RoomReservation> room=new ArrayList<RoomReservation>();
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
@@ -178,17 +179,25 @@ public class TravelDAO {
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, contentId);
-			pstmt.setString(2, "%"+startDate+"%");
-			pstmt.setString(3, "%"+endDate+"%");
+			pstmt.setString(2, startDate);
+			pstmt.setString(3, endDate);
+			System.out.println("contentId는?"+contentId);
+			System.out.println("startDate는?"+startDate);
+			System.out.println("endDate는?"+endDate);
 			rset=pstmt.executeQuery();
 			
-			while (rset.next()) {
-				String userId=rset.getString("user_id");
-				String roomName=rset.getString("room_name");
-				String reservationDate=rset.getString("reservation_date");
-				String friendId=rset.getString("friend_id");
-				RoomReservation r=new RoomReservation(userId, contentId, roomName, reservationDate, friendId);
+			while (rset.next()) {		
+				String userId=rset.getString("user_id");				
+				String roomName=rset.getString("room_name");				
+				String travelName=rset.getString("travel_name");				
+				String reservationStartDate=rset.getString("reservation_start_date");				
+				String reservationEndDate=rset.getString("reservation_end_date");				
+				String friendId=rset.getString("friend_id");				
+				Date paymentDate=rset.getDate("payment_date");
+				int price=rset.getInt("price");
+				RoomReservation r=new RoomReservation(userId, contentId, travelName, roomName, reservationStartDate, reservationEndDate, friendId, paymentDate, price);
 				room.add(r);
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -263,5 +272,39 @@ public class TravelDAO {
 		
 		
 		return list;
+	}
+
+	public List<RoomReservation> myReservationRoom(Connection conn, String userId) {
+		List<RoomReservation> room=new ArrayList<RoomReservation>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("myReservationRoom");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				String contentId=rset.getString("content_id");
+				String travelName=rset.getString("travel_name");
+				String roomName=rset.getString("room_name");
+				String reservationStartDate=rset.getString("reservation_start_date");				
+				String reservationEndDate=rset.getString("reservation_end_date");	
+				String friendId=rset.getString("friend_id");
+				Date paymentDate=rset.getDate("payment_date");
+				int price=rset.getInt("price");
+				RoomReservation r=new RoomReservation(userId, contentId, travelName, roomName, reservationStartDate, reservationEndDate, friendId, paymentDate, price);
+				room.add(r);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return room;
 	}
 }

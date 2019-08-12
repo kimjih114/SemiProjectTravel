@@ -179,7 +179,7 @@ p.userprofile-userId{
    	</tr>
    	<table id="tbl-usermenu1">
    		<tr>
-   			<td>예약내역</td>
+   			<td><a href="<%=request.getContextPath()%>/mypage/myReservationView?userId=<%=userLoggedIn.getUserId()%>">예약내역</a></td>
    		</tr>
    		<tr>
    			<td>장바구니</td>

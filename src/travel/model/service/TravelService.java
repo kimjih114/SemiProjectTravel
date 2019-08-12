@@ -65,4 +65,11 @@ public class TravelService {
 		return list;
 		
 	}
+
+	public List<RoomReservation> myReservationRoom(String userId) {
+		Connection conn=getConnection();
+		List<RoomReservation> room=new TravelDAO().myReservationRoom(conn,userId);
+		close(conn);
+		return room;
+	}
 }
