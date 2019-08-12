@@ -328,5 +328,27 @@ public class SNSDAO {
 		return result;
 	}
 
+	public int addFollow(Connection conn, String userFollowing, String userFollowed) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("addFollow");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userFollowing);
+			pstmt.setString(2, userFollowed);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 	
 }

@@ -3,7 +3,8 @@
     pageEncoding="UTF-8"%>
  <%
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
-	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
+	String mypage = request.getParameter("mypage");
+ 	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 %>
 
 <style>
@@ -312,9 +313,9 @@ document.addEventListener('keydown', function(event) {
     }
 }, true);
 
-$(()=>{
+/* $(()=>{
 	location.href="#"
-})
+}) */
 
 var filesTempArr = [];
 
@@ -480,6 +481,23 @@ $("#btnSubmit").click(function(event){
 	     }
 	 });
 
+	
+	(function poll() {
+	    $.ajax({
+	        url: '<%=request.getContextPath()%>/gson/sns/selectBoard.do',
+	        type: 'GET',
+	        dataType: 'json',
+	        success: function() {
+	            console.log('success');
+	        },
+	        timeout: 3000,
+	        complete: setTimeout(function() {
+	        		poll();
+	        }, 6000)
+	    })
+	})();
+
+	
 
 
 

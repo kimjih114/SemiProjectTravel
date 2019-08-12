@@ -1,15 +1,20 @@
+<%@page import="user.model.service.UserService"%>
 <%@page import="sns.model.vo.ProfileSNS"%>
 <%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>    
+<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>   
+<%
+	String mypage = request.getParameter("mypage");
+	User mypageUser = new UserService().selectOne(mypage);
+ 	System.out.println("mypage="+mypage);
+ 	System.out.println("userLoggedIn="+userLoggedIn);
+ 	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
+
+ 
+%> 
 <!DOCTYPE html>
 <html lang="ko">
-<%   
-
-	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
-
-%>
 <script>
 function updateHeaderText(){
 	var headertext = $("#headerBefore").text();
@@ -119,7 +124,6 @@ function introModify(){
 	$("#introAfter").remove();
 	$("#introAfterBtn").remove();
 
-	
 	$.ajax({
 		url : "<%=request.getContextPath()%>/gson/sns/introModify.do",
 		data : param,
@@ -138,16 +142,43 @@ function introModify(){
 			
 		}
 	});
-}
+	
+	$("#followBtn").click(function(){
+		
+		var param={
+			userFollowing : '<%=userLoggedIn.getUserId() %>',
+			userFollowed : '<%=mypageUser.getUserId() %>'    		
+		}
+	
+		$.ajax({
+			url : "<%=request.getContextPath()%>/gson/sns/addFollow.do",
+			data : param,
+			dataType: "json",
+			type : "post",
+			success : function(data){
+				("#followbtn").remove();
+				var html = "<button id='unfollowbtn'>UF</button>";
+				("#follow-chk").html(html);
+			},
+			error : function(data){
+				console.log("ajax처리실패");
+			},
+			complete: function(data){
+				
+			}
+		
+	})
 
+	})
 </script>
-
  <header class="masthead" style="height:300px;">
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
        		<div id="headerFrm">
 				<span id="headerBefore"><%=profileSNS.getHeaderText()!=null? profileSNS.getHeaderText() : profileSNS.getUserNickname()+"의 홈" %></span>
-				<button id="headerBeforeBtn" onclick="updateHeaderText();" style='margin-left:10px;'>edit</button>
+				<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
+					<button id="headerBeforeBtn" onclick="updateHeaderText();" style='margin-left:10px;'>edit</button>
+				<%}%>
 			</div>
         </div>
      </div>
@@ -156,14 +187,21 @@ function introModify(){
 <section class="page-top" style="padding:0px; !important;">
 	  <nav id="sideNav">
 		<div id="profile-header">
-	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=userLoggedIn.getFileName() %>" alt="">
+	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=mypageUser.getFileName()%>" alt="">
 	      <div id="nickFrm">
 	      	<span id="nickBefore" style="font-weight: 700;"><%=profileSNS.getUserNickname() %></span>
-	      	<button id="nickBeforeBtn" onclick="updateNickName();">edit</button>
+	      	<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
+	      		<button id="nickBeforeBtn" onclick="updateNickName();">edit</button>
+	      	<%} else if(userLoggedIn!=null && !mypage.equals(userLoggedIn.getUserId())){%>
+				<div id="follow-chk"><button id="followBtn">F</button></div>
+				<button id="blacklistBtn">B</button>
+			<%} %>
 	      </div>
 	      <div id="introFrm" style="margin: 10px 0 50px;">
 				<span id="introBefore"><%=profileSNS.getUserIntroduce()!=null? profileSNS.getUserIntroduce(): "안녕하세요. 저는 " + profileSNS.getUserNickname() +"입니다." %></span>
+				<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
 				<button id="introBeforeBtn" onclick="updateIntroduce();">edit</button>
+				<%} %>
 		 </div>
 	   </div>
 	    <table class="tbl-usermenu">

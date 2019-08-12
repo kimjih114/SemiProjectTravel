@@ -32,11 +32,8 @@ public class SnsMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session =  request.getSession(false);
-		User userLoggedIn = (User)session.getAttribute("userLoggedIn");
-		
-		ProfileSNS profileSNS = new SNSService().selectOneProfile(userLoggedIn);
+		String userId=request.getParameter("mypage");
+		ProfileSNS profileSNS = new SNSService().selectOneProfile(userId);
 		System.out.println("profileSNS@servlet="+profileSNS);
 		
 		if(profileSNS!=null) {

@@ -93,4 +93,13 @@ public class SNSService {
 		return result;
 	}
 
+	public int addFollow(String userFollowing, String userFollowed) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().addFollow(conn, userFollowing, userFollowed);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
 }

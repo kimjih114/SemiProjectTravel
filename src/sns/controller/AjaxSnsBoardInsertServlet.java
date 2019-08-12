@@ -177,29 +177,10 @@ public class AjaxSnsBoardInsertServlet extends HttpServlet {
 
 		}
 		  
-		
 		if(resultImage>0 && resultGrade>0) {
 			new Gson().toJson(boardSNS, response.getWriter());
 		}
 		
-		  
-		 
-		/*
-		 * if(originalFileName1!=null) { int resultImage1 = new
-		 * SNSService().insertImage(imageSNS1); } if(originalFileName2!=null) { int
-		 * resultImage2 = new SNSService().insertImage(imageSNS2); }
-		 * if(originalFileName3!=null) { int resultImage3 = new
-		 * SNSService().insertImage(imageSNS3); } if(originalFileName4!=null) { int
-		 * resultImage4 = new SNSService().insertImage(imageSNS4); }
-		 * if(originalFileName5!=null) { int resultImage5 = new
-		 * SNSService().insertImage(imageSNS5); }
-		 * 
-		 * if(contentId1!=null) { int resultContentId1 = new
-		 * SNSService().insertGrade(gradeSNS1); } if(contentId2!=null) { int
-		 * resultContentId1 = new SNSService().insertGrade(gradeSNS2); }
-		 * if(contentId3!=null) { int resultContentId1 = new
-		 * SNSService().insertGrade(gradeSNS3); }
-		 */
 	}
 
 	/**
