@@ -1,5 +1,12 @@
+<%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%
+
+	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
+
+	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
+%>
 
 <style>
 #rightNav {
@@ -187,53 +194,10 @@
 			</td>
 		</tr>
 	</table>
-<div id="post">post</div>
-	<form action="" name="snsUpload"
-					id="snsUpload"
-					method="post"
-					enctype="multipart/form-data">
-	<table id="postFrm">
-		<tr>
-			<td style="font-weight: 700;">소중한 여행후기를 공유해주세요!</td>
-		</tr>
-		<tr>
-			<td style="padding-bottom: 0px;">
-				<div class="travelsrch"></div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="reviewContent" style="font-weight: 700;">어떤 여행을 하셨나요?</label>
-				<textarea name="reviewContent" id="reviewContent" cols="59" rows="5"></textarea>
-				<div id="contentIdList">
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td style="margin-bottom:3px;">
-					<label for="" style="font-weight: 700;">첨부이미지</label>
-					<span style="font-size:0.5em; color:gray;">최대 5개까지 등록 가능합니다.</span><br>
-					<input name="fileupload" id="fileupload" type="file" accept="image/*" style="margin-bottom:10px;" multiple />
-					<div style="display:table;">
-						<div class="imgs_wrap"></div>
-					</div>	
-			</td>
-		</tr>
-		<tr>
-			<td>
-					<input type="radio" name="boardtype" id="followOnly" value="followOnly" />
-					<label for="followOnly">팔로워공개</label> &nbsp;
-					<input type="radio" name="boardtype" id="locked" value="locked" />
-					<label for="locked">비공개</label>
-				<br>
-				<input type="submit" id="btnSubmit" value="포스트 등록" style="float:right; margin-top : 10px;" onclick="validate();">
-			</td>
-		</tr>
-	</table>
-	</form>		
+</form>
 
 <!-- 게시글 -->
-<!--  
+  
 		  <div id="tab-container">
 			<ul class="tab">
 				<li class="current" data-tab="tab1"><a>타임라인</a></li>
@@ -333,13 +297,15 @@
 				</td>
 			</tr>
 			
-	    </table>-->
+	    </table>
 		
 		
 <script>
 $(()=>{
 	location.href="#"
 })
+
+var filesTempArr = [];
 
 $(function() {
 	$('ul.tab li').click(function() {
@@ -389,6 +355,8 @@ $(document).ready(function(){
 });
 
 function handleImgsFilesSelect(e){
+
+	
 	if($(".imgs").length>0){
 		$(".imgs").each(function(){
 			$(this).remove();
@@ -398,13 +366,19 @@ function handleImgsFilesSelect(e){
 	
 	var files = e.target.files;
 	var filesArr = Array.prototype.slice.call(files);
-
-	if(filesArr.length>5){	
+	var filesArrLen = filesArr.length;
+	var filesTempArrLen = filesTempArr.length;
+	
+	if(filesArrLen>5){	
 		$("#fileupload").val("");
 		alert("첨부파일은 5개까지만 가능합니다.");
 		return;
 	}
 
+	for(var i=0; i<filesArrLen; i++){
+		filesTempArr.push(filesArr[i]);
+	}
+	
 	filesArr.forEach(function(f){
 		if(!f.type.match("image.*")){
 			$("#fileupload").val("");
@@ -426,71 +400,75 @@ function handleImgsFilesSelect(e){
 	});
 }
 
+$("#btnSubmit").click(function(event){
+	event.preventDefault();
 
-
-function validate(){
+	var grades = [];
 	
-	$("#btnSubmit").click(function(event){
-		event.preventDefault();
-		
-		var html = '';
-		/*if($(".contentid").length>0){
-			
-			$(".contentid").each(function(i, elem){
-				
-				//console.log($(this).parent().parent().parent().children('.starRev').children('.starR.on').length);
-				var grade = $(this).parent().parent().parent().children('.starRev').children('.starR.on').length;
-				    html += "<input type='hidden' id='contentId"+ (i+1) +"' name='contentId"+ (i+1) +"' value='"+$(this).text()+"' />";
-				    html += "<input type='hidden' id='contentGrade"+ (i+1) +"' name='contentGrade"+ (i+1) +"' value='"+grade+"' />";
-				});
-			}
-	 	$("#contentIdList").append(html);*/
-	 	
-	 	contentids = [];
-	 	var boardSNS = {
-				:$("#userId").val(), 
-				name:$("#userName").val(),
-				addr:$("#userAddr").val()
-		}
-		var jsonUser = JSON.stringify(user);
-		console.log(jsonUser);
-		
-	 	$.ajax({
-			url : "<%=request.getContextPath()%>/jquery/gson/member/insert.do",
-			data : "user="+jsonUser,
-			type : "post",
-			success : function(data){
-				console.log(data);
-				var html = "<table>";
-				for(var i in data){
-					var user = data[i];						
-					html += "<tr><td>"+user.id+"</td>";
-					html += "<td>"+user.name+"</td>";
-					html += "<td>"+user.addr+"</td></tr>";
-				}
-				html+="</table>";
-				$("#area3").html(html);
-			},
-			error : function(data){
-				console.log("ajax처리실패");
-			},
-			complete: function(data){
-				$("#userId, #userName, #userAddr").val("");
-			}
+	if($(".contentid").length>0){
+		$(".contentid").each(function(i, elem){
+			var grade = $(this).parent().parent().parent().children('.starRev').children('.starR.on').length;
+		   	grades.push(grade);
 		});
+	}
 	 	
+	console.log(contentids);
+	console.log(grades);
+	 
+	
+	
 	 	
+	 var formData = new FormData();
+	
+	 formData.append("boardWriter",'<%=userLoggedIn.getUserId() %>');
+	 formData.append("boardContent", $("#reviewContent").val());
+	 formData.append("boardType", $('input[name="boardtype"]:checked').val());
+	 formData.append("contentId1",contentids[0]);
+	 formData.append("contentId2",contentids[1]);
+	 formData.append("contentId3",contentids[2]);
+	 formData.append("grade1",grades[0]);
+	 formData.append("grade2",grades[1]);
+	 formData.append("grade3",grades[2]);
+		
+		
+	// 파일 데이터
+	 for(var i=0, filesTempArrLen = filesTempArr.length; i<filesTempArrLen; i++) {
+	    formData.append("file"+i, filesTempArr[i]);
+	 }
+
+	  
+	 $.ajax({
+	     type : "POST",
+	     url : "<%=request.getContextPath()%>/gson/sns/insertBoard.do",
+	     data : formData,
+	     processData: false,
+	     contentType: false,
+	     success : function(data) {
+	         if(data.result){
+	             alert("Success");
+	         }else{
+	             alert(data.result);
+	         }
+	         
+	     },
+	     err : function(err) {
+	         alert(err.status);
+	     }
+	 });
+
+
+
+	contentids = [];
+	grades=[];
+	filesTempArr=[];
 	 	
 	})
+
+
 	
 	
  	
  	
-}
-
-
-
-
 
 
 

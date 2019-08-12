@@ -36,7 +36,8 @@ public class AjaxSnsIntroModifyServlet extends HttpServlet {
 		response.setContentType("application/json; charset=utf-8");
 								
 		//1.parameter handling
-		String intro = request.getParameter("intro");
+		String intro = request.getParameter("intro").replace("<", "&lt;")
+				   									.replace(">", "&gt;");;
 		String userId= request.getParameter("userid");
 								
 		//2.business logic

@@ -8,38 +8,30 @@ public class GradeSNS implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String userId;
-	private int boardNo;
 	private String contentId;
+	private int grade;
 	private Date gradeDate;
 	public GradeSNS() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public GradeSNS(String userId, int boardNo, String contentId, Date gradeDate) {
+	public GradeSNS(String contentId, int grade, Date gradeDate) {
 		super();
-		this.userId = userId;
-		this.boardNo = boardNo;
 		this.contentId = contentId;
+		this.grade = grade;
 		this.gradeDate = gradeDate;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public int getBoardNo() {
-		return boardNo;
-	}
-	public void setBoardNo(int boardNo) {
-		this.boardNo = boardNo;
 	}
 	public String getContentId() {
 		return contentId;
 	}
 	public void setContentId(String contentId) {
 		this.contentId = contentId;
+	}
+	public int getGrade() {
+		return grade;
+	}
+	public void setGrade(int grade) {
+		this.grade = grade;
 	}
 	public Date getGradeDate() {
 		return gradeDate;
@@ -49,9 +41,9 @@ public class GradeSNS implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "GradeSNS [userId=" + userId + ", boardNo=" + boardNo + ", contentId=" + contentId + ", gradeDate="
-				+ gradeDate + "]";
+		return "GradeSNS [contentId=" + contentId + ", grade=" + grade + ", gradeDate=" + gradeDate + "]";
 	}
+	
 	
 	
 }
