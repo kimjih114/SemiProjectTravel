@@ -1,24 +1,29 @@
+<%@page import="sns.model.vo.FollowSNS"%>
+<%@page import="java.util.List"%>
+<%@page import="sns.model.service.SNSService"%>
 <%@page import="user.model.service.UserService"%>
 <%@page import="sns.model.vo.ProfileSNS"%>
 <%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>   
+<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>  
+ 
 <%
 	String mypage = request.getParameter("mypage");
 	User mypageUser = new UserService().selectOne(mypage);
  	System.out.println("mypage="+mypage);
  	System.out.println("userLoggedIn="+userLoggedIn);
  	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
+ 	
+ 	List<String> followLoggedInList = new SNSService().selectOneIdFollow(userLoggedIn.getUserId());
 
- 
+
 %> 
-<!DOCTYPE html>
-<html lang="ko">
-<script>
+
+
+<script type="text/javascript">
 function updateHeaderText(){
 	var headertext = $("#headerBefore").text();
-	console.log(headertext);
 	
 	var html = "<input type='text' id='headerAfter' name='headerAfter' value='"+headertext+"'/>";
 	html += "<button id='headerAfterBtn' onclick='headerTextModify();' style='margin-left:10px;'>edit</button>"
@@ -29,7 +34,6 @@ function updateHeaderText(){
 }
 function updateNickName(){
 	var nickname = $("#nickBefore").text();
-	console.log(nickname);
 	
 	var html = "<input type='text' id='nickAfter' name='nickafter' value='"+nickname+"' size='10' />";
 	html += "<button id='nickAfterBtn' onclick='nickNameModify();' style='margin-left:10px;'>edit</button>"
@@ -40,7 +44,6 @@ function updateNickName(){
 }
 function updateIntroduce(){
 	var intro = $("#introBefore").text();
-	console.log(intro);
 	
 	var html = "<textarea name='introAfter' id='introAfter' cols='20' rows='4'>"+intro+"</textarea>";
 	html += "<button id='introAfterBtn' onclick='introModify();' style='float:right; margin-right: 14px;'>edit</button>"
@@ -68,7 +71,6 @@ function headerTextModify(){
 		dataType: "json",
 		type : "post",
 		success : function(data){
-			console.log(data);
 			var html = "<span id='headerBefore'>"+headertext+"</span>";
 			html+="<button id='headerBeforeBtn' onclick='updateHeaderText();'>edit</button>";
 			$("#headerFrm").html(html);
@@ -99,7 +101,6 @@ function nickNameModify(){
 		dataType: "json",
 		type : "post",
 		success : function(data){
-			console.log(data);
 			var html = "<span id='nickBefore'>"+nickname+"</span>";
 			html+="<button id='nickBeforeBtn' onclick='updateNickName();'>edit</button>";
 			$("#nickFrm").html(html);
@@ -114,7 +115,6 @@ function nickNameModify(){
 }
 function introModify(){
 	var intro = $("#introAfter").val();
-	console.log(intro);
 	var userid = '<%=userLoggedIn.getUserId() %>';
 	var param = {
 			intro : intro,
@@ -130,7 +130,6 @@ function introModify(){
 		dataType: "json",
 		type : "post",
 		success : function(data){
-			console.log(data);
 			var html = "<span id='introBefore'>"+intro+"</span>";
 			html+="<button id='introBeforeBtn' onclick='updateIntroduce();'>edit</button>";
 			$("#introFrm").html(html);
@@ -142,34 +141,67 @@ function introModify(){
 			
 		}
 	});
+}
+
+function follow(){
+	var param={
+			userFollowing : '<%=userLoggedIn.getUserId() %>',
+			userFollowed : '<%=mypageUser.getUserId() %>'    		
+		}
 	
-	$("#followBtn").click(function(){
-		
+		$.ajax({
+			url : '<%=request.getContextPath()%>/gson/sns/follow.do',
+			data : param,
+			dataType: 'json',
+			type : 'post',
+			success : function(data){
+										
+				console.log("ajax처리성공!")
+			},
+			error : function(data){
+				console.log("ajax처리실패");
+			},
+			complete: function(data){
+				$("#followBtn").removeClass("btn-success");
+				$("#followBtn").addClass("btn-danger");
+				$("#followBtn").html("Unfollow");
+				$("#followBtn").off('click').on('click', unfollow);
+				
+			}
+		})
+}
+
+function unfollow(){
 		var param={
 			userFollowing : '<%=userLoggedIn.getUserId() %>',
 			userFollowed : '<%=mypageUser.getUserId() %>'    		
 		}
 	
 		$.ajax({
-			url : "<%=request.getContextPath()%>/gson/sns/addFollow.do",
+			url : '<%=request.getContextPath()%>/gson/sns/unFollow.do',
 			data : param,
-			dataType: "json",
-			type : "post",
+			dataType: 'json',
+			type : 'post',
 			success : function(data){
-				("#followbtn").remove();
-				var html = "<button id='unfollowbtn'>UF</button>";
-				("#follow-chk").html(html);
+				console.log("ajax처리성공!")
 			},
 			error : function(data){
 				console.log("ajax처리실패");
 			},
 			complete: function(data){
+				$("#followBtn").removeClass("btn-danger");
+				$("#followBtn").addClass("btn-success");
+				$("#followBtn").html("Follow");
+				$("#followBtn").off('click').on('click', follow);
+				
 				
 			}
-		
-	})
+		}) 
 
-	})
+	}
+
+
+	
 </script>
  <header class="masthead" style="height:300px;">
       <div class="intro-text" style="padding-top:140px; !important">
@@ -192,17 +224,29 @@ function introModify(){
 	      	<span id="nickBefore" style="font-weight: 700;"><%=profileSNS.getUserNickname() %></span>
 	      	<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
 	      		<button id="nickBeforeBtn" onclick="updateNickName();">edit</button>
-	      	<%} else if(userLoggedIn!=null && !mypage.equals(userLoggedIn.getUserId())){%>
-				<div id="follow-chk"><button id="followBtn">F</button></div>
-				<button id="blacklistBtn">B</button>
-			<%} %>
-	      </div>
+	      	<%}
+	      	else if(userLoggedIn!=null && !mypage.equals(userLoggedIn.getUserId())){%>
+					<%if(followLoggedInList.contains(mypage)){ %>
+						 <br>	    
+						 <button type="button" class="btn btn-danger" id="followBtn" onclick="unfollow();">Unfollow</button>
+						 <button type="button" class="btn btn-dark">Block</button>
+					<%} else{ %>
+						<br>
+						<button type="button" class="btn btn-success" id="followBtn" onclick="follow();">Follow</button>
+						<button type="button" class="btn btn-dark">Block</button>
+					<% }
+			} %>
+		</div>
+
 	      <div id="introFrm" style="margin: 10px 0 50px;">
 				<span id="introBefore"><%=profileSNS.getUserIntroduce()!=null? profileSNS.getUserIntroduce(): "안녕하세요. 저는 " + profileSNS.getUserNickname() +"입니다." %></span>
 				<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
-				<button id="introBeforeBtn" onclick="updateIntroduce();">edit</button>
+						<button id="introBeforeBtn" onclick="updateIntroduce();">edit</button>
 				<%} %>
 		 </div>
+		 
+		 
+		 
 	   </div>
 	    <table class="tbl-usermenu">
 	   		<tr>
@@ -210,24 +254,28 @@ function introModify(){
 	   		</tr>
 	   	</table>
 	   	<table class="tbl-usermenu">
+   	 		<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)) {%>
 	   		<tr>
 	   			<td>메시지</td>
 	   		</tr>
+	   		<%} %>
 	   		<tr>
 	   			<td>검색</td>
 	   		</tr>
+	   		
+	   	
 	   		<tr>
-	   			<td>팔로워</td>
+	   			<td id="follower">팔로워</td>
 	   		</tr>
 
 	   	</table>
-	   	
+	   	<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)) {%>
 	    <table class="tbl-usermenu">
 	    <tr>
 	   		<td id="setting">설정</td>
 	   	</tr>
 		</table>
-	
+		<%} %>
 		<table class="tbl-usermenu" style="margin-bottom:0px; !important">
 	    <tr>
 	    	<td>FAQ</td>
@@ -236,11 +284,8 @@ function introModify(){
 	    <tr>
 	    	<td id="QuestionList">1:1문의</td>
 	    </tr>
-	    
-	    <tr>
-	    	<td>공지사항</td>
-	    </tr> 	
 		</table>
+		   	
 	  </nav>
 	  
  <style>	 
@@ -364,8 +409,16 @@ div#profile-header{
 	padding:0px;
 }
 
+.tbl-usermenu td{
+	width: 210px;
+
+}
+
 .nick_sns{
 	font-weight: 700;
+}
+.btn-dark{
+	width:81.36px;
 }
 
 </style>	  
@@ -395,6 +448,24 @@ div#profile-header{
 			success: function(data){
  				console.log(data);
 				$("#container-sns").html(data);
+			},
+			error: function(jqxhr, textStatus, errorThrown){
+				console.log("ajax처리실패!");
+				console.log(jqxhr, textStatus, errorThrown);
+			},
+			complete: function(){
+				console.log("complete!!!");
+			}
+		});
+ 	});
+ 
+ 	$("#follower").on("click", function(){
+ 		$.ajax({
+			url: "<%=request.getContextPath() %>/ajax/follower.jsp",
+			data:"mypage="+'<%=mypage%>',
+			success: function(data){
+				$("#container-sns").html(data);
+				console.log("ajax처리성공!");
 			},
 			error: function(jqxhr, textStatus, errorThrown){
 				console.log("ajax처리실패!");

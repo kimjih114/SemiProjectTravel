@@ -1,6 +1,6 @@
 package sns.model.dao;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Properties;
 
 import sns.model.vo.BoardSNS;
+import sns.model.vo.FollowSNS;
 import sns.model.vo.GradeSNS;
 import sns.model.vo.ImageSNS;
 import sns.model.vo.ProfileSNS;
-import user.model.vo.User;
 
 public class SNSDAO {
 
@@ -61,70 +61,6 @@ public class SNSDAO {
 		return friendId;
 	}
 
-	public ProfileSNS selectOneProfile(Connection conn, User userLoggedIn) {
-		ProfileSNS profileSNS = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("selectOneProfile");
-		
-		try {
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, userLoggedIn.getUserId());
-			
-			rset=pstmt.executeQuery();
-			
-			if(rset.next()) {
-				profileSNS = new ProfileSNS();
-				
-				System.out.println("null@dao="+rset.getString("user_introduce"));
-				
-				profileSNS.setUserId(rset.getString("user_id"));
-				profileSNS.setUserNickname(rset.getString("user_nickname"));
-				if(rset.getString("user_introduce")!=null) {
-					profileSNS.setUserIntroduce(rset.getString("user_introduce"));
-				} else {
-					profileSNS.setUserIntroduce("안녕하세요. 저는 " + rset.getString("user_nickname") +"입니다.");
-					
-				}
-				if(rset.getString("profile_original_filename")!=null) {
-					profileSNS.setProfileOriginalFilename(rset.getString("profile_original_filename"));
-				} else {
-					
-				}
-		
-				if(rset.getString("profile_renamed_filename")!=null) {
-					profileSNS.setProfileRenamedFilename(rset.getString("profile_renamed_filename"));
-				}
-				if(rset.getString("header_original_filename")!=null) {
-					profileSNS.setHeaderOriginalFilename(rset.getString("header_original_filename"));
-				}
-				if(rset.getString("header_renamed_filename")!=null) {
-					profileSNS.setHeaderRenamedFilename(rset.getString("header_renamed_filename"));
-				}
-				
-				if(rset.getString("header_text")!=null) {
-					profileSNS.setHeaderText(rset.getString("header_text"));
-				} else {
-					profileSNS.setHeaderText(rset.getString("user_nickname")+"의 홈");
-				}
-				
-				if(rset.getString("theme_color")!=null) {
-					profileSNS.setThemeColor(rset.getString("theme_color"));
-				} else {
-					profileSNS.setThemeColor("#fed136");
-				}
-				
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return profileSNS;
-	}
 
 	public ProfileSNS selectOneProfile(Connection conn, String userId) {
 		ProfileSNS profileSNS = null;
@@ -139,8 +75,6 @@ public class SNSDAO {
 			
 			if(rset.next()) {
 				profileSNS = new ProfileSNS();
-				
-				System.out.println("null@dao="+rset.getString("user_introduce"));
 				
 				profileSNS.setUserId(rset.getString("user_id"));
 				profileSNS.setUserNickname(rset.getString("user_nickname"));
@@ -328,10 +262,10 @@ public class SNSDAO {
 		return result;
 	}
 
-	public int addFollow(Connection conn, String userFollowing, String userFollowed) {
+	public int follow(Connection conn, String userFollowing, String userFollowed) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = prop.getProperty("addFollow");
+		String sql = prop.getProperty("follow");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -348,6 +282,102 @@ public class SNSDAO {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int unFollow(Connection conn, String userFollowing, String userFollowed) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("unFollow");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userFollowing);
+			pstmt.setString(2, userFollowed);
+		
+			
+			result = pstmt.executeUpdate();
+			
+		
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+	public List<String> selectOneIdFollow(Connection conn, String userFollowing) {
+		List<String> followOneList=new ArrayList<String>();
+		FollowSNS followSNS = null;
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectOneIdFollow");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userFollowing);
+			
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				followOneList.add(rset.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return followOneList;
+	}
+
+	public List<ProfileSNS> selectOneProfileFollow(Connection conn, List<String> followOneList) {
+		List<ProfileSNS> followProfileList=new ArrayList<ProfileSNS>();
+		ProfileSNS profileSNS = null;
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectOneProfileFollow");
+		
+		try {
+				pstmt=conn.prepareStatement(sql);
+				
+				for(String userId : followOneList) {
+					pstmt.setString(1, userId);
+					
+					rset=pstmt.executeQuery();
+					
+					while(rset.next()) {
+						profileSNS = new ProfileSNS();
+						
+						profileSNS.setUserId(rset.getString("user_id"));
+						profileSNS.setUserNickname(rset.getString("user_nickname"));
+						profileSNS.setUserIntroduce(rset.getString("user_introduce"));
+						profileSNS.setProfileOriginalFilename(rset.getString("profile_original_filename"));
+						profileSNS.setProfileRenamedFilename(rset.getString("profile_renamed_filename"));
+						profileSNS.setHeaderOriginalFilename(rset.getString("header_original_filename"));
+						profileSNS.setHeaderRenamedFilename(rset.getString("header_renamed_filename"));
+						profileSNS.setHeaderText(rset.getString("header_text"));
+						profileSNS.setThemeColor(rset.getString("theme_color"));
+						
+						followProfileList.add(profileSNS);
+					}
+					
+				}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+			
+		return followProfileList;
 	}
 
 	

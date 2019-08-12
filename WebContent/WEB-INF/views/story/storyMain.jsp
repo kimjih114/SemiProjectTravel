@@ -35,38 +35,35 @@
 	  
  </section>
  
+ 
  <script>
-	$(function() {
-	$('ul.tab li').click(function() {
-		var activeTab = $(this).attr('data-tab');
-		$('ul.tab li').removeClass('current');
-		$('.tabcontent').removeClass('current');
-		$(this).addClass('current');
-		$('#' + activeTab).addClass('current');
-	})
-});
-	
-$("#post").click(function(){
-	$("#tab-container").removeClass('post-unpushed');
-	$("#tab-container").addClass('post-pushed');
-
-	$("#postFrm").css('display', 'block');
-	
-	$.ajax({
-		url: "<%=request.getContextPath() %>/ajax/travelsrch.jsp", 
-		type: "get",
-		dataType: "html",
-		success: function(data){
-			$("#travelsrch").html(data);
-		},
-		error: function(jqxhr, textStatus, errorThrown){
-			console.log("ajax처리실패!");
-			console.log(jqxhr, textStatus, errorThrown);
+ 	var param={
+			userFollowing : '<%=userLoggedIn.getUserId() %>',
+			userFollowed : '<%=mypageUser.getUserId() %>'    		
 		}
-	});
 	
-})
-	
+		$.ajax({
+			url : '<%=request.getContextPath()%>/gson/sns/unFollow.do',
+			data : param,
+			dataType: 'json',
+			type : 'post',
+			success : function(data){
+				console.log("ajax처리성공!")
+			},
+			error : function(data){
+				console.log("ajax처리실패");
+			},
+			complete: function(data){
+				$("#followBtn").removeClass("btn-danger");
+				$("#followBtn").addClass("btn-success");
+				$("#followBtn").html("Follow");
+				$("#followBtn").off('click').on('click', follow);
+				
+				var html = "<button type='button' class='btn btn-dark' id='blockBtn'>Block</button>";
+				$("#darkArea").html(html);
+			}
+		}) 
+
 	
 	
 	

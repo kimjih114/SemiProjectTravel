@@ -1,15 +1,20 @@
 package sns.model.service;
 
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
 import java.util.List;
+
 import sns.model.dao.SNSDAO;
 import sns.model.vo.BoardSNS;
+import sns.model.vo.FollowSNS;
 import sns.model.vo.GradeSNS;
 import sns.model.vo.ImageSNS;
 import sns.model.vo.ProfileSNS;
 import user.model.vo.User;
-
-import static common.JDBCTemplate.*;
 
 public class SNSService {
 
@@ -18,13 +23,6 @@ public class SNSService {
 		List<String> friendId=new SNSDAO().friendIdSearch(conn,userId,searchId);
 		close(conn);
 		return friendId;
-	}
-
-	public ProfileSNS selectOneProfile(User userLoggedIn) {
-		Connection conn=getConnection();
-		ProfileSNS profileSNS=new SNSDAO().selectOneProfile(conn, userLoggedIn);
-		close(conn);
-		return profileSNS;
 	}
 
 	public ProfileSNS selectOneProfile(String userId) {
@@ -93,13 +91,38 @@ public class SNSService {
 		return result;
 	}
 
-	public int addFollow(String userFollowing, String userFollowed) {
+	public int follow(String userFollowing, String userFollowed) {
 		Connection conn=getConnection();
-		int result=new SNSDAO().addFollow(conn, userFollowing, userFollowed);
+		int result=new SNSDAO().follow(conn, userFollowing, userFollowed);
 		if(result>0) commit(conn);
 		else rollback(conn);
 		close(conn);
 		return result;
 	}
+
+	public int unFollow(String userFollowing, String userFollowed) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().unFollow(conn, userFollowing, userFollowed);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	public List<String> selectOneIdFollow(String userFollowing){
+		Connection conn=getConnection();
+		List<String> followOneList=new SNSDAO().selectOneIdFollow(conn, userFollowing);
+		close(conn);
+		return followOneList;
+		
+	}
+
+	public List<ProfileSNS> selectOneProfileFollow(List<String> followOneList) {
+		Connection conn=getConnection();
+		List<ProfileSNS> followProfileList=new SNSDAO().selectOneProfileFollow(conn, followOneList);
+		close(conn);
+		return followProfileList;
+	}
+
 
 }

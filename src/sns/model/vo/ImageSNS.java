@@ -2,6 +2,7 @@ package sns.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ImageSNS implements Serializable {
 	/**
@@ -13,13 +14,13 @@ public class ImageSNS implements Serializable {
 	private String originalFileName;
 	private String renamedFileName;
 	private int imageOrder;
-	private Date imageDate;
+	private Timestamp imageDate;
 	public ImageSNS() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public ImageSNS(int boardNo, String boardWriter, String originalFileName, String renamedFileName, int imageOrder,
-			Date imageDate) {
+			Timestamp imageDate) {
 		super();
 		this.boardNo = boardNo;
 		this.boardWriter = boardWriter;
@@ -58,10 +59,10 @@ public class ImageSNS implements Serializable {
 	public void setImageOrder(int imageOrder) {
 		this.imageOrder = imageOrder;
 	}
-	public Date getImageDate() {
+	public Timestamp getImageDate() {
 		return imageDate;
 	}
-	public void setImageDate(Date imageDate) {
+	public void setImageDate(Timestamp imageDate) {
 		this.imageDate = imageDate;
 	}
 	@Override

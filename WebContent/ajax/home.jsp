@@ -201,8 +201,8 @@
 		  <div id="tab-container">
 			<ul class="tab">
 				<li class="current" data-tab="tab1"><a>타임라인</a></li>
-				<li data-tab="tab2"><a>추천</a></li>
-				<li data-tab="tab3"><a>스크랩</a></li>
+				<li data-tab="tab2"><a>내가 쓴 리뷰</a></li>
+				<li data-tab="tab3"><a>좋아요를 누른 글</a></li>
 			</ul>
 		
 			<div id="tab1" class="tabcontent current">
@@ -481,6 +481,18 @@ $("#btnSubmit").click(function(event){
 	     }
 	 });
 
+	$(function() {
+		$('ul.tab li').click(function() {
+			var activeTab = $(this).attr('data-tab');
+			$('ul.tab li').removeClass('current');
+			$('.tabcontent').removeClass('current');
+			$(this).addClass('current');
+			$('#' + activeTab).addClass('current');
+		})
+	});
+		
+	
+	
 	
 	(function poll() {
 	    $.ajax({

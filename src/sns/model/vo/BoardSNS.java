@@ -2,7 +2,7 @@ package sns.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
+import java.sql.Timestamp;
 
 public class BoardSNS implements Serializable {
 	/**
@@ -14,13 +14,13 @@ public class BoardSNS implements Serializable {
 	private String boardWriter;
 	private String boardContent;
 	private String boardType;
-	private Date boardDate;
+	private Timestamp boardDate;
 
 	public BoardSNS() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public BoardSNS(int boardNo, String boardWriter, String boardContent, String boardType, Date boardDate) {
+	public BoardSNS(int boardNo, String boardWriter, String boardContent, String boardType, Timestamp boardDate) {
 		super();
 		this.boardNo = boardNo;
 		this.boardWriter = boardWriter;
@@ -46,10 +46,10 @@ public class BoardSNS implements Serializable {
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
-	public Date getBoardDate() {
+	public Timestamp getBoardDate() {
 		return boardDate;
 	}
-	public void setBoardDate(Date boardDate) {
+	public void setBoardDate(Timestamp boardDate) {
 		this.boardDate = boardDate;
 	}
 	public String getBoardType() {

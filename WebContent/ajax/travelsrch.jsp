@@ -7,7 +7,7 @@
 	var sido1;
 	var gugun1;
 
- 
+ 	
  function closeDiv(div){
 	 contentids.pop(contentids.indexOf($(div).next().children().html()));
 	 $(div).parent().parent().remove();
@@ -255,7 +255,7 @@
    											contentids.push($(m).find("contentid").text());	
    											
    											contenttypes.push($(m).find("contenttypeid").text());
-   											console.log("클릭시="+$(contentids)[0]+$(contentids)[1]+$(contentids)[2]);
+   											console.log(contenttypes);
    					
    									}	
    					
@@ -268,8 +268,7 @@
    							}
    						});
    						
-   						
-   						
+  
    					})).hover(e=>{
    						$(e.target).addClass("sel").siblings().removeClass("sel");			
    					}, e=>{

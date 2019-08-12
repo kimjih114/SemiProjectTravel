@@ -2,6 +2,7 @@ package sns.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class GradeSNS implements Serializable {
 	/**
@@ -13,12 +14,12 @@ public class GradeSNS implements Serializable {
 	private String contentId;
 	private String contentType;
 	private int grade;
-	private Date gradeDate;
+	private Timestamp gradeDate;
 	public GradeSNS() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public GradeSNS(int boardNo, String boardWriter, String contentId, String contenttype, int grade, Date gradeDate) {
+	public GradeSNS(int boardNo, String boardWriter, String contentId, String contenttype, int grade, Timestamp gradeDate) {
 		super();
 		this.boardNo = boardNo;
 		this.boardWriter = boardWriter;
@@ -57,10 +58,10 @@ public class GradeSNS implements Serializable {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
-	public Date getGradeDate() {
+	public Timestamp getGradeDate() {
 		return gradeDate;
 	}
-	public void setGradeDate(Date gradeDate) {
+	public void setGradeDate(Timestamp gradeDate) {
 		this.gradeDate = gradeDate;
 	}
 	@Override

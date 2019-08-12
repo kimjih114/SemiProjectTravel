@@ -14,14 +14,14 @@ import sns.model.service.SNSService;
 /**
  * Servlet implementation class AjaxSnsAddFollowServlet
  */
-@WebServlet("/gson/sns/addFollow.do")
-public class AjaxSnsAddFollowServlet extends HttpServlet {
+@WebServlet("/gson/sns/follow.do")
+public class AjaxSnsFollowServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxSnsAddFollowServlet() {
+    public AjaxSnsFollowServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,10 +35,13 @@ public class AjaxSnsAddFollowServlet extends HttpServlet {
 								
 		//1.parameter handling
 		String userFollowing = request.getParameter("userFollowing");
-		String userFollowed= request.getParameter("userFollowing");
+		String userFollowed= request.getParameter("userFollowed");
+		
+		System.out.println("following@servlet="+userFollowing);
+		System.out.println("followed@servlet="+userFollowed);
 								
 		//2.business logic
-		int result = new SNSService().addFollow(userFollowing, userFollowed);
+		int result = new SNSService().follow(userFollowing, userFollowed);
 								
 		//view단 작성
 		response.setContentType("application/json; charset=utf-8");

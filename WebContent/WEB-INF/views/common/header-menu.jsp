@@ -1,3 +1,4 @@
+<%@page import="sns.model.service.SNSService"%>
 <%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -48,7 +49,11 @@
   <title>유람</title>
 
 <style>
+header.masthead{
+background-image:<%=userLoggedIn==null || new SNSService().selectOneProfile(userLoggedIn.getUserId()).getHeaderRenamedFilename()==null ?  "url("+request.getContextPath()+"/img/header-new.jpg)" : "url("+request.getContextPath()+"/img/header-new.jpg)" %>
 
+
+}
 .header-profile-circle{
     border: 0px;
     border-radius: 100%;

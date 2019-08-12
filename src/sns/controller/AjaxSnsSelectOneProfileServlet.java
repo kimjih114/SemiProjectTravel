@@ -19,13 +19,13 @@ import user.model.vo.User;
  * Servlet implementation class AjaxSnsSelectOneServlet
  */
 @WebServlet("/gson/sns/selectOneProfile.do")
-public class AjaxSnsSelectOneServlet extends HttpServlet {
+public class AjaxSnsSelectOneProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxSnsSelectOneServlet() {
+    public AjaxSnsSelectOneProfileServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
