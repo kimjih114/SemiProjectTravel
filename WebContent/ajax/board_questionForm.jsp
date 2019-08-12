@@ -15,7 +15,6 @@ System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
   List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
  
  Board_Question qb = new Board_Question();
- System.out.println();
 
 	
  /*//페이지 바 
@@ -184,7 +183,8 @@ border : 1px solid gray;
 }
 
 #tbl-board>table>tbody>tr:first-child{
-background:#fed136;}
+background:#fed136;
+}
 
 
 .form-control{
@@ -273,11 +273,11 @@ function qboardValidate(){
 			
 					
 			<tr>
-				<th>내용</th>
+				<th class="text-control">내용</th>
 				<td>
 				<div class="input-group">
   					<div class="input-group-prepend">
-    					<span class="input-group-text">With textarea</span>
+    				
   					</div>
  					<textarea class="text-control" aria-label="With textarea" 
  					 		name="qboardContent"  required></textarea>	

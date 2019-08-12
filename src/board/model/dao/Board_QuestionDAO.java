@@ -1,5 +1,7 @@
 package board.model.dao;
 
+import static common.JDBCTemplate.close;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,8 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import static common.JDBCTemplate.*;
+
 import board.model.vo.Board_Question;
+import board.model.vo.Board_QuestionComment;
 
 public class Board_QuestionDAO {
 	
@@ -63,6 +66,7 @@ public class Board_QuestionDAO {
 				
 				list.add(qb); 
 		
+				
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -72,7 +76,7 @@ public class Board_QuestionDAO {
 			close(pstmt);
 		}
 		
-		
+
 		
 		return list;
 	}
@@ -164,6 +168,117 @@ public class Board_QuestionDAO {
 		
 		
 		return qboardNo;
+	}
+
+	public Board_Question selectOne(Connection conn, int qboardNo) {
+	
+		Board_Question qb = null; 
+		PreparedStatement pstmt = null; 
+		ResultSet rset =  null; 
+		
+		String sql = prop.getProperty("selectOne"); 
+		
+		
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, qboardNo);
+
+				rset= pstmt.executeQuery(); 
+				
+				if(rset.next()) {
+					qb = new Board_Question(); 
+					qb.setQboardNo(rset.getInt("qboard_no"));
+					qb.setQboardWriter(rset.getString("qboard_writer"));
+					qb.setQboardTitle(rset.getString("qboard_title"));
+					qb.setQboardContent(rset.getString("qboard_content"));
+					qb.setQboardDate(rset.getDate("qboard_date"));
+					qb.setQboardReadcnt(rset.getInt("qboard_readcnt"));
+					qb.setQboardTravel_ref(rset.getInt("qboard_travel_ref"));
+					qb.setQboardFileName(rset.getString("qboard_filename"));
+					qb.setQboardNewFileName(rset.getString("qboard_state"));
+					
+			
+					
+				}
+			
+			
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				close(rset); 
+				close(pstmt); 
+			}
+			return qb; 
+			
+	
+	
+	}
+
+	public int increaseReadCount(Connection conn, int qboardNo) {
+		
+		int result = 0; 
+		PreparedStatement pstmt = null; 
+		String sql = prop.getProperty("increaseReadCount"); 
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, qboardNo);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt); 
+		}
+		System.out.println("board_questionSerivce---------------->>>"+result);
+		return result; 
+		
+	}
+
+	public List<Board_QuestionComment> selectCommentList(Connection conn, int qboardNo) {
+		List<Board_QuestionComment> list = new ArrayList<>(); 
+		PreparedStatement pstmt = null; 
+		 ResultSet rset = null; 
+		 
+		 String sql = prop.getProperty("selectCommentList"); 
+		 
+		 try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, qboardNo);
+			
+			rset = pstmt.executeQuery(); 
+			
+			while(rset.next()) {
+				
+				Board_QuestionComment bqc = new Board_QuestionComment(); 
+				
+				bqc.setQboardComment_no(rset.getInt("qboard_comment_no"));
+				bqc.setQboardCommentLevel(rset.getInt("qboard_comment_level"));
+				bqc.setQboardCommentWriter(rset.getString("qboard_comment_writer"));
+				bqc.setQboardCommentContent(rset.getString("qboard_comment_content"));
+				bqc.setQboardref(rset.getInt("qboard_ref"));
+				bqc.setQboardCommentRef(rset.getInt("qboard_comment_ref"));//null인 참조댓글필드는 0값이 대입됨.
+				bqc.setQboardCommentDate(rset.getDate("qboard_comment_date"));
+				list.add(bqc);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			close(rset); 
+			close(pstmt);
+			
+		}
+		 
+		
+		
+		
+		
+		return list;
 	}
 	
 	

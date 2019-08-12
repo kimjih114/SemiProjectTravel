@@ -1,4 +1,3 @@
-
 <%@page import="user.model.vo.User"%>
 <%@page import="user.controller.UserLoginEndServlet"%>
 <%@page import="user.controller.UserLogoutServlet"%>
@@ -15,7 +14,7 @@ System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
   List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
  
  Board_Question qb = new Board_Question();
- System.out.println();
+ System.out.println("questionList.jsp@list="+list);
 
 	
  /*//페이지 바 
@@ -26,13 +25,13 @@ System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 
 <style>
 #q-container {
-	width:700px;
-	margin:0 auto;
-	text-align:center;
+	width: 700px;
+	margin: 0 auto;
+	text-align: center;
 	position: absolute;
-	left:265px;
+	left: 265px;
 	transition: 0.5s;
-	top:-344px;
+	top: -344px;
 }
 
 #q-container .tab {
@@ -67,7 +66,6 @@ System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 }
 
 #q-container ul.tab li.current {
-
 	color: #222;
 	border: 1px solid;
 	border-bottom: 0;
@@ -109,103 +107,118 @@ System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 	padding: 10px;
 }
 
-board_containerfrm{
-width: 600px; 
-margin:0 auto;
-text-align:center; 
-
+board_containerfrm {
+	width: 600px;
+	margin: 0 auto;
+	text-align: center;
 }
 /*게시글 작성버튼*/
-#btn-add{
-	float:right;
+#btn-add {
+	float: right;
 	margin: 0 0 8px;
 }
-table#tbl-board{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
-table#tbl-board th, table#tbl-board td {border:1px solid; padding: 5px 0; text-align:center;} 
-form#board_containerfrm{
-margin-left: 8px;
-margin-top:400px;
 
+table#tbl-board {
+	width: 100%;
+	margin: 0 auto;
+	border: 1px solid black;
+	border-collapse: collapse;
+	clear: both;
 }
 
+table#tbl-board th, table#tbl-board td {
+	border: 1px solid;
+	padding: 5px 0;
+	text-align: center;
+}
 
-div.board_search{
-width:700px;
+form#board_containerfrm {
+	margin-left: 8px;
+	margin-top: 400px;
+}
+
+div.board_search {
+	width: 700px;
 }
 
 #select_box {
-  position: relative;
-  width: 200px;
-  height: 32px;
-  background: url(http://cfile1.uf.tistory.com/image/27423E43565F8EF627B215) 0 center no-repeat;
- 
+	position: relative;
+	width: 200px;
+	height: 32px;
+	background: url(http://cfile1.uf.tistory.com/image/27423E43565F8EF627B215)
+		0 center no-repeat;
 }
-div.sub_content ul{
-  list-style:none;
+
+div.sub_content ul {
+	list-style: none;
 }
+
 div.sub_content {
- height: 300px;
-
-}
-div.postscript_area{
-height:244px;
-background: #f5f5f5;
-border-radius: 10px;
+	height: 300px;
 }
 
-ul.post_con{
-padding-left: 20px;
-/* padding-bottom: 25px; */
-padding-right: 20px;
-height: 241px;
+div.postscript_area {
+	height: 244px;
+	background: #f5f5f5;
+	border-radius: 10px;
 }
 
-hr{
-border: 3px solid rgb(00,00,66);
-}
-li.post-font{
-text-align:left;
-}
-#tbl-board>table{
-border-collapse: collapse;
-border-radius: 10px;
-
+ul.post_con {
+	padding-left: 20px;
+	/* padding-bottom: 25px; */
+	padding-right: 20px;
+	height: 241px;
 }
 
-#tbl-board>table, #tbl-board>table>td{
-width:700px;
-border : 1px solid gray;
-
-
-
-}
-#post_font_a:hover{
-	color:#007bff;
+hr {
+	border: 3px solid rgb(00, 00, 66);
 }
 
-#tbl-board>table>tbody>tr:first-child{
-background:#fed136;}
-
-
-/* table#tbl-table, td {
-border: 1px solid;
+li.post-font {
+	text-align: left;
 }
-table#tbl-table{
-width: 700px;
-} */
 
+#tbl-board>table {
+	border-collapse: collapse;
+	border-radius: 10px;
+}
+
+#tbl-board>table, #tbl-board>table>td {
+	width: 700px;
+	border: 1px solid gray;
+}
+
+#post_font_a:hover {
+	color: #007bff;
+}
+
+#tbl-board>table>tbody>tr:first-child {
+	background: #fed136;
+}
+
+div#tbl-board>table>tbody>tr:not (:first-child )>td:nth-child(2)>a {
+	color: black;
+}
+
+div#tbl-board>table>tbody>tr:not (:first-child )>td:nth-child(2)>a:hover
+	{
+	color: orange;
+	text-decoration: none;
+}
 </style>
 
 <script>
  $(()=>{
 	location.href="#"
-})
+});
 
 $(function() {
 	  var select = $("select#color");
 
 	  select.change(function() {
-	    var select_name = $(this).children("option:selected").text();
+	    var select_name = $(this).children
+
+("option:selected").text();
 	    $(this).siblings("label").text(select_name);
 	  });
 	});
@@ -229,7 +242,7 @@ $(function() {
 					$(data).each((i,qb)=>{
 						var html ="<tr>"; 
 						html +="<td>"+qb.qboardNo+"</td>"; //번호 
-						html +="<td>"+qb.qboardTitle+"</td>"; //제목
+						html +="<td><div class='title'>"+qb.qboardTitle+"</div></td>"; //제목
 						html +="<td>"+qb.qboardWriter+"</td>"; //작성자
 						html +="<td>"+qb.qboardDate+"</td>"; //작성일 
 						html +="<td>"+qb.qboardStatus+"</td>"; //진행상태
@@ -249,6 +262,25 @@ $(function() {
 	});
  
  
+ $('.container').click(function(){
+		
+		$.ajax({
+			url: "<%=request.getContextPath() %>/ajax/board_questionView.do?", 
+			type: "get",
+			dataType: "html",
+			success: function(data){
+				$("#tbl-board").html(data);
+			},
+			error: function(jqxhr, textStatus, errorThrown){
+				console.log("ajax처리실패!");
+				console.log(jqxhr, textStatus, errorThrown);
+			}
+		});
+		
+	})
+ 
+	
+	
  
 
 </script>
@@ -257,42 +289,39 @@ $(function() {
 
 <!-- 메뉴폼 -->
 
- <div id="q-container">
+<div id="q-container">
 
 	<form action="" id="board_containerfrm">
- 		<div class="sub_content">
-                            <hr />
-                        <div class="postscript_area">
-                            <ul class="post_con">
-                                <li class="post_title"><h4>1:1문의</h4></li>
-                                <li class="post_font">
-                                		업무와 관련 문의 및 요청사항을 작성하는 게시판입니다. <br />
-                                		1:1 문의는 타인에게 내용이 공개되지 않으므로 더 자세한 답변을 받을 수 있습니다. <br /> <br />
-                                		<% if(userLoggedIn ==null) {%>
-                                		문의 시 <a  id="post_font_a"   href="<%=request.getContextPath()%>/user/userLoginFrm">로그인</a>이 필요합니다. <br />
-                                		<%} %>
-                                		<br />유람은 고객님의 목소리를 소중히 여깁니다. <br />
-                                		문의주신 내용은 확인 즉시 , 빠르게 답변 드리겠습니다.  <br />
-                                		답변은 전화상담이 아닌 온라인으로만 진행됩니다.<br />
-                                    <br />
-           							
-                                </li>
-                            </ul>
-            
-						<hr />
-                        </div>
- </div>
+		<div class="sub_content">
+			<hr />
+			<div class="postscript_area">
+				<ul class="post_con">
+					<li class="post_title"><h4>1:1문의</h4></li>
+					<li class="post_font">업무와 관련 문의 및 요청사항을 작성하는 게시판입니다. <br />
+						1:1 문의는 타인에게 내용이 공개되지 않으므로 더 자세한 답변을 받을 수 있습니다. <br /> <br />
+						유람은 고객님의 목소리를 소중히 여깁니다. <br />
+						 문의주신내용은 확인 즉시 , 빠르게 답변 드리겠습니다. <br /> 
+						 답변은 전화상담이 아닌 온라인으로만 진행됩니다.<br />
+						<br />
+
+					</li>
+				</ul>
+
+				<hr />
+			</div>
+		</div>
 		<div class="board_search">
 
-			<fieldset style="padding-right:10px;">
-	
-			<%
-				 if(userLoggedIn != null) { 
-			%>
-			<input type="button" class="btn btn-secondary btn-sm" id="btn-add" value="글쓰기">				
-			<!-- 로그인한 경우 글쓰기 가능하게 하기  -->
+			<fieldset style="padding-right: 10px;">
 
-			<script>
+				<%
+					if (userLoggedIn != null) {
+				%>
+				<input type="button" class="btn btn-secondary btn-sm"
+					id="btn-add" value="글쓰기">
+				<!-- 로그인한 경우 글쓰기 가능하게 하기  -->
+
+				<script>
 			
 			$("#btn-add").on("click", function(){
 				$.ajax({
@@ -309,27 +338,23 @@ $(function() {
 				});
 			})
 			
-	
-			
+		
 			</script>
 
-			<%
-				}
-			%>
-				</fieldset>
-			</div>
-			</form>
+				<%
+					}
+				%>
+			</fieldset>
+		</div>
+	</form>
 
 
-			<!-- //게시판 검색폼 -->
-			<!-- board s -->
-				<div id="tbl-board">
-				
-				
-				</div>
-			
+	<!-- //게시판 검색폼 -->
+	<!-- board s -->
+	<div id="tbl-board"></div>
 
-	</div>
-			
-	</body>
+
+</div>
+
+</body>
 </html>

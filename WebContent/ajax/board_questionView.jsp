@@ -1,4 +1,3 @@
-
 <%@page import="user.model.vo.User"%>
 <%@page import="user.controller.UserLoginEndServlet"%>
 <%@page import="user.controller.UserLogoutServlet"%>
@@ -7,18 +6,55 @@
 <%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/story/storyMain.jsp" %>  
+
 <%
 
-User userLoggedIn = (User)session.getAttribute("userLoggedIn");
-
+ userLoggedIn = (User)session.getAttribute("userLoggedIn");
+profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
 System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
+  List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
  
  Board_Question qb = new Board_Question();
+ System.out.println("questionList.jsp@list="+list);
+
+	
+ /*//페이지 바 
+ String pageBar = (String)request.getAttribute("pageBar");  */
  
 %>
 
+<link href="/trav/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/trav/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="/trav/css/agency.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap core JavaScript -->
+  <script src="/trav/vendor/jquery/jquery.min.js"></script>
+  <script src="/trav/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="/trav/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="/trav/js/jqBootstrapValidation.js"></script>
+  <script src="/trav/js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="/trav/js/agency.min.js"></script>
+
+
 
 <style>
+ 
+
 #q-container {
 	width:700px;
 	margin:0 auto;
@@ -26,7 +62,7 @@ System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 	position: absolute;
 	left:265px;
 	transition: 0.5s;
-	top:100px;
+	top:-344px;
 }
 
 #q-container .tab {
@@ -173,25 +209,14 @@ border : 1px solid gray;
 
 
 }
-#post_font_a:hover{
-	color:#007bff;
-}
-
-#tbl-board>table>tbody>tr:first-child{
-background:#fed136;}
 
 
-.form-control{
-width: 200px;
-margin-bottom: 10px;
-margin-top: 10px;
-}
-</style>
+ </style>
 
 <script>
  $(()=>{
 	location.href="#"
-})
+});
 
 $(function() {
 	  var select = $("select#color");
@@ -201,29 +226,26 @@ $(function() {
 	    $(this).siblings("label").text(select_name);
 	  });
 	});
-
-
-function qboardValidate(){
-	var content = $("[name= qboardContent]").val(); 
-	if(content.trim().length==0) {
-		alert("내용을 입력해주세요!"); 
-		return false; 
-	}
-	
-	return true;
-}
-
- 
+  
  
  
 
 </script>
 
-
+<header class="masthead" style="height:300px;">
+      <div class="intro-text" style="padding-top:140px; !important">
+        <div class="intro-heading text-uppercase">
+       		<div id="headerFrm">
+				<span id="headerBefore"><%=profileSNS.getHeaderText()!=null? profileSNS.getHeaderText() : profileSNS.getUserNickname()+"의 홈" %></span>
+				<button id="headerBeforeBtn" onclick="updateHeaderText();" style='margin-left:10px;'>edit</button>
+			</div>
+        </div>
+     </div>
+  </header>
+  
 
 <!-- 메뉴폼 -->
-
- <div id="q-container">
+<div id="q-container">
 
 	<div  id="board_containerfrm">
  		<div class="sub_content">
@@ -267,11 +289,11 @@ function qboardValidate(){
 			
 					
 			<tr>
-				<th>내용</th>
+				<th class="text-control">내용</th>
 				<td>
 				<div class="input-group">
   					<div class="input-group-prepend">
-    					<span class="input-group-text">With textarea</span>
+    				
   					</div>
  					<textarea class="text-control" aria-label="With textarea" 
  					 		name="qboardContent"  required></textarea>	
@@ -292,11 +314,6 @@ function qboardValidate(){
 			</div>
 	</div>
 
-
-		
-			
-
-	</div>
 			
 	</body>
 </html>
