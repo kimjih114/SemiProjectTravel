@@ -60,7 +60,7 @@ public class TravelDAO {
 				int like=rset.getInt("travel_like");
 				int grade=rset.getInt("travel_grade");
 				String travelAddress=rset.getString("travel_address");
-				Travel t=new Travel(travelNo, userId, travelName, oldProfileName, newProfileName, travelContent, travelEnrolldate, viewCount, like, grade, travelAddress);
+				Travel t=new Travel();
 				list.add(t);
 			}
 		} catch (SQLException e) {
