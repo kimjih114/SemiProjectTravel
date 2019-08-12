@@ -2,8 +2,10 @@ package sns.model.service;
 
 import java.sql.Connection;
 import java.util.List;
-
 import sns.model.dao.SNSDAO;
+import sns.model.vo.BoardSNS;
+import sns.model.vo.GradeSNS;
+import sns.model.vo.ImageSNS;
 import sns.model.vo.ProfileSNS;
 import user.model.vo.User;
 
@@ -53,6 +55,38 @@ public class SNSService {
 	public int updateIntro(String userId, String intro) {
 		Connection conn=getConnection();
 		int result=new SNSDAO().updateIntro(conn, userId, intro);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int insertBoardSNS(BoardSNS boardSNS) {
+		Connection conn=getConnection();
+		int boardNo = 0;
+		int result=new SNSDAO().insertBoardSNS(conn, boardSNS);
+		if(result>0) {
+			boardNo = new SNSDAO().selectBoardSNSLastSeq(conn);
+			commit(conn);
+		}
+		else rollback(conn);
+		close(conn);
+		
+		return boardNo;
+	}
+
+	public int insertImage(List<ImageSNS> imageSNSList) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().insertImage(conn, imageSNSList);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int insertGrade(List<GradeSNS> gradeSNSList) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().insertGrade(conn, gradeSNSList);
 		if(result>0) commit(conn);
 		else rollback(conn);
 		close(conn);

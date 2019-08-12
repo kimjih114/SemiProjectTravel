@@ -1,6 +1,6 @@
 package sns.model.dao;
 
-import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import sns.model.vo.BoardSNS;
+import sns.model.vo.GradeSNS;
+import sns.model.vo.ImageSNS;
 import sns.model.vo.ProfileSNS;
 import user.model.vo.User;
 
@@ -227,4 +230,103 @@ public class SNSDAO {
 		}
 		return result;
 	}
+
+	public int insertBoardSNS(Connection conn, BoardSNS boardSNS) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertBoardSNS");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, boardSNS.getBoardWriter());
+			pstmt.setString(2, boardSNS.getBoardContent());
+			pstmt.setString(3, boardSNS.getBoardType());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int selectBoardSNSLastSeq(Connection conn) {
+		PreparedStatement pstmt = null;
+		int boardNo = 0;
+		ResultSet rset = null;
+		String sql = "select seq_board_no.currval from dual";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				boardNo = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return boardNo;
+	}
+
+	public int insertImage(Connection conn, List<ImageSNS> imageSNSList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertImage");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			for(ImageSNS is : imageSNSList) {
+			
+				pstmt.setInt(1, is.getBoardNo());
+				pstmt.setString(2, is.getBoardWriter());
+				pstmt.setString(3, is.getOriginalFileName());
+				pstmt.setString(4, is.getRenamedFileName());
+				pstmt.setInt(5, is.getImageOrder());
+			
+				result = pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertGrade(Connection conn, List<GradeSNS> gradeSNSList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertGrade");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			for(GradeSNS gs : gradeSNSList) {
+			
+				pstmt.setInt(1, gs.getBoardNo());
+				pstmt.setString(2, gs.getBoardWriter());
+				pstmt.setString(3, gs.getContentId());
+				pstmt.setString(4, gs.getContentType());
+				pstmt.setInt(5, gs.getGrade());
+			
+				result = pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	
 }

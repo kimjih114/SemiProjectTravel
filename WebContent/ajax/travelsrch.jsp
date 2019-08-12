@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 
  <script type="text/javascript">
- 
+	var contentids = new Array();
+	var contenttypes = new Array();
 	var sido1;
 	var gugun1;
-	var contentids = new Array();
 
  
  function closeDiv(div){
@@ -126,15 +126,12 @@
 					var $items=$root.find("item");
 					var html = "";
 					
-					
 					if($(".h-100").length>=3){
 						alert("여행지는 3개까지 등록 가능합니다.");
 						return;
 					}
 					$items.each(function(i,m){
-						console.log("작동확인"); //정상
-						
-						if($(m).find("title").text()==$(e.target).text().replace('+', '')){
+						if($(m).find("title").text()==$sel.text().replace('+', '')){
 							if(contentids.length>0){
 								  if(contentids.indexOf($(m).find("contentid").text())!=-1){
 									  alert("이미 추가된 여행지입니다.");
@@ -142,19 +139,28 @@
 								  }
 							}
 							html+="<div class='card h-100'>";
-									html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
-										html+="<div class='caption'>"
-											html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
-											html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
-											html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"
-											html+="</h4>";
-											html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p></div>";
-										html+="</div>"
-										html+="</div>";
+								html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
+									html+="<div class='caption'>"
+										html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
+										html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
+											html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
+										html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
+									html+="</div>";
+								html+="</div>";
+								html+="<div class='starRev'>";
+									html+="<span class='starR on' onclick='star(this);'>별1</span>";
+									html+="<span class='starR' onclick='star(this);'>별2</span>";
+									html+="<span class='starR' onclick='star(this);'>별3</span>";
+									html+="<span class='starR' onclick='star(this);'>별4</span>";
+									html+="<span class='starR' onclick='star(this);'>별5</span>";
+									html+="</div>"
+									html+="</div>";
+									
 										
-						
-								contentids.push($(m).find("contentid").text());		
-								console.log($(contentids));
+									
+									contentids.push($(m).find("contentid").text());		
+									contenttypes.push($(m).find("contenttypeid").text());
+									console.log("enter입력시="+$(contentids)[0]+$(contentids)[1]+$(contentids)[2]);
 		
 						}	
 				
@@ -233,7 +239,7 @@
 	   													html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
 	   													html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
 	   														html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
-															html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
+	   														html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
 														html+="</div>";
 													html+="</div>";
 													html+="<div class='starRev'>";
@@ -246,8 +252,10 @@
    													html+="</div>";
    													
    									
-   											contentids.push($(m).find("contentid").text());		
-   											console.log($(contentids));
+   											contentids.push($(m).find("contentid").text());	
+   											
+   											contenttypes.push($(m).find("contenttypeid").text());
+   											console.log("클릭시="+$(contentids)[0]+$(contentids)[1]+$(contentids)[2]);
    					
    									}	
    					
@@ -286,6 +294,7 @@
 		<select name="sido1" id="sido1"></select>
 		<select name="gugun1" id="gugun1"></select>
 		<div id="searchFrm">
+			<input hidden="hidden" />
 			<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="30" /> 
 			<ul id="autoComplete" style="z-index:99;">
 						

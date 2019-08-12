@@ -168,7 +168,7 @@ function introModify(){
 	   </div>
 	    <table class="tbl-usermenu">
 	   		<tr>
-	   			<td id="gohome">홈</td>
+	  			<td id="gohome">홈</td>
 	   		</tr>
 	   	</table>
 	   	<table class="tbl-usermenu">

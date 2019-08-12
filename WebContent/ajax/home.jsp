@@ -2,9 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%
-
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
-
 	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 %>
 
@@ -16,7 +14,6 @@
     display: -webkit-box;
     display: -ms-flexbox;
     /*display: fixed;*/
-    -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
@@ -168,7 +165,7 @@
 		<tr>
 			<td>
 				<label for="reviewContent" style="font-weight: 700;">어떤 여행을 하셨나요?</label>
-				<textarea name="reviewContent" id="reviewContent" cols="59" rows="5"></textarea>
+				<textarea name="reviewContent" id="reviewContent" cols="59" rows="5" required></textarea>
 				<div id="contentIdList">
 				</div>
 			</td>
@@ -185,12 +182,14 @@
 		</tr>
 		<tr>
 			<td>
-					<input type="radio" name="boardtype" id="followOnly" value="followOnly" />
+					<input type="radio" name="boardtype" id="public" value="P" checked />
+					<label for="public">전체공개</label> &nbsp;
+					<input type="radio" name="boardtype" id="followOnly" value="F" />
 					<label for="followOnly">팔로워공개</label> &nbsp;
-					<input type="radio" name="boardtype" id="locked" value="locked" />
+					<input type="radio" name="boardtype" id="locked" value="L" />
 					<label for="locked">비공개</label>
 				<br>
-				<input type="submit" id="btnSubmit" value="포스트 등록" style="float:right; margin-top : 10px;" onclick="validate();">
+				<input type="submit" id="btnSubmit" value="포스트 등록" style="float:right; margin-top : 10px;">
 			</td>
 		</tr>
 	</table>
@@ -218,6 +217,12 @@
 								<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 								  <div class="carousel-inner">
 								    <div class="carousel-item active">
+								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
+								    </div>
+								    <div class="carousel-item">
+								      <img src="<%=request.getContextPath() %>/img/profile.jpg" class="d-block w-100" alt="...">
+								    </div>
+								    <div class="carousel-item">
 								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
 								    </div>
 								    <div class="carousel-item">
@@ -301,6 +306,12 @@
 		
 		
 <script>
+document.addEventListener('keydown', function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+    }
+}, true);
+
 $(()=>{
 	location.href="#"
 })
@@ -401,8 +412,10 @@ function handleImgsFilesSelect(e){
 }
 
 $("#btnSubmit").click(function(event){
+	 var formData = new FormData();
+	
 	event.preventDefault();
-
+	
 	var grades = [];
 	
 	if($(".contentid").length>0){
@@ -414,11 +427,9 @@ $("#btnSubmit").click(function(event){
 	 	
 	console.log(contentids);
 	console.log(grades);
-	 
+	console.log(contenttypes);
 	
 	
-	 	
-	 var formData = new FormData();
 	
 	 formData.append("boardWriter",'<%=userLoggedIn.getUserId() %>');
 	 formData.append("boardContent", $("#reviewContent").val());
@@ -426,41 +437,52 @@ $("#btnSubmit").click(function(event){
 	 formData.append("contentId1",contentids[0]);
 	 formData.append("contentId2",contentids[1]);
 	 formData.append("contentId3",contentids[2]);
+	 formData.append("contentType1", contenttypes[0]);
+	 formData.append("contentType2", contenttypes[1]);
+	 formData.append("contentType3", contenttypes[2]);
 	 formData.append("grade1",grades[0]);
 	 formData.append("grade2",grades[1]);
 	 formData.append("grade3",grades[2]);
-		
+	 	
 		
 	// 파일 데이터
 	 for(var i=0, filesTempArrLen = filesTempArr.length; i<filesTempArrLen; i++) {
-	    formData.append("file"+i, filesTempArr[i]);
+	    formData.append("file"+(i+1), filesTempArr[i]);
+	    formData.append("filename"+(i+1), filesTempArr[i].name);
 	 }
 
 	  
-	 $.ajax({
+	$.ajax({
 	     type : "POST",
 	     url : "<%=request.getContextPath()%>/gson/sns/insertBoard.do",
 	     data : formData,
+	     enctype:"multipart/form-data",
 	     processData: false,
 	     contentType: false,
 	     success : function(data) {
-	         if(data.result){
-	             alert("Success");
-	         }else{
-	             alert(data.result);
-	         }
+	         alert("게시글 등록 성공 :D!");
 	         
 	     },
-	     err : function(err) {
+	     error : function(err) {
 	         alert(err.status);
+	     },
+	     complete: function(){
+	     	contentids = [];
+			grades=[];
+			filesTempArr=[];
+			contenttypes=[];
+			$("#postFrm").css('display', 'none');
+			$("#tab-container").css("opacity", "1");
+			$("#fileupload").val("");
+			$("#reviewContent").val('');
+			$(".imgs").remove();
+			
 	     }
 	 });
 
 
 
-	contentids = [];
-	grades=[];
-	filesTempArr=[];
+
 	 	
 	})
 
