@@ -144,4 +144,33 @@ public class UserDAO {
 
 	}
 
+
+	public int updateUser(Connection conn, User u) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateUser");
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, u.getUsernickName());
+			pstmt.setString(2, u.getUserName());
+			pstmt.setDate(3, u.getUserBirth());
+			pstmt.setString(4, u.getUserEmail());
+			pstmt.setString(5, u.getUserPhone());
+			pstmt.setString(6, u.getUserGender());
+			pstmt.setString(7, u.getOriginalFileName());
+			pstmt.setString(8,u.getFileName());
+			pstmt.setString(9, u.getUserId());
+
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

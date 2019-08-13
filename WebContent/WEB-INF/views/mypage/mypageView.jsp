@@ -31,11 +31,14 @@
 
 <script>
 
-
-$("#modifyUserInfo").click(()=>{
-	var param = {userId : '<%=userLoggedIn.getUserId() %>'}
+<%-- 
+$("#modifyUserInfo").on("click",function(){
+	console.log("???");
+	var param = {
+			userId :'<%=userLoggedIn.getUserId() %>'
+	}
 	$.ajax({
-		url:"<%=request.getContextPath()%>/gson/users/userView.do",
+		url:"<%=request.getContextPath()%>/gson/users/userView",
 		data : param,
 		type: "get",
 		dataType: "json",
@@ -65,7 +68,7 @@ $("#modifyUserInfo").click(()=>{
 			console.log(jqxhr, textStatus, errorThrown);
 		}
 	});
-});
+}); --%>
 
 </script>
   <style>
@@ -190,7 +193,7 @@ p.userprofile-userId{
 
    <table id="tbl-usermenu0">
    	 <tr>
-   		<td id="modifyUserInfo">회원정보수정</td>
+   		<td id="modifyUserInfo"> <a href="<%=request.getContextPath()%>/user/userUpdateView?userId=<%=userLoggedIn.getUserId()%>">회원정보수정</a></td>
    	</tr>
 	<tr>
    		<td>메시지</td>
@@ -222,10 +225,11 @@ p.userprofile-userId{
 	</table>
   </nav>   
 
-  	<div class="content">
+  	<div id="content">
   		
   	</div>
-</table></nav>
+</table>
+</nav>
  </section>
 
 </body>

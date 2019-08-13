@@ -50,7 +50,7 @@
 
 <style>
 header.masthead{
-background-image:<%=userLoggedIn==null || new SNSService().selectOneProfile(userLoggedIn.getUserId()).getHeaderRenamedFilename()==null ?  "url("+request.getContextPath()+"/img/header-new.jpg)" : "url("+request.getContextPath()+"/img/header-new.jpg)" %>
+background-image:url(<%=request.getContextPath() %>/img/header-new.jpg);
 
 
 }
