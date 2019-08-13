@@ -112,4 +112,11 @@ public class TravelService {
 		close(conn);
 		return result;
 	}
+
+	public List<RoomReservation> myBasketView(String userId) {
+		Connection conn=getConnection();
+		List<RoomReservation> basketRoom=new TravelDAO().myBasketView(conn,userId);
+		close(conn);
+		return basketRoom;
+	}
 }

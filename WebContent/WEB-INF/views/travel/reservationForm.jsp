@@ -15,7 +15,11 @@
 	String contentId=request.getParameter("contentId");
 	String contentTypeId=request.getParameter("contentTypeId");
 	String title=request.getParameter("title");
-	System.out.println(title);
+	String basket=request.getParameter("basket");
+	String sDate=request.getParameter("startDate");
+	String eDate=request.getParameter("endDate");
+	System.out.println(sDate);
+	System.out.println(eDate);
 	Date date=new Date();
 	System.out.println(date.getMonth()+1); //현재 월
 %>
@@ -76,7 +80,152 @@
 			    $("#edate").val(enddate);
 			    */
 			    
-		
+				if("basket"=="<%=basket%>"){
+					 $("#sdate").datepicker( "setDate", "<%=sDate%>");
+					 $("#edate").datepicker( "setDate", "<%=eDate%>");
+					
+					var roomList=new Array;
+					
+					$.ajax({
+						type : "get",
+						url : "<%=request.getContextPath()%>/travel/roomSearch.do?sdate=<%=sDate%>&edate=<%=eDate%>&contentId=<%=contentId%>",
+						dataType : "json",
+						async : false,
+						success:function(data){
+							console.log("data값은?"+data);
+							$(data).each((i,u)=>{		
+								roomList.push(u.roomName);
+				
+							});
+						},
+						error:function(jqxhr,textStatus,errorThrown){
+							
+						}
+						
+					});
+					
+					$.ajax({
+						url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=<%=contentTypeId%>&contentId=<%=contentId%>&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y",
+						type: "get",
+						dataType: "xml",
+						success:function(data){
+							var $root=$(data).find(":root");
+							
+							var $items=$root.find("item");
+							var html="";
+							
+							var $root=$(data).find(":root");				
+							var $items=$root.find("item");
+							var html1 = "";
+							
+							$items.each(function(i,m){						
+								var bool=false;
+									
+									if(roomList.length!=0){
+										
+										for(var i=0;i<roomList.length;i++){
+											
+											if(roomList[i]==$(m).find("roomtitle").text()){
+												bool=true;
+											}
+										}
+										
+										if(bool==true){
+											
+											html1+="<h1 class='my-4'></h1>";
+											html1+="<div class='row'>";
+											html1+="<div class='col-md-8'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></div>";
+											html1+="<div class='col-md-4'>";
+											html1+="<h3 class='my-3'>"+$(m).find("roomtitle").text()+"</h3>";
+											html1+="<p>객실크기:"+$(m).find("roomsize1").text()+"</p>";
+											html1+="<p>기준인원:"+$(m).find("roommaxcount").text()+"</p>";
+											html1+="<p>객실소개:"+$(m).find("roomintro").text()+"</p>";
+											html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
+											html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";
+											html1+="<h3 class='my-3'>예약불가</h3>";
+											html1+="</div></div>";
+											html1+="<h3 class='my-4'></h3>";	
+											html1+="<div class='row'>";
+											html1+="<div class='col-md-3 col-sm-6 mb-4'>";
+											html1+="<a href='#'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></a>";
+											html1+="</div>";
+											html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg2").text()+"' alt=''></a></div>";
+											html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg3").text()+"' alt=''></a></div>";
+											html1+=" </div>";
+										}
+					
+										if(bool==false){
+											
+											html1+="<h1 class='my-4'></h1>";
+											html1+="<div class='row'>";
+											html1+="<div class='col-md-8'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></div>";
+											html1+="<div class='col-md-4'>";
+											html1+="<h3 class='my-3'>"+$(m).find("roomtitle").text()+"</h3>";
+											html1+="<p>객실크기:"+$(m).find("roomsize1").text()+"</p>";
+											html1+="<p>기준인원:"+$(m).find("roommaxcount").text()+"</p>";
+											html1+="<p>객실소개:"+$(m).find("roomintro").text()+"</p>";
+											html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
+											html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";															
+																			
+											<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
+											html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee2").text()+"원 예약하기</button></h3>";
+											<%}else{%>
+											html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee1").text()+"원 예약하기</button></h3>";
+											<%}%>
+											html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
+											
+											html1+="</div></div>";
+											html1+="<h3 class='my-4'></h3>";	
+											html1+="<div class='row'>";
+											html1+="<div class='col-md-3 col-sm-6 mb-4'>";
+											html1+="<a href='#'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></a>";
+											html1+="</div>";
+											html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg2").text()+"' alt=''></a></div>";
+											html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg3").text()+"' alt=''></a></div>";
+											html1+=" </div>";
+										}
+										
+									}else{
+										
+										html1+="<h1 class='my-4'></h1>";
+										html1+="<div class='row'>";
+										html1+="<div class='col-md-8'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></div>";
+										html1+="<div class='col-md-4'>";
+										html1+="<h3 class='my-3'>"+$(m).find("roomtitle").text()+"</h3>";
+										html1+="<p>객실크기:"+$(m).find("roomsize1").text()+"</p>";
+										html1+="<p>기준인원:"+$(m).find("roommaxcount").text()+"</p>";
+										html1+="<p>객실소개:"+$(m).find("roomintro").text()+"</p>";
+										html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
+										html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";							
+										html1+="<input type='hidden' id='roomTitle' value='"+$(m).find("roomtitle").text()+"'>";									
+										<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
+										html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee2").text()+"원 예약하기</button></h3>";
+										<%}else{%>
+										html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee1").text()+"원 예약하기</button></h3>";
+										<%}%>
+										html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
+										
+										html1+="</div></div>";
+										html1+="<h3 class='my-4'></h3>";	
+										html1+="<div class='row'>";
+										html1+="<div class='col-md-3 col-sm-6 mb-4'>";
+										html1+="<a href='#'><img class='img-fluid' src='"+$(m).find("roomimg1").text()+"' alt=''></a>";
+										html1+="</div>";
+										html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg2").text()+"' alt=''></a></div>";
+										html1+="<div class='col-md-3 col-sm-6 mb-4'><a href='#'><img class='img-fluid' src='"+$(m).find("roomimg3").text()+"' alt=''></a></div>";
+										html1+=" </div>";
+									}
+									
+
+							});
+							$("#contents").html(html1);
+							
+						},
+						error:function(jqxhr,textStatus,errorThrown){
+							
+						}
+					});
+				}
 	});
 	
 	function search(){

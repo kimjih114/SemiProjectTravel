@@ -415,4 +415,38 @@ public class TravelDAO {
 		
 		return result;
 	}
+
+	public List<RoomReservation> myBasketView(Connection conn, String userId) {
+		
+		List<RoomReservation> basketRoom=new ArrayList<RoomReservation>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("myBasketView");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				String contentId=rset.getString("content_id");
+				String contentTypeId=rset.getString("content_type_id");
+				String travelName=rset.getString("travel_name");
+				String roomName=rset.getString("room_name");
+				String reservationStartDate=rset.getString("reservation_start_date");				
+				String reservationEndDate=rset.getString("reservation_end_date");	
+				int price=rset.getInt("price");
+				RoomReservation r=new RoomReservation(userId, contentId, contentTypeId, travelName, roomName, reservationStartDate, reservationEndDate, price);
+				basketRoom.add(r);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return basketRoom;
+	}
 }

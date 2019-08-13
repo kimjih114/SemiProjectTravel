@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <%
-	List<RoomReservation> room=(List<RoomReservation>)request.getAttribute("room");
+	List<RoomReservation> basketRoom=(List<RoomReservation>)request.getAttribute("basketRoom");
 %>
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -215,33 +215,33 @@ section#page-top{
   </nav>   
 	
 	<div id="content">
-  		<h2>예약 내역</h2>
+  		<h2>장바구니</h2>
   		<table id="tbl-user">
   			<thead>
   			<tr>
   				<th>숙소이름</th>
   				<th>방이름</th>
-  				<th>예약날짜</th>
+  				<th>검색날짜</th>
   				<th>가격</th>
-  				<th>결제날짜</th>
+  				<th></th>
   				<th></th>
   			</tr>
   			</thead>
   			<tbody>
-  				<%if(room==null){ %>
+  				<%if(basketRoom==null){ %>
   				<tr>
   					<td colspan="5">예약내역이 없습니다.</td>
   				</tr>
   				<%}else{ 
-  					for(int i=0;i<room.size();i++){
+  					for(int i=0;i<basketRoom.size();i++){
   						%>
   						<tr>
-  							<td><%=room.get(i).getTravelName() %></td>
-  							<td><%=room.get(i).getRoomName() %></td>
-  							<td><%=room.get(i).getReservationStartDate() %>~<%=room.get(i).getReservationEndDate() %></td>
-  							<td><%=room.get(i).getPrice() %></td>
-  							<td><%=room.get(i).getPaymentDate()%></td>
-  							<td><button type="button" onclick="location.href='<%=request.getContextPath()%>/mypage/reservationDel?userId=<%=userLoggedIn.getUserId()%>&contentId=<%=room.get(i).getContentId()%>&travelName=<%=room.get(i).getTravelName()%>&roomName=<%=room.get(i).getRoomName() %>&reservationStartDate=<%=room.get(i).getReservationStartDate()%>&reservationEndDate=<%=room.get(i).getReservationEndDate()%>'">예약취소</button></td>
+  							<td><%=basketRoom.get(i).getTravelName() %></td>
+  							<td><%=basketRoom.get(i).getRoomName() %></td>
+  							<td><%=basketRoom.get(i).getReservationStartDate() %>~<%=basketRoom.get(i).getReservationEndDate() %></td>
+  							<td><%=basketRoom.get(i).getPrice() %></td>
+  							<td><button type="button" onclick="location.href='<%=request.getContextPath()%>/travel/reservationForm?contentId=<%=basketRoom.get(i).getContentId()%>&contentTypeId=<%=basketRoom.get(i).getContentTypeId()%>&title=<%=basketRoom.get(i).getTravelName() %>&basket=basket&startDate=<%=basketRoom.get(i).getReservationStartDate()%>&endDate=<%=basketRoom.get(i).getReservationEndDate()%>'">결제하러가기</button></td>
+  							<td><button type="button" onclick="#">삭제</button></td>
   						</tr>
   						<%
   					}

@@ -206,7 +206,7 @@ p.userprofile-userId{
    			<td><a href="<%=request.getContextPath()%>/mypage/myReservationDelView?userId=<%=userLoggedIn.getUserId()%>">취소내역</a></td>
    		</tr>
    		<tr>
-   			<td>장바구니</td>
+   			<td><a href="<%=request.getContextPath()%>/mypage/myBasketView?userId=<%=userLoggedIn.getUserId()%>">장바구니</a></td>
    		</tr>
    		<tr>
    			<td>위시리스트</td>
