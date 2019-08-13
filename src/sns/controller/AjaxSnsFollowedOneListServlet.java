@@ -1,6 +1,7 @@
 package sns.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -38,6 +39,18 @@ public class AjaxSnsFollowedOneListServlet extends HttpServlet {
 		
 		//2.business logic
 		List<String> followedOneList = new SNSService().selectOneIdFollowed(userLoggedIn);
+		List<String> followOneList = new SNSService().selectOneIdFollow(userLoggedIn); 
+		if(followedOneList!=null) {
+			for(String followed : followedOneList) {
+				if(followOneList!=null) {
+					for(String follow : followOneList) {
+						if(followed.equals(follow)){
+							followedOneList.remove(followed);
+						}
+					}
+				}
+			}
+		}
 		List<ProfileSNS> followedProfileList = new SNSService().selectOneProfileFollow(followedOneList);
 	
 		//view단 작성

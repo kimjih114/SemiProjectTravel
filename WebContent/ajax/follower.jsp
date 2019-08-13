@@ -70,15 +70,16 @@ div.followListContainer{
 table.followList{
 	width: 527px;
 	border:1px solid black;
+	
 }
 table.followList td{
 	width: 527px;
-	padding: 10px;
+	padding: 8px;
 }
-#followerSearch{
+.followerSearch{
 	width: 200px;
 	float:left;
-	margin: 10px;
+margin-bottom: 10px
 }
 
 .firstRow{
@@ -98,6 +99,15 @@ table.followList td{
 .ub-btns{
 	display:inline;
 	float:right;
+}
+
+.magni{
+	float:left;
+	margin: 4px 3px;
+}
+
+.header-profile-circle{
+	margin-right: 5px;
 }
 </style>
 <script>
@@ -132,7 +142,7 @@ $(()=>{
 				if(u.userType=='S'){
 					html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
 				}		
-				html+="&nbsp;<span class='followerIntro'>"+u.userIntroduce+"</span>";
+				html+="&nbsp;<span class='followerIntro'>@"+u.userId+"</span>";
 				html+="</div>"
 				html+="<div class='ub-btns'>"
 				html+="<%if(mypage.equals(userLoggedIn.getUserId())){ %>";
@@ -201,7 +211,7 @@ $(function() {
 						if(u.userType=='S'){
 							html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
 						}		
-						html+="&nbsp;<span class='followerIntro'>"+u.userIntroduce+"</span>";
+						html+="&nbsp;<span class='followerId'>@"+u.userId+"</span>";
 						html+="</div>"
 						html+="<div class='ub-btns'>"
 						html+="<%if(mypage.equals(userLoggedIn.getUserId())){ %>";
@@ -256,7 +266,7 @@ $(function() {
 						if(u.userType=='S'){
 							html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
 						}		
-						html+="&nbsp;<span class='followerIntro'>"+u.userIntroduce+"</span>";
+						html+="&nbsp;<span class='followerIntro'>@"+u.userId+"</span>";
 						html+="</div>"
 						html+="<div class='ub-btns'>"
 						html+="<%if(mypage.equals(userLoggedIn.getUserId())){ %>";
@@ -310,7 +320,7 @@ $(function() {
 						if(u.userType=='S'){
 							html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
 						}		
-						html+="&nbsp;<span class='followerIntro'>"+u.userIntroduce+"</span>";
+						html+="&nbsp;<span class='followerIntro'@"+u.userId+"</span>";
 						html+="</div>"
 						html+="<div class='ub-btns'>"
 						html+="<%if(mypage.equals(userLoggedIn.getUserId())){ %>";
@@ -410,7 +420,9 @@ function follower(btn){
 		
 			<div id="tab1" class="tabcontent current">
 				<div class="followListContainer">
-					<input type="search" name="followerSearch" id="followerSearch" />
+					<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" alt="" width='20' height='20'/>
+					<input type="search" name="followerSearch" class="followerSearch" id="followerSearch1" />
+					
 					<table class="followList" id="followerList">
 					
 					</table>
@@ -419,7 +431,8 @@ function follower(btn){
 		
 			<div id="tab2" class="tabcontent">
 				<div class="followListContainer">
-					<input type="search" name="followerSearch" id="followerSearch" />
+				<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" width='20' height='20'/>
+					<input type="search" name="followerSearch" class="followerSearch" id="followerSearch2" />
 					<table class="followList" id="followingList">
 					
 					</table>
@@ -428,7 +441,8 @@ function follower(btn){
 			<div id="tab3" class="tabcontent">
 			<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)){ %>
 				<div class="followListContainer">
-					<input type="search" name="followerSearch" id="followerSearch" />
+				<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" width='20' height='20'/>
+					<input type="search" name="followerSearch" class="followerSearch" id="followerSearch3" />
 					<table class="followList" id="followedList">
 					
 					</table>
