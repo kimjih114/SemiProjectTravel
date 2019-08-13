@@ -14,6 +14,8 @@
  	System.out.println("mypage="+mypage);
  	System.out.println("userLoggedIn="+userLoggedIn);
  	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
+ 
+ 	System.out.println("profileSNS@jsp="+profileSNS);
  	
  	List<String> followLoggedInList = new SNSService().selectOneIdFollow(userLoggedIn.getUserId());
 	System.out.println("followLoggedInList="+followLoggedInList);
@@ -161,12 +163,59 @@ function follow(){
 			type : 'post',
 			success : function(data){
 				console.log("follow working");
+				if($('.followerTr').length>0){
+					$('.followerTr').remove();
+					$('.follower').remove();				
+				}
+				var html = "<tr class='followerTr'><td class='follower'>팔로워</td></tr>";
+				$("#tbl-followmenu").append(html);
+				
+				$(".follower").on("click", function(){
+			 		$.ajax({
+						url: "<%=request.getContextPath() %>/ajax/follower.jsp",
+						data:"mypage="+'<%=mypage%>',
+						success: function(data){
+							$("#container-sns").html(data);
+							console.log("ajax처리성공!");
+						},
+						error: function(jqxhr, textStatus, errorThrown){
+							console.log("ajax처리실패!");
+							console.log(jqxhr, textStatus, errorThrown);
+						},
+						complete: function(){
+							console.log("complete!!!");
+						}
+					});
+			 	});
+				
+				
+				
 				
 				$("#followBtn").removeClass("btn-success");
 				$("#followBtn").addClass("btn-danger");
 				$("#followBtn").html("Unfollow");
 				$("#followBtn").off('click')
 				$("#followBtn").on('click', unfollow);
+				
+				$("#follower").on("click", function(){
+			 		$.ajax({
+						url: "<%=request.getContextPath() %>/ajax/follower.jsp",
+						data:"mypage="+'<%=mypage%>',
+						success: function(data){
+							$("#container-sns").html(data);
+							console.log("ajax처리성공!");
+						},
+						error: function(jqxhr, textStatus, errorThrown){
+							console.log("ajax처리실패!");
+							console.log(jqxhr, textStatus, errorThrown);
+						},
+						complete: function(){
+							console.log("complete!!!");
+						}
+					});
+			 	});
+				
+
 				console.log("ajax처리성공!")
 			},
 			error : function(data){
@@ -198,12 +247,20 @@ function unfollow(){
 				$("#followBtn").off('click');
 				$("#followBtn").on('click', follow);
 				
+				$('.followerTr').remove();
+				$('.follower').remove();
+				
+				
+				if($('#follower-container').length>0){
+					location.href='<%=request.getContextPath() %>/story/storyMain?mypage=<%=mypage %>';
+				}
+				
 			},
 			error : function(data){
 				console.log("ajax처리실패");
 			},
 			complete: function(data){
-			
+				
 				
 			}
 		}) 
@@ -263,21 +320,21 @@ function unfollow(){
 	  			<td id="gohome">홈</td>
 	   		</tr>
 	   	</table>
-	   	<table class="tbl-usermenu">
+	   	<table class="tbl-usermenu" id="tbl-followmenu">
    	 		<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)) {%>
-	   		<tr>
-	   			<td>메시지</td>
-	   		</tr>
+		   		<tr>
+		   			<td>메시지</td>
+		   		</tr>
 	   		<%} %>
 	   		<tr>
 	   			<td>검색</td>
 	   		</tr>
 	   		
-	   	
-	   		<tr>
-	   			<td id="follower">팔로워</td>
-	   		</tr>
-
+	   		<%if((userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) ||  !mypage.equals(userLoggedIn.getUserId()) && followLoggedInList.contains(mypage)){%>
+		   		<tr class="followerTr">
+		   			<td class="follower">팔로워</td>
+		   		</tr>
+			<% }%>
 	   	</table>
 	   	<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)) {%>
 	    <table class="tbl-usermenu">
@@ -469,7 +526,7 @@ div#profile-header{
 		});
  	});
  
- 	$("#follower").on("click", function(){
+ 	$(".follower").on("click", function(){
  		$.ajax({
 			url: "<%=request.getContextPath() %>/ajax/follower.jsp",
 			data:"mypage="+'<%=mypage%>',
@@ -501,7 +558,7 @@ div#profile-header{
 			}
 		});
 	})
-	<%-- 	
+		
 	$("#QuestionList").on("click", function(){
 		$.ajax({
 			url: "<%=request.getContextPath() %>/ajax/board_questionList.jsp", 
@@ -515,10 +572,6 @@ div#profile-header{
 				console.log(jqxhr, textStatus, errorThrown);
 			}
 		});
-	}) --%>
-
- 	$("#QuestionList").on("click", function(){
-		location.href="<%=request.getContextPath()%>/boardquestion/boardList"; 
 	})
 
 	</script>

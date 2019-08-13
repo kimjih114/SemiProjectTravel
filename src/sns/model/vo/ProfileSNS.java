@@ -10,22 +10,27 @@ public class ProfileSNS implements Serializable{
 	private String userId;
     private String userNickname;
     private String userIntroduce;
+    private String userType;
     private String profileOriginalFilename;
     private String profileRenamedFilename;
     private String headerOriginalFilename;
     private String headerRenamedFilename;
     private String headerText;
     private String themeColor;
-    
 	public ProfileSNS() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	public ProfileSNS(String userId, String userNickname, String userIntroduce, String headerOriginalFilename,
+	public ProfileSNS(String userId, String userNickname, String userIntroduce, String userType,
+			String profileOriginalFilename, String profileRenamedFilename, String headerOriginalFilename,
 			String headerRenamedFilename, String headerText, String themeColor) {
 		super();
 		this.userId = userId;
 		this.userNickname = userNickname;
 		this.userIntroduce = userIntroduce;
+		this.userType = userType;
+		this.profileOriginalFilename = profileOriginalFilename;
+		this.profileRenamedFilename = profileRenamedFilename;
 		this.headerOriginalFilename = headerOriginalFilename;
 		this.headerRenamedFilename = headerRenamedFilename;
 		this.headerText = headerText;
@@ -48,6 +53,24 @@ public class ProfileSNS implements Serializable{
 	}
 	public void setUserIntroduce(String userIntroduce) {
 		this.userIntroduce = userIntroduce;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getProfileOriginalFilename() {
+		return profileOriginalFilename;
+	}
+	public void setProfileOriginalFilename(String profileOriginalFilename) {
+		this.profileOriginalFilename = profileOriginalFilename;
+	}
+	public String getProfileRenamedFilename() {
+		return profileRenamedFilename;
+	}
+	public void setProfileRenamedFilename(String profileRenamedFilename) {
+		this.profileRenamedFilename = profileRenamedFilename;
 	}
 	public String getHeaderOriginalFilename() {
 		return headerOriginalFilename;
@@ -76,22 +99,12 @@ public class ProfileSNS implements Serializable{
 	@Override
 	public String toString() {
 		return "ProfileSNS [userId=" + userId + ", userNickname=" + userNickname + ", userIntroduce=" + userIntroduce
-				+ ", headerOriginalFilename=" + headerOriginalFilename + ", headerRenamedFilename="
-				+ headerRenamedFilename + ", headerText=" + headerText + ", themeColor=" + themeColor + "]";
+				+ ", userType=" + userType + ", profileOriginalFilename=" + profileOriginalFilename
+				+ ", profileRenamedFilename=" + profileRenamedFilename + ", headerOriginalFilename="
+				+ headerOriginalFilename + ", headerRenamedFilename=" + headerRenamedFilename + ", headerText="
+				+ headerText + ", themeColor=" + themeColor + "]";
 	}
-	public String getProfileOriginalFilename() {
-		return profileOriginalFilename;
-	}
-	public void setProfileOriginalFilename(String profileOriginalFilename) {
-		this.profileOriginalFilename = profileOriginalFilename;
-	}
-	public String getProfileRenamedFilename() {
-		return profileRenamedFilename;
-	}
-	public void setProfileRenamedFilename(String profileRenamedFilename) {
-		this.profileRenamedFilename = profileRenamedFilename;
-	}
-    
+   
     
     
 }

@@ -1,9 +1,11 @@
+<%@page import="user.model.vo.User"%>
 <%@page import="sns.model.vo.ProfileSNS"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	String mypage = request.getParameter("mypage");
+User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 %>
 <style>
 #follower-container {
@@ -71,9 +73,7 @@ table.followList{
 }
 table.followList td{
 	width: 527px;
-	border:1px solid black;
 	padding: 10px;
-	border-collapse: collapse;
 }
 #followerSearch{
 	width: 200px;
@@ -81,30 +81,71 @@ table.followList td{
 	margin: 10px;
 }
 
+.firstRow{
+	margin-left: 5px;
+	color: gray;
+	float: left;
+	diplay:inline;
+	font-size:0.8em;
+}
+
+.firstRow .followerURL{
+	font-weight: 700;
+	font-size: 1.2em;
+	color: black;
+}
+
+.ub-btns{
+	display:inline;
+	float:right;
+}
 </style>
 <script>
 $(()=>{
 	var param = {
 			mypage : '<%=mypage%>'
 	}
+	
 	$.ajax({
-		url:"<%=request.getContextPath() %>/gson/sns/followOneList.do",
+		url:"<%=request.getContextPath() %>/gson/sns/followerOneList.do",
 		type:"get",
 		data:param,
 		dataType:"json",
 		success: function(data){
 			console.log(data);
 			
-			var html = '';
 			$(data).each((i,u)=>{
-				html = "<tr>";
-				html += "<td>"+u.userId+"</td>";
-				html += "<td>"+u.userNickname+"</td>";
-				html += "<td>"+u.userIntroduce+"</td>";
-				html += "</tr>";
+				var html = '';
+				if(u.userIntroduce==undefined){
+					u.userIntroduce='안녕하세요. 저는 '+u.userNickname+'입니다.';
+				} 
+				
+				if(u.userIntroduce.length >= 10){
+					u.userIntroduce= u.userIntroduce.substr(0, 10) + "...";
+				}
+				
+				html+="<tr>";
+				html+="<td>";
+				html+="<div class='firstRow'>";
+				html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
+				html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.userId+"' class='followerURL'>"+u.userNickname+"</a>";
+				if(u.userType=='S'){
+					html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
+				}		
+				html+="&nbsp;<span class='followerIntro'>"+u.userIntroduce+"</span>";
+				html+="</div>"
+				html+="<div class='ub-btns'>"
+				html+="<%if(mypage.equals(userLoggedIn.getUserId())){ %>";
+					html+="<button type='button' class='btn btn-danger' class='followerBtn' value='"+u.userId+"' onclick='unfollower(this);'>Unfollow</button>";
+					html+="&nbsp;"
+					html+="<button type='button' class='btn btn-dark'>Block</button>";
+				html+="<%}%>";
+				html+="</div>";	
+				html+="</td>";
+				html+="</tr>";
 				console.log(html);
-			$(".followList").append(html);
-			
+				
+				$("#followerList").append(html);
 			});
 			
 		},
@@ -113,49 +154,286 @@ $(()=>{
 			console.log(jqxhr, textStatus, errorThrown);
 		}
 	});
-	
-	
+
 });
 
 
-	
+
 
 
 $(function() {
-	$('ul.tab li').click(function() {
+	$('ul.tab li').click(function() {	
 		var activeTab = $(this).attr('data-tab');
 		$('ul.tab li').removeClass('current');
 		$('.tabcontent').removeClass('current');
 		$(this).addClass('current');
 		$('#' + activeTab).addClass('current');
+		
+		console.log($(this).attr('data-tab'));
+		
+		if($(this).attr('data-tab')=='tab1'){
+			var param = {
+					mypage : '<%=mypage%>'
+			}
+			$.ajax({
+				url:"<%=request.getContextPath() %>/gson/sns/followerOneList.do",
+				type:"get",
+				data:param,
+				dataType:"json",
+				success: function(data){
+					console.log(data);
+					$("#followerList").html('');
+					$(data).each((i,u)=>{
+						var html = '';
+						if(u.userIntroduce==undefined){
+							u.userIntroduce='안녕하세요. 저는 '+u.userNickname+'입니다.';
+						} 
+						
+						if(u.userIntroduce.length >= 10){
+							u.userIntroduce= u.userIntroduce.substr(0, 10) + "...";
+						}
+						
+						html+="<tr>";
+						html+="<td>";
+						html+="<div class='firstRow'>";
+						html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
+						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.userId+"' class='followerURL'>"+u.userNickname+"</a>";
+						if(u.userType=='S'){
+							html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
+						}		
+						html+="&nbsp;<span class='followerIntro'>"+u.userIntroduce+"</span>";
+						html+="</div>"
+						html+="<div class='ub-btns'>"
+						html+="<%if(mypage.equals(userLoggedIn.getUserId())){ %>";
+							html+="<button type='button' class='btn btn-danger' class='followerBtn' value='"+u.userId+"' onclick='unfollower(this);'>Unfollow</button>";
+							html+="&nbsp;"
+							html+="<button type='button' class='btn btn-dark'>Block</button>";
+						html+="<%}%>";
+						html+="</div>";	
+						html+="</td>";
+						html+="</tr>";
+						console.log(html);
+						
+						$("#followerList").append(html);
+					});
+					
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					console.log("ajax처리실패!");
+					console.log(jqxhr, textStatus, errorThrown);
+				}
+			});
+		} 
+		
+		else if($(this).attr('data-tab')=='tab2'){
+			var param = {
+					mypage : '<%=mypage%>'
+			}
+			$.ajax({
+				url:"<%=request.getContextPath() %>/gson/sns/followOneList.do",
+				type:"get",
+				data:param,
+				dataType:"json",
+				success: function(data){
+					$("#followingList").html('');
+					console.log(data);
+					
+					$(data).each((i,u)=>{
+						var html = '';
+						if(u.userIntroduce==undefined){
+							u.userIntroduce='안녕하세요. 저는 '+u.userNickname+'입니다.';
+						} 
+						
+						if(u.userIntroduce.length >= 10){
+							u.userIntroduce= u.userIntroduce.substr(0, 10) + "...";
+						}
+						
+						html+="<tr>";
+						html+="<td>";
+						html+="<div class='firstRow'>";
+						html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
+						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.userId+"' class='followerURL'>"+u.userNickname+"</a>";
+						if(u.userType=='S'){
+							html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
+						}		
+						html+="&nbsp;<span class='followerIntro'>"+u.userIntroduce+"</span>";
+						html+="</div>"
+						html+="<div class='ub-btns'>"
+						html+="<%if(mypage.equals(userLoggedIn.getUserId())){ %>";
+							html+="<button type='button' class='btn btn-danger' class='followerBtn' value='"+u.userId+"' onclick='unfollower(this);'>Unfollow</button>";
+							html+="&nbsp;"
+							html+="<button type='button' class='btn btn-dark'>Block</button>";
+						html+="<%}%>";
+						html+="</div>";	
+						html+="</td>";
+						html+="</tr>";
+						console.log(html);
+						
+						$("#followingList").append(html);
+					});
+					
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					console.log("ajax처리실패!");
+					console.log(jqxhr, textStatus, errorThrown);
+				}
+			});
+			
+		}else if($(this).attr('data-tab')=='tab3'){
+			var param1 = {
+					userLoggedIn : '<%=userLoggedIn.getUserId()%>'
+			}
+			$.ajax({
+				url:"<%=request.getContextPath() %>/gson/sns/followedOneList.do",
+				type:"get",
+				data:param1,
+				dataType:"json",
+				success: function(data){
+					$("#followedList").html('');
+					console.log(data);
+					
+					$(data).each((i,u)=>{
+						var html = '';
+						if(u.userIntroduce==undefined){
+							u.userIntroduce='안녕하세요. 저는 '+u.userNickname+'입니다.';
+						} 
+						
+						if(u.userIntroduce.length >= 10){
+							u.userIntroduce= u.userIntroduce.substr(0, 10) + "...";
+						}
+						
+						html+="<tr>";
+						html+="<td>";
+						html+="<div class='firstRow'>";
+						html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
+						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.userId+"' class='followerURL'>"+u.userNickname+"</a>";
+						if(u.userType=='S'){
+							html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
+						}		
+						html+="&nbsp;<span class='followerIntro'>"+u.userIntroduce+"</span>";
+						html+="</div>"
+						html+="<div class='ub-btns'>"
+						html+="<%if(mypage.equals(userLoggedIn.getUserId())){ %>";
+							html+="<button type='button' class='btn btn-success' class='followedBtn' value='"+u.userId+"' onclick='follower(this);'>follow</button>";
+							html+="&nbsp;"
+							html+="<button type='button' class='btn btn-dark'>Block</button>";
+						html+="<%}%>";
+						html+="</div>";	
+						html+="</td>";
+						html+="</tr>";
+						console.log(html);
+						
+						$("#followedList").append(html);
+					});
+					
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					console.log("ajax처리실패!");
+					console.log(jqxhr, textStatus, errorThrown);
+				}
+			});
+			
+		}
+		
 	})
 });
+
+function unfollower(btn){
+		var param={
+			userFollowing : '<%=userLoggedIn.getUserId() %>',
+			userFollowed : $(btn).val()
+		}
+	
+		$.ajax({
+			url : '<%=request.getContextPath()%>/gson/sns/unFollow.do',
+			data : param,
+			dataType: 'json',
+			type : 'post',
+			success : function(data){	
+				
+				$(btn).parent().parent().parent().remove();
+				
+				
+			},
+			error : function(data){
+				console.log("ajax처리실패");
+			},
+			complete: function(data){
+			
+				
+			}
+		}) 
+
+	}
+	
+function follower(btn){
+	var param={
+		userFollowing : '<%=userLoggedIn.getUserId() %>',
+		userFollowed : $(btn).val()
+	}
+
+	$.ajax({
+		url : '<%=request.getContextPath()%>/gson/sns/follow.do',
+		data : param,
+		dataType: 'json',
+		type : 'post',
+		success : function(data){		
+			$(btn).parent().parent().parent().remove();
+			
+		},
+		error : function(data){
+			console.log("ajax처리실패");
+		},
+		complete: function(data){
+		
+			
+		}
+	}) 
+
+}
+
 
 </script>
 
  <div id="follower-container">
 			<ul class="tab">
-				<li class="current" data-tab="tab1"><a>팔로워</a></li>
-				<li data-tab="tab2"><a>내가 팔로우한 사람</a></li>
-				<li data-tab="tab3"><a>나를 팔로우한 사람</a></li>
+			<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)){ %>
+				<li class="current" data-tab="tab1"><a>팔로우</a></li>
+				<li data-tab="tab2"><a>팔로잉</a></li>
+				<li data-tab="tab3"><a>나를 팔로잉한 사람</a></li>
+			<% } else if(userLoggedIn!=null && !userLoggedIn.getUserId().equals(mypage)){%>
+				<li class="current" data-tab="tab1"><a><%=mypage %>의 팔로우</a></li>
+				<li data-tab="tab2"><a><%=mypage %>의 팔로잉</a></li>
+				<li data-tab="tab3"><a>함께 팔로우한 사람</a></li>
+			<% } %>
 			</ul>
 		
 			<div id="tab1" class="tabcontent current">
 				<div class="followListContainer">
 					<input type="search" name="followerSearch" id="followerSearch" />
-					<table class="followList">
-						
+					<table class="followList" id="followerList">
+					
 					</table>
 		    	</div>
 			</div>
 		
 			<div id="tab2" class="tabcontent">
-				<h3>좋아요</h3>
-				<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+				<div class="followListContainer">
+					<input type="search" name="followerSearch" id="followerSearch" />
+					<table class="followList" id="followingList">
+					
+					</table>
+		    	</div>
 			</div>
 			<div id="tab3" class="tabcontent">
-				<h3>좋아요</h3>
-				<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
-			</div>
+			<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)){ %>
+				<div class="followListContainer">
+					<input type="search" name="followerSearch" id="followerSearch" />
+					<table class="followList" id="followedList">
+					
+					</table>
+		    	</div>
+		    <% } %>
+		    </div>
 
 		</div>

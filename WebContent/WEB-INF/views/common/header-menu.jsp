@@ -50,7 +50,7 @@
 
 <style>
 header.masthead{
-background-image:url(<%=request.getContextPath() %>/img/header-new.jpg);
+background-image:url(<%=request.getContextPath()%>/img/header-new.jpg);
 
 
 }

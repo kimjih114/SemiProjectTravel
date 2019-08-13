@@ -38,9 +38,13 @@ public class SnsMainServlet extends HttpServlet {
 		
 		if(profileSNS!=null) {
 			request.setAttribute("profileSNS", profileSNS);
+			request.getRequestDispatcher("/WEB-INF/views/story/storyMain.jsp").forward(request, response);
 		}
-	
-		request.getRequestDispatcher("/WEB-INF/views/story/storyMain.jsp").forward(request, response);
+		else if(profileSNS==null){
+			request.setAttribute("msg", "해당하는 페이지가 없습니다.");
+			request.setAttribute("loc", "/");
+			request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
+		}
 	}
 
 	/**

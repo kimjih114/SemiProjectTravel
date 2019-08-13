@@ -124,5 +124,19 @@ public class SNSService {
 		return followProfileList;
 	}
 
+	public List<String> selectOneIdFollower(String userfollowed, List<String> followOneList) {
+		Connection conn=getConnection();
+		List<String> followedOneList=new SNSDAO().selectOneIdFollower(conn, userfollowed, followOneList);
+		close(conn);
+		return followedOneList;
+	}
+
+	public List<String> selectOneIdFollowed(String userLoggedIn) {
+		Connection conn=getConnection();
+		List<String> followedOneList=new SNSDAO().selectOneIdFollowed(conn, userLoggedIn);
+		close(conn);
+		return followedOneList;
+	}
+
 
 }

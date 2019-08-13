@@ -79,6 +79,7 @@ public class SNSDAO {
 				profileSNS.setUserId(rset.getString("user_id"));
 				profileSNS.setUserNickname(rset.getString("user_nickname"));
 				profileSNS.setUserIntroduce(rset.getString("user_introduce"));
+				profileSNS.setUserType(rset.getString("user_type"));
 				profileSNS.setProfileOriginalFilename(rset.getString("profile_original_filename"));
 				profileSNS.setProfileRenamedFilename(rset.getString("profile_renamed_filename"));
 				profileSNS.setHeaderOriginalFilename(rset.getString("header_original_filename"));
@@ -308,7 +309,6 @@ public class SNSDAO {
 
 	public List<String> selectOneIdFollow(Connection conn, String userFollowing) {
 		List<String> followOneList=new ArrayList<String>();
-		FollowSNS followSNS = null;
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
 		String sql=prop.getProperty("selectOneIdFollow");
@@ -354,6 +354,7 @@ public class SNSDAO {
 						profileSNS.setUserId(rset.getString("user_id"));
 						profileSNS.setUserNickname(rset.getString("user_nickname"));
 						profileSNS.setUserIntroduce(rset.getString("user_introduce"));
+						profileSNS.setUserType(rset.getString("user_type"));
 						profileSNS.setProfileOriginalFilename(rset.getString("profile_original_filename"));
 						profileSNS.setProfileRenamedFilename(rset.getString("profile_renamed_filename"));
 						profileSNS.setHeaderOriginalFilename(rset.getString("header_original_filename"));
@@ -375,6 +376,65 @@ public class SNSDAO {
 		}
 			
 		return followProfileList;
+	}
+
+	public List<String> selectOneIdFollower(Connection conn, String userfollowed, List<String> followOneList) {
+		List<String> followerOneList=new ArrayList<String>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectOneIdFollower");
+		System.out.println("userfollowed@dao="+userfollowed);
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			for(String userFollowing : followOneList) {
+				pstmt.setString(1, userFollowing);
+				pstmt.setString(2, userfollowed);
+				
+				rset=pstmt.executeQuery();
+				
+				while(rset.next()) {
+					followerOneList.add(rset.getString(1));
+				}
+			
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return followerOneList;
+	}
+
+	public List<String> selectOneIdFollowed(Connection conn, String userLoggedIn) {
+		List<String> followedOneList=new ArrayList<String>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectOneIdFollowed");
+		System.out.println("userfollowed@dao="+userLoggedIn);
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userLoggedIn);
+
+			rset=pstmt.executeQuery();
+				
+			while(rset.next()) {
+				followedOneList.add(rset.getString(1));
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return followedOneList;
 	}
 
 	

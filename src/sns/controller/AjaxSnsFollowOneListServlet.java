@@ -42,7 +42,6 @@ public class AjaxSnsFollowOneListServlet extends HttpServlet {
 		
 		//2.business logic
 		List<String> followOneList = new SNSService().selectOneIdFollow(userFollowing);
-		System.out.println("followOneList@servlet="+followOneList);
 		List<ProfileSNS> followProfileList = new SNSService().selectOneProfileFollow(followOneList);
 		System.out.println("followProfileList@servlet="+followProfileList);
 						
