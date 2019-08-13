@@ -38,7 +38,7 @@ public class Board_QuestionDAO {
 		
 	}
 
-	public List<Board_Question> selectBoardQuestionList(Connection conn) {
+	public List<Board_Question> selectBoardQuestionList(Connection conn, int cPage, int numPerPage) {
 		
 		List<Board_Question> list = new ArrayList<>(); 
 		PreparedStatement pstmt = null; 
@@ -48,6 +48,9 @@ public class Board_QuestionDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, (cPage-1)*numPerPage+1);
+			pstmt.setInt(2, cPage*numPerPage);
 			
 			rset = pstmt.executeQuery();
 			

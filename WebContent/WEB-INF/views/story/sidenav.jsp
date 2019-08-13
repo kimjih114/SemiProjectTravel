@@ -501,7 +501,7 @@ div#profile-header{
 			}
 		});
 	})
-		
+	<%-- 	
 	$("#QuestionList").on("click", function(){
 		$.ajax({
 			url: "<%=request.getContextPath() %>/ajax/board_questionList.jsp", 
@@ -515,6 +515,10 @@ div#profile-header{
 				console.log(jqxhr, textStatus, errorThrown);
 			}
 		});
+	}) --%>
+
+ 	$("#QuestionList").on("click", function(){
+		location.href="<%=request.getContextPath()%>/boardquestion/boardList"; 
 	})
 
 	</script>

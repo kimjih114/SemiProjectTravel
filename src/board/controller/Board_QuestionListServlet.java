@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
+
 
 import board.model.service.Board_QuestionService;
 import board.model.vo.Board_Question;
-import common.QuestionBoardListSingletone;
+/*import common.QuestionBoardListSingletone;*/
 
 /**
  * Servlet implementation class BoardQuestionListServlet
  */
-@WebServlet("/board/controller/board/boardList.do")
+@WebServlet("/boardquestion/boardList")
 public class Board_QuestionListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,24 +37,26 @@ public class Board_QuestionListServlet extends HttpServlet {
 		
 			request.setCharacterEncoding("utf-8");
 		
-		  final int numPerPage = 5; int cPage = 1; try{ cPage =
-		  Integer.parseInt(request.getParameter("cPage")); }
+		  final int numPerPage = 5; 
+		  int cPage = 1; 
+		  try{ 
+			  cPage = Integer.parseInt(request.getParameter("cPage")); }
 		  catch(NumberFormatException e){
 		  
 		  }
 		 
 		  
-		List<Board_Question> qboardList = QuestionBoardListSingletone.getInstance().getQboardList(); 
+		List<Board_Question> qboardList = new Board_QuestionService().selectBoardQuestionList(cPage,numPerPage); 
 		System.out.println("boardQuestion@list="+qboardList);
 		
 		
 		  int totalqBoardCount = new Board_QuestionService().selectBoardQuestionCount();
 		  
 		  int totalqPage = (int)Math.ceil((double)totalqBoardCount/numPerPage);
-		  System.out.println("totalBoardQuestion="+totalqBoardCount+", totalqPage="
-		  +totalqPage);
+		  System.out.println("totalBoardQuestion="+totalqBoardCount+", totalqPage="+totalqPage);
 		  
-		  String pageBar = ""; int pageBarSize = 5;
+		  String pageBar = ""; 
+		  int pageBarSize = 5;
 		  
 		  int pageStart = ((cPage-1)/pageBarSize)*pageBarSize+1;
 		  
@@ -68,8 +70,8 @@ public class Board_QuestionListServlet extends HttpServlet {
 		  pageNo > totalqPage)){
 		  
 		  if(cPage == pageNo ){ pageBar += "<span class='cPage'>"+pageNo+"</span> "; }
-		  else { pageBar +=
-		  "<a href='"+request.getContextPath()+"/board/boardList?cPage="+pageNo+"'>"+
+		  else { 
+			  pageBar +="<a href='"+request.getContextPath()+"/board/boardList?cPage="+pageNo+"'>"+
 		  pageNo+"</a> "; } pageNo++; }
 		  
 		  //[다음]  section
@@ -80,10 +82,11 @@ public class Board_QuestionListServlet extends HttpServlet {
 		  request.setAttribute("pageBar", pageBar);
 		 
 		  
+		  request.setAttribute("qboardList", qboardList);
+		  System.out.println("qboardList@listservlet="+qboardList);
+		  request.setAttribute("pageBar", pageBar);
+		  request.getRequestDispatcher("/ajax/board_questionList.jsp").forward(request, response);
 		  
-	
-		  response.setContentType("application/json; charset=UTF-8");
-		  new Gson().toJson(qboardList,response.getWriter());
 				
 				
 				

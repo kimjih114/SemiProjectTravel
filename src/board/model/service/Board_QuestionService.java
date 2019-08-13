@@ -15,10 +15,9 @@ import board.model.vo.Board_QuestionComment;
 
 public class Board_QuestionService {
 
-	public List<Board_Question> selectBoardQuestionList() {
+	public List<Board_Question> selectBoardQuestionList(int cPage, int numPerPage) {
 		Connection conn = getConnection(); 
-		List<Board_Question> list = new Board_QuestionDAO().selectBoardQuestionList(conn); 
-
+		List<Board_Question> list = new Board_QuestionDAO().selectBoardQuestionList(conn,cPage,numPerPage); 
 		close(conn);
 		return list;
 	}

@@ -6,15 +6,11 @@
 <%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/story/storyMain.jsp" %>  
 
 <%
-
- userLoggedIn = (User)session.getAttribute("userLoggedIn");
-profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
-
   List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
  
+  User userLoggedIn = (User)session.getAttribute("userLoggedIn");
  Board_Question qb = new Board_Question();
  System.out.println("questionList.jsp@list="+list);
 
@@ -232,16 +228,7 @@ $(function() {
 
 </script>
 
-<header class="masthead" style="height:300px;">
-      <div class="intro-text" style="padding-top:140px; !important">
-        <div class="intro-heading text-uppercase">
-       		<div id="headerFrm">
-				<span id="headerBefore"><%=profileSNS.getHeaderText()!=null? profileSNS.getHeaderText() : profileSNS.getUserNickname()+"의 홈" %></span>
-				<button id="headerBeforeBtn" onclick="updateHeaderText();" style='margin-left:10px;'>edit</button>
-			</div>
-        </div>
-     </div>
-  </header>
+
   
 
 <!-- 메뉴폼 -->

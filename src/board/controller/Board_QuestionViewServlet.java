@@ -17,7 +17,7 @@ import board.model.vo.Board_QuestionComment;
 /**
  * Servlet implementation class Board_QuestionViewServlet
  */
-@WebServlet("/ajax/board_questionView.do")
+@WebServlet("/ajax/board_questionView")
 public class Board_QuestionViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -65,10 +65,10 @@ public class Board_QuestionViewServlet extends HttpServlet {
 		}
 		System.out.println("viewservlet@qboardNo="+qboardNo);
 		Board_Question qb = new Board_QuestionService().selectOne(qboardNo, hasRead); 
-		 //List<Board_QuestionComment> commentList= new Board_QuestionService().selectCommentList(qboardNo);
+		 List<Board_QuestionComment> commentList= new Board_QuestionService().selectCommentList(qboardNo);
  		
 		request.setAttribute("qb", qb);
-		//request.setAttribute("commentList", commentList);
+		request.setAttribute("commentList", commentList);
 		
 		String view = "/ajax/board_questionView.jsp"; 
 		
@@ -82,7 +82,7 @@ public class Board_QuestionViewServlet extends HttpServlet {
 			
 			
 		}
-		request.getRequestDispatcher("/ajax/board_questionView.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/ajax/board_questionView.jsp").forward(request, response);
 		
 	}
 
