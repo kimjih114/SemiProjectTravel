@@ -270,8 +270,6 @@ text-align:left;
 				location.href="<%=request.getContextPath()%>/board/qboardForm";
 			
 			}
-			
-		
 			</script>
 
 			<%
@@ -300,12 +298,12 @@ text-align:left;
 					<% for(Board_Question bq: list){ %>
 					
 					<tr class="tr_notice">
-						<td><%=bq.getQboardNo() %></td>
-						<td><%=bq.getQboardContent() %></td>
+						<td><%=bq.getQboardNo() %></td> 
+						<td><a href="<%=request.getContextPath()%>/qboardView?qboardNo=<%=bq.getQboardNo() %>" ></a><%=bq.getQboardContent() %></td>  <!-- 링크     -->
 						<td><%=bq.getQboardWriter() %></td>
 			
 						<td><%=bq.getQboardDate() %></td>  <!-- 작성일 넣 -->
-						<td><%=bq.getQboardStatus() %></td> <!-- 진행상태넣 -->
+						<td><%=(bq.getQboardStatus()==0)?"진행중":"처리완료"%></td> <!-- 진행상태넣 -->
 					</tr>
 
 

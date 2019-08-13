@@ -17,7 +17,7 @@ import board.model.vo.Board_QuestionComment;
 /**
  * Servlet implementation class Board_QuestionViewServlet
  */
-@WebServlet("/ajax/board_questionView")
+@WebServlet("")
 public class Board_QuestionViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -82,7 +82,7 @@ public class Board_QuestionViewServlet extends HttpServlet {
 			
 			
 		}
-		request.getRequestDispatcher("/WEB-INF/ajax/board_questionView.jsp").forward(request, response);
+		request.getRequestDispatcher("/ajax/board_questionView.jsp").forward(request, response);
 		
 	}
 

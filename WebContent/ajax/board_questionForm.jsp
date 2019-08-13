@@ -8,7 +8,7 @@
 	pageEncoding="UTF-8"%>
 <%
 
-User userLoggedIn = (User)session.getAttribute("userLoggedIn");
+ User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 
   List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
  
