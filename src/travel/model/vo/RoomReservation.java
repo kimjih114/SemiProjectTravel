@@ -6,6 +6,7 @@ public class RoomReservation {
 
 	private String userId;
 	private String contentId;
+	private String contentTypeId;
 	private String travelName;
 	private String roomName;
 	private String reservationStartDate;
@@ -13,10 +14,12 @@ public class RoomReservation {
 	private String friendId;
 	private Date paymentDate;
 	private int price;
+	private Date delDate;
 	public RoomReservation() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	public RoomReservation(String userId, String contentId, String travelName, String roomName,
 			String reservationStartDate, String reservationEndDate, String friendId, Date paymentDate, int price) {
 		super();
@@ -30,6 +33,44 @@ public class RoomReservation {
 		this.paymentDate = paymentDate;
 		this.price = price;
 	}
+	
+	public RoomReservation(String userId, String contentId, String travelName, String roomName,
+			String reservationStartDate, String reservationEndDate, String friendId, Date paymentDate, int price, Date delDate) {
+		super();
+		this.userId = userId;
+		this.contentId = contentId;
+		this.travelName = travelName;
+		this.roomName = roomName;
+		this.reservationStartDate = reservationStartDate;
+		this.reservationEndDate = reservationEndDate;
+		this.friendId = friendId;
+		this.paymentDate = paymentDate;
+		this.price = price;
+		this.delDate=delDate;
+	}
+	
+	public RoomReservation(String userId, String contentId, String contentTypeId ,String travelName, String roomName,
+			String reservationStartDate, String reservationEndDate, int price) {
+		super();
+		this.userId = userId;
+		this.contentId = contentId;
+		this.contentTypeId=contentTypeId;
+		this.travelName = travelName;
+		this.roomName = roomName;
+		this.reservationStartDate = reservationStartDate;
+		this.reservationEndDate = reservationEndDate;
+		this.price = price;
+		
+	}
+	
+	public String getContentTypeId() {
+		return contentTypeId;
+	}
+
+	public void setContentTypeId(String contentTypeId) {
+		this.contentTypeId = contentTypeId;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
@@ -84,13 +125,22 @@ public class RoomReservation {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+	public Date getDelDate() {
+		return delDate;
+	}
+	public void setDelDate(Date delDate) {
+		this.delDate = delDate;
+	}
+
 	@Override
 	public String toString() {
-		return "RoomReservation [userId=" + userId + ", contentId=" + contentId + ", travelName=" + travelName
-				+ ", roomName=" + roomName + ", reservationStartDate=" + reservationStartDate + ", reservationEndDate="
-				+ reservationEndDate + ", friendId=" + friendId + ", paymentDate=" + paymentDate + ", price=" + price
-				+ "]";
+		return "RoomReservation [userId=" + userId + ", contentId=" + contentId + ", contentTypeId=" + contentTypeId
+				+ ", travelName=" + travelName + ", roomName=" + roomName + ", reservationStartDate="
+				+ reservationStartDate + ", reservationEndDate=" + reservationEndDate + ", friendId=" + friendId
+				+ ", paymentDate=" + paymentDate + ", price=" + price + ", delDate=" + delDate + "]";
 	}
+	
+	
 	
 	
 	

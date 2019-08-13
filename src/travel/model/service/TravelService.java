@@ -83,4 +83,33 @@ public class TravelService {
 		close(conn);
 		return result;
 	}
+
+	public int reservationDelete(RoomReservation r) {
+		Connection conn=getConnection();
+		int result=new TravelDAO().reservationDelete(conn,r);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public List<RoomReservation> myReservationDelView(String userId) {
+		Connection conn=getConnection();
+		List<RoomReservation> room=new TravelDAO().myReservationDelView(conn,userId);
+		close(conn);
+		return room;
+	}
+
+	public int reservationBasketInsert(RoomReservation r) {
+		Connection conn=getConnection();
+		int result=new TravelDAO().reservationBasketInsert(conn,r);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
 }

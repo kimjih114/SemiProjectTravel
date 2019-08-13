@@ -215,7 +215,7 @@ section#page-top{
   </nav>   
 	
 	<div id="content">
-  		<h2>예약 내역</h2>
+  		<h2>취소 내역</h2>
   		<table id="tbl-user">
   			<thead>
   			<tr>
@@ -224,7 +224,7 @@ section#page-top{
   				<th>예약날짜</th>
   				<th>가격</th>
   				<th>결제날짜</th>
-  				<th></th>
+  				<th>취소날짜</th>
   			</tr>
   			</thead>
   			<tbody>
@@ -241,7 +241,7 @@ section#page-top{
   							<td><%=room.get(i).getReservationStartDate() %>~<%=room.get(i).getReservationEndDate() %></td>
   							<td><%=room.get(i).getPrice() %></td>
   							<td><%=room.get(i).getPaymentDate()%></td>
-  							<td><button type="button" onclick="location.href='<%=request.getContextPath()%>/mypage/reservationDel?userId=<%=userLoggedIn.getUserId()%>&contentId=<%=room.get(i).getContentId()%>&travelName=<%=room.get(i).getTravelName()%>&roomName=<%=room.get(i).getRoomName() %>&reservationStartDate=<%=room.get(i).getReservationStartDate()%>&reservationEndDate=<%=room.get(i).getReservationEndDate()%>'">예약취소</button></td>
+  							<td><%=room.get(i).getDelDate() %></td>
   						</tr>
   						<%
   					}

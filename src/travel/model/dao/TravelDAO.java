@@ -332,4 +332,87 @@ public class TravelDAO {
 		}
 		return result;
 	}
+
+	public int reservationDelete(Connection conn, RoomReservation r) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		String sql=prop.getProperty("reservationDelete");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, r.getUserId());
+			pstmt.setString(2, r.getContentId());
+			pstmt.setString(3, r.getTravelName());
+			pstmt.setString(4, r.getRoomName());
+			pstmt.setString(5, r.getReservationStartDate());
+			pstmt.setString(6, r.getReservationEndDate());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public List<RoomReservation> myReservationDelView(Connection conn, String userId) {
+		List<RoomReservation> room=new ArrayList<RoomReservation>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("myReservationDelView");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rset=pstmt.executeQuery();
+			while(rset.next()) {
+				String contentId=rset.getString("content_id");
+				String travelName=rset.getString("travel_name");
+				String roomName=rset.getString("room_name");
+				String reservationStartDate=rset.getString("reservation_start_date");				
+				String reservationEndDate=rset.getString("reservation_end_date");	
+				String friendId=rset.getString("friend_id");
+				Date paymentDate=rset.getDate("payment_date");
+				int price=rset.getInt("price");
+				Date delDate=rset.getDate("del_date");
+				RoomReservation r=new RoomReservation(userId, contentId, travelName, roomName, reservationStartDate, reservationEndDate, friendId, paymentDate, price, delDate);
+				room.add(r);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return room;
+	}
+
+	public int reservationBasketInsert(Connection conn, RoomReservation r) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		String sql=prop.getProperty("reservationBasketInsert");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, r.getUserId());
+			pstmt.setString(2, r.getContentId());
+			pstmt.setString(3, r.getContentTypeId());
+			pstmt.setString(4, r.getTravelName());
+			pstmt.setString(5, r.getRoomName());
+			pstmt.setString(6, r.getReservationStartDate());
+			pstmt.setString(7, r.getReservationEndDate());
+			pstmt.setInt(8, r.getPrice());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 }
