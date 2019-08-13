@@ -174,14 +174,14 @@ section#page-top{
    		<td id="modifyUserInfo">관리자 정보 수정</td>
    	</tr>
 	<tr>
-   		<td id="userList" onclick="location.href='<%=request.getContextPath()%>//admin/adminuserListView.do'">회원보기</td>
+   		<td id="userList" onclick="location.href='<%=request.getContextPath()%>/admin/adminUserList'">회원보기</td>
    	</tr>
 
    		<tr>
    			<td id="business_registration" onclick="location.href='<%=request.getContextPath()%>/travel/travelEnroll.do'">업체 등록</td>
    		</tr>
    		<tr>
-   			<td>공지사항 등록</td>
+   			<td>블랙리스트 관리</td>
    		</tr>
    		<tr>
    			<td>문의관리</td>

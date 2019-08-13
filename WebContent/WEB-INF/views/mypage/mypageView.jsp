@@ -31,23 +31,41 @@
 
 <script>
 
-$(()=>{
-	$("#modifyUserInfo").click(function(){
-		$.ajax({
-	        type : "GET",
-	        url : "<%=request.getContextPath() %>/my",
-	        dataType : "text",
-	        error : function() {
-	          alert('통신실패!!');
-	        },
-	        success : function(data) {
-	          $('#Context').html(data);
-	        }
-	 
-	      });
-	})
-})
 
+$("#modifyUserInfo").click(()=>{
+	var param = {userId : '<%=userLoggedIn.getUserId() %>'}
+	$.ajax({
+		url:"<%=request.getContextPath()%>/gson/users/userView.do",
+		data : param,
+		type: "get",
+		dataType: "json",
+		success: function(data){
+			console.log(data);
+			var $table = $("<table><th>아이디</th><th>닉네임</th><th>이름</th><th>성별</th><th>생년월일</th><th>이메일</th><th>여행지</th><th>활동</th><th>등록일</th></table>");
+				
+				var html = "<tr>";
+				html += "<td><input='text' value='"+u.userId+"'></td>";
+				html += "<td>"+u.usernickName+"</td>";
+				html += "<td>"+u.userName+"</td>";
+				html += "<td>"+u.userGender+"</td>";
+				html += "<td>"+u.userBirth+"</td>";
+				html += "<td>"+u.userEmail+"</td>";
+				html += "<td>"+u.userDefaultPlace+"</td>";
+				html += "<td>"+u.userDefaultActivity+"</td>";
+				html += "<td>"+u.userEnrollDate+"</td>";
+				html += "</tr>";
+				console.log(html);
+				$table.append(html);
+		
+			$("#content").html($table);
+					
+		},
+		error: function(jqxhr, textStatus, errorThrown){
+			console.log("ajax 처리 실패!");
+			console.log(jqxhr, textStatus, errorThrown);
+		}
+	});
+});
 
 </script>
   <style>
@@ -203,11 +221,11 @@ p.userprofile-userId{
     </tr> 	
 	</table>
   </nav>   
-  <article class="myPost">
+
   	<div class="content">
   		
   	</div>
-  </article> 
+</table></nav>
  </section>
 
 </body>
