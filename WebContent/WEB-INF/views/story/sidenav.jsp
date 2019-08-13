@@ -560,18 +560,7 @@ div#profile-header{
 	})
 		
 	$("#QuestionList").on("click", function(){
-		$.ajax({
-			url: "<%=request.getContextPath() %>/ajax/board_questionList.jsp", 
-			type: "get",
-			dataType: "html",
-			success: function(data){
-				$("#container-sns").html(data);
-			},
-			error: function(jqxhr, textStatus, errorThrown){
-				console.log("ajax처리실패!");
-				console.log(jqxhr, textStatus, errorThrown);
-			}
-		});
+		location.href="<%=request.getContextPath()%>/boardquestion/boardList"; 
 	})
 
 	</script>
