@@ -6,9 +6,10 @@
 <%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/header-menu.jsp"%>
 <%
 
- User userLoggedIn = (User)session.getAttribute("userLoggedIn");
+	userLoggedIn = (User)session.getAttribute("userLoggedIn");
 
   List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
  
@@ -20,6 +21,46 @@
  
 %>
 
+
+<!-- Bootstrap core CSS -->
+<link
+	href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link
+	href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+	rel='stylesheet' type='text/css'>
+
+<!-- Custom styles for this template -->
+<link href="<%=request.getContextPath()%>/css/agency.min.css"
+	rel="stylesheet">
+
+<!-- Bootstrap core JavaScript -->
+<%-- <script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ --%>
+<!-- Plugin JavaScript -->
+<%-- <script
+	src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+ --%>
+<!-- Contact form JavaScript -->
+<%-- <script src="<%=request.getContextPath()%>/js/jqBootstrapValidation.js"></script>
+<script src="<%=request.getContextPath()%>/js/contact_me.js"></script>
+ --%>
+<!-- Custom scripts for this template -->
+<script src="<%=request.getContextPath()%>/js/agency.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -30,11 +71,29 @@
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
 <style>
+<style>
+header{
+height: 200px;
+}
+.intro-text{
+padding-top:50px;
+} 
+/*전체컨테이너 */
+div#container {
+	background: background-color:#F0F0F0;
+	width: 960px;
+	margin: 0 auto;
+
+}
+
+
+
+
 #q-container {
 	width:700px;
 	margin:0 auto;
 	text-align:center;
-	position: absolute;
+	position:-50px;
 	left:265px;
 	transition: 0.5s;
 	top:100px;
@@ -129,7 +188,7 @@ table#tbl-board{width:100%; margin:0 auto; border:1px solid black; border-collap
 table#tbl-board th, table#tbl-board td {border:1px solid; padding: 5px 0; text-align:center;} 
 form#board_containerfrm{
 margin-left: 8px;
-margin-top:400px;
+margin-top:100px;
 
 }
 
@@ -231,7 +290,14 @@ function qboardValidate(){
 
 </script>
 
-
+<header class="masthead">
+	<div class="container">
+		<div class="intro-text" style="padding-top:100px;">
+			<h1>1:1문의</h1>
+			<!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"> -->
+		</div>
+	</div>
+</header>
 
 <!-- 메뉴폼 -->
 
@@ -260,7 +326,7 @@ function qboardValidate(){
  </div>
 		<div class="board_search">
 		
-			<form action="<%=request.getContextPath() %>/board/boardQuestionFrm" method="post"
+			<form action="<%=request.getContextPath() %>/board/boardQuestionFrmEnd" method="post"
 	      enctype="multipart/form-data">
 		<table id="tbl-board-view">
 			<tr>

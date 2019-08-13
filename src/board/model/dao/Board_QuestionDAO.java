@@ -130,6 +130,7 @@ public class Board_QuestionDAO {
 			pstmt.setString(5, bq.getQboardFileName());		
 			pstmt.setString(6, bq.getQboardNewFileName());		
 			
+		
 			
 			result = pstmt.executeUpdate(); 
 			

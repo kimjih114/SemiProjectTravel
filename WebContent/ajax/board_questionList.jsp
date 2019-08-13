@@ -299,7 +299,13 @@ text-align:left;
 					
 					<tr class="tr_notice">
 						<td><%=bq.getQboardNo() %></td> 
-						<td><a href="<%=request.getContextPath()%>/qboardView?qboardNo=<%=bq.getQboardNo() %>" ></a><%=bq.getQboardContent() %></td>  <!-- 링크     -->
+						<td>
+						<% if(bq.getQboardFileName() != null){ %>
+							<a href="<%=request.getContextPath()%>/qboardView?qboardNo=<%=bq.getQboardNo() %>" >
+							<%=bq.getQboardTitle() %>
+							</a><img alt="첨부파일" src="<%=request.getContextPath() %>/images/file.png" width=16px>
+							<% }%>
+							</td>  <!-- 링크     -->
 						<td><%=bq.getQboardWriter() %></td>
 			
 						<td><%=bq.getQboardDate() %></td>  <!-- 작성일 넣 -->
