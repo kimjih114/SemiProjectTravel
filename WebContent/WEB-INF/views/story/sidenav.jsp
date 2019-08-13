@@ -11,15 +11,10 @@
 <%
 	String mypage = request.getParameter("mypage");
 	User mypageUser = new UserService().selectOne(mypage);
- 	System.out.println("mypage="+mypage);
- 	System.out.println("userLoggedIn="+userLoggedIn);
  	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
- 
- 	System.out.println("profileSNS@jsp="+profileSNS);
- 	
+
  	List<String> followLoggedInList = new SNSService().selectOneIdFollow(userLoggedIn.getUserId());
-	System.out.println("followLoggedInList="+followLoggedInList);
-	System.out.println("followLoggedInList.contains(mypage)="+followLoggedInList.contains(mypage));
+	int totalPage = (Integer)request.getAttribute("totalPage");
 	
 
 %> 
@@ -492,8 +487,14 @@ div#profile-header{
 	  
 	  <script>
  $(()=>{
-		$.ajax({
+	 var param = {
+			 mypage : '<%=mypage%>',
+			 totalPage : '<%=totalPage%>'
+		}
+		$.ajax({	 
+			
 			url: "<%=request.getContextPath() %>/ajax/home.jsp",
+			data:param,
 			success: function(data){
 				$("#container-sns").html(data);
 			},
@@ -506,24 +507,29 @@ div#profile-header{
 			}
 		});
  })
-  
+
  
  
  	$("#gohome").on("click", function(){
- 		$.ajax({
-			url: "<%=request.getContextPath() %>/ajax/home.jsp",
-			success: function(data){
- 				console.log(data);
-				$("#container-sns").html(data);
-			},
-			error: function(jqxhr, textStatus, errorThrown){
-				console.log("ajax처리실패!");
-				console.log(jqxhr, textStatus, errorThrown);
-			},
-			complete: function(){
-				console.log("complete!!!");
-			}
-		});
+ 		var param = {
+ 				 mypage : '<%=mypage%>',
+ 				 totalPage : '<%=totalPage%>'
+ 			}
+ 			$.ajax({	 
+ 				
+ 				url: "<%=request.getContextPath() %>/ajax/home.jsp",
+ 				data:param,
+ 				success: function(data){
+ 					$("#container-sns").html(data);
+ 				},
+ 				error: function(jqxhr, textStatus, errorThrown){
+ 					console.log("ajax처리실패!");
+ 					console.log(jqxhr, textStatus, errorThrown);
+ 				},
+ 				complete: function(){
+ 					console.log("complete!!!");
+ 				}
+ 			});
  	});
  
  	$(".follower").on("click", function(){

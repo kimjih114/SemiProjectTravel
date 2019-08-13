@@ -1,10 +1,13 @@
+<%@page import="user.model.service.UserService"%>
 <%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 	String mypage = request.getParameter("mypage");
+	User mypageUser = new UserService().selectOne(mypage);
  	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
+ 	int totalPage = Integer.parseInt(request.getParameter("totalPage"));
 %>
 
 <style>
@@ -55,7 +58,7 @@
 	text-align: center;
 	text-decoration: none;
 	padding: 14px 16px;
-	font-size: 17px;
+	font-size: 1em;
 	transition:0.3s;
 	cursor: pointer;
 }
@@ -200,9 +203,9 @@
   
 		  <div id="tab-container">
 			<ul class="tab">
-				<li class="current" data-tab="tab1"><a>타임라인</a></li>
-				<li data-tab="tab2"><a>내가 쓴 리뷰</a></li>
-				<li data-tab="tab3"><a>좋아요를 누른 글</a></li>
+				<li class="current" data-tab="tab1"><a>타임라인</a></li>			
+				<li data-tab="tab2"><a><%=userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage) ? "나의리뷰" : mypageUser.getUsernickName() + "의리뷰" %></a></li>
+				<li data-tab="tab3"><a><%=userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage) ? "좋아요" : mypageUser.getUsernickName() +"의좋아요" %></a></li>
 			</ul>
 		
 			<div id="tab1" class="tabcontent current">
@@ -278,8 +281,7 @@
 			</div>
 		
 			<div id="tab2" class="tabcontent">
-				<h3>좋아요</h3>
-				<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p>
+			
 			</div>
 		
 			<div id="tab3" class="tabcontent">
@@ -326,6 +328,32 @@ $(function() {
 		$('.tabcontent').removeClass('current');
 		$(this).addClass('current');
 		$('#' + activeTab).addClass('current');
+		
+		
+		
+		if($(this).attr('data-tab')=='tab2'){	
+			var param = {
+					mypage : '<%=mypage %>',
+					totalPage : '<%=totalPage %>'
+			}
+			
+				$.ajax({
+					
+					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
+					data: param,
+					type: "get",
+					dataType: "html",
+					success: function(data){
+						$("#tab2").html(data);
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						console.log("ajax처리실패!");
+						console.log(jqxhr, textStatus, errorThrown);
+					}
+				});
+
+			
+		}
 	})
 });
 	
@@ -481,20 +509,11 @@ $("#btnSubmit").click(function(event){
 	     }
 	 });
 
-	$(function() {
-		$('ul.tab li').click(function() {
-			var activeTab = $(this).attr('data-tab');
-			$('ul.tab li').removeClass('current');
-			$('.tabcontent').removeClass('current');
-			$(this).addClass('current');
-			$('#' + activeTab).addClass('current');
-		})
-	});
-		
+
 	
 	
 	
-	(function poll() {
+	/*(function poll() {
 	    $.ajax({
 	        url: '<%=request.getContextPath()%>/gson/sns/selectBoard.do',
 	        type: 'GET',
@@ -507,7 +526,7 @@ $("#btnSubmit").click(function(event){
 	        		poll();
 	        }, 6000)
 	    })
-	})();
+	})();*/
 
 	
 

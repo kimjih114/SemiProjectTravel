@@ -1,3 +1,4 @@
+<%@page import="user.model.service.UserService"%>
 <%@page import="user.model.vo.User"%>
 <%@page import="sns.model.vo.ProfileSNS"%>
 <%@page import="java.util.List"%>
@@ -5,7 +6,8 @@
     pageEncoding="UTF-8"%>
 <%
 	String mypage = request.getParameter("mypage");
-User userLoggedIn = (User)session.getAttribute("userLoggedIn");
+   User userLoggedIn = (User)session.getAttribute("userLoggedIn");
+   User mypageUser = new UserService().selectOne(mypage);
 %>
 <style>
 #follower-container {
@@ -412,8 +414,8 @@ function follower(btn){
 				<li data-tab="tab2"><a>팔로잉</a></li>
 				<li data-tab="tab3"><a>나를 팔로잉한 사람</a></li>
 			<% } else if(userLoggedIn!=null && !userLoggedIn.getUserId().equals(mypage)){%>
-				<li class="current" data-tab="tab1"><a><%=mypage %>의 팔로우</a></li>
-				<li data-tab="tab2"><a><%=mypage %>의 팔로잉</a></li>
+				<li class="current" data-tab="tab1"><a><%=mypageUser.getUsernickName() %>의 팔로우</a></li>
+				<li data-tab="tab2"><a><%=mypageUser.getUsernickName() %>의 팔로잉</a></li>
 				<li data-tab="tab3"><a>함께 팔로우한 사람</a></li>
 			<% } %>
 			</ul>

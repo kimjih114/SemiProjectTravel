@@ -34,7 +34,16 @@ public class SnsMainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId=request.getParameter("mypage");
 		ProfileSNS profileSNS = new SNSService().selectOneProfile(userId);
-		System.out.println("profileSNS@servlet="+profileSNS);
+		
+		//1.business logic
+		//총페이지 = 올림(총게시물/numPerPage)
+		int totalContents = new SNSService().selectBoardSNSCnt(userId);
+		final int numPerPage = 5;
+		int totalPage = (int)Math.ceil(totalContents*1.0/numPerPage);
+		System.out.println("totalPage="+totalPage);
+				
+		//2.view단 처리
+		request.setAttribute("totalPage", totalPage);
 		
 		if(profileSNS!=null) {
 			request.setAttribute("profileSNS", profileSNS);

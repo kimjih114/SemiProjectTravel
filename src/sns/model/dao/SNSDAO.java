@@ -383,7 +383,7 @@ public class SNSDAO {
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
 		String sql=prop.getProperty("selectOneIdFollower");
-		System.out.println("userfollowed@dao="+userfollowed);
+		
 		try {
 			pstmt=conn.prepareStatement(sql);
 			
@@ -414,7 +414,7 @@ public class SNSDAO {
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
 		String sql=prop.getProperty("selectOneIdFollowed");
-		System.out.println("userfollowed@dao="+userLoggedIn);
+	
 		try {
 			pstmt=conn.prepareStatement(sql);
 			
@@ -437,5 +437,152 @@ public class SNSDAO {
 		return followedOneList;
 	}
 
+	public int selectBoardSNSCnt(Connection conn, String userId) {
+		int totalContents = 0;
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectBoardSNSCnt");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				totalContents = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContents;
+	}
+
+	public List<BoardSNS> selectBoardSNSMore(Connection conn, int cPage, int numPerPage) {
+		List<BoardSNS> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoardSNSMore");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (cPage-1)*numPerPage+1);
+			pstmt.setInt(2, cPage*numPerPage);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				BoardSNS bs = new BoardSNS();
+
+				bs.setBoardNo(rset.getInt("board_no"));
+				bs.setBoardWriter(rset.getString("board_writer"));
+				bs.setBoardContent(rset.getString("board_content"));
+				bs.setBoardType(rset.getString("board_type"));
+				bs.setBoardDate(rset.getTimestamp("board_date"));
+				
+				list.add(bs);
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<ImageSNS> selectImageSNS(Connection conn, int boardNo) {
+		List<ImageSNS> list = new ArrayList<>();
+		ImageSNS is = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectImageSNS");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+		
+			pstmt.setInt(1,boardNo);
+			rset = pstmt.executeQuery();
+				
+			while(rset.next()) {
+				is = new ImageSNS();
+					
+				is.setBoardNo(rset.getInt("board_no"));
+				is.setBoardWriter(rset.getString("board_writer"));
+				is.setOriginalFileName(rset.getString("original_file_name"));
+				is.setRenamedFileName(rset.getString("renamed_file_name"));
+				is.setImageOrder(rset.getInt("image_order"));
+				is.setImageDate(rset.getTimestamp("image_date"));
+					
+				list.add(is);
+				
+			}
+			
+		
+		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<GradeSNS> selectGradeSNS(Connection conn, int boardNo) {
+		List<GradeSNS> list = new ArrayList<>();
+		GradeSNS gs = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectGradeSNS");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+		
+			pstmt.setInt(1,boardNo);
+			rset = pstmt.executeQuery();
+				
+			while(rset.next()) {
+				gs = new GradeSNS();
+				
+				gs.setBoardNo(rset.getInt("board_no"));
+				gs.setBoardWriter(rset.getString("user_id"));
+				gs.setContentId(rset.getString("content_id"));
+				gs.setContentType(rset.getString("content_type"));
+				gs.setGrade(rset.getInt("grade"));
+				gs.setGradeDate(rset.getTimestamp("grade_date"));
+					
+				list.add(gs);
+				
+			}
+			
+		
+		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	
 	
 }
+

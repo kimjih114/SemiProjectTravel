@@ -138,5 +138,33 @@ public class SNSService {
 		return followedOneList;
 	}
 
+	public int selectBoardSNSCnt(String userId) {
+		Connection conn=getConnection();
+		int totalContents=new SNSDAO().selectBoardSNSCnt(conn, userId);
+		close(conn);
+		return totalContents;
+	}
 
+	public List<BoardSNS> selectBoardSNSMore(int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<BoardSNS> list = new SNSDAO().selectBoardSNSMore(conn, cPage, numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public List<ImageSNS> selectImageSNS(int boardNo) {
+		Connection conn = getConnection();
+		List<ImageSNS> list = new SNSDAO().selectImageSNS(conn, boardNo);
+		close(conn);
+		return list;
+	}
+
+	public List<GradeSNS> selectGradeSNS(int boardNo) {
+		Connection conn = getConnection();
+		List<GradeSNS> list = new SNSDAO().selectGradeSNS(conn, boardNo);
+		close(conn);
+		return list;
+	}
+
+	
 }
