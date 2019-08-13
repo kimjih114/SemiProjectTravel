@@ -1,29 +1,23 @@
-package user.controller;
+package board.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
-import user.model.service.UserService;
-import user.model.vo.User;
-
 /**
- * Servlet implementation class AjaxUserUpdateServlet
+ * Servlet implementation class Board_QuestionupdateFrm
  */
-@WebServlet("/gson/users/userView")
-public class AjaxUserUpdateServlet extends HttpServlet {
+@WebServlet("/board/qboardUpdateForm")
+public class Board_QuestionupdateFrm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxUserUpdateServlet() {
+    public Board_QuestionupdateFrm() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,19 +27,14 @@ public class AjaxUserUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("application/json; charset=utf-8");
-		System.out.println("here");
-		String userId = request.getParameter("userId"); 
+		int qboardNo ; 
+		 
+		qboardNo =Integer.parseInt(request.getParameter("qboardNo"));
 		
-		User user  = new UserService().selectOne(userId);;
-
-	
-
-		new Gson().toJson(user,response.getWriter());
-		}
-
 		
+		
+	}
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -1,7 +1,8 @@
-
 --문의게시글고유번호 시퀀스
 create sequence seq_qboard_no;
+select sequence seq_qboard_no from dual;
 
+select seq_qboard_no.currval from dual;
 --문의게시글테이블
  --트레블 테이블 콘텐트아이디 외래키는 나중에 지정 on delete set null
  --제목
@@ -28,9 +29,11 @@ create table qboard (
 
 --drop table qboard;
 --문의 게시판 insert 
-insert into qboard values(1,'admin','안녕하세요','안녕하세요,관리자 입니다.',sysdate,0,0,null,null,0);
+insert into qboard values(seq_qboard_no.nextval,'admin','안녕하세요','안녕하세요,관리자 입니다.',sysdate,0,0,null,null,0);
+insert into qboard values(seq_qboard_no.nextval,?,?,?,sysdate,0,?,?,?,?)
 insert into qboard values(seq_qboard_no.nextval,?,?,?,sysdate,0,?,?,?,?);
 
+select * from qboard;
 
 SELECT * FROM ( SELECT ROWNUM AS RNUM, V.* FROM( SELECT * FROM QBOARD ORDER BY QBOARD_DATE DESC) V ) V WHERE RNUM BETWEEN ? AND ?;
 
@@ -58,6 +61,11 @@ begin
         insert into qboard_deleted
         values(:old.qboard_no, :old.qboard_writer, :old.qboard_content, :old.qboard_date, :old.qboard_readcnt, :old.qboard_travel_ref);
 end;
+
+
+commit;
+
+
 
 
 --문의게시판 댓글테이블

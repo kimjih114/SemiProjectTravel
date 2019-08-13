@@ -49,8 +49,7 @@ public class UserLoginEndServlet extends HttpServlet {
 		String userId = request.getParameter("userId"); 
 		String userPassword_ = request.getParameter("userPassword");  
 		String userPassword = MVCUtils.getSha512(userPassword_);
-		System.out.println("userPassword_"+userPassword);
-	
+		
 		String saveId = request.getParameter("saveId");
 		
 		User user = new User();

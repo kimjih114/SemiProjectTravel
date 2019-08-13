@@ -15,9 +15,6 @@
  
  Board_Question qb = new Board_Question();
 
-	
- /*//페이지 바 
- String pageBar = (String)request.getAttribute("pageBar");  */
  
 %>
 

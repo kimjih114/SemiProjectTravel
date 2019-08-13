@@ -1,5 +1,6 @@
 package board.model.dao;
 
+
 import static common.JDBCTemplate.close;
 
 import java.io.FileNotFoundException;
@@ -284,6 +285,31 @@ public class Board_QuestionDAO {
 		
 		return list;
 	}
+
+	public int deleteQBoard(Connection conn, int qboardNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteQBoard"); 
+		
+		try {
+			//미완성쿼리문을 가지고 객체생성.
+			pstmt = conn.prepareStatement(query);
+			//쿼리문미완성
+			pstmt.setInt(1, qboardNo);
+			
+			//쿼리문실행 : 완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+			//DML은 executeUpdate()
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 	
 	
 	

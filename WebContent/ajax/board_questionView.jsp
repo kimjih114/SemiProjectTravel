@@ -1,3 +1,4 @@
+<%@page import="board.model.vo.Board_QuestionComment"%>
 <%@page import="user.model.vo.User"%>
 <%@page import="user.controller.UserLoginEndServlet"%>
 <%@page import="user.controller.UserLogoutServlet"%>
@@ -6,59 +7,93 @@
 <%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ include file="/WEB-INF/views/common/header-menu.jsp"%>
 
 <%
-  List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
- 
-  User userLoggedIn = (User)session.getAttribute("userLoggedIn");
- Board_Question qb = new Board_Question();
- System.out.println("questionList.jsp@list="+list);
+  userLoggedIn =(User)session.getAttribute("userLoggedIn");
+ Board_Question bq = (Board_Question)request.getAttribute("bq");
 
-	
- /*//페이지 바 
- String pageBar = (String)request.getAttribute("pageBar");  */
+ //List<Board_QuestionComment> commentList = (List<Board_QuestionComment>)request.getAttribute("commentList");
+
  
 %>
 
-<link href="/trav/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link
+	href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
 
-  <!-- Custom fonts for this template -->
-  <link href="/trav/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+<!-- Custom fonts for this template -->
+<link
+	href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css"
+	rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
+	rel='stylesheet' type='text/css'>
+<link
+	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
+	rel='stylesheet' type='text/css'>
 
-  <!-- Custom styles for this template -->
-  <link href="/trav/css/agency.min.css" rel="stylesheet">
-  
-  <!-- Bootstrap core JavaScript -->
-  <script src="/trav/vendor/jquery/jquery.min.js"></script>
-  <script src="/trav/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Custom styles for this template -->
+<link href="<%=request.getContextPath()%>/css/agency.min.css"
+	rel="stylesheet">
 
-  <!-- Plugin JavaScript -->
-  <script src="/trav/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Contact form JavaScript -->
-  <script src="/trav/js/jqBootstrapValidation.js"></script>
-  <script src="/trav/js/contact_me.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="/trav/js/agency.min.js"></script>
-
-
+<!-- Bootstrap core JavaScript -->
+<%-- <script src="<%=request.getContextPath()%>/vendor/jquery/jquery.min.js"></script>
+<script
+	src="<%=request.getContextPath()%>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+ --%>
+<!-- Plugin JavaScript -->
+<%-- <script
+	src="<%=request.getContextPath()%>/vendor/jquery-easing/jquery.easing.min.js"></script>
+ --%>
+<!-- Contact form JavaScript -->
+<%-- <script src="<%=request.getContextPath()%>/js/jqBootstrapValidation.js"></script>
+<script src="<%=request.getContextPath()%>/js/contact_me.js"></script>
+ --%>
+<!-- Custom scripts for this template -->
+<script src="<%=request.getContextPath()%>/js/agency.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
 
 <style>
- 
+header{
+height: 200px;
+}
+.intro-text{
+padding-top:50px;
+} 
+/*전체컨테이너 */
+div#container {
+	background: background-color:#F0F0F0;
+	width: 960px;
+	margin: 0 auto;
 
+}
+
+
+.btn.btn-primary{
+width: 294px;
+}
 #q-container {
 	width:700px;
 	margin:0 auto;
 	text-align:center;
-	position: absolute;
+	position:-50px;
 	left:265px;
 	transition: 0.5s;
-	top:-344px;
+	top:100px;
 }
 
 #q-container .tab {
@@ -107,33 +142,6 @@
 	border-top: 0px;
 }
 
-#postFrm {
-	width: 550px;
-	margin: 0 auto;
-	text-align: center;
-	position: absolute;
-	left: 240px;
-	top: 50px;
-	border: 1px solid;
-}
-
-#post {
-	position: absolute;
-	top: 10px;
-	left: 730px;
-}
-
-#timline-sns {
-	border: 1px solid;
-}
-
-#timeline-board-sns {
-	border: 1px solid;
-}
-
-#timeline-board-sns td {
-	padding: 10px;
-}
 
 board_containerfrm{
 width: 600px; 
@@ -150,10 +158,9 @@ table#tbl-board{width:100%; margin:0 auto; border:1px solid black; border-collap
 table#tbl-board th, table#tbl-board td {border:1px solid; padding: 5px 0; text-align:center;} 
 form#board_containerfrm{
 margin-left: 8px;
-margin-top:400px;
+margin-top:100px;
 
 }
-
 
 div.board_search{
 width:700px;
@@ -183,6 +190,7 @@ ul.post_con{
 padding-left: 20px;
 /* padding-bottom: 25px; */
 padding-right: 20px;
+padding-top:30px;
 height: 241px;
 }
 
@@ -191,28 +199,13 @@ border: 3px solid rgb(00,00,66);
 }
 li.post-font{
 text-align:left;
-}
-#tbl-board>table{
-border-collapse: collapse;
-border-radius: 10px;
 
-}
-
-#tbl-board>table, #tbl-board>table>td{
-width:700px;
-border : 1px solid gray;
-
-
-
-}
-
-
- </style>
+</style>
 
 <script>
- $(()=>{
+ /* $(()=>{
 	location.href="#"
-});
+}); */
 
 $(function() {
 	  var select = $("select#color");
@@ -224,11 +217,31 @@ $(function() {
 	});
   
  
- 
+function fileDownload(oName, rName){
+	//ie에서 요청한 한글파일명은 오류를 유발하므로,
+	//유니코드 문자로 직접변환함.
+	oName = encodeURIComponent(oName);
+	console.log(oName);
+	
+	location.href = "<%=request.getContextPath()%>/board/qboardFileDownload"
+				  + "?oName=" + oName
+				  + "&rName=" + rName;
+}
 
 </script>
 
 
+
+<!-- Header -->
+
+<header class="masthead">
+	<div class="container">
+		<div class="intro-text" style="padding-top:100px;">
+			<h1>1:1문의</h1>
+			<!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"> -->
+		</div>
+	</div>
+</header>
   
 
 <!-- 메뉴폼 -->
@@ -257,12 +270,11 @@ $(function() {
  </div>
 		<div class="board_search">
 		
-			<form action="<%=request.getContextPath() %>/board/boardQuestionFrm" method="post"
-	      enctype="multipart/form-data">
+
 		<table id="tbl-board-view">
 			<tr>
 				<th>제목</th>
-				<td><input class="form-control" type="text" name="qboardTitle" required/></td>
+				<td><input class="form-control" type="text" name="qboardTitle" value="<%=bq.getQboardTitle() %>" required/></td>
 			</tr>		
 			<tr>
 				<th>작성자</th>
@@ -271,35 +283,72 @@ $(function() {
 			</tr>		
 			<tr>
 				<th>첨부파일</th>
-				<td><input type="file" name="upFile"/></td>
+				<td>
+					<% if(bq.getQboardFileName() != null){ %>
+					<a href="javascript:fileDownload('<%=bq.getQboardFileName()%>','<%=bq.getQboardNewFileName() %>');">
+					<img src="<%=request.getContextPath() %>/images/file.png" alt="" />
+					<!-- 사용자가 업로드한 파일명 -->
+					<%= bq.getQboardFileName() %>
+				</a>
+				<% }%>
+				</td>
 			</tr>
-			
+			<tr>
+				<th>조회수</th>
+				<td><%=bq.getQboardReadcnt() %></td>
+			</tr>
 					
 			<tr>
-				<th class="text-control">내용</th>
-				<td>
-				<div class="input-group">
-  					<div class="input-group-prepend">
-    				
-  					</div>
- 					<textarea class="text-control" aria-label="With textarea" 
- 					 		name="qboardContent"  required></textarea>	
-					</div>	 	  
-				</td>
-			</tr>		
-			<tr>
-				<th colspan="2">
-					<input type="submit" 
-						   value="등록" 
-						   onclick="return qboardValidate();"/>
-				</th>
-			</tr>		
+				<th>내용</th>
+				<td><%= bq.getQboardContent() %></td>
+			</tr>	
+			
+			<% if(userLoggedIn!=null && 
+			(bq.getQboardWriter().equals(userLoggedIn.getUserId())
+			|| "admin".equals(userLoggedIn.getUserId())) ) { %>	
+		<tr>
+			<th colspan="2">
+				<input type="button" value="수정" 
+					   onclick="updateqBoard();" />
+				<input type="button" value="삭제" 
+					   onclick="deleteqBoard();" />
+			</th>
+		</tr>	
+	
+		<form action="<%=request.getContextPath()%>/board/qboardDelete" name="qboardDeleteFrm"
+		      method="post">
+			<input type="hidden" name="qboardNo"
+				   value="<%=bq.getQboardNo()%>" />
+			<input type="hidden" name="newFileName" 
+				   value="<%=bq.getQboardNewFileName()!=null?
+						   		bq.getQboardNewFileName():""%>"/>      
+
+		</form>
+	
+		<script>
+		
+		function updateqBoard(){
+			location.href = "<%=request.getContextPath()%>/board/boardUpdateForm?boardNo=<%=bq.getQboardNo()%>";
+		}
+		
+		function deleteqBoard(){
+			if(!confirm("정말 삭제 하시겠습니까?")){
+				return;
+			}
+			$("[name=qboardDeleteFrm]").submit();
+		}
+		
+	
+		</script>
+			
+		<%} %>
 		
 		</table>
-	</form>
+
+</div>
 			
-			</div>
-	</div>
+</div>
+</div>
 
 			
 	</body>

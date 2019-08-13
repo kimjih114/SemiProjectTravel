@@ -69,4 +69,18 @@ public class Board_QuestionService {
 		return list;
 	}
 
+	public int deleteQBoard(int qboardNo) {
+		Connection conn = getConnection(); 
+		int result = new Board_QuestionDAO().deleteQBoard(conn,qboardNo);
+		
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn); 
+		close(conn); 
+		
+		return result;
+	
+	}
+
 }

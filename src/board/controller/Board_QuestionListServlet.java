@@ -50,40 +50,43 @@ public class Board_QuestionListServlet extends HttpServlet {
 		System.out.println("boardQuestion@list="+qboardList);
 		
 		
-		  int totalqBoardCount = new Board_QuestionService().selectBoardQuestionCount();
+		  int totalBoardCount = new Board_QuestionService().selectBoardQuestionCount();
 		  
-		  int totalqPage = (int)Math.ceil((double)totalqBoardCount/numPerPage);
-		  System.out.println("totalBoardQuestion="+totalqBoardCount+", totalqPage="+totalqPage);
+		  int totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
+		  System.out.println("totalBoardQuestion="+totalBoardCount+", totalqPage="+totalPage);
 		  
 		  String pageBar = ""; 
 		  int pageBarSize = 5;
 		  
 		  int pageStart = ((cPage-1)/pageBarSize)*pageBarSize+1;
 		  
-		  int pageEnd =pageStart+pageBarSize-1; int pageNo = pageStart; //[이전] section
-		  if(pageNo == 1 ){ pageBar += "<span>[이전]</span>"; } else { pageBar +=
-		  "<a href='"+request.getContextPath()+"/board/boardList?cPage="+(pageNo-1)
+		  int pageEnd =pageStart+pageBarSize-1; 
+		  int pageNo = pageStart; //[이전] section
+		  if(pageNo == 1 ){ pageBar += "<span>[이전]</span>"; } else { 
+			  pageBar += "<a href='"+request.getContextPath()+"/board/boardList?cPage="+(pageNo-1)
 		  +"'>[이전]</a> "; }
 		  
 		  // pageNo section // 보통 !(빠져나가는 조건식)으로 많이 쓴다.
-		  while(!(pageNo>pageEnd ||
-		  pageNo > totalqPage)){
+		  while(!(pageNo>pageEnd || pageNo > totalPage)){
 		  
-		  if(cPage == pageNo ){ pageBar += "<span class='cPage'>"+pageNo+"</span> "; }
+		  if(cPage == pageNo ){ 
+			  pageBar += "<span class='cPage'>"+pageNo+"</span> "; 
+		  }
 		  else { 
-			  pageBar +="<a href='"+request.getContextPath()+"/board/boardList?cPage="+pageNo+"'>"+
-		  pageNo+"</a> "; } pageNo++; }
+			  pageBar +="<a href='"+request.getContextPath()+"/boardquestion/boardList?cPage="+pageNo+"'>"+ pageNo+"</a> "; 
+			  } 
+		  pageNo++; 
+		  }
 		  
 		  //[다음]  section
-		  if(pageNo > totalqPage){ pageBar += "<span>[다음]</span>"; }
-		  else { pageBar +=
-		  "<a href='"+request.getContextPath()+"/board/boardList?cPage="+pageNo+
-		  "'>[다음]</a>"; } request.setAttribute("qboardList", qboardList);
+		  if(pageNo > totalPage){ pageBar += "<span>[다음]</span>"; }
+		  else { pageBar += "<a href='"+request.getContextPath()+"/boardquestion/boardList?cPage="+pageNo+ "'>[다음]</a>"; 
+		  }
+		  request.setAttribute("qboardList", qboardList);
 		  request.setAttribute("pageBar", pageBar);
 		 
 		  
 		  request.setAttribute("qboardList", qboardList);
-		  System.out.println("qboardList@listservlet="+qboardList);
 		  request.setAttribute("pageBar", pageBar);
 		  request.getRequestDispatcher("/ajax/board_questionList.jsp").forward(request, response);
 		  

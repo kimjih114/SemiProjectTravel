@@ -93,7 +93,7 @@ public class Board_QuestionFormEndServlet extends HttpServlet {
 		
 		if(result >0) {
 			msg ="게시글 등록 성공"; 
-			loc = "/";/*"/ajax/"+result;  */  //view로 간다    
+			loc = "/board/qboardView?qboardNo="+result;/*"/ajax/"+result;  */  //view로 간다    
 		}else {
 			msg="게시글 등록실패"; 
 		}
