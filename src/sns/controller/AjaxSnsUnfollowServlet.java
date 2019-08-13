@@ -36,16 +36,16 @@ public class AjaxSnsUnfollowServlet extends HttpServlet {
 		//1.parameter handling
 		String userFollowing = request.getParameter("userFollowing");
 		String userFollowed= request.getParameter("userFollowed");
-				
-		System.out.println("following@servlet="+userFollowing);
-		System.out.println("followed@servlet="+userFollowed);
-										
+			
 		//2.business logic
 		int result = new SNSService().unFollow(userFollowing, userFollowed);
-										
+		System.out.println("result@unfollowServlet="+result);			
+		
 		//view단 작성
+		
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(result, response.getWriter());
+		
 	}
 
 	/**

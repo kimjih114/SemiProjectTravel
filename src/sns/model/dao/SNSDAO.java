@@ -294,11 +294,8 @@ public class SNSDAO {
 			
 			pstmt.setString(1, userFollowing);
 			pstmt.setString(2, userFollowed);
-		
 			
 			result = pstmt.executeUpdate();
-			
-		
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

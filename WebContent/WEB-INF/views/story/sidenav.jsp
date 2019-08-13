@@ -16,12 +16,15 @@
  	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
  	
  	List<String> followLoggedInList = new SNSService().selectOneIdFollow(userLoggedIn.getUserId());
-
+	System.out.println("followLoggedInList="+followLoggedInList);
+	System.out.println("followLoggedInList.contains(mypage)="+followLoggedInList.contains(mypage));
+	
 
 %> 
 
 
 <script type="text/javascript">
+
 function updateHeaderText(){
 	var headertext = $("#headerBefore").text();
 	
@@ -32,6 +35,7 @@ function updateHeaderText(){
 	$("#headerFrm").html(html);
 	
 }
+
 function updateNickName(){
 	var nickname = $("#nickBefore").text();
 	
@@ -42,6 +46,7 @@ function updateNickName(){
 	$("#nickFrm").html(html);
 	
 }
+
 function updateIntroduce(){
 	var intro = $("#introBefore").text();
 	
@@ -155,17 +160,19 @@ function follow(){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
-										
+				console.log("follow working");
+				
+				$("#followBtn").removeClass("btn-success");
+				$("#followBtn").addClass("btn-danger");
+				$("#followBtn").html("Unfollow");
+				$("#followBtn").off('click')
+				$("#followBtn").on('click', unfollow);
 				console.log("ajax처리성공!")
 			},
 			error : function(data){
 				console.log("ajax처리실패");
 			},
 			complete: function(data){
-				$("#followBtn").removeClass("btn-success");
-				$("#followBtn").addClass("btn-danger");
-				$("#followBtn").html("Unfollow");
-				$("#followBtn").off('click').on('click', unfollow);
 				
 			}
 		})
@@ -183,17 +190,20 @@ function unfollow(){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
-				console.log("ajax처리성공!")
+				console.log("unfollow working");
+				
+				$("#followBtn").removeClass("btn-danger");
+				$("#followBtn").addClass("btn-success");
+				$("#followBtn").html("Follow");
+				$("#followBtn").off('click');
+				$("#followBtn").on('click', follow);
+				
 			},
 			error : function(data){
 				console.log("ajax처리실패");
 			},
 			complete: function(data){
-				$("#followBtn").removeClass("btn-danger");
-				$("#followBtn").addClass("btn-success");
-				$("#followBtn").html("Follow");
-				$("#followBtn").off('click').on('click', follow);
-				
+			
 				
 			}
 		}) 
@@ -226,8 +236,8 @@ function unfollow(){
 	      		<button id="nickBeforeBtn" onclick="updateNickName();">edit</button>
 	      	<%}
 	      	else if(userLoggedIn!=null && !mypage.equals(userLoggedIn.getUserId())){%>
-					<%if(followLoggedInList.contains(mypage)){ %>
-						 <br>	    
+					<%if(followLoggedInList.contains(mypage)){	%>
+						 <br>
 						 <button type="button" class="btn btn-danger" id="followBtn" onclick="unfollow();">Unfollow</button>
 						 <button type="button" class="btn btn-dark">Block</button>
 					<%} else{ %>

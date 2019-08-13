@@ -36,38 +36,9 @@
  </section>
  
  
- <script>
- 	var param={
-			userFollowing : '<%=userLoggedIn.getUserId() %>',
-			userFollowed : '<%=mypageUser.getUserId() %>'    		
-		}
-	
-		$.ajax({
-			url : '<%=request.getContextPath()%>/gson/sns/unFollow.do',
-			data : param,
-			dataType: 'json',
-			type : 'post',
-			success : function(data){
-				console.log("ajax처리성공!")
-			},
-			error : function(data){
-				console.log("ajax처리실패");
-			},
-			complete: function(data){
-				$("#followBtn").removeClass("btn-danger");
-				$("#followBtn").addClass("btn-success");
-				$("#followBtn").html("Follow");
-				$("#followBtn").off('click').on('click', follow);
-				
-				var html = "<button type='button' class='btn btn-dark' id='blockBtn'>Block</button>";
-				$("#darkArea").html(html);
-			}
-		}) 
+
 
 	
-	
-	
-</script>
 </body>
 </html>
 

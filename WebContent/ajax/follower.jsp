@@ -94,7 +94,8 @@ $(()=>{
 		dataType:"json",
 		success: function(data){
 			console.log(data);
-			var html='';
+			
+			var html = '';
 			$(data).each((i,u)=>{
 				html = "<tr>";
 				html += "<td>"+u.userId+"</td>";
@@ -102,10 +103,10 @@ $(()=>{
 				html += "<td>"+u.userIntroduce+"</td>";
 				html += "</tr>";
 				console.log(html);
+			$(".followList").append(html);
 			
 			});
 			
-			$(".followList").html(html);
 		},
 		error: function(jqxhr, textStatus, errorThrown){
 			console.log("ajax처리실패!");

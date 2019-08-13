@@ -251,7 +251,7 @@
 														html+="</div>"
    													html+="</div>";
    													
-   									
+   											
    											contentids.push($(m).find("contentid").text());	
    											
    											contenttypes.push($(m).find("contenttypeid").text());
