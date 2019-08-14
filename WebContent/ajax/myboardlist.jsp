@@ -1,3 +1,4 @@
+<%@page import="user.model.vo.User"%>
 <%@page import="sns.model.vo.ProfileSNS"%>
 <%@page import="sns.model.vo.BoardSNS"%>
 <%@page import="sns.model.service.SNSService"%>
@@ -8,6 +9,7 @@
 <%
 	String mypage = request.getParameter("mypage");
 	int totalPage = Integer.parseInt(request.getParameter("totalPage"));
+	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 	
 %>
 <!-- Bootstrap core CSS -->
@@ -42,7 +44,33 @@
 $(()=>{
 	pageMore(1);
 });
+function unfollower(btn){
+	var param={
+		userFollowing : '<%=userLoggedIn.getUserId() %>',
+		userFollowed : $(btn).val()
+	}
 
+	$.ajax({
+		url : '<%=request.getContextPath()%>/gson/sns/unFollow.do',
+		data : param,
+		dataType: 'json',
+		type : 'post',
+		success : function(data){	
+			
+			$(btn).parent().parent().parent().remove();
+			
+			
+		},
+		error : function(data){
+			console.log("ajax처리실패");
+		},
+		complete: function(data){
+		
+			
+		}
+	}) 
+
+}
 function pageMore(cPage){
 	var param = {
 			cPage:cPage,
@@ -65,7 +93,14 @@ function pageMore(cPage){
 				html+="<img src='<%=request.getContextPath()%>/upload/profile/"+bs.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
 				html+="<span style='font-weight: 600'>"+bs.profileSNS.userNickname+"</span>";
 				html+="<span style='font-size: 0.8em; color: gray;''>"+bs.boardDate+"</span>";
-				html+="<span style='float: right;'>팔/언팔 블락</span>";
+				html+="<span style='float: right;'>";
+				if(bs.boardWriter!='<%=userLoggedIn.getUserId()%>'){
+					html+="<button type='button' class='btn btn-danger' class='followerBtn' value='"+bs.boardWriter+"' onclick='unfollower(this);'>Unfollow</button>";
+					html+="&nbsp;"
+					html+="<button type='button' class='btn btn-dark'>Block</button>";
+				}
+				
+				html+="</span>";
 				html+="</td>";
 				html+="</tr>";
 				if(bs.imageSNSList!=null){
@@ -135,9 +170,9 @@ function pageMore(cPage){
 					html+="</tr>";
 				}
 				
-				html+="<tr>";
+				html+="<t>";
 				html+="<td>";
-				html+="<span style='float: right;'>좋아요&nbsp;&nbsp;신고</span>";
+				html+="<span style='float: right; margin:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/>1&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
 				html+="</td>";
 				html+="</tr>";
 				html+="<tr>";
@@ -391,7 +426,10 @@ p.card-text{
 
 
 
-
+#trMore{
+	cursor:pointer;
+	padding-bottom: 10px;
+}
 
 
 

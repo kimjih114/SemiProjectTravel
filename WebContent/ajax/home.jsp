@@ -21,7 +21,7 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 230px;
+    width: 232px;
     /*height: 100vh;*/
 	border: 1px solid;
  	position: absolute;
@@ -66,7 +66,7 @@
 #tab-container .tabcontent {
 	display: none;
 	background-color:black;
-	padding: 6px 5px;
+	padding: 1px;
 	color:#fff;
 }
 #tab-container ul.tab li.current{
@@ -319,7 +319,11 @@
 							<td class="timeline-boardcontent-sns">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A tempore labore atque tenetur dolore recusandae nemo sunt commodi aliquid aut voluptatum hic nostrum velit aperiam consectetur temporibus eius harum cumque?</td>
 						</tr>
 						<tr>
-							<td class="timeline-boardcontent-sns"><span style="float:right;">좋아요(12)&nbsp;&nbsp;스크랩(2)</span></td>
+							<td class="timeline-boardcontent-sns"><span style="float:right;">
+							
+							
+							
+							(12)&nbsp;&nbsp;스크랩(2)</span></td>
 						</tr>
 						<tr>
 							<td class="timeline-boardcontent-sns">댓글(3)</td>
