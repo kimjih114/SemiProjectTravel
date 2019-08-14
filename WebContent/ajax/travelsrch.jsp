@@ -4,6 +4,9 @@
  <script type="text/javascript">
 	var contentids = new Array();
 	var contenttypes = new Array();
+	var contentthumbnails = new Array();
+	var contenttitles = new Array();
+	var contentaddresses = new Array();
 	var sido1;
 	var gugun1;
 
@@ -126,7 +129,7 @@
 					var $items=$root.find("item");
 					var html = "";
 					
-					if($(".h-100").length>=3){
+					if($(contentids).length>=3){
 						alert("여행지는 3개까지 등록 가능합니다.");
 						return;
 					}
@@ -142,7 +145,7 @@
 								html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
 									html+="<div class='caption'>"
 										html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
-										html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
+										html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find('contenttypeid').text()+"'>"+$(m).find("title").text()+"</a>";
 											html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
 										html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
 									html+="</div>";
@@ -160,7 +163,11 @@
 									
 									contentids.push($(m).find("contentid").text());		
 									contenttypes.push($(m).find("contenttypeid").text());
-									console.log("enter입력시="+$(contentids)[0]+$(contentids)[1]+$(contentids)[2]);
+									
+									contentthumbnails.push($(m).find("firstimage").text());
+									contenttitles.push($(m).find("title").text());
+									contentaddresses.push($(m).find("addr1").text());
+									
 		
 						}	
 				
@@ -219,7 +226,7 @@
    								
    								console.log($items);
    								
-   								if($(".h-100").length>=3){
+   								if($("contentids").length>=3){
    									alert("여행지는 3개까지 등록 가능합니다.");
    									return;
    								}
@@ -237,7 +244,7 @@
    												html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
 	   												html+="<div class='caption'>"
 	   													html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
-	   													html+="<div class='caption-text' ><a href='#'>"+$(m).find("title").text()+"</a>";
+	   														html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find('contenttypeid').text()+"'>"+$(m).find("title").text()+"</a>";
 	   														html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
 	   														html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
 														html+="</div>";
@@ -251,11 +258,16 @@
 														html+="</div>"
    													html+="</div>";
    													
-   											
+   											console.log("imageroot="+$(m).find("firstimage").text());
    											contentids.push($(m).find("contentid").text());	
    											
    											contenttypes.push($(m).find("contenttypeid").text());
-   											console.log(contenttypes);
+   											contentthumbnails.push($(m).find("firstimage").text());
+   											contenttitles.push($(m).find("title").text());
+   											contentaddresses.push($(m).find("addr1").text());
+   											
+   											
+   										
    					
    									}	
    					
@@ -294,7 +306,7 @@
 		<select name="gugun1" id="gugun1"></select>
 		<div id="searchFrm">
 			<input hidden="hidden" />
-			<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="30" /> 
+			<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="27" /> 
 			<ul id="autoComplete" style="z-index:99;">
 						
 			</ul>

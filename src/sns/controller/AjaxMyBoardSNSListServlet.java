@@ -39,10 +39,12 @@ public class AjaxMyBoardSNSListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1.parameter
 		int cPage = Integer.parseInt(request.getParameter("cPage"));
-		int numPerPage = 5+cPage;
+		int numPerPage = 5;
+		String mypage = request.getParameter("mypage");
 						
 		//2.업무로직
-		List<BoardSNS> boardSNSList = new SNSService().selectBoardSNSMore(cPage, numPerPage);
+		List<BoardSNS> boardSNSList = new SNSService().selectBoardSNSMore(mypage, cPage, numPerPage);
+		
 		List<BoardSNS> boardSNSResultList = new ArrayList<>();
 		if(boardSNSList!=null) {
 			for(BoardSNS bs : boardSNSList) {
@@ -57,8 +59,7 @@ public class AjaxMyBoardSNSListServlet extends HttpServlet {
 				
 				List<GradeSNS> gradeSNSList = new SNSService().selectGradeSNS(bs.getBoardNo());
 				
-				bs.setGrandeSNSList(gradeSNSList);
-				
+				bs.setGradeSNSList(gradeSNSList);
 				
 				boardSNSResultList.add(bs);
 				

@@ -76,17 +76,17 @@ public class BoardSNS implements Serializable {
 	public void setImageSNSList(List<ImageSNS> imageSNSList) {
 		this.imageSNSList = imageSNSList;
 	}
-	public List<GradeSNS> getGrandeSNSList() {
+	public List<GradeSNS> getGradeSNSList() {
 		return gradeSNSList;
 	}
-	public void setGrandeSNSList(List<GradeSNS> gradeSNSList) {
+	public void setGradeSNSList(List<GradeSNS> gradeSNSList) {
 		this.gradeSNSList = gradeSNSList;
 	}
 	@Override
 	public String toString() {
 		return "BoardSNS [boardNo=" + boardNo + ", boardWriter=" + boardWriter + ", boardContent=" + boardContent
 				+ ", boardType=" + boardType + ", boardDate=" + boardDate + ", profileSNS=" + profileSNS
-				+ ", imageSNSList=" + imageSNSList + ", grandeSNSList=" + gradeSNSList + "]";
+				+ ", imageSNSList=" + imageSNSList + ", gradeSNSList=" + gradeSNSList + "]";
 	}
 	
 	

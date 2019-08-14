@@ -250,7 +250,11 @@ public class SNSDAO {
 				pstmt.setString(2, gs.getBoardWriter());
 				pstmt.setString(3, gs.getContentId());
 				pstmt.setString(4, gs.getContentType());
-				pstmt.setInt(5, gs.getGrade());
+				pstmt.setString(5, gs.getContentThumbnail());
+				pstmt.setString(6, gs.getContentTitle());
+				pstmt.setString(7, gs.getContentAddress());
+				pstmt.setInt(8, gs.getGrade());
+				pstmt.setInt(9, gs.getGradeOrder());
 			
 				result = pstmt.executeUpdate();
 			}
@@ -464,16 +468,18 @@ public class SNSDAO {
 		return totalContents;
 	}
 
-	public List<BoardSNS> selectBoardSNSMore(Connection conn, int cPage, int numPerPage) {
+	public List<BoardSNS> selectBoardSNSMore(Connection conn, String mypage, int cPage, int numPerPage) {
 		List<BoardSNS> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectBoardSNSMore");
 		
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, (cPage-1)*numPerPage+1);
-			pstmt.setInt(2, cPage*numPerPage);
+			pstmt.setString(1, mypage);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
 			
 			rset = pstmt.executeQuery();
 			
@@ -562,6 +568,9 @@ public class SNSDAO {
 				gs.setBoardWriter(rset.getString("user_id"));
 				gs.setContentId(rset.getString("content_id"));
 				gs.setContentType(rset.getString("content_type"));
+				gs.setContentThumbnail(rset.getString("content_thumbnail"));
+				gs.setContentTitle(rset.getString("content_title"));
+				gs.setContentAddress(rset.getString("content_address"));
 				gs.setGrade(rset.getInt("grade"));
 				gs.setGradeDate(rset.getTimestamp("grade_date"));
 					

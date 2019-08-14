@@ -249,11 +249,68 @@
 						</tr>
 						<tr>
 							<td>
-								<table style="border: 1px solid;">
+								<table>
 									<tr>
-										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 1</td>
-										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 2</td>
-										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 3</td>
+										<td id="tes11">
+											<div class='card h-100'>
+												<a href='#' class='goInfo'><img class='card-img-top' src='<%=request.getContextPath() %>/img/이동욱.jpg'></a>
+												<div class='caption'>
+	   												<div class='caption-text' ><a href='#'>이름</a>
+	   													<div class='contentid' style='display:none'>아이디</div></h4>
+	   													<p class='card-text'>주소</p>
+													</div>
+												</div>
+   											</div>
+   											<div class='starRev'>
+													<span class='starR on' onclick='star(this);'>별1</span>
+													<span class='starR' onclick='star(this);'>별2</span>
+													<span class='starR' onclick='star(this);'>별3</span>
+													<span class='starR' onclick='star(this);'>별4</span>
+													<span class='starR' onclick='star(this);'>별5</span>
+											</div>
+										</td>
+										
+									
+										
+										
+										
+										
+										<td id="tes11">
+											<div class='card h-100'>
+												<a href='#' class='goInfo'><img class='card-img-top' src='<%=request.getContextPath() %>/img/이동욱.jpg'></a>
+												<div class='caption'>
+	   												<div class='caption-text' ><a href='#'>이름</a>
+	   													<div class='contentid' style='display:none'>아이디</div></h4>
+	   													<p class='card-text'>주소</p>
+													</div>
+												</div>
+   											</div>
+   											<div class='starRev'>
+													<span class='starR on' onclick='star(this);'>별1</span>
+													<span class='starR' onclick='star(this);'>별2</span>
+													<span class='starR' onclick='star(this);'>별3</span>
+													<span class='starR' onclick='star(this);'>별4</span>
+													<span class='starR' onclick='star(this);'>별5</span>
+											</div>
+										</td>
+										<td id="tes11">
+											<div class='card h-100'>
+												<a href='#' class='goInfo'><img class='card-img-top' src='<%=request.getContextPath() %>/img/이동욱.jpg'></a>
+												<div class='caption'>
+	   												<div class='caption-text' ><a href='#'>이름</a>
+	   													<div class='contentid' style='display:none'>아이디</div></h4>
+	   													<p class='card-text'>주소</p>
+													</div>
+												</div>
+   											</div>
+   											<div class='starRev'>
+													<span class='starR on' onclick='star(this);'>별1</span>
+													<span class='starR' onclick='star(this);'>별2</span>
+													<span class='starR' onclick='star(this);'>별3</span>
+													<span class='starR' onclick='star(this);'>별4</span>
+													<span class='starR' onclick='star(this);'>별5</span>
+											</div>
+										</td>
 									</tr>
 								</table>
 							</td>
@@ -278,6 +335,8 @@
 						</tr>
 					</table>
 		    	</div>
+		    	
+		    	
 			</div>
 		
 			<div id="tab2" class="tabcontent">
@@ -288,7 +347,7 @@
 				<h3>스크랩</h3>
 					<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
 				</div>
-		</div>
+			</div>
 		
 		<table id="rightNav">
 			<tr>
@@ -457,7 +516,9 @@ $("#btnSubmit").click(function(event){
 	console.log(contentids);
 	console.log(grades);
 	console.log(contenttypes);
-	
+	console.log(contentthumbnails);
+	console.log(contenttitles);
+	console.log(contentaddresses);
 	
 	
 	 formData.append("boardWriter",'<%=userLoggedIn.getUserId() %>');
@@ -469,6 +530,16 @@ $("#btnSubmit").click(function(event){
 	 formData.append("contentType1", contenttypes[0]);
 	 formData.append("contentType2", contenttypes[1]);
 	 formData.append("contentType3", contenttypes[2]);
+	 formData.append("contentThumbnail1", contentthumbnails[0]);
+	 formData.append("contentThumbnail2", contentthumbnails[1]);
+	 formData.append("contentThumbnail3", contentthumbnails[2]);
+	 formData.append("contentTitle1", contenttitles[0]);
+	 formData.append("contentTitle2", contenttitles[1]);
+	 formData.append("contentTitle3", contenttitles[2]);
+	 formData.append("contentAddress1", contentaddresses[0]);
+	 formData.append("contentAddress2", contentaddresses[1]);
+	 formData.append("contentAddress3", contentaddresses[2]);
+	 
 	 formData.append("grade1",grades[0]);
 	 formData.append("grade2",grades[1]);
 	 formData.append("grade3",grades[2]);
@@ -500,6 +571,10 @@ $("#btnSubmit").click(function(event){
 			grades=[];
 			filesTempArr=[];
 			contenttypes=[];
+			contentthumbnails=[];
+			contenttitles=[];
+			contentaddresses=[];
+			
 			$("#postFrm").css('display', 'none');
 			$("#tab-container").css("opacity", "1");
 			$("#fileupload").val("");
@@ -536,14 +611,5 @@ $("#btnSubmit").click(function(event){
 	})
 
 
-	
-	
- 	
- 	
-
-
-
-
-
-
 </script>
+

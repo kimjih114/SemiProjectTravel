@@ -145,9 +145,9 @@ public class SNSService {
 		return totalContents;
 	}
 
-	public List<BoardSNS> selectBoardSNSMore(int cPage, int numPerPage) {
+	public List<BoardSNS> selectBoardSNSMore(String mypage, int cPage, int numPerPage) {
 		Connection conn = getConnection();
-		List<BoardSNS> list = new SNSDAO().selectBoardSNSMore(conn, cPage, numPerPage);
+		List<BoardSNS> list = new SNSDAO().selectBoardSNSMore(conn, mypage, cPage, numPerPage);
 		close(conn);
 		return list;
 	}

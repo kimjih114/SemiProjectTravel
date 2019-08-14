@@ -464,7 +464,7 @@ div#profile-header{
 	padding: 10px;
 	width: 580px;
 	text-align:left;
-	border:1px solid;
+	
 }
 
 #boardcontent_img{
