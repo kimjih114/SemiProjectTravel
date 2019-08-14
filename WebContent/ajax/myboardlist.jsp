@@ -98,7 +98,7 @@ function pageMore(cPage){
 					html+="<button type='button' class='btn btn-danger' class='followerBtn' value='"+bs.boardWriter+"' onclick='unfollower(this);'>Unfollow</button>";
 					html+="&nbsp;"
 					html+="<button type='button' class='btn btn-dark'>Block</button>";
-				}
+				} 
 				
 				html+="</span>";
 				html+="</td>";
@@ -402,6 +402,7 @@ p.card-text{
 	height: 30px;
 	display:table-cell;
 	text-indent: -9999px;
+	cursor:none;
 		  
 }
 .tbl-td	.starR.on{background-position:0 0;}
