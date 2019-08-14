@@ -89,6 +89,7 @@ width: 294px;
 	left:265px;
 	transition: 0.5s;
 	top:100px;
+	margin-bottom: 100px;
 }
 
 #q-container .tab {

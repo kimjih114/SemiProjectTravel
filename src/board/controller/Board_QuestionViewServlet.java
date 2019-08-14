@@ -61,12 +61,13 @@ public class Board_QuestionViewServlet extends HttpServlet {
 			qboardCookie.setPath(request.getContextPath()+"/board");
 			
 			response.addCookie(qboardCookie);
+		}
 			
 			Board_Question bq = new Board_QuestionService().selectOne(qboardNo, hasRead);
-			//List<Board_QuestionComment> commentList = new Board_QuestionService().selectCommentList(qboardNo);
+			List<Board_QuestionComment> commentList = new Board_QuestionService().selectCommentList(qboardNo);
 			
 			request.setAttribute("bq", bq);
-			//request.setAttribute("commentList", commentList);
+			request.setAttribute("commentList", commentList);
 			
 			String view = "/ajax/board_questionView.jsp";
 			
@@ -78,7 +79,6 @@ public class Board_QuestionViewServlet extends HttpServlet {
 			}
 			request.getRequestDispatcher("/ajax/board_questionView.jsp").forward(request, response);
 			
-		}
 		
 		
 		

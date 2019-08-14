@@ -227,14 +227,18 @@ public class Board_QuestionDAO {
 		String sql = prop.getProperty("increaseReadCount"); 
 		
 		try {
+			
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setInt(1, qboardNo);
+			
+			result = pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt); 
 		}
-		System.out.println("board_questionSerivce---------------->>>"+result);
+		System.out.println("board_questionSerivce   increaseReadCount---------------->>>"+result);
 		return result; 
 		
 	}
@@ -306,6 +310,87 @@ public class Board_QuestionDAO {
 		} finally {
 			close(pstmt);
 		}
+		
+		return result;
+	}
+
+	public int updateqBoard(Connection conn, Board_Question bq) {
+		
+		int result = 0; 
+		PreparedStatement pstmt = null; 
+		String sql =prop.getProperty("updateQBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, bq.getQboardTitle());
+			pstmt.setString(2, bq.getQboardContent());
+			pstmt.setString(3, bq.getQboardFileName());
+			pstmt.setString(4, bq.getQboardNewFileName());
+			pstmt.setInt(5, bq.getQboardNo());
+			
+			System.out.println("결과결과결과@dao="+result);
+			result = pstmt.executeUpdate(); 
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); 
+		}
+		
+		
+		return result;
+	}
+
+	public int insertBoardComment(Connection conn, Board_QuestionComment bc) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertBoardComment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bc.getQboardCommentLevel());
+			pstmt.setString(2, bc.getQboardCommentWriter());
+			pstmt.setString(3, bc.getQboardCommentContent());
+			pstmt.setInt(4, bc.getQboardref());
+			//java - int: null을 허용하지 않음. 0
+			//oracle - number: null 
+			
+			pstmt.setString(5, bc.getQboardCommentRef()==0?null:bc.getQboardCommentRef()+"");
+			System.out.println("result="+result);
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteBoardComment(Connection conn, int qboardCommentNo) {
+		
+		int result = 0; 
+		PreparedStatement pstmt = null; 
+		String sql = prop.getProperty("deleteBoardComment"); 
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, qboardCommentNo);
+			
+			result =  pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
+		
 		
 		return result;
 	}

@@ -13,7 +13,7 @@
   userLoggedIn =(User)session.getAttribute("userLoggedIn");
  Board_Question bq = (Board_Question)request.getAttribute("bq");
 
- //List<Board_QuestionComment> commentList = (List<Board_QuestionComment>)request.getAttribute("commentList");
+ List<Board_QuestionComment> commentList = (List<Board_QuestionComment>)request.getAttribute("commentList");
 
  
 %>
@@ -94,6 +94,7 @@ width: 294px;
 	left:265px;
 	transition: 0.5s;
 	top:100px;
+	    margin-bottom: 100px;
 }
 
 #q-container .tab {
@@ -193,12 +194,16 @@ padding-right: 20px;
 padding-top:30px;
 height: 241px;
 }
+#tbl-comment{
+margin : 0 auto;
+}
 
 hr{
 border: 3px solid rgb(00,00,66);
 }
 li.post-font{
 text-align:left;
+}
 
 </style>
 
@@ -228,6 +233,59 @@ function fileDownload(oName, rName){
 				  + "&rName=" + rName;
 }
 
+$(()=>{
+
+	$("name=qboardCommentContent").val().trim().length;
+	
+	if(len==0) {
+			e.prevnetDefalut();
+		}
+	})
+
+});
+
+$(".btn-reply").on("click", (e)=>{
+	var tr = $("<tr></tr>");
+	var html = "<td style='display:none; text-align:left;' colspan='2'>";
+	html += "<form action='<%=request.getContextPath()%>/board/qboardCommentInsert' method='post'>";
+	html += "<input type='hidden' name='qboardRef' value='<%=bq.getQboardNo()%>'/>";
+	html += "<input type='hidden' name='qboardCommentWriter' value='<%=userLoggedIn.getUserId()%>'/>";
+	html += "<input type='hidden' name='qboardCommentLevel' value='2'/>";
+	html += "<input type='hidden' name='qboardCommentRef' value='"+e.target.value+"'/>";
+	html += "<textarea name='qboardCommentContent' cols='60' rows='1'></textarea>";
+	html += "<button type='submit' class='btn-insert2'>등록</button>";
+	html += "</form>";
+	html +="</td>";
+	tr.html(html);
+	
+	
+	tr.insertAfter($(e.target).parent().parent())
+	  .children("td")
+	  .slideDown(800)
+	  .children("form")
+	  .submit((e)=>{
+		 console.log($(e.target));
+		 var len = $(e.target).children("textarea")
+		 					  .val()
+		 					  .trim()
+		 					  .length;
+		 if(len == 0)
+			 e.preventDefault();
+		 
+	  })
+	  .find("textarea").focus();
+	
+	//한번 댓글폼 생성후 이벤트핸들러 제거
+	$(e.target).off('click');
+	
+
+});
+
+
+
+
+
+
 </script>
 
 
@@ -237,7 +295,7 @@ function fileDownload(oName, rName){
 <header class="masthead">
 	<div class="container">
 		<div class="intro-text" style="padding-top:100px;">
-			<h1>1:1문의</h1>
+			<h1><a href="<%=request.getContextPath()%>/boardquestion/boardList" style='color:white;'>1:1문의</a></h1>
 			<!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"> -->
 		</div>
 	</div>
@@ -279,7 +337,7 @@ function fileDownload(oName, rName){
 			<tr>
 				<th>작성자</th>
 				<td> <input class="form-control" type="text"  name="qboardWriter"
-					 value="<%=userLoggedIn.getUserId()%>" required readonly> </td>
+					 value="<%=bq.getQboardWriter()%>" required readonly> </td>
 			</tr>		
 			<tr>
 				<th>첨부파일</th>
@@ -328,7 +386,7 @@ function fileDownload(oName, rName){
 		<script>
 		
 		function updateqBoard(){
-			location.href = "<%=request.getContextPath()%>/board/boardUpdateForm?boardNo=<%=bq.getQboardNo()%>";
+			location.href = "<%=request.getContextPath()%>/board/boardUpdateForm?qboardNo=<%=bq.getQboardNo()%>";
 		}
 		
 		function deleteqBoard(){
@@ -344,6 +402,98 @@ function fileDownload(oName, rName){
 		<%} %>
 		
 		</table>
+		
+			<hr style="margin-top: 30px;"/>
+	<div id="comment-container">
+		<div class="comment-editor">
+			<form action="<%=request.getContextPath()%>/board/qboardCommentInsert"
+				  name="qboardCommentFrm"
+				  method="post">
+				<input type="hidden" name="qboardRef" 
+					   value="<%=bq.getQboardNo()%>" />
+				<input type="hidden" name="qboardCommentWriter" 
+					   value="<%=userLoggedIn!=null?userLoggedIn.getUserId():""%>" />
+				<input type="hidden" name="qboardCommentLevel" 
+					   value="1" />
+				<input type="hidden" name="qboardCommentRef" 
+					   value="0" /> <!-- 댓글인 경우 참조댓글이 없으므로 0으로 초기화 -->
+				<textarea name="qboardCommentContent" 
+						  id="qboardCommentContent" 
+						  cols="60" rows="3"></textarea>
+				<button type="submit"
+					    id="btn-insert">등록</button>			
+			</form>
+		</div>
+		<!-- 댓글목록테이블 -->
+		<table id="tbl-comment">
+			<%
+			if(commentList != null){
+				for(Board_QuestionComment bc : commentList){
+					if(bc.getQboardCommentLevel()==1){
+			%>
+					<tr class=level1>
+						<td>
+							<sub class=comment-writer><%=bc.getQboardCommentWriter() %></sub>
+							<sub class=comment-date><%=bc.getQboardCommentDate()%></sub>
+							<br />
+							<%=bc.getQboardCommentContent() %>
+						</td>
+						<td>
+							<button class="btn-reply" 
+									value="<%=bc.getQboardComment_no()%>">답글</button>
+							<%--@실습문제:
+								 관리자/댓글작성자에 한해 이버튼을 노출시키고,
+								 댓글 삭제 기능추가. 
+								 댓글삭제후에는 현재페이지로 다시 이동함.
+							  --%>
+							<%if(userLoggedIn!=null 
+								&& ("admin".equals(userLoggedIn.getUserId()) 
+										|| bc.getQboardCommentWriter().equals(userLoggedIn.getUserId()) )){%>
+							<button class="btn-delete" value="<%=bc.getQboardComment_no()%>">삭제</button>
+							<%} %>
+						</td>
+					</tr>
+			<% 		} else { %>
+					<tr class=level2>
+						<td>
+							<sub class=comment-writer><%=bc.getQboardCommentWriter() %></sub>
+							<sub class=comment-date><%=bc.getQboardCommentDate()%></sub>
+							<br />
+							<%=bc.getQboardCommentContent() %>
+						</td>
+						<td>
+							<%-- 삭제버튼 추가 --%>
+							<%if(userLoggedIn!=null 
+								&& ("admin".equals(userLoggedIn.getUserId()) 
+										|| bc.getQboardCommentWriter().equals(userLoggedIn.getUserId()) )){%>
+							<button class="btn-delete" value="<%=bc.getQboardComment_no()%>">삭제</button>
+							<%} %>
+						</td>
+					</tr>
+		
+		<script>
+		//삭제버튼 클릭시
+		$(".btn-delete").click(function(){
+		if(!confirm("정말 삭제하시겠습니까?")) return;
+		//삭제처리후 돌아올 현재게시판번호도 함께 전송함.
+		location.href="<%=request.getContextPath()%>/board/qboardCommentDelete?qboardNo=<%=bq.getQboardNo() %>&del="+$(this).val();
+		});
+		
+		</script>
+		
+			<%
+					}//end of if : level1, level2
+		
+				}//end of for	
+			} 
+			%>
+		</table>
+		
+	
+	</div>
+		
+		
+		
 
 </div>
 			

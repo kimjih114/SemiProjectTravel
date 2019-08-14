@@ -94,6 +94,7 @@ div#container {
 	left:265px;
 	transition: 0.5s;
 	top:100px;
+	    margin-bottom: 100px;
 }
 
 #q-container .tab {
@@ -290,7 +291,7 @@ function qboardValidate(){
 <header class="masthead">
 	<div class="container">
 		<div class="intro-text" style="padding-top:100px;">
-			<h1>1:1문의</h1>
+			<h1><a href="<%=request.getContextPath()%>/boardquestion/boardList" style='color:white;'>1:1문의</a></h1>
 			<!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"> -->
 		</div>
 	</div>

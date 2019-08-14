@@ -1,28 +1,27 @@
 package board.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-import board.model.exception.BoardQuestionException;
 import board.model.service.Board_QuestionService;
-import board.model.vo.Board_Question;
 
 /**
- * Servlet implementation class Board_QuestionupdateFrm
+ * Servlet implementation class Board_CommentDeleteServlet
  */
-@WebServlet("/board/boardUpdateForm")
-public class Board_QuestionupdateFrm extends HttpServlet {
+@WebServlet("/board/qboardCommentDelete")
+public class Board_CommentDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Board_QuestionupdateFrm() {
+    public Board_CommentDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,18 +31,28 @@ public class Board_QuestionupdateFrm extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int qboardNo ; 
-		 try {
-			 qboardNo =Integer.parseInt(request.getParameter("qboardNo"));
-			 
-		 }catch(NumberFormatException e) {
-			 throw new BoardQuestionException("유효하지 않은 게시글 요청입니다."); 
-		 }
+		int qboardNo = Integer.parseInt(request.getParameter("qboardNo")); 
+		int qboardCommentNo = Integer.parseInt(request.getParameter("del"));
 		
-		 Board_Question bq = new Board_QuestionService().selectOne(qboardNo);
+		int result =  new Board_QuestionService().deleteBoardComment(qboardCommentNo); 
+		System.out.println("코멘트 삭제 서블릿 결과 값 "+ result);
+	
+		String view = "/WEB-INF/views/common/msg.jsp"; 
+		String msg = ""; 
+		String loc = "board/qboardView?qboardNo="+qboardNo;
 		
-		 request.setAttribute("bq", bq);
-		 request.getRequestDispatcher("/WEB-INF/views/board/board_questionUpdateFrm.jsp").forward(request, response);
+		if(result>0)
+			msg = "댓글 삭제 성공!";
+			
+		else 
+			msg = "댓글 삭제 실패!";	
+		
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		
+		RequestDispatcher reqDispatcher = request.getRequestDispatcher(view);
+		reqDispatcher.forward(request, response);
+		
 		
 	}
 

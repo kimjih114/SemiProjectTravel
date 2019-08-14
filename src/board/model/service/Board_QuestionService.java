@@ -7,6 +7,7 @@ import java.util.List;
 
 import static common.JDBCTemplate.close;
 import static common.JDBCTemplate.getConnection;
+
 import static common.JDBCTemplate.*;
 
 import board.model.dao.Board_QuestionDAO;
@@ -81,6 +82,54 @@ public class Board_QuestionService {
 		
 		return result;
 	
+	}
+
+	public Board_Question selectOne(int qboardNo) {
+		Connection conn = getConnection(); 
+		Board_Question qboard = new Board_QuestionDAO().selectOne(conn, qboardNo); 
+		close(conn);
+		return qboard;
+	}
+
+	public int updateqBoard(Board_Question bq) {
+		Connection conn= getConnection(); 
+		int result = new Board_QuestionDAO().updateqBoard(conn,bq); 
+		if(result>0) {
+			commit(conn); 
+		}else 
+			rollback(conn); 
+		
+		close(conn); 
+		
+		
+		return result;
+	}
+
+	public int insertQBoardComment(Board_QuestionComment bc) {
+		Connection conn = getConnection();
+		int result = new Board_QuestionDAO().insertBoardComment(conn, bc);
+		
+		//트랜잭션 
+		if(result > 0)
+			commit(conn);
+		else 
+			rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public int deleteBoardComment(int qboardCommentNo) {
+		Connection conn = getConnection();
+		int result = new Board_QuestionDAO().deleteBoardComment(conn, qboardCommentNo);
+		if(result>0)
+			commit(conn);
+		else 
+			rollback(conn);
+		close(conn);
+		
+		return result;
 	}
 
 }

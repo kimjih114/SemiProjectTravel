@@ -54,7 +54,7 @@ public class Board_QuestionDeleteServlet extends HttpServlet {
 		
 		String view = "/WEB-INF/views/common/msg.jsp"; 
 		String msg ="";
-		String loc = "/ajax/board_questionView"; 
+		String loc = "/boardquestion/boardList"; 
 		
 		if(result>0) {
 			msg="게시글 삭제 성공"; 
