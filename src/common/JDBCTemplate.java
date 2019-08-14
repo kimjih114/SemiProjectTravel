@@ -37,7 +37,7 @@ public class JDBCTemplate {
 			String fileName = JDBCTemplate.class
 										  .getResource("/driver.properties") //리턴값은 url
 										  .getPath(); //URL객체의 절대경로(문자열)리턴
-			System.out.println("fileName@JDBCTemplate="+fileName);
+			
 			prop.load(new FileReader(fileName));
 			
 			String driver = prop.getProperty("driver");

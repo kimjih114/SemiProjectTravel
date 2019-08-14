@@ -48,59 +48,17 @@ public class AjaxMyBoardSNSListServlet extends HttpServlet {
 			for(BoardSNS bs : boardSNSList) {
 				ProfileSNS profileSNS = new SNSService().selectOneProfile(bs.getBoardWriter());
 				
-				List<ImageSNS> imageList = new SNSService().selectImageSNS(bs.getBoardNo());
-				
-				ImageSNS imageSNS1 = null;
-				ImageSNS imageSNS2 = null;
-				ImageSNS imageSNS3 = null;
-				ImageSNS imageSNS4 = null;
-				ImageSNS imageSNS5 = null;
-				
-				if(imageList!=null) {
-				if(imageList.size()>0) {
-					imageSNS1 = imageList.get(0);
-				}
-				if(imageList.size()>1) {
-					imageSNS2 = imageList.get(1);
-				}
-				if(imageList.size()>2) {
-					imageSNS3 = imageList.get(2);
-				}
-				if(imageList.size()>3) {
-					imageSNS4 = imageList.get(3);
-				}
-				if(imageList.size()>4) {
-					imageSNS5 = imageList.get(4);
-				}
-				}
-				
-				List<GradeSNS> gradeList = new SNSService().selectGradeSNS(bs.getBoardNo());
-				
-				GradeSNS gradeSNS1 = null;
-				GradeSNS gradeSNS2 = null;
-				GradeSNS gradeSNS3 = null;
-				if(gradeList!=null) {
-					if(gradeList.size()>0) {
-						gradeSNS1 = gradeList.get(0);
-					}
-					if(gradeList.size()>1) {
-						gradeSNS2 = gradeList.get(1);
-					}
-					if(gradeList.size()>2) {
-						gradeSNS3 = gradeList.get(2);
-					}
-					
-				}
-				
 				bs.setProfileSNS(profileSNS);
-				bs.setImageSNS1(imageSNS1);
-				bs.setImageSNS2(imageSNS2);
-				bs.setImageSNS3(imageSNS3);
-				bs.setImageSNS4(imageSNS4);
-				bs.setImageSNS5(imageSNS5);
-				bs.setGradeSNS1(gradeSNS1);
-				bs.setGradeSNS2(gradeSNS2);
-				bs.setGradeSNS3(gradeSNS3);
+				
+				List<ImageSNS> imageSNSList = new SNSService().selectImageSNS(bs.getBoardNo());
+				
+				bs.setImageSNSList(imageSNSList);
+	
+				
+				List<GradeSNS> gradeSNSList = new SNSService().selectGradeSNS(bs.getBoardNo());
+				
+				bs.setGrandeSNSList(gradeSNSList);
+				
 				
 				boardSNSResultList.add(bs);
 				

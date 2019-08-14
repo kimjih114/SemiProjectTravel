@@ -9,16 +9,38 @@
 	String mypage = request.getParameter("mypage");
 	int totalPage = Integer.parseInt(request.getParameter("totalPage"));
 	
-%>	
+%>
+<!-- Bootstrap core CSS -->
+  <link href="/trav/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/trav/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="/trav/css/agency.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap core JavaScript -->
+  <script src="/trav/vendor/jquery/jquery.min.js"></script>
+  <script src="/trav/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="/trav/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="/trav/js/jqBootstrapValidation.js"></script>
+  <script src="/trav/js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="/trav/js/agency.min.js"></script>
+
+
 <script>
 $(()=>{
 	pageMore(1);
-	
-	$("#tdMore").click((e)=>{
-		var nextPage = Number($(e.target).val()) + 1;
-		pageMore(nextPage);
-	});
-	
 });
 
 function pageMore(cPage){
@@ -35,9 +57,6 @@ function pageMore(cPage){
 			
 			var html = "";
 			$.each(data,(i,bs)=>{
-				
-				console.log(bs.imageSNS1);
-				console.log(bs.imageSNS5);
 				html+="<tr>";
 				html+="<td class='timeline-boardcontent-sns'>";
 				html+="<img src='<%=request.getContextPath()%>/upload/profile/"+bs.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
@@ -47,36 +66,26 @@ function pageMore(cPage){
 				html+="</td>";
 				html+="</tr>";
 				html+="<tr>";
-				if(bs.imageSNS1!==undefined){
 				html+="<td class='timeline-boardcontent-sns' id='boardcontent_img'>"
 				html+="<div id='carouselExampleControls' class='carousel slide' data-ride='carousel'>";
-				html+="<div class='carousel-inner'>";
-				    html+="<div class='carousel-item active'>";
-					html+="<img src='<%=request.getContextPath()%>/upload/board/"+bs.imageSNS1.renamedFileName+"' class='d-block w-100' alt='...'>";
-					html+="</div>";		
-				if(bs.imageSNS2!==undefined){
-				    html+="<div class='carousel-item'>";
-					html+="<img src='<%=request.getContextPath()%>/upload/board/"+bs.imageSNS2.renamedFileName+"' class='d-block w-100' alt='...'>";
-					html+="</div>";
-				}			
-				if(bs.imageSNS3!==undefined){
-				    html+="<div class='carousel-item'>";
-					html+="<img src='<%=request.getContextPath()%>/upload/board/"+bs.imageSNS3.renamedFileName+"' class='d-block w-100' alt='...'>";
-					html+="</div>";
-				}			
-				if(bs.imageSNS4!==undefined){
-				    html+="<div class='carousel-item'>";
-					html+="<img src='<%=request.getContextPath()%>/upload/board/"+bs.imageSNS4.renamedFileName+"' class='d-block w-100' alt='...'>";
-					html+="</div>";
-				}			
-				if(bs.imageSNS5!==undefined){
-				    html+="<div class='carousel-item'>";
-					html+="<img src='<%=request.getContextPath()%>/upload/board/"+bs.imageSNS5.renamedFileName+"' class='d-block w-100' alt='...'>";
-					html+="</div>";
-				}			
+				if(bs.imageSNSList!=null){
+					html+="<div class='carousel-inner'>";
+					for(j=0; j<bs.imageSNSList.length;j++){
+						if(bs.imageSNSList[j]!=null){
+							if(j==0){
+								html+="<div class='carousel-item active'>";
+				
+							} else if(j>0){
+								html+="<div class='carousel-item'>";
+							}
+							html+="<img src='<%=request.getContextPath()%>/upload/board/"+bs.imageSNSList[j].renamedFileName+"' class='d-block w-100' alt='...'>";
+							html+="</div>";		
+						}	
+					}	
+				}
 				html+="</div>";
 				html+="<a class='carousel-control-prev' href='#carouselExampleControls' role='button' data-slide='prev'>";
-				html+="<span class='carousel-control-prev-icon' aria-hidden='true'></span>"
+				html+="<span class=;carousel-control-prev-icon' aria-hidden='true'></span>"
 				html+="<span class='sr-only'>Previous</span>";
 				html+="</a>";
 				html+="<a class='carousel-control-next' href='#carouselExampleControls' role='button' data-slide='next'>";
@@ -85,7 +94,6 @@ function pageMore(cPage){
 				html+="</a>";
 				html+="</div>";
 				html+="</td>";
-				}
 				html+="</tr>";
 				html+="<tr>";
 				html+="<td>";
@@ -106,14 +114,31 @@ function pageMore(cPage){
 				html+="<span style='float: right;'>좋아요(12)</span>";
 				html+="</td>";
 				html+="</tr>";
+				html+="<tr>";
+				html+="<td class='timeline-boardcontent-sns'>댓글(3)</td>";
+				html+="</tr>";
+				html+="<tr>";
+				html+="<td class='timeline-boardcontent-sns'>";
+				html+="<span class='nick_sns'>@abcde</span>&nbsp;";
+				html+="<span style='float:right;'>&nbsp;&nbsp;좋아요&nbsp;&nbsp;팔로잉&nbsp;&nbsp;블랙리스트</span>";
+				html+="</td>";		
+				html+="</tr>";
 				html+="<tr><td stlye='height: 10px;'></td></tr>";
-
 			});
+
+			html+="<tr id='trMore'><td id='tdMore'>&nbsp;</td></tr>";
 			
 		$("#myBoardList").append(html);
 		
+
+		$("#tdMore").click(function(e){
+			var nextPage = Number($(e.target).val()) + 1;
+			pageMore(nextPage);
+			$(this).remove();
+		});
+		
 		//cPage값을 #btn-more에 저장하기
-		$("#tdMore").val(cPage).text("더보기");
+		$("#tdMore").val(cPage).text("더보기("+cPage+"/<%=totalPage %>)");
 		
 		//마지막 페이지인 경우, 더보기 버튼 비활성화
 		if(cPage == <%=totalPage%>){
@@ -135,14 +160,11 @@ function pageMore(cPage){
 
 
 </script>	
-	<style>#tdMore{text-align:center; padding: 10px; }</style>
+	<style>#tdMore{text-align:center; padding: 10px; cursor:pointer; }</style>
 	
 	
 	
 <table class="timeline-board-sns" id="myBoardList">
-	<tr id="trMore">
-		<td id="tdMore">&nbsp;</td>
-	</tr>
 </table>
 
 
