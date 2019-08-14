@@ -3,6 +3,7 @@ package travel.model.service;
 import java.sql.Connection;
 import java.util.List;
 
+import sns.model.vo.GradeSNS;
 import travel.model.dao.TravelDAO;
 import travel.model.vo.RoomReservation;
 import travel.model.vo.Travel;
@@ -147,5 +148,11 @@ public class TravelService {
 		int totalTravel = new TravelDAO().selectTravelCountByTravelName(conn,searchKeyword);
 		close(conn);
 		return totalTravel;
+	}
+	public List<GradeSNS> contentGradeSelect(String contentId) {
+		Connection conn=getConnection();
+		List<GradeSNS> gradeList=new TravelDAO().contentGradeSelect(conn,contentId);
+		close(conn);
+		return gradeList;
 	}
 }

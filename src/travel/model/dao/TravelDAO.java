@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import sns.model.vo.GradeSNS;
 import travel.model.vo.RoomReservation;
 import travel.model.vo.Travel;
 import travel.model.vo.TravelFood;
@@ -576,5 +577,31 @@ public class TravelDAO {
 			close(pstmt);
 		}
 		return totalTravel;
+	}
+	public List<GradeSNS> contentGradeSelect(Connection conn, String contentId) {
+		List<GradeSNS> gradeList=new ArrayList<GradeSNS>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("contentGradeSelect");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, contentId);
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int boardNo=rset.getInt("board_no");
+				String boardWriter=rset.getString("user_id");
+				int grade=rset.getInt("grade");
+				GradeSNS g=new GradeSNS(boardNo, boardWriter, contentId, null, null, null, null, grade, 0, null);
+				gradeList.add(g);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return gradeList;
 	}
 }

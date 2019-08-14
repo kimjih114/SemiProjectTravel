@@ -485,12 +485,12 @@
 	
 	function rsvCheck(price,roomTitle){
 
-		var startDate=$("#sdate").val();
+		<%-- var startDate=$("#sdate").val();
 		var endDate=$("#edate").val();
 		var friendId=$("#search").val();
 
-		location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
-		<%-- var IMP = window.IMP;
+		location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>"; --%>
+		var IMP = window.IMP;
 		IMP.init('imp68757717');
 
 		IMP.request_pay({
@@ -517,14 +517,13 @@
 		        msg += '에러내용 : ' + rsp.error_msg;
 		    }
 		    alert(msg);
-		    
-		    var roomTitle=$("#roomTitle").val();
+	    
 			var startDate=$("#sdate").val();
 			var endDate=$("#edate").val();
 			var friendId=$("#search").val();
 		    
 		    location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
-		}); --%>
+		}); 
 	}
 </script>
 <style>
