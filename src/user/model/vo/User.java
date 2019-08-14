@@ -26,9 +26,6 @@ public class User implements Serializable ,HttpSessionBindingListener{
 	
 	private String userType;
 	
-	private String userDefaultPlace;
-	private String userDefaultActivity;
-	
 	private Date userEnrollDate;
 
 	public User() {
@@ -38,7 +35,7 @@ public class User implements Serializable ,HttpSessionBindingListener{
 
 	public User(String userId, String usernickName, String userPassword, String userName, String userGender,
 			Date userBirth, String userEmail, String userPhone, String fileName, String originalFileName, String userType,
-			String userDefaultPlace, String userDefaultActivity, Date userEnrollDate) {
+			 Date userEnrollDate) {
 		super();
 		this.userId = userId;
 		this.usernickName = usernickName;
@@ -51,8 +48,6 @@ public class User implements Serializable ,HttpSessionBindingListener{
 		this.fileName = fileName;
 		this.originalFileName = originalFileName;
 		this.userType = userType;
-		this.userDefaultPlace = userDefaultPlace;
-		this.userDefaultActivity = userDefaultActivity;
 		this.userEnrollDate = userEnrollDate;
 	}
 
@@ -149,21 +144,6 @@ public class User implements Serializable ,HttpSessionBindingListener{
 		this.userType = userType;
 	}
 
-	public String getUserDefaultPlace() {
-		return userDefaultPlace;
-	}
-
-	public void setUserDefaultPlace(String userDefaultPlace) {
-		this.userDefaultPlace = userDefaultPlace;
-	}
-
-	public String getUserDefaultActivity() {
-		return userDefaultActivity;
-	}
-
-	public void setUserDefaultActivity(String userDefaultActivity) {
-		this.userDefaultActivity = userDefaultActivity;
-	}
 
 	public Date getUserEnrollDate() {
 		return userEnrollDate;
@@ -183,7 +163,6 @@ public class User implements Serializable ,HttpSessionBindingListener{
 		return "User [userId=" + userId + ", usernickName=" + usernickName + ", userPassword=" + userPassword
 				+ ", userName=" + userName + ", userGender=" + userGender + ", userBirth=" + userBirth + ", userEmail="
 				+ userEmail + ", userPhone=" + userPhone + ", fileName=" + fileName +", originalFileName= "+originalFileName+ ", userType=" + userType
-				+ ", userDefaultPlace=" + userDefaultPlace + ", userDefaultActivity=" + userDefaultActivity
 				+ ", userEnrollDate=" + userEnrollDate + "]";
 	}
 

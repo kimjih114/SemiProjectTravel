@@ -1,3 +1,5 @@
+<%@page import="user.model.service.UserService"%>
+<%@page import="sns.model.vo.ProfileSNS"%>
 <%@page import="sns.model.service.SNSService"%>
 <%@page import="user.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -36,8 +38,11 @@
 <%
 
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
-
 	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
+	User loggedIn = null;
+	if(userLoggedIn!=null){
+		loggedIn = new UserService().selectOne(userLoggedIn.getUserId());
+	}
 %>
 <head>
   <meta charset="utf-8">
@@ -120,8 +125,8 @@ background-image:url(<%=request.getContextPath()%>/img/header-new.jpg);
 	           <a class="nav-link js-scroll-trigger" style="padding-top: 5px !important" href='<%=request.getContextPath() %>/mypage/mypageView'>
 	           	<%if(userLoggedIn==null || userLoggedIn.getFileName()==null){%>
 	           		<button onclick="location.href='<%=request.getContextPath() %>/mypage/mypageView'"></button>
-	           	<% } else {%>
-	           		<img src="<%=request.getContextPath() %>/upload/profile/<%=userLoggedIn.getFileName() %>" class="header-profile-circle"  width="40" height="40" />
+	           	<% } else if(userLoggedIn!=null && loggedIn!=null) {%>
+	           		<img src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" class="header-profile-circle"  width="40" height="40" />
 	           	<%} %>
 	           </a> <!-- userLogin.jsp로 이동하는 서블릿 -->
 	         </li> 

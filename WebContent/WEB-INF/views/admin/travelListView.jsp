@@ -1,6 +1,15 @@
+<%@page import="travel.model.vo.Travel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%
+	List<Travel> list = (List<Travel>)request.getAttribute("list");
+	String pageBar = (String)request.getAttribute("pageBar");
+	int numPerPage = (int)request.getAttribute("numPerPage");
+%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
+<link rel="stylesheet" href="selectbox.min.css">
+<script src="selectbox.min.js"></script>
 
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +37,42 @@
 
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
- <style>
+
+<script>
+
+$(()=>{
+	$("#numPerPage").on("change",()=>{
+		$("#numPerPageFrm").submit();
+	});
+	
+	
+	
+	
+});
+
+	$("#modifyUserInfo").click(function(){
+		
+		$.ajax({
+	        type : "GET",
+	        url : "<%=request.getContextPath() %>/my",
+	        dataType : "text",
+	        error : function() {
+	          alert('통신실패!!');
+	        },
+	        success : function(data) {
+	          $('#Context').html(data);
+	        }
+	 
+	  });
+		
+		var foo = $("select[name=searchType]").val();
+		
+	
+})
+
+
+</script>
+  <style>
 .page-top{
 	width: 1024px;
 	position : relative;
@@ -126,7 +170,7 @@ section#page-top{
 #content{
 	position : absolute;
 	top : 5%;
-	left : 28%;
+	left : 22%;
 }
 #content table{
 	border-collapse : collapse;
@@ -149,6 +193,15 @@ section#page-top{
 #content table tr:nth-child(2n){
 	background-color:#f7f2eb;
 }
+div#search-container{
+	margin : 0 0 10px;
+	padding : 3px;
+}
+div#search-travelName{display: inline-block;}
+numPerPage{
+	float : right;
+}
+
 </style>
   
  <header class="masthead" style="height:300px;">
@@ -178,13 +231,13 @@ section#page-top{
    	</tr>
 
    		<tr>
-   			<td id="business_registration" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 등록</td>
+   			<td id="business_registration" onclick="location.href='<%=request.getContextPath()%>/travel/travelEnroll.do'">업체 등록</td>
    		</tr>
    		<tr>
    			<td id="business_List" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 목록</td>
    		</tr>
    		<tr>
-   			<td>블랙리스트 관리</td>
+   			<td>공지사항 등록</td>
    		</tr>
    		<tr>
    			<td>문의관리</td>
@@ -194,108 +247,104 @@ section#page-top{
   </nav>   
  
   	<div id="content">
-  	<form action="<%=request.getContextPath()%>/travel/travelEnrollEnd"
-  		  name="travelEnrollFrm"
-  		  id="travelEnrollFrm"
-  		  method = "post"
-  		  enctype="multipart/form-data"
-  		  style="width:500px;">
-  	 <div class="form-group">
-     <label for="exampleInputEmail1">시설 명칭 입력</label>
-    <input type="text" class="form-control" id="travelName" aria-describedby="emailHelp" placeholder="Name" name="travelName" required>
-    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-  </div>
-  <div class="form-group">
-   <label for="exampleInputEmail1">상세 주소 입력</label>
-    <input type="text" class="form-control" id="travelLocation" aria-describedby="emailHelp" placeholder="Location" name="travelLocation" required>
-    <small id="emailHelp" class="form-text text-muted">도로명 주소를 적어주세요.</small>
-  </div>
-	<div class="form-group">
-    <label for="exampleInputEmail1">사진등록</label><br />
-    <input type="file" name="fileName" id="fileName" style="text-align:center;"/>
-  </div>
-  <div class="form-group">
-  <label for="exampleInputEmail1">사업 등록자 이름</label>
-    <input type="text" class="form-control" id="officierName" aria-describedby="emailHelp" placeholder="Officier" name="officierName" required>
-  </div>
-  <div class="form-group">
-  	<label for="exampleInputEmail1">사업 등록자 전화번호</label>
-    <input type="text" class="form-control" id="officierPhone" aria-describedby="emailHelp" 
-    maxlength="11" placeholder="Phone" name="officierPhone" required>
-  </div>
-  	<div class="form-group">
-    <label for="exampleInputEmail1" id="userDefaultActivity">여행 타입</label><br />
-    <input type="checkbox" name="program" id="program1" value="P"  onclick="doOpenCheck(this);"/>
-					<label for="program1">여행지</label>
-					<input type="checkbox" name="program" id="program2" value="A" onclick="doOpenCheck(this);"/>
-					<label for="program2">숙소</label>
-					<input type="checkbox" name="program" id="program3" value="R" onclick="doOpenCheck(this);"/>
-					<label for="program3">맛집</label>
-					<input type="checkbox" name="program" id="program4" value="E" onclick="doOpenCheck(this);"/>
-					<label for="program4">놀거리</label>
-					<input type="checkbox" name="program" id="program5" value="S" onclick="doOpenCheck(this);" />
-					<label for="program5">쇼핑</label>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">시설 소개 내용</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="7"></textarea>
-  </div>
-
-	<div id="putt" style="text-align:center;">
-
-  <button type="submit" class="btn btn-primary" >등록</button>
-  <button type="reset" class="btn btn-primary" >초기화</button>
- </div>
- </form>
-   	</div>
+  		<h2>업체 목록</h2>
+  		<div id="head-wrapper">
+  			<div id="search-container">
+  				검색타입 :
+  				<select name ="searchType" id="searchType">
+  					<option value="P">여행지</option>
+  					<option value="A">숙소</option>
+  					<option value="R">맛집</option>
+  					<option value="E">놀거리</option>
+  					<option value="S">쇼핑</option>
+  				</select>
+  			<div id="search-travelName" class="searchFrm">
+  				<form action="<%=request.getContextPath()%>/admin/travelFinder?foo="+foo>
+  			
+  				<input type="hidden"
+  						name="searchType" 
+  						value="travel_name"/>
+  				<input type="search"
+  					  name="searchKeyword"
+  					  size="25"
+  					  placeholder="검색할 업체 이름을 입력하세요."/>
+  				<input type="submit" value="검색"/>  
+  			</form>
+  			</div>
+  			</div>
+  			</div>
+  		<div id="numPerPage-container" class="wrapper">
+  		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
+  		페이지 당 업체 수 
+  		<select name="numPerPage" id="numPerPage">
+  			<option value="20" <%=numPerPage==20?"selected":"" %>>20</option>
+  			<option value="10" <%=numPerPage==10?"selected":"" %>>10</option>
+  			<option value="5" <%=numPerPage==5?"selected":"" %>>5</option>
+  		</select>
+  		</form>
+  		
+  		</div>
+  		<br /><br />
+  		<table id="tbl-travel">
+  			<thead>
+  			<tr>
+  				<th>업체 이름</th>
+  				<th>타입</th>
+  				<th>관리자 이름</th>
+  				<th>핸드폰 번호</th>
+  			</tr>
+  			</thead>
+  			<tbody>
+  			<% if(list==null|| list.isEmpty()){%>
+  			<tr>
+  				<td colspan="4" align="center"> 검색 결과가 없습니다.</td>
+  			</tr>
+  			<%
+  			}
+  			else{
+  				for(Travel t : list){
+  			%>
+  			<tr>
+  				<td>
+  					<a href="<%=request.getContextPath()%>">
+  					<%=t.getTravelName() %></a>
+  				</td>
+  				<td><%switch(t.getTravelType()){
+  					case "P" :%>여행지<%;break;
+					case "A" :%>숙소<%;break;
+					case "R" :%>맛집<%;break;
+					case "E" :%>놀거리<%;break;
+					case "S" :%>쇼핑<%;break;}%></td>
+  				<td><%=t.getTravelOfficierName()%></td>
+  				<td><%=t.getTravelOfficierphone()%></td>
+  			</tr>
+  			<%		
+  				}
+  			}
+  			%>
+  			</tbody>
+  		</table>
+  		<div id="pageBar">
+  			<%=pageBar %>
+  		</div>
+	</div>
  </section>
 
-<script>
-function doOpenCheck(chk){
-    var obj = document.getElementsByName("program");
-    for(var i=0; i<obj.length; i++){
-        if(obj[i] != chk){
-            obj[i].checked = false;
-        }
-    }
-}
-$("#userList").click(()=>{
-	$.ajax({
-		url:"<%=request.getContextPath()%>/jquery/gson/admin/selectAll.do",
-		type: "get",
-		dataType: "json",
-		success: function(data){
-			console.log(data);
-			
-			var $table = $("<table><th>아이디</th><th>닉네임</th><th>이름</th><th>성별</th><th>생년월일</th><th>이메일</th><th>여행지</th><th>활동</th><th>등록일</th></table>");
-			$(data).each((i,u)=>{
-				
-				var html = "<tr>";
-				html += "<td>"+u.userId+"</td>";
-				html += "<td>"+u.usernickName+"</td>";
-				html += "<td>"+u.userName+"</td>";
-				html += "<td>"+u.userGender+"</td>";
-				html += "<td>"+u.userBirth+"</td>";
-				html += "<td>"+u.userEmail+"</td>";
-				html += "<td>"+u.userDefaultPlace+"</td>";
-				html += "<td>"+u.userDefaultActivity+"</td>";
-				html += "<td>"+u.userEnrollDate+"</td>";
-				html += "</tr>";
-				console.log(html);
-				$table.append(html);
-			});
-			
-			$("#content").html($table);
-			
-			
-		},
-		error: function(jqxhr, textStatus, errorThrown){
-			console.log("ajax 처리 실패!");
-			console.log(jqxhr, textStatus, errorThrown);
-		}
-	});
-});
-</script>
+ 
 
+<style>
+
+#numPerPageFrm{
+	text-align : center;
+}
+#numPerPage{
+	border-color : orange;
+	size : 20px;
+}
+
+#travelName{
+text-align : center;
+}
+</style>
 </body>
 </html>

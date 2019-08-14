@@ -34,7 +34,6 @@ public class UserUpdateServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String userId = request.getParameter("userId");
-		System.out.println("userId@userUpdateServlet"+userId);
 		
 		User user = new UserService().selectOne(userId);
 		

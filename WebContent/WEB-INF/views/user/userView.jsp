@@ -3,6 +3,8 @@
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <%
 	User user = (User)session.getAttribute("userLoggedIn");
+
+	User rUser = new UserService().selectOne(user.getUserId());
 %>
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -296,7 +298,7 @@ p.userprofile-userId{
 			style="display:none;" value="D" />
     <label for="exampleInputEmail1">아이디</label>
     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ID" name="userId"
-    value = <%=user.getUserId() %> required readonly>
+    value = <%=rUser.getUserId() %> required readonly>
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
   <div class="form-group">
@@ -304,51 +306,51 @@ p.userprofile-userId{
 			style="display:none;" value="D" />
     <label for="exampleInputEmail1">닉네임</label>
     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="NickName" name="usernickName"
-    value="<%=user.getUsernickName()%>">
+    value="<%=rUser.getUsernickName()%>">
   </div>
   
   <div class="form-group">
     <label for="exampleInputEmail1">이름</label>
     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name" name="userName" 
-    value="<%=user.getUserName() %>" required>
+    value="<%=rUser.getUserName() %>" required>
   </div>
    <div class="form-group">
     <label for="exampleInputEmail1">생일</label>
     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="2000-01-01"name="userBirth"
-    value="<%=user.getUserBirth()%>">
+    value="<%=rUser.getUserBirth()%>">
     <small id="emailHelp" class="form-text text-muted">2000-01-01 식으로 적어주세요.</small> 
   </div>
    <div class="form-group">
     <label for="exampleInputEmail1">이메일</label>
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="abc@naver.com"name="userEmail"
-    value="<%=user.getUserEmail()%>">
+    value="<%=rUser.getUserEmail()%>">
   </div>
    <div class="form-group">
     <label for="exampleInputEmail1">휴대폰</label>
     <input type="tel" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="(-없이)01012345678"name="userPhone"
-    		maxlength="11" value="<%=user.getUserPhone() %>" required>
+    		maxlength="11" value="<%=rUser.getUserPhone() %>" required>
   </div><br />
   <div class="form-check form-check-inline">
   <input class="form-check-input" type="checkbox" id="userGenderM" name="userGender" value="M" checked
-    		onclick="check_only(this)" value="<%=user.getUserGender()%>">
+    		onclick="check_only(this)" value="<%=rUser.getUserGender()%>">
   <label class="form-check-label" for="inlineCheckbox1">남</label>
 </div>
 <div class="form-check form-check-inline">
   <input class="form-check-input" type="checkbox" name="userGender" id="userGenderF" value="F"
-    		onclick="check_only(this)" value="<%=user.getUserGender()%>"> 
+    		onclick="check_only(this)" value="<%=rUser.getUserGender()%>"> 
   <label class="form-check-label" for="inlineCheckbox2">여</label>
 </div><br /><br />
 <div class="form-group">
     <label for="exampleInputEmail1">사진등록</label><br />
    <input type="file" name="fileUpdate" id="fileUpdate"/>
-   <span id="fname"><%=user.getFileName()!=null?user.getFileName():"" %></span>
-   <%if(user.getFileName()!=null){ %>
+   <span id="fname"><%=rUser.getFileName()!=null?rUser.getFileName():"" %></span>
+   <%if(rUser.getFileName()!=null){ %>
    <br>
    <input type="checkbox" name="delFile" id="delFile">
    <label for="exampleInputEmail1">파일 삭제</label>
    <%} %>
-   <input type="hidden" name="oldOName" value="<%=user.getOriginalFileName()!=null?user.getOriginalFileName():"" %>" />
-   <input type="hidden" name="oldRName" value="<%=user.getFileName()!=null?user.getFileName():"" %>" />
+   <input type="hidden" name="oldOName" value="<%=rUser.getOriginalFileName()!=null?rUser.getOriginalFileName():"" %>" />
+   <input type="hidden" name="oldRName" value="<%=rUser.getFileName()!=null?rUser.getFileName():"" %>" />
   </div><br />
  	<button type="submit" class="btn btn-primary" >회원정보 수정</button>
  	 <button type="reset" class="btn btn-primary" >초기화</button>

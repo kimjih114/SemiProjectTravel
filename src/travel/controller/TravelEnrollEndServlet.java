@@ -55,7 +55,7 @@ public class TravelEnrollEndServlet extends HttpServlet {
 		
 		String travelName = mrequest.getParameter("travelName");
 		String travelLocation = mrequest.getParameter("travelLocation");
-		String originalFileName = mrequest.getParameter("fileName");
+		String originalFileName = mrequest.getOriginalFileName("fileName");
 		
 		String fileName_ = mrequest.getFilesystemName("fileName");
 		File f = mrequest.getFile("fileName_");

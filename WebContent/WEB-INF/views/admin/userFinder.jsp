@@ -224,6 +224,9 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
    			<td id="business_registration" onclick="location.href='<%=request.getContextPath()%>/travel/travelEnroll.do'">업체 등록</td>
    		</tr>
    		<tr>
+   			<td id="business_List" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 목록</td>
+   		</tr>
+   		<tr>
    			<td>공지사항 등록</td>
    		</tr>
    		<tr>
@@ -283,8 +286,10 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
   			</form>
   			</div>
   			</div>
+  			
+  			
   		</div>
-  		
+  		<br /><br /><br />
   		<table id="tbl-user">
   			<thead>
   			<tr>

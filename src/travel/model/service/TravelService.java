@@ -119,4 +119,33 @@ public class TravelService {
 		close(conn);
 		return basketRoom;
 	}
+
+	public List<Travel> selectTravelList(int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Travel> list
+			= new TravelDAO().selectTravelList(conn,cPage,numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTotalContents() {
+		Connection conn = getConnection();
+		int totalContents = new TravelDAO().selectTotalContents(conn);
+		close(conn);
+		return totalContents;
+	}
+
+	public List<Travel> selectTravelByTravelName(String searchType,String searchKeyword, int cPage, int numPerPage) {
+		Connection conn = getConnection();
+		List<Travel> list = new TravelDAO().selectTravelByTravelName(conn,searchType,searchKeyword,cPage,numPerPage);
+		close(conn);
+		return list;
+	}
+
+	public int selectTravelCountByTravelName(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalTravel = new TravelDAO().selectTravelCountByTravelName(conn,searchKeyword);
+		close(conn);
+		return totalTravel;
+	}
 }

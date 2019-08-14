@@ -76,26 +76,25 @@ public class UserUpdateEndServlet extends HttpServlet {
 		
 		
 		String renamedFileName = mrequest.getFilesystemName("fileUpdate");
-		System.out.println("renamedFileName="+renamedFileName);
+//		System.out.println("renamedFileName="+renamedFileName);
 		String originalFileName = mrequest.getOriginalFileName("fileUpdate");
-		System.out.println("originalFileName="+originalFileName);
+//		System.out.println("originalFileName="+originalFileName);
 		
-		//String oldOName = mrequest.getParameter("oldOName");
+		String oldOName = mrequest.getParameter("oldOName");
 		String oldRName = mrequest.getParameter("oldRName");
-		System.out.println("oldOName"+originalFileName);
-		System.out.println("oldRName"+oldRName);
 		
 		if(!"".equals(originalFileName)) {
 			System.out.println("*****기존 첨부 파일이 있는 경우, 후처리 시작*******");
 			
 			//업로드된 파일에 대한 객체생성
-			File f = mrequest.getFile("upFile");
+			File f = mrequest.getFile("fileUpdate");
 			
 			//1.전송된 파일이 있는 경우
 			if(f!=null && f.length()>0) {
 				//기존파일이 있다면, 삭제
 				File delFile 
-				= new File(saveDirectory+"/"+mrequest.getParameter("oldRName"));
+				= new File(saveDirectory+File.separator+mrequest.getParameter("oldRName"));
+				System.out.println("delFIle+"+delFile);
 				boolean bool = delFile.delete();
 				System.out.println(bool?"파일 삭제 성공":"파일 삭제 실패");
 				
@@ -111,12 +110,16 @@ public class UserUpdateEndServlet extends HttpServlet {
 				
 			}
 			//3.첨부한 파일이 없는 경우
-			else {
+			else if(f==null) {
 				//기존파일명을 다시 대입
-				originalFileName = originalFileName;
+				originalFileName = oldOName;
 				renamedFileName = oldRName;
 			}
 			
+		}
+		else if("".equals(originalFileName)) {
+			originalFileName = oldOName;
+			renamedFileName = oldRName;
 		}
 		
 		
@@ -130,7 +133,7 @@ public class UserUpdateEndServlet extends HttpServlet {
 		u.setOriginalFileName(originalFileName);
 		u.setFileName(renamedFileName);
 		
-		System.out.println("u@userUpdateEnd"+u);
+//		System.out.println("u@userUpdateEnd"+u);
 		
 		int result = new UserService().updateUser(u);
 		

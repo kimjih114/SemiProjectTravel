@@ -59,12 +59,10 @@ public class UserDAO {
 				u.setUserBirth(rset.getDate("user_birth"));
 				u.setUserEmail(rset.getString("user_email"));
 				u.setUserPhone(rset.getString("user_phone"));
+				u.setOriginalFileName(rset.getString("user_original_filename"));
 				u.setFileName(rset.getString("user_filename"));
 				u.setUserType(rset.getString("user_type"));
-				u.setUserDefaultPlace(rset.getString("user_default_place"));
-				u.setUserDefaultActivity(rset.getString("user_default_activity"));
-			
-			
+		
 				
 			}
 			
@@ -130,9 +128,7 @@ public class UserDAO {
 			pstmt.setString(9, u.getUserType());
 			pstmt.setString(10,u.getFileName());
 			pstmt.setString(11, u.getOriginalFileName());
-			pstmt.setString(12, u.getUserDefaultPlace());
-			pstmt.setString(13, u.getUserDefaultActivity());
-			
+
 			result = pstmt.executeUpdate();
 			
 		}catch(SQLException e) {

@@ -449,4 +449,132 @@ public class TravelDAO {
 		}
 		return basketRoom;
 	}
+
+	public List<Travel> selectTravelList(Connection conn, int cPage, int numPerPage) {
+		List<Travel> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectTravelList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int start = (cPage-1)*numPerPage+1;
+			int end = cPage * numPerPage;
+			
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {
+				Travel t = new Travel();
+				t.setContentId(rset.getString("content_id"));
+				t.setTravelName(rset.getString("travel_name"));
+				t.setTravelLocation(rset.getString("travel_location"));
+				t.setThumbnailOriginalFilename(rset.getString("thumbnail_original_filename"));
+				t.setThumbnailRenamedFilename(rset.getString("thumbnail_renamed_filename"));
+				t.setTravelDate(rset.getDate("travel_date"));
+				t.setTravelContent(rset.getString("travel_content"));
+				t.setTravelOfficierName(rset.getString("travel_officier_name"));
+				t.setTravelOfficierphone(rset.getString("travel_officer_phone"));
+				t.setTravelType(rset.getString("travel_type"));
+				list.add(t);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println("TravelList@dao="+list);
+		return list;
+	}
+
+	public int selectTotalContents(Connection conn) {
+		int totalContents = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectTotalContents");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				totalContents = rset.getInt("cnt");
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalContents;
+	}
+
+	public List<Travel> selectTravelByTravelName(Connection conn,String searchType, String searchKeyword, int cPage, int numPerPage) {
+		List<Travel>list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		System.out.println("여기 오니?");
+		String query = prop.getProperty("selectPagedTravelByTravelName");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "%"+searchKeyword+"%");
+			pstmt.setString(2, searchType);
+			pstmt.setInt(3, (cPage-1)*numPerPage+1);
+			pstmt.setInt(4, cPage*numPerPage);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Travel t = new Travel();
+				t.setContentId(rset.getString("content_id"));
+				t.setTravelName(rset.getString("travel_name"));
+				t.setTravelLocation(rset.getString("travel_location"));
+				t.setThumbnailOriginalFilename(rset.getString("thumbnail_original_filename"));
+				t.setThumbnailRenamedFilename(rset.getString("thumbnail_renamed_filename"));
+				t.setTravelDate(rset.getDate("travel_date"));
+				t.setTravelContent(rset.getString("travel_content"));
+				t.setTravelOfficierName(rset.getString("travel_officier_name"));
+				t.setTravelOfficierphone(rset.getString("travel_officer_phone"));
+				t.setTravelType(rset.getString("travel_type"));
+				list.add(t);
+			}
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int selectTravelCountByTravelName(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		int totalTravel =0;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectTravelCountByTravelName");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1,"%"+searchKeyword+"%");
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				totalTravel = rset.getInt("cnt");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalTravel;
+	}
 }

@@ -79,26 +79,6 @@ public class UserEnrollEndServlet extends HttpServlet {
 		
 		
 		
-		String[] dplaces = mrequest.getParameterValues("location");
-		String user_default_place = "";
-		if(dplaces!=null)
-			user_default_place = String.join(",",dplaces);
-		
-		String[] dactivitys = mrequest.getParameterValues("program");
-		String user_default_activity = "";
-		if(dactivitys!=null)
-			user_default_activity = String.join(",",dactivitys);
-		
-		String[] splaces = mrequest.getParameterValues("promotion");
-		String user_seller_place = "";
-		if(splaces!=null)
-			user_seller_place=String.join(",", splaces);
-		
-		String[] sproducttype = mrequest.getParameterValues("traveltype");
-		String user_seller_producttype="";
-		if(sproducttype!=null)
-			user_seller_producttype=String.join(",", sproducttype);
-		
 		User u = new User();
 		u.setUserId(userId);
 		u.setUsernickName(nickName);
@@ -111,8 +91,7 @@ public class UserEnrollEndServlet extends HttpServlet {
 		u.setUserType(userType);
 		u.setOriginalFileName(originalFileName);
 		u.setFileName(fileName_);
-		u.setUserDefaultPlace(user_default_place);
-		u.setUserDefaultActivity(user_default_activity);
+
 		
 		System.out.println("입력한 회원 정보 : "+u);
 		

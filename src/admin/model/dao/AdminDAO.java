@@ -63,8 +63,6 @@ public class AdminDAO {
 				u.setUserPhone(rset.getString("user_phone"));
 				u.setFileName(rset.getString("user_filename"));
 				u.setUserType(rset.getString("user_type"));
-				u.setUserDefaultPlace(rset.getString("user_default_place"));
-				u.setUserDefaultActivity(rset.getString("user_default_activity"));
 				u.setUserEnrollDate(rset.getDate("user_enrolldate"));
 				list.add(u);
 			}
@@ -131,8 +129,6 @@ public class AdminDAO {
 				u.setUserPhone(rset.getString("user_phone"));
 				u.setFileName(rset.getString("user_filename"));
 				u.setUserType(rset.getString("user_type"));
-				u.setUserDefaultPlace(rset.getString("user_default_place"));
-				u.setUserDefaultActivity(rset.getString("user_default_activity"));
 				u.setUserEnrollDate(rset.getDate("user_enrolldate"));
 				list.add(u);		
 			}
@@ -171,8 +167,6 @@ public class AdminDAO {
 				u.setUserPhone(rset.getString("user_phone"));
 				u.setFileName(rset.getString("user_filename"));
 				u.setUserType(rset.getString("user_type"));
-				u.setUserDefaultPlace(rset.getString("user_default_place"));
-				u.setUserDefaultActivity(rset.getString("user_default_activity"));
 				u.setUserEnrollDate(rset.getDate("user_enrolldate"));
 				list.add(u);		
 			}
@@ -211,8 +205,6 @@ public class AdminDAO {
 				u.setUserPhone(rset.getString("user_phone"));
 				u.setFileName(rset.getString("user_filename"));
 				u.setUserType(rset.getString("user_type"));
-				u.setUserDefaultPlace(rset.getString("user_default_place"));
-				u.setUserDefaultActivity(rset.getString("user_default_activity"));
 				u.setUserEnrollDate(rset.getDate("user_enrolldate"));
 				list.add(u);		
 			}

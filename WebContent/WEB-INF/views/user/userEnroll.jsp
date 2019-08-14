@@ -234,33 +234,6 @@ label{
     <label for="exampleInputEmail1">사진등록</label><br />
     <input type="file" name="fileName" id="fileName" style="text-align:center;"/>
   </div><br />
- <div class="form-group">
-    <label for="exampleInputEmail1" id="userDefaultPlace">관심여행지</label><br />
-    <input type="checkbox" name="location" id="location1" value="여행지1" />
-					<label for="location1">여행지1</label>
-					<input type="checkbox" name="location" id="location2" value="여행지2" />
-					<label for="location2">여행지2</label>
-					<input type="checkbox" name="location" id="location3" value="여행지3" />
-					<label for="location3">여행지3</label>
-					<input type="checkbox" name="location" id="location4" value="여행지4" />
-					<label for="location4">여행지4</label>
-					<input type="checkbox" name="location" id="location5" value="여행지5" />
-					<label for="location5">여행지5</label>
-	 </div> <br />
-  <div class="form-group">
-    <label for="exampleInputEmail1" id="userDefaultActivity">관심 프로그램</label><br />
-    <input type="checkbox" name="program" id="program1" value="프로그램1" />
-					<label for="program1">프로그램1</label>
-					<input type="checkbox" name="program" id="program2" value="프로그램2" />
-					<label for="program2">프로그램2</label>
-					<input type="checkbox" name="program" id="program3" value="프로그램3" />
-					<label for="program3">프로그램3</label>
-					<input type="checkbox" name="program" id="program4" value="프로그램4" />
-					<label for="program4">프로그램4</label>
-					<input type="checkbox" name="program" id="program5" value="프로그램5" />
-					<label for="program5">프로그램5</label>
-  </div>
-  
   
   <br /><br />
  <div id="putt">
