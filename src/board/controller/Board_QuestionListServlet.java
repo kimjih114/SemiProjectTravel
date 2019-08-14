@@ -47,13 +47,13 @@ public class Board_QuestionListServlet extends HttpServlet {
 		 
 		  
 		List<Board_Question> qboardList = new Board_QuestionService().selectBoardQuestionList(cPage,numPerPage); 
-		System.out.println("boardQuestion@list="+qboardList);
+		
 		
 		
 		  int totalBoardCount = new Board_QuestionService().selectBoardQuestionCount();
 		  
 		  int totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
-		  System.out.println("totalBoardQuestion="+totalBoardCount+", totalqPage="+totalPage);
+	
 		  
 		  String pageBar = ""; 
 		  int pageBarSize = 5;
@@ -82,17 +82,13 @@ public class Board_QuestionListServlet extends HttpServlet {
 		  if(pageNo > totalPage){ pageBar += "<span>[다음]</span>"; }
 		  else { pageBar += "<a href='"+request.getContextPath()+"/boardquestion/boardList?cPage="+pageNo+ "'>[다음]</a>"; 
 		  }
-		  request.setAttribute("qboardList", qboardList);
-		  request.setAttribute("pageBar", pageBar);
-		 
+		
 		  
 		  request.setAttribute("qboardList", qboardList);
 		  request.setAttribute("pageBar", pageBar);
 		  request.getRequestDispatcher("/ajax/board_questionList.jsp").forward(request, response);
 		  
-				
-				
-				
+			
 	}
 
 	/**

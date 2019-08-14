@@ -155,8 +155,7 @@ text-align:center;
 	float:right;
 	margin: 0 0 8px;
 }
-table#tbl-board{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
-table#tbl-board th, table#tbl-board td {border:1px solid; padding: 5px 0; text-align:center;} 
+
 form#board_containerfrm{
 margin-left: 8px;
 margin-top:100px;
@@ -205,12 +204,16 @@ li.post-font{
 text-align:left;
 }
 
+table#tbl-board-view{
+width:700px;
+}
+
 </style>
 
 <script>
- /* $(()=>{
+  $(()=>{
 	location.href="#"
-}); */
+}); 
 
 $(function() {
 	  var select = $("select#color");
@@ -233,16 +236,14 @@ function fileDownload(oName, rName){
 				  + "&rName=" + rName;
 }
 
-$(()=>{
+ $(()=>{ 
 
-	$("name=qboardCommentContent").val().trim().length;
+	 $("name=qboardCommentContent").val().trim().length;
 	
 	if(len==0) {
 			e.prevnetDefalut();
 		}
-	})
-
-});
+	}); 
 
 $(".btn-reply").on("click", (e)=>{
 	var tr = $("<tr></tr>");
@@ -281,7 +282,16 @@ $(".btn-reply").on("click", (e)=>{
 
 });
 
-
+	
+$(()=>{
+//삭제버튼 클릭시
+$(".btn-delete").click(function(){
+if(!confirm("정말 삭제하시겠습니까?")) return;
+//삭제처리후 돌아올 현재게시판번호도 함께 전송함.
+	location.href="<%=request.getContextPath()%>/board/qboardCommentDelete?qboardNo=<%=bq.getQboardNo() %>&del="+$(this).val();
+});
+	
+});
 
 
 
@@ -331,7 +341,7 @@ $(".btn-reply").on("click", (e)=>{
 
 		<table id="tbl-board-view">
 			<tr>
-				<th>제목</th>
+				<th style="width: 297px;">제목</th>
 				<td><input class="form-control" type="text" name="qboardTitle" value="<%=bq.getQboardTitle() %>" required/></td>
 			</tr>		
 			<tr>
@@ -357,8 +367,15 @@ $(".btn-reply").on("click", (e)=>{
 			</tr>
 					
 			<tr>
-				<th>내용</th>
-				<td><%= bq.getQboardContent() %></td>
+			<td>
+			<div class="input-group" style="left:163px;width:388px;">
+  				<div class="input-group-prepend">
+   				 <span class="input-group-text">내용</span>
+  			</div>
+  			<textarea class="form-control" aria-label="With textarea" cols="40"><%= bq.getQboardContent() %></textarea>
+			</div>
+			</td>
+				
 			</tr>	
 			
 			<% if(userLoggedIn!=null && 
@@ -441,11 +458,7 @@ $(".btn-reply").on("click", (e)=>{
 						<td>
 							<button class="btn-reply" 
 									value="<%=bc.getQboardComment_no()%>">답글</button>
-							<%--@실습문제:
-								 관리자/댓글작성자에 한해 이버튼을 노출시키고,
-								 댓글 삭제 기능추가. 
-								 댓글삭제후에는 현재페이지로 다시 이동함.
-							  --%>
+							
 							<%if(userLoggedIn!=null 
 								&& ("admin".equals(userLoggedIn.getUserId()) 
 										|| bc.getQboardCommentWriter().equals(userLoggedIn.getUserId()) )){%>
@@ -469,17 +482,10 @@ $(".btn-reply").on("click", (e)=>{
 							<button class="btn-delete" value="<%=bc.getQboardComment_no()%>">삭제</button>
 							<%} %>
 						</td>
+						<td></td>
 					</tr>
 		
-		<script>
-		//삭제버튼 클릭시
-		$(".btn-delete").click(function(){
-		if(!confirm("정말 삭제하시겠습니까?")) return;
-		//삭제처리후 돌아올 현재게시판번호도 함께 전송함.
-		location.href="<%=request.getContextPath()%>/board/qboardCommentDelete?qboardNo=<%=bq.getQboardNo() %>&del="+$(this).val();
-		});
 		
-		</script>
 		
 			<%
 					}//end of if : level1, level2

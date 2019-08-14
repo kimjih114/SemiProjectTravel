@@ -238,7 +238,7 @@ public class Board_QuestionDAO {
 		}finally {
 			close(pstmt); 
 		}
-		System.out.println("board_questionSerivce   increaseReadCount---------------->>>"+result);
+		
 		return result; 
 		
 	}
@@ -388,10 +388,6 @@ public class Board_QuestionDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		
-		
-		
-		
 		return result;
 	}
 	

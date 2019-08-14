@@ -39,13 +39,17 @@ public class Board_CommentDeleteServlet extends HttpServlet {
 	
 		String view = "/WEB-INF/views/common/msg.jsp"; 
 		String msg = ""; 
-		String loc = "board/qboardView?qboardNo="+qboardNo;
+		String loc = "/board/qboardView?qboardNo="+qboardNo;
 		
-		if(result>0)
+		if(result>0) 
+			
 			msg = "댓글 삭제 성공!";
+		
 			
 		else 
 			msg = "댓글 삭제 실패!";	
+			
+		
 		
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
