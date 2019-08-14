@@ -41,9 +41,9 @@ response.setContentType("application/json; charset=utf-8");
 		
 		//2.business logic
 		List<String> followOneList = new SNSService().selectOneIdFollow(mypage);
-		System.out.println("followOneList@servlet="+followOneList);
+		
 		List<String> followerOneList = new SNSService().selectOneIdFollower(mypage, followOneList);
-		System.out.println("followerOneList@servlet="+followerOneList);
+		
 		List<ProfileSNS> followerProfileList = new SNSService().selectOneProfileFollow(followerOneList);
 	
 		//view단 작성

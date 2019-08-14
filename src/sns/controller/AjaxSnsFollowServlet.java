@@ -36,9 +36,6 @@ public class AjaxSnsFollowServlet extends HttpServlet {
 		//1.parameter handling
 		String userFollowing = request.getParameter("userFollowing");
 		String userFollowed= request.getParameter("userFollowed");
-		
-		System.out.println("following@servlet="+userFollowing);
-		System.out.println("followed@servlet="+userFollowed);
 								
 		//2.business logic
 		int result = new SNSService().follow(userFollowing, userFollowed);

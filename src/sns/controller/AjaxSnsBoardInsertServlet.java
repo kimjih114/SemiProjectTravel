@@ -106,9 +106,9 @@ public class AjaxSnsBoardInsertServlet extends HttpServlet {
 		contentId2 = !"undefined".equals(mReq.getParameter("contentId2")) ? mReq.getParameter("contentId2") : null;
 		contentId3 = !"undefined".equals(mReq.getParameter("contentId3")) ? mReq.getParameter("contentId3") : null;
 
-		System.out.println("contentId1=" + contentId1);
-		System.out.println("contentId2=" + contentId2);
-		System.out.println("contentId3=" + contentId3);
+//		System.out.println("contentId1=" + contentId1);
+//		System.out.println("contentId2=" + contentId2);
+//		System.out.println("contentId3=" + contentId3);
 
 		contentType1 = !"undefined".equals(mReq.getParameter("contentType1")) ? mReq.getParameter("contentType1")
 				: null;
@@ -117,9 +117,9 @@ public class AjaxSnsBoardInsertServlet extends HttpServlet {
 		contentType3 = !"undefined".equals(mReq.getParameter("contentType3")) ? mReq.getParameter("contentType3")
 				: null;
 
-		System.out.println("contentType1=" + contentType1);
-		System.out.println("contentType2=" + contentType2);
-		System.out.println("contentType3=" + contentType3);
+//		System.out.println("contentType1=" + contentType1);
+//		System.out.println("contentType2=" + contentType2);
+//		System.out.println("contentType3=" + contentType3);
 		
 		contentThumbnail1 = !"undefined".equals(mReq.getParameter("contentThumbnail1")) ? mReq.getParameter("contentThumbnail1")
 				: null;
@@ -128,9 +128,9 @@ public class AjaxSnsBoardInsertServlet extends HttpServlet {
 		contentThumbnail3 = !"undefined".equals(mReq.getParameter("contentThumbnail3")) ? mReq.getParameter("contentThumbnail3")
 				: null;
 
-		System.out.println("contentThumbnail1=" + contentType1);
-		System.out.println("contentThumbnail2=" + contentType2);
-		System.out.println("contentThumbnail3=" + contentType3);
+//		System.out.println("contentThumbnail1=" + contentType1);
+//		System.out.println("contentThumbnail2=" + contentType2);
+//		System.out.println("contentThumbnail3=" + contentType3);
 		
 		contentTitle1 = !"undefined".equals(mReq.getParameter("contentTitle1")) ? mReq.getParameter("contentTitle1")
 				: null;
@@ -139,9 +139,9 @@ public class AjaxSnsBoardInsertServlet extends HttpServlet {
 		contentTitle3 = !"undefined".equals(mReq.getParameter("contentTitle3")) ? mReq.getParameter("contentTitle3")
 				: null;
 		
-		System.out.println("contentTitle1=" + contentType1);
-		System.out.println("contentTitle2=" + contentType2);
-		System.out.println("contentTitle3=" + contentType3);
+//		System.out.println("contentTitle1=" + contentType1);
+//		System.out.println("contentTitle2=" + contentType2);
+//		System.out.println("contentTitle3=" + contentType3);
 		
 		contentAddress1 = !"undefined".equals(mReq.getParameter("contentAddress1")) ? mReq.getParameter("contentAddress1")
 				: null;
@@ -150,17 +150,17 @@ public class AjaxSnsBoardInsertServlet extends HttpServlet {
 		contentAddress3 = !"undefined".equals(mReq.getParameter("contentAddress3")) ? mReq.getParameter("contentAddress3")
 				: null;
 		
-		System.out.println("contentAddress1=" + contentType1);
-		System.out.println("contentAddress2=" + contentType2);
-		System.out.println("contentAddress3=" + contentType3);
+//		System.out.println("contentAddress1=" + contentType1);
+//		System.out.println("contentAddress2=" + contentType2);
+//		System.out.println("contentAddress3=" + contentType3);
 		
 		grade1 = !"undefined".equals(mReq.getParameter("grade1")) ? Integer.parseInt(mReq.getParameter("grade1")) : 0;
 		grade2 = !"undefined".equals(mReq.getParameter("grade2")) ? Integer.parseInt(mReq.getParameter("grade2")) : 0;
 		grade3 = !"undefined".equals(mReq.getParameter("grade3")) ? Integer.parseInt(mReq.getParameter("grade3")) : 0;
 
-		System.out.println("grade1=" + grade1);
-		System.out.println("grade2=" + grade2);
-		System.out.println("grade3=" + grade3);
+//		System.out.println("grade1=" + grade1);
+//		System.out.println("grade2=" + grade2);
+//		System.out.println("grade3=" + grade3);
 
 		String originalFileName1 = mReq.getOriginalFileName("file1") != null ? mReq.getOriginalFileName("file1") : null;
 		String renamedFileName1 = mReq.getFilesystemName("file1") != null ? mReq.getFilesystemName("file1") : null;
@@ -171,7 +171,7 @@ public class AjaxSnsBoardInsertServlet extends HttpServlet {
 		String originalFileName4 = mReq.getOriginalFileName("file4") != null ? mReq.getOriginalFileName("file4") : null;
 		String renamedFileName4 = mReq.getFilesystemName("file4") != null ? mReq.getFilesystemName("file4") : null;
 		String originalFileName5 = mReq.getOriginalFileName("file5") != null ? mReq.getOriginalFileName("file5") : null;
-		String renamedFileName5 = mReq.getFilesystemName("file6") != null ? mReq.getFilesystemName("file5") : null;
+		String renamedFileName5 = mReq.getFilesystemName("file5") != null ? mReq.getFilesystemName("file5") : null;
 
 		BoardSNS boardSNS = new BoardSNS();
 
@@ -217,8 +217,6 @@ public class AjaxSnsBoardInsertServlet extends HttpServlet {
 			if(contentId3!=null) {
 				gradeSNSList.add(new GradeSNS(boardNo, boardWriter, contentId3, contentType3, contentThumbnail3, contentTitle3, contentAddress3, grade3, 3, null));
 			}
-			
-			System.out.println(gradeSNSList);
 			
 			resultGrade = new SNSService().insertGrade(gradeSNSList);
 

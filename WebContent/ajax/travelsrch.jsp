@@ -145,7 +145,7 @@
 								html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
 									html+="<div class='caption'>"
 										html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
-										html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find('contenttypeid').text()+"'>"+$(m).find("title").text()+"</a>";
+										html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find('contenttypeid').text()+"' target='_blank'>"+$(m).find("title").text()+"</a>";
 											html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
 										html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
 									html+="</div>";
@@ -244,7 +244,7 @@
    												html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+$(m).find("firstimage").text()+"'></a>";
 	   												html+="<div class='caption'>"
 	   													html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
-	   														html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find('contenttypeid').text()+"'>"+$(m).find("title").text()+"</a>";
+	   														html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find('contenttypeid').text()+"' target='_blank'>"+$(m).find("title").text()+"</a>";
 	   														html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
 	   														html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
 														html+="</div>";

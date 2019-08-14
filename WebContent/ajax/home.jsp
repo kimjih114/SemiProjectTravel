@@ -6,7 +6,6 @@
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 	String mypage = request.getParameter("mypage");
 	User mypageUser = new UserService().selectOne(mypage);
- 	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
  	int totalPage = Integer.parseInt(request.getParameter("totalPage"));
 %>
 
@@ -21,7 +20,7 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 232px;
+    width: 230px;
     /*height: 100vh;*/
 	border: 1px solid;
  	position: absolute;
@@ -66,7 +65,7 @@
 #tab-container .tabcontent {
 	display: none;
 	background-color:black;
-	padding: 1px;
+	padding: 6px 5px;
 	color:#fff;
 }
 #tab-container ul.tab li.current{
@@ -249,68 +248,11 @@
 						</tr>
 						<tr>
 							<td>
-								<table>
+								<table style="border: 1px solid;">
 									<tr>
-										<td id="tes11">
-											<div class='card h-100'>
-												<a href='#' class='goInfo'><img class='card-img-top' src='<%=request.getContextPath() %>/img/이동욱.jpg'></a>
-												<div class='caption'>
-	   												<div class='caption-text' ><a href='#'>이름</a>
-	   													<div class='contentid' style='display:none'>아이디</div></h4>
-	   													<p class='card-text'>주소</p>
-													</div>
-												</div>
-   											</div>
-   											<div class='starRev'>
-													<span class='starR on' onclick='star(this);'>별1</span>
-													<span class='starR' onclick='star(this);'>별2</span>
-													<span class='starR' onclick='star(this);'>별3</span>
-													<span class='starR' onclick='star(this);'>별4</span>
-													<span class='starR' onclick='star(this);'>별5</span>
-											</div>
-										</td>
-										
-									
-										
-										
-										
-										
-										<td id="tes11">
-											<div class='card h-100'>
-												<a href='#' class='goInfo'><img class='card-img-top' src='<%=request.getContextPath() %>/img/이동욱.jpg'></a>
-												<div class='caption'>
-	   												<div class='caption-text' ><a href='#'>이름</a>
-	   													<div class='contentid' style='display:none'>아이디</div></h4>
-	   													<p class='card-text'>주소</p>
-													</div>
-												</div>
-   											</div>
-   											<div class='starRev'>
-													<span class='starR on' onclick='star(this);'>별1</span>
-													<span class='starR' onclick='star(this);'>별2</span>
-													<span class='starR' onclick='star(this);'>별3</span>
-													<span class='starR' onclick='star(this);'>별4</span>
-													<span class='starR' onclick='star(this);'>별5</span>
-											</div>
-										</td>
-										<td id="tes11">
-											<div class='card h-100'>
-												<a href='#' class='goInfo'><img class='card-img-top' src='<%=request.getContextPath() %>/img/이동욱.jpg'></a>
-												<div class='caption'>
-	   												<div class='caption-text' ><a href='#'>이름</a>
-	   													<div class='contentid' style='display:none'>아이디</div></h4>
-	   													<p class='card-text'>주소</p>
-													</div>
-												</div>
-   											</div>
-   											<div class='starRev'>
-													<span class='starR on' onclick='star(this);'>별1</span>
-													<span class='starR' onclick='star(this);'>별2</span>
-													<span class='starR' onclick='star(this);'>별3</span>
-													<span class='starR' onclick='star(this);'>별4</span>
-													<span class='starR' onclick='star(this);'>별5</span>
-											</div>
-										</td>
+										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 1</td>
+										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 2</td>
+										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 3</td>
 									</tr>
 								</table>
 							</td>
@@ -319,11 +261,7 @@
 							<td class="timeline-boardcontent-sns">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A tempore labore atque tenetur dolore recusandae nemo sunt commodi aliquid aut voluptatum hic nostrum velit aperiam consectetur temporibus eius harum cumque?</td>
 						</tr>
 						<tr>
-							<td class="timeline-boardcontent-sns"><span style="float:right;">
-							
-							
-							
-							(12)&nbsp;&nbsp;스크랩(2)</span></td>
+							<td class="timeline-boardcontent-sns"><span style="float:right;">좋아요(12)&nbsp;&nbsp;스크랩(2)</span></td>
 						</tr>
 						<tr>
 							<td class="timeline-boardcontent-sns">댓글(3)</td>
@@ -339,8 +277,6 @@
 						</tr>
 					</table>
 		    	</div>
-		    	
-		    	
 			</div>
 		
 			<div id="tab2" class="tabcontent">
@@ -351,7 +287,7 @@
 				<h3>스크랩</h3>
 					<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
 				</div>
-			</div>
+		</div>
 		
 		<table id="rightNav">
 			<tr>
@@ -520,9 +456,7 @@ $("#btnSubmit").click(function(event){
 	console.log(contentids);
 	console.log(grades);
 	console.log(contenttypes);
-	console.log(contentthumbnails);
-	console.log(contenttitles);
-	console.log(contentaddresses);
+	
 	
 	
 	 formData.append("boardWriter",'<%=userLoggedIn.getUserId() %>');
@@ -543,7 +477,6 @@ $("#btnSubmit").click(function(event){
 	 formData.append("contentAddress1", contentaddresses[0]);
 	 formData.append("contentAddress2", contentaddresses[1]);
 	 formData.append("contentAddress3", contentaddresses[2]);
-	 
 	 formData.append("grade1",grades[0]);
 	 formData.append("grade2",grades[1]);
 	 formData.append("grade3",grades[2]);
@@ -575,10 +508,6 @@ $("#btnSubmit").click(function(event){
 			grades=[];
 			filesTempArr=[];
 			contenttypes=[];
-			contentthumbnails=[];
-			contenttitles=[];
-			contentaddresses=[];
-			
 			$("#postFrm").css('display', 'none');
 			$("#tab-container").css("opacity", "1");
 			$("#fileupload").val("");
@@ -588,7 +517,16 @@ $("#btnSubmit").click(function(event){
 	     }
 	 });
 
-
+	$(function() {
+		$('ul.tab li').click(function() {
+			var activeTab = $(this).attr('data-tab');
+			$('ul.tab li').removeClass('current');
+			$('.tabcontent').removeClass('current');
+			$(this).addClass('current');
+			$('#' + activeTab).addClass('current');
+		})
+	});
+		
 	
 	
 	
@@ -615,5 +553,14 @@ $("#btnSubmit").click(function(event){
 	})
 
 
-</script>
+	
+	
+ 	
+ 	
 
+
+
+
+
+
+</script>

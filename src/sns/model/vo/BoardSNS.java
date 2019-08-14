@@ -15,25 +15,20 @@ public class BoardSNS implements Serializable {
 	private String boardContent;
 	private String boardType;
 	private Timestamp boardDate;
-	private ProfileSNS profileSNS;
-	private List<ImageSNS> imageSNSList; 
-	private List<GradeSNS> gradeSNSList;
 	public BoardSNS() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public BoardSNS(int boardNo, String boardWriter, String boardContent, String boardType, Timestamp boardDate,
-			ProfileSNS profileSNS, List<ImageSNS> imageSNSList, List<GradeSNS> gradeSNSList) {
+	public BoardSNS(int boardNo, String boardWriter, String boardContent, String boardType, Timestamp boardDate) {
 		super();
 		this.boardNo = boardNo;
 		this.boardWriter = boardWriter;
 		this.boardContent = boardContent;
 		this.boardType = boardType;
 		this.boardDate = boardDate;
-		this.profileSNS = profileSNS;
-		this.imageSNSList = imageSNSList;
-		this.gradeSNSList = gradeSNSList;
 	}
+	
+	
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -64,31 +59,11 @@ public class BoardSNS implements Serializable {
 	public void setBoardDate(Timestamp boardDate) {
 		this.boardDate = boardDate;
 	}
-	public ProfileSNS getProfileSNS() {
-		return profileSNS;
-	}
-	public void setProfileSNS(ProfileSNS profileSNS) {
-		this.profileSNS = profileSNS;
-	}
-	public List<ImageSNS> getImageSNSList() {
-		return imageSNSList;
-	}
-	public void setImageSNSList(List<ImageSNS> imageSNSList) {
-		this.imageSNSList = imageSNSList;
-	}
-	public List<GradeSNS> getGradeSNSList() {
-		return gradeSNSList;
-	}
-	public void setGradeSNSList(List<GradeSNS> gradeSNSList) {
-		this.gradeSNSList = gradeSNSList;
-	}
 	@Override
 	public String toString() {
 		return "BoardSNS [boardNo=" + boardNo + ", boardWriter=" + boardWriter + ", boardContent=" + boardContent
-				+ ", boardType=" + boardType + ", boardDate=" + boardDate + ", profileSNS=" + profileSNS
-				+ ", imageSNSList=" + imageSNSList + ", gradeSNSList=" + gradeSNSList + "]";
+				+ ", boardType=" + boardType + ", boardDate=" + boardDate + "]";
 	}
-	
 	
 	
 

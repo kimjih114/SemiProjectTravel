@@ -14,9 +14,12 @@ import com.google.gson.Gson;
 
 import sns.model.service.SNSService;
 import sns.model.vo.BoardSNS;
+import sns.model.vo.CommentSNS;
 import sns.model.vo.GradeSNS;
 import sns.model.vo.ImageSNS;
+import sns.model.vo.LikeSNS;
 import sns.model.vo.ProfileSNS;
+import sns.model.vo.TotalSNS;
 
 /**
  * Servlet implementation class AjaxMyBoardSNSListServlet
@@ -45,32 +48,48 @@ public class AjaxMyBoardSNSListServlet extends HttpServlet {
 		//2.업무로직
 		List<BoardSNS> boardSNSList = new SNSService().selectBoardSNSMore(mypage, cPage, numPerPage);
 		
-		List<BoardSNS> boardSNSResultList = new ArrayList<>();
+		ProfileSNS profileSNS = null;
+		List<ImageSNS> imageSNSList = null;
+		List<GradeSNS> gradeSNSList = null;
+		List<CommentSNS> commentSNSList = null;
+		List<LikeSNS> likeSNSList = null;
+		List<String> followerOneList = null;
+		List<String> blockingSNSList = null;
+		List<String> blockedSNSList = null;
+		
+		List<TotalSNS> totalSNSList = new ArrayList<>();
+		
 		if(boardSNSList!=null) {
 			for(BoardSNS bs : boardSNSList) {
-				ProfileSNS profileSNS = new SNSService().selectOneProfile(bs.getBoardWriter());
 				
-				bs.setProfileSNS(profileSNS);
+				profileSNS = new SNSService().selectOneProfile(bs.getBoardWriter());
 				
-				List<ImageSNS> imageSNSList = new SNSService().selectImageSNS(bs.getBoardNo());
+				imageSNSList = new SNSService().selectImageSNS(bs.getBoardNo());
 				
-				bs.setImageSNSList(imageSNSList);
-	
+				gradeSNSList = new SNSService().selectGradeSNS(bs.getBoardNo());
 				
-				List<GradeSNS> gradeSNSList = new SNSService().selectGradeSNS(bs.getBoardNo());
+				commentSNSList = new SNSService().selectCommentSNS(bs.getBoardNo());
 				
-				bs.setGradeSNSList(gradeSNSList);
+				likeSNSList = new SNSService().selectLikeSNS(bs.getBoardNo());
 				
-				boardSNSResultList.add(bs);
+				followerOneList = new SNSService().selectOneIdFollower(bs.getBoardWriter(), new SNSService().selectOneIdFollow(bs.getBoardWriter()));
 				
+				blockingSNSList = new SNSService().selectOneIdBlock(bs.getBoardWriter());
+
+				blockedSNSList = new SNSService().selectOneIdBlocked(bs.getBoardWriter());
+				
+				TotalSNS totalSNS = new TotalSNS(bs, profileSNS, imageSNSList, gradeSNSList, commentSNSList, likeSNSList, followerOneList, blockingSNSList, blockedSNSList);
+				
+				totalSNSList.add(totalSNS);
 			}
 		}
+		
 		
 	
 		
 		//3.view단처리
 		response.setContentType("application/json; charset=utf-8");
-		new Gson().toJson(boardSNSResultList, response.getWriter());
+		new Gson().toJson(totalSNSList, response.getWriter());
 			
 	}
 

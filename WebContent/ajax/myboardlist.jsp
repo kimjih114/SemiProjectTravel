@@ -86,16 +86,16 @@ function pageMore(cPage){
 			
 			var html = "";
 			
-			$.each(data,(i,bs)=>{
+			$.each(data,(i,tl)=>{
 				html+="<table class='tbl-boardsns'>"
 				html+="<tr>";
 				html+="<td class='timeline-boardcontent-sns'>";
-				html+="<img src='<%=request.getContextPath()%>/upload/profile/"+bs.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
-				html+="<span style='font-weight: 600'>"+bs.profileSNS.userNickname+"</span>";
-				html+="<span style='font-size: 0.8em; color: gray;''>"+bs.boardDate+"</span>";
+				html+="<img src='<%=request.getContextPath()%>/upload/profile/"+tl.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
+				html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>"+tl.profileSNS.userNickname+"</a></span>";
+				html+="<span style='font-size: 0.8em; color: gray;''>"+tl.boardSNS.boardDate+"</span>";
 				html+="<span style='float: right;'>";
-				if(bs.boardWriter!='<%=userLoggedIn.getUserId()%>'){
-					html+="<button type='button' class='btn btn-danger' class='followerBtn' value='"+bs.boardWriter+"' onclick='unfollower(this);'>Unfollow</button>";
+				if(tl.boardSNS.boardWriter!='<%=userLoggedIn.getUserId()%>'){
+					html+="<button type='button' class='btn btn-danger' class='followerBtn' value='"+tl.boardSNS.boardWriter+"' onclick='unfollower(this);'>Unfollow</button>";
 					html+="&nbsp;"
 					html+="<button type='button' class='btn btn-dark'>Block</button>";
 				} 
@@ -103,26 +103,26 @@ function pageMore(cPage){
 				html+="</span>";
 				html+="</td>";
 				html+="</tr>";
-				if(bs.imageSNSList!=null){
+				if(tl.imageSNSList!=null){
 					html+="<tr>";
 					html+="<td>"
-					html+="<div id='carouselExampleControls"+bs.boardNo+"' class='carousel slide' data-ride='carousel'>";
+					html+="<div id='carouselExampleControls"+tl.boardSNS.boardNo+"' class='carousel slide' data-ride='carousel'>";
 					html+="<div class='carousel-inner'>";
-					for(j=0; j<bs.imageSNSList.length; j++){
+					for(j=0; j<tl.imageSNSList.length; j++){
 						if(j==0){
 							html+="<div class='carousel-item active'>";
 						} else if(j>0){
 							html+="<div class='carousel-item'>";
 						}
-						html+="<img src='<%=request.getContextPath()%>/upload/board/"+bs.imageSNSList[j].renamedFileName+"' class='d-block w-100' alt='...'>";
+						html+="<img src='<%=request.getContextPath()%>/upload/board/"+tl.imageSNSList[j].renamedFileName+"' class='d-block w-100' alt='...'>";
 						html+="</div>";		
 					}
 					html+="</div>";
-					html+="<a class='carousel-control-prev' href='#carouselExampleControls"+bs.boardNo+"' role='button' data-slide='prev'>";
+					html+="<a class='carousel-control-prev' href='#carouselExampleControls"+tl.boardSNS.boardNo+"' role='button' data-slide='prev'>";
 					html+="<span class=;carousel-control-prev-icon' aria-hidden='true'></span>"
 					html+="<span class='sr-only'>Previous</span>";
 					html+="</a>";
-					html+="<a class='carousel-control-next' href='#carouselExampleControls"+bs.boardNo+"' role='button' data-slide='next'>";
+					html+="<a class='carousel-control-next' href='#carouselExampleControls"+tl.boardSNS.boardNo+"' role='button' data-slide='next'>";
 					html+="<span class='carousel-control-next-icon' aria-hidden='true'></span>";
 					html+="<span class='sr-only'>Next</span>";
 					html+="</a>";
@@ -130,29 +130,29 @@ function pageMore(cPage){
 					html+="</td>";
 					html+="</tr>";
 				}
-				if(bs.gradeSNSList!=null){
+				if(tl.gradeSNSList!=null){
 					html+="<tr>";
 					html+="<td>";
 					html+="<table>";
 					html+="<tr>"
-					for(k=0; k<bs.gradeSNSList.length; k++){
+					for(k=0; k<tl.gradeSNSList.length; k++){
 						html+="<td class='tbl-td'>";
 						html+="<div class='card h-100'>";
 							html+="<a href='#' class='goInfo'>";
-							html+="<img class='card-img-top' src='"+bs.gradeSNSList[k].contentThumbnail+"'></a>";
+							html+="<img class='card-img-top' src='"+tl.gradeSNSList[k].contentThumbnail+"'></a>";
 							html+="<div class='caption'>";
-							html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+bs.gradeSNSList[k].contentId+"&contentTypeId="+bs.gradeSNSList[k].contentType+"'>"+bs.gradeSNSList[k].contentTitle+"</a>";
-							html+="<div class='contentid' style='display:none'>"+bs.gradeSNSList[k].contentId+"</div></h4>"
-							html+="<p class='card-text'>"+bs.gradeSNSList[k].contentAddress+"</p>"
+							html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+tl.gradeSNSList[k].contentId+"&contentTypeId="+tl.gradeSNSList[k].contentType+"' target='_blank'>"+tl.gradeSNSList[k].contentTitle+"</a>";
+							html+="<div class='contentid' style='display:none'>"+tl.gradeSNSList[k].contentId+"</div></h4>"
+							html+="<p class='card-text'>"+tl.gradeSNSList[k].contentAddress+"</p>"
 							html+="</div>"
 							html+="</div>"
 							html+="</div>"
 							
 							html+="<div class='starRev'>"
-								for(var l=0; l<bs.gradeSNSList[k].grade; l++){
+								for(var l=0; l<tl.gradeSNSList[k].grade; l++){
 									html+="<span class='starR on'>별</span>";
 								}
-								for(var m=0; m<5-bs.gradeSNSList[k].grade; m++){
+								for(var m=0; m<5-tl.gradeSNSList[k].grade; m++){
 									html+="<span class='starR'>별</span>";
 								}
 							html+="</div>";
@@ -164,9 +164,9 @@ function pageMore(cPage){
 					html+="</tr>";
 				}		
 				
-				if(bs.boardContent!=null){
+				if(tl.boardSNS.boardContent!=null){
 					html+="<tr>";
-					html+="<td style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage='"+bs.boardWriter+"'>@"+bs.profileSNS.userNickname+"</a>&nbsp;"+bs.boardContent+"</td>";
+					html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>@"+tl.boardSNS.boardWriter+"</a>&nbsp;"+tl.boardSNS.boardContent+"</td>";
 					html+="</tr>";
 				}
 				
@@ -222,7 +222,12 @@ function pageMore(cPage){
 
 </script>	
 	<style>#tdMore{text-align:center; padding: 10px; cursor:pointer; }
-	
+
+.w-100{
+ 	width:532px;
+ 	height:532px;
+}
+
 .timeline-boardcontent-sns{
 	border: 1px solid black;
 }
@@ -451,6 +456,6 @@ p.card-text{
 
 
 
-</divs>
+</div>
 
 

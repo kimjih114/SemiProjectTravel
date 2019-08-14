@@ -12,9 +12,12 @@
 	String mypage = request.getParameter("mypage");
 	User mypageUser = new UserService().selectOne(mypage);
  	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
-
+ 	
+	List<String> blockLoggedInList = new SNSService().selectOneIdBlock(userLoggedIn.getUserId());
  	List<String> followLoggedInList = new SNSService().selectOneIdFollow(userLoggedIn.getUserId());
 	int totalPage = (Integer)request.getAttribute("totalPage");
+	
+	System.out.println("blockLoggedInList@jsp="+blockLoggedInList);
 	
 
 %> 
@@ -157,61 +160,59 @@ function follow(){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
-				console.log("follow working");
-				if($('.followerTr').length>0){
-					$('.followerTr').remove();
-					$('.follower').remove();				
+				if(data>0){
+					if($('.followerTr').length>0){
+						$('.followerTr').remove();
+						$('.follower').remove();				
+					}
+					var html = "<tr class='followerTr'><td class='follower'>팔로워</td></tr>";
+					$("#tbl-followmenu").append(html);
+					
+					$(".follower").on("click", function(){
+				 		$.ajax({
+							url: "<%=request.getContextPath() %>/ajax/follower.jsp",
+							data:"mypage="+'<%=mypage%>',
+							success: function(data){
+								$("#container-sns").html(data);
+								console.log("ajax처리성공!");
+							},
+							error: function(jqxhr, textStatus, errorThrown){
+								console.log("ajax처리실패!");
+								console.log(jqxhr, textStatus, errorThrown);
+							},
+							complete: function(){
+								console.log("complete!!!");
+							}
+						});
+				 	});
+					
+					$("#followBtn").removeClass("btn-success");
+					$("#followBtn").addClass("btn-danger");
+					$("#followBtn").html("Unfollow");
+					$("#followBtn").off('click')
+					$("#followBtn").on('click', unfollow);
+					
+					$('.blackArea').html('');
+					
+					$("#follower").on("click", function(){
+				 		$.ajax({
+							url: "<%=request.getContextPath() %>/ajax/follower.jsp",
+							data:"mypage="+'<%=mypage%>',
+							success: function(data){
+								$("#container-sns").html(data);
+								console.log("ajax처리성공!");
+							},
+							error: function(jqxhr, textStatus, errorThrown){
+								console.log("ajax처리실패!");
+								console.log(jqxhr, textStatus, errorThrown);
+							},
+							complete: function(){
+								console.log("complete!!!");
+							}
+						});
+				 	});
+					
 				}
-				var html = "<tr class='followerTr'><td class='follower'>팔로워</td></tr>";
-				$("#tbl-followmenu").append(html);
-				
-				$(".follower").on("click", function(){
-			 		$.ajax({
-						url: "<%=request.getContextPath() %>/ajax/follower.jsp",
-						data:"mypage="+'<%=mypage%>',
-						success: function(data){
-							$("#container-sns").html(data);
-							console.log("ajax처리성공!");
-						},
-						error: function(jqxhr, textStatus, errorThrown){
-							console.log("ajax처리실패!");
-							console.log(jqxhr, textStatus, errorThrown);
-						},
-						complete: function(){
-							console.log("complete!!!");
-						}
-					});
-			 	});
-				
-				
-				
-				
-				$("#followBtn").removeClass("btn-success");
-				$("#followBtn").addClass("btn-danger");
-				$("#followBtn").html("Unfollow");
-				$("#followBtn").off('click')
-				$("#followBtn").on('click', unfollow);
-				
-				$("#follower").on("click", function(){
-			 		$.ajax({
-						url: "<%=request.getContextPath() %>/ajax/follower.jsp",
-						data:"mypage="+'<%=mypage%>',
-						success: function(data){
-							$("#container-sns").html(data);
-							console.log("ajax처리성공!");
-						},
-						error: function(jqxhr, textStatus, errorThrown){
-							console.log("ajax처리실패!");
-							console.log(jqxhr, textStatus, errorThrown);
-						},
-						complete: function(){
-							console.log("complete!!!");
-						}
-					});
-			 	});
-				
-
-				console.log("ajax처리성공!")
 			},
 			error : function(data){
 				console.log("ajax처리실패");
@@ -233,21 +234,22 @@ function unfollow(){
 			data : param,
 			dataType: 'json',
 			type : 'post',
-			success : function(data){
-				console.log("unfollow working");
-				
-				$("#followBtn").removeClass("btn-danger");
-				$("#followBtn").addClass("btn-success");
-				$("#followBtn").html("Follow");
-				$("#followBtn").off('click');
-				$("#followBtn").on('click', follow);
-				
-				$('.followerTr').remove();
-				$('.follower').remove();
-				
-				
-				if($('#follower-container').length>0){
-					location.href='<%=request.getContextPath() %>/story/storyMain?mypage=<%=mypage %>';
+			success : function(data){	
+				if(data>0){
+					$("#followBtn").removeClass("btn-danger");
+					$("#followBtn").addClass("btn-success");
+					$("#followBtn").html("Follow");
+					$("#followBtn").off('click');
+					$("#followBtn").on('click', follow);
+					
+					$('.followerTr').remove();
+					$('.follower').remove();
+					
+					$('.blackArea').html("<button type='button' class='btn btn-dark' id='blockBtn' onclick='block();'>Block</button>");
+					
+					if($('#follower-container').length>0){
+						location.href='<%=request.getContextPath() %>/story/storyMain?mypage=<%=mypage %>';
+					}
 				}
 				
 			},
@@ -260,8 +262,78 @@ function unfollow(){
 			}
 		}) 
 
+}
+	
+function block(){
+	var param={
+		userBlocking : '<%=userLoggedIn.getUserId() %>',
+		userBlocked : '<%=mypageUser.getUserId() %>'    		
 	}
 
+	$.ajax({
+		url : '<%=request.getContextPath()%>/gson/sns/block.do',
+		data : param,
+		dataType: 'json',
+		type : 'post',
+		success : function(data){
+			if(data>0){
+				$("#followBtn").remove();
+				$("#blockBtn").removeClass("btn-dark");
+				$("#blockBtn").addClass("btn-light");
+				$("#blockBtn").text("Unblock");
+				$("#blockBtn").css("width", "105px");
+				
+				$("#blockBtn").off("click");
+				$("#blockBtn").on("click", unblock);
+			}
+			
+		},
+		error : function(data){
+			console.log("ajax처리실패");
+		},
+		complete: function(data){
+			
+			
+		}
+	}) 
+
+}
+
+function unblock(){
+	var param={
+			userBlocking : '<%=userLoggedIn.getUserId() %>',
+			userBlocked : '<%=mypageUser.getUserId() %>'    		
+		}
+
+		$.ajax({
+			url : '<%=request.getContextPath()%>/gson/sns/unblock.do',
+			data : param,
+			dataType: 'json',
+			type : 'post',
+			success : function(data){
+				if(data>0){
+					$(".greenArea").append("<button type='button' class='btn btn-success' id='followBtn' onclick='follow();'>Follow</button>");
+					
+					$("#blockBtn").removeClass("btn-light");
+					$("#blockBtn").addClass("btn-dark");
+					$("#blockBtn").text("block");
+					$("#blockBtn").css("width", "81.36px");
+					
+					$("#blockBtn").off("click");
+					$("#blockBtn").on("click", block);
+			
+				}
+			},
+			error : function(data){
+				console.log("ajax처리실패");
+			},
+			complete: function(data){
+				
+				
+			}
+		}) 
+	
+}
 
 	
 </script>
@@ -286,29 +358,29 @@ function unfollow(){
 	      	<span id="nickBefore" style="font-weight: 700;"><%=profileSNS.getUserNickname() %></span>
 	      	<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
 	      		<button id="nickBeforeBtn" onclick="updateNickName();">edit</button>
-	      	<%}
-	      	else if(userLoggedIn!=null && !mypage.equals(userLoggedIn.getUserId())){%>
+	      	<%}%>
+	      	<div id="introFrm" style="margin-top: 10px;">
+			<span id="introBefore"><%=profileSNS.getUserIntroduce()!=null? profileSNS.getUserIntroduce(): "안녕하세요. 저는 " + profileSNS.getUserNickname() +"입니다." %></span>
+			<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
+					<button id="introBeforeBtn" onclick="updateIntroduce();">edit</button>
+			<%} %>
+	 	</div>
+	 
+	      	<% if(userLoggedIn!=null && !mypage.equals(userLoggedIn.getUserId())){%>
 					<%if(followLoggedInList.contains(mypage)){	%>
-						 <br>
-						 <button type="button" class="btn btn-danger" id="followBtn" onclick="unfollow();">Unfollow</button>
-						 <button type="button" class="btn btn-dark">Block</button>
-					<%} else{ %>
-						<br>
-						<button type="button" class="btn btn-success" id="followBtn" onclick="follow();">Follow</button>
-						<button type="button" class="btn btn-dark">Block</button>
+						 <div class='greenArea'><button type="button" class="btn btn-danger" id="followBtn" onclick="unfollow();">Unfollow</button></div>
+						 <div class='blackArea'></div>
+					<%} else{%>
+							<%if(blockLoggedInList.contains(mypage)){ %>
+								<div class='greenArea'></div>
+								<div class='blackArea'><button type="button" id="blockBtn" class="btn btn-light" onclick="unblock();">Unblock</button></div>
+							<%} else { %>
+						<div class='greenArea'><button type="button" class="btn btn-success" id="followBtn" onclick="follow();">Follow</button></div>
+						<div class='blackArea'><button type="button" id="blockBtn" class="btn btn-dark" onclick="block();">Block</button></div>
 					<% }
+					}
 			} %>
 		</div>
-
-	      <div id="introFrm" style="margin: 10px 0 50px;">
-				<span id="introBefore"><%=profileSNS.getUserIntroduce()!=null? profileSNS.getUserIntroduce(): "안녕하세요. 저는 " + profileSNS.getUserNickname() +"입니다." %></span>
-				<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
-						<button id="introBeforeBtn" onclick="updateIntroduce();">edit</button>
-				<%} %>
-		 </div>
-		 
-		 
-		 
 	   </div>
 	    <table class="tbl-usermenu">
 	   		<tr>
@@ -356,7 +428,7 @@ function unfollow(){
 }
 
 #profile-header{
-	padding-bottom: 20px;
+	padding-bottom: 40px;
 	margin: 0;
 	background-color:<%=profileSNS.getThemeColor()!=null? profileSNS.getThemeColor() : "#fed136" %>;
 } 
@@ -385,6 +457,11 @@ function unfollow(){
     border: 0.5rem solid #212529;
     border-radius: 100%;
 }
+
+.blackArea, .greenArea {
+	display: inline;
+	text-align: center;
+}
 #sideNav .navbar-nav .nav-item .nav-link {
   font-weight: 800;
   letter-spacing: 0.05rem;
@@ -402,8 +479,7 @@ a .nav-link js-scroll-trigger{
 
 }
 .tbl-usermenu{
-	margin: 10 auto;
-	margin-bottom: 30px;
+	margin: 10px auto;
 }
 
 .tbl-usermenu tr :hover{
@@ -479,8 +555,11 @@ div#profile-header{
 .nick_sns{
 	font-weight: 700;
 }
-.btn-dark{
+.btn-dark,{
 	width:81.36px;
+}
+.btn-light{
+	width:105px;
 }
 
 </style>	  

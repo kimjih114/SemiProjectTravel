@@ -14,9 +14,11 @@ import java.util.List;
 import java.util.Properties;
 
 import sns.model.vo.BoardSNS;
+import sns.model.vo.CommentSNS;
 import sns.model.vo.FollowSNS;
 import sns.model.vo.GradeSNS;
 import sns.model.vo.ImageSNS;
+import sns.model.vo.LikeSNS;
 import sns.model.vo.ProfileSNS;
 
 public class SNSDAO {
@@ -589,6 +591,180 @@ public class SNSDAO {
 		}
 		
 		return list;
+	}
+
+	public int block(Connection conn, String userBlocking, String userBlocked) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("block");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userBlocking);
+			pstmt.setString(2, userBlocked);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<String> selectOneIdBlock(Connection conn, String userBlocking) {
+		List<String> blockOneList=new ArrayList<String>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectOneIdBlock");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userBlocking);
+
+			rset=pstmt.executeQuery();
+				
+			while(rset.next()) {
+				blockOneList.add(rset.getString(2));
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return blockOneList;
+	}
+
+	public int unblock(Connection conn, String userBlocking, String userBlocked) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("unblock");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userBlocking);
+			pstmt.setString(2, userBlocked);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<LikeSNS> selectLikeSNS(Connection conn, int boardNo) {
+		List<LikeSNS> likeSNSList=new ArrayList<>();
+		LikeSNS likeSNS = null;
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectLikeSNS");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, boardNo);
+
+			rset=pstmt.executeQuery();
+				
+			while(rset.next()) {
+				likeSNS = new LikeSNS();
+				
+				likeSNS.setBoardNo(boardNo);
+				likeSNS.setUserId(rset.getString("user_id"));
+				likeSNS.setLikeDate(rset.getTimestamp("like_date"));
+				
+				likeSNSList.add(likeSNS);
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return likeSNSList;
+	}
+
+	public List<CommentSNS> selectCommentSNS(Connection conn, int boardNo) {
+		List<CommentSNS> commentSNSList=new ArrayList<>();
+		CommentSNS commentSNS = null;
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectCommentSNS");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, boardNo);
+
+			rset=pstmt.executeQuery();
+				
+			while(rset.next()) {
+				commentSNS = new CommentSNS();
+				
+				commentSNS.setBoardNo(rset.getInt("board_no"));
+				commentSNS.setCommentLevel(rset.getInt("comment_level"));
+				commentSNS.setCommentWriter(rset.getString("comment_writer"));
+				commentSNS.setCommentContent(rset.getString("comment_content"));
+				commentSNS.setBoardNo(boardNo);
+				commentSNS.setCommentRef(rset.getInt("comment_ref"));
+				commentSNS.setCommentDate(rset.getTimestamp("comment_date"));
+				
+				commentSNSList.add(commentSNS);
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return commentSNSList;
+	}
+
+	public List<String> selectOneIdBlocked(Connection conn, String userBlocked) {
+		List<String> blockedOneList=new ArrayList<String>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectOneIdBlocked");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userBlocked);
+
+			rset=pstmt.executeQuery();
+				
+			while(rset.next()) {
+				blockedOneList.add(rset.getString(1));
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return blockedOneList;
 	}
 
 	

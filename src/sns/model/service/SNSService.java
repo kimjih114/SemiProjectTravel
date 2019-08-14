@@ -10,9 +10,11 @@ import java.util.List;
 
 import sns.model.dao.SNSDAO;
 import sns.model.vo.BoardSNS;
+import sns.model.vo.CommentSNS;
 import sns.model.vo.FollowSNS;
 import sns.model.vo.GradeSNS;
 import sns.model.vo.ImageSNS;
+import sns.model.vo.LikeSNS;
 import sns.model.vo.ProfileSNS;
 import user.model.vo.User;
 
@@ -166,5 +168,52 @@ public class SNSService {
 		return list;
 	}
 
+	public int block(String userBlocking, String userBlocked) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().block(conn, userBlocking, userBlocked);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public List<String> selectOneIdBlock(String userBlocking) {
+		Connection conn=getConnection();
+		List<String> blockOneList=new SNSDAO().selectOneIdBlock(conn, userBlocking);
+		close(conn);
+		return blockOneList;
+	}
+
+	public int unblock(String userBlocking, String userBlocked) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().unblock(conn, userBlocking, userBlocked);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public List<LikeSNS> selectLikeSNS(int boardNo) {
+		Connection conn=getConnection();
+		List<LikeSNS> likeSNSList=new SNSDAO().selectLikeSNS(conn, boardNo);
+		close(conn);
+		return likeSNSList;
+	}
+
+	public List<CommentSNS> selectCommentSNS(int boardNo) {
+		Connection conn=getConnection();
+		List<CommentSNS> commentSNSList=new SNSDAO().selectCommentSNS(conn, boardNo);
+		close(conn);
+		return commentSNSList;
+	}
+
+	public List<String> selectOneIdBlocked(String userBlocked) {
+		Connection conn=getConnection();
+		List<String> blocedkOneList=new SNSDAO().selectOneIdBlocked(conn, userBlocked);
+		close(conn);
+		return blocedkOneList;
+	}
+
+	
 	
 }
