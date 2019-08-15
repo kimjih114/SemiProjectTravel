@@ -125,13 +125,11 @@ table{
 	margin: 10 auto;
 	margin-bottom: 30px;
 }
-
-table tr :hover{
+#tbl-usermenu0 tr :hover{
 	cursor: pointer;
 	color: orangered;
 	
 }
-
 table td{
 	padding: 10px;
 	border-bottom: 1px solid #212529;

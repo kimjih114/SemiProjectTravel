@@ -123,7 +123,7 @@ table{
 	margin-bottom: 30px;
 }
 
-table tr :hover{
+#tbl-usermenu0 tr :hover{
 	cursor: pointer;
 	color: orangered;
 	
@@ -312,10 +312,7 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
   				for(User u : list){
   			%>
   			<tr>
-  				<td>
-  					<a href="<%=request.getContextPath()%>/user/userView?userId=<%=u.getUserId()%>">
-  					<%=u.getUserId() %></a>
-  				</td>
+  				<td><%=u.getUserId() %></td>
   				<td><%=u.getUsernickName() %></td>
   				<td><%=u.getUserName() %></td>
   				<td><%="M".equals(u.getUserGender())?"남":"여" %></td>

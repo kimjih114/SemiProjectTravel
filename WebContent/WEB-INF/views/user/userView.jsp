@@ -222,8 +222,8 @@ p.userprofile-userId{
 }
 #content{
 	position : absolute;
-	top : 5%;
-	left : 22%;
+	top : 7%;
+	left : 28%;
 }
 #fname{
 	position : absolute;

@@ -132,7 +132,7 @@ table{
 	margin-bottom: 30px;
 }
 
-table tr :hover{
+#tbl-usermenu0 tr :hover{
 	cursor: pointer;
 	color: orangered;
 	
@@ -172,8 +172,8 @@ section#page-top{
 }
 #content{
 	position : absolute;
-	top : 5%;
-	left : 22%;
+	top : 9%;
+	left : 28%;
 }
 #content table{
 	border-collapse : collapse;
@@ -251,8 +251,9 @@ numPerPage{
 
   </nav>   
  
-  	<div id="content">
+  	<div id="content" style="top:20%; text-align : center">
   		<h2>회원 목록</h2>
+  		<br><br>
   		<div id="head-wrapper">
   			<div id="search-container">
   				검색타입 :
@@ -300,6 +301,7 @@ numPerPage{
   			</div>
   		<div id="numPerPage-container" class="wrapper">
   		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
+  		<br>
   		페이지 당 회원 수 
   		<select name="numPerPage" id="numPerPage">
   			<option value="20" <%=numPerPage==20?"selected":"" %>>20</option>
@@ -313,7 +315,8 @@ numPerPage{
   		
   		</div>
   		</div>
-  		<table id="tbl-user">
+  		<br><br><br>
+  		<table id="tbl-user" style="margin:0 auto; width:600px;">
   			<thead>
   			<tr>
   				<th>아이디</th>
@@ -336,7 +339,6 @@ numPerPage{
   			%>
   			<tr>
   				<td>
-  					<a href="<%=request.getContextPath()%>/user/userUpdateView?userId=<%=u.getUserId()%>">
   					<%=u.getUserId() %></a>
   				</td>
   				<td><%=u.getUsernickName() %></td>
@@ -351,7 +353,7 @@ numPerPage{
   			%>
   			</tbody>
   		</table>
-  		<div id="pageBar">
+  		<div id="pageBar" style="text-align:center">
   			<%=pageBar %>
   		</div>
   	</div>

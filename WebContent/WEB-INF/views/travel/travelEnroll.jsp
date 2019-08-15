@@ -246,10 +246,10 @@ section#page-top{
   <button type="submit" class="btn btn-primary" >등록</button>
   <button type="reset" class="btn btn-primary" >초기화</button>
  </div>
+<br><br><br><br>
  </form>
    	</div>
  </section>
-
 <script>
 function doOpenCheck(chk){
     var obj = document.getElementsByName("program");

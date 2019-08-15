@@ -127,7 +127,7 @@ table{
 	margin-bottom: 30px;
 }
 
-table tr :hover{
+#tbl-usermenu0 tr :hover{
 	cursor: pointer;
 	color: orangered;
 	
@@ -167,8 +167,8 @@ section#page-top{
 }
 #content{
 	position : absolute;
-	top : 5%;
-	left : 22%;
+	top : 8%;
+	left : 30%;
 }
 #content table{
 	border-collapse : collapse;
@@ -244,8 +244,9 @@ numPerPage{
 
   </nav>   
  
-  	<div id="content">
+  	<div id="content" style="top:20%; text-align : center">
   		<h2>업체 목록</h2>
+  		<br><br>
   		<div id="head-wrapper">
   			<div id="search-container">
   			<div id="search-travelName" class="searchFrm">
@@ -273,6 +274,7 @@ numPerPage{
   			</div>
   		<div id="numPerPage-container" class="wrapper">
   		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
+  		<br>
   		페이지 당 업체 수 
   		<select name="numPerPage" id="numPerPage">
   			<option value="20" <%=numPerPage==20?"selected":"" %>>20</option>
@@ -282,12 +284,13 @@ numPerPage{
   		</form>
   		
   		</div>
-  		<br /><br />
-  		<table id="tbl-travel"style="margin:0 auto;">
+  		<br /><br /><br>
+  		<table id="tbl-travel"style="margin:0 auto; width:600px;">
   			<thead>
   			<tr>
   				<th>업체 이름</th>
   				<th>타입</th>
+  				<th>위치</th>
   				<th>관리자 이름</th>
   				<th>핸드폰 번호</th>
   			</tr>
@@ -313,6 +316,7 @@ numPerPage{
 					case "R" :%>맛집<%;break;
 					case "E" :%>놀거리<%;break;
 					case "S" :%>쇼핑<%;break;}%></td>
+				<td><%=t.getTravelLocation() %></td>
   				<td><%=t.getTravelOfficierName()%></td>
   				<td><%=t.getTravelOfficierphone()%></td>
   			</tr>
