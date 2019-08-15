@@ -1,8 +1,6 @@
 package mypage.controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,20 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mypage.model.service.MypageService;
-import travel.model.service.TravelService;
 import travel.model.vo.RoomReservation;
 
 /**
- * Servlet implementation class MyReservationViewServlet
+ * Servlet implementation class MyBasketDelServlet
  */
-@WebServlet("/mypage/myReservationView")
-public class MyReservationViewServlet extends HttpServlet {
+@WebServlet("/mypage/myBasketDel")
+public class MyBasketDelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyReservationViewServlet() {
+    public MyBasketDelServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,14 +30,25 @@ public class MyReservationViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId=request.getParameter("userId");
-		System.out.println("아이디는?="+userId);
-		List<RoomReservation> room=new TravelService().myReservationRoom(userId);
+		String contentId=request.getParameter("contentId");
+		String roomName=request.getParameter("roomName");
+		String startDate=request.getParameter("startDate");
+		String endDate=request.getParameter("endDate");
 		
-		List<RoomReservation> friendRoom=new MypageService().friendReservationRoom(userId);
+		RoomReservation r=new RoomReservation(userId, contentId, null, null, roomName, startDate, endDate, 0);
 		
-		request.setAttribute("friendRoom", friendRoom);
-		request.setAttribute("room",room);
-		request.getRequestDispatcher("/WEB-INF/views/mypage/myReservationView.jsp").forward(request, response);
+		int result=new MypageService().myBasketDel(r);
+		
+		String msg="";
+		String loc="/mypage/myBasketView?userId="+r.getUserId();
+		if(result>0) {
+			msg="삭제에 성공하였습니다.";
+		}else {
+			msg="삭제에 실패하였습니다.";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
 		
 	}
 

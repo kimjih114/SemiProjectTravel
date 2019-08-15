@@ -27,7 +27,12 @@
  $("select[name^=sido]").each(function() {
 	  $selsido = $(this);
 	  $.each(eval(area0), function(idx) {
-	   	$selsido.append("<option value='"+idx+"'>"+this+"</option>");
+		  if(idx>=9){
+			  $selsido.append("<option value='"+(idx+22)+"'>"+this+"</option>");
+		  }else{
+			  $selsido.append("<option value='"+idx+"'>"+this+"</option>");	  
+		  }
+	   	
 	  });
 	  $selsido.next().append("<option value=''>구/군 선택</option>");
  });

@@ -5,6 +5,8 @@
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <%
 	List<RoomReservation> room=(List<RoomReservation>)request.getAttribute("room");
+	List<RoomReservation> friendRoom=(List<RoomReservation>)request.getAttribute("friendRoom");
+	System.out.println("friendRoom값은?"+friendRoom);
 %>
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -228,7 +230,7 @@ section#page-top{
   			</tr>
   			</thead>
   			<tbody>
-  				<%if(room==null){ %>
+  				<%if(room==null&&friendRoom==null){ %>
   				<tr>
   					<td colspan="5">예약내역이 없습니다.</td>
   				</tr>
@@ -242,6 +244,18 @@ section#page-top{
   							<td><%=room.get(i).getPrice() %></td>
   							<td><%=room.get(i).getPaymentDate()%></td>
   							<td><button type="button" onclick="location.href='<%=request.getContextPath()%>/mypage/reservationDel?userId=<%=userLoggedIn.getUserId()%>&contentId=<%=room.get(i).getContentId()%>&travelName=<%=room.get(i).getTravelName()%>&roomName=<%=room.get(i).getRoomName() %>&reservationStartDate=<%=room.get(i).getReservationStartDate()%>&reservationEndDate=<%=room.get(i).getReservationEndDate()%>'">예약취소</button></td>
+  						</tr>
+  						<%
+  					}
+  					for(int z=0;z<friendRoom.size();z++){
+  						%>
+  						<tr>
+  							<td><%=friendRoom.get(z).getTravelName() %></td>
+  							<td><%=friendRoom.get(z).getRoomName() %></td>
+  							<td><%=friendRoom.get(z).getReservationStartDate() %>~<%=friendRoom.get(z).getReservationEndDate() %></td>
+  							<td><%=friendRoom.get(z).getPrice() %></td>
+  							<td><%=friendRoom.get(z).getPaymentDate()%></td>
+  							<td>취소불가</td>
   						</tr>
   						<%
   					}

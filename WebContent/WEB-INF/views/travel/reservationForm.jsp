@@ -485,12 +485,13 @@
 	
 	function rsvCheck(price,roomTitle){
 
-		<%-- var startDate=$("#sdate").val();
+		var startDate=$("#sdate").val();
 		var endDate=$("#edate").val();
 		var friendId=$("#search").val();
 
-		location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>"; --%>
-		var IMP = window.IMP;
+		location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
+		
+		<%-- var IMP = window.IMP;
 		IMP.init('imp68757717');
 
 		IMP.request_pay({
@@ -523,7 +524,8 @@
 			var friendId=$("#search").val();
 		    
 		    location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
-		}); 
+		});  --%>
+		
 	}
 </script>
 <style>
@@ -581,7 +583,7 @@
   	</form>
   	</div>
   	<h5 align="center" style="margin-top: 10px;">같이 숙박할 친구 id<input type='search' name='search' id='search' placeholder='선택사항' onkeyup='searchList(event);' /></h5>
-	<ul id='autoComplete'>
+	<ul id='autoComplete' style="margin-left: 930px; margin-top: -50px;">
 		
 	</ul>
 	<!-- Page Content -->

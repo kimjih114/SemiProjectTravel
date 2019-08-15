@@ -241,7 +241,7 @@ section#page-top{
   							<td><%=basketRoom.get(i).getReservationStartDate() %>~<%=basketRoom.get(i).getReservationEndDate() %></td>
   							<td><%=basketRoom.get(i).getPrice() %></td>
   							<td><button type="button" onclick="location.href='<%=request.getContextPath()%>/travel/reservationForm?contentId=<%=basketRoom.get(i).getContentId()%>&contentTypeId=<%=basketRoom.get(i).getContentTypeId()%>&title=<%=basketRoom.get(i).getTravelName() %>&basket=basket&startDate=<%=basketRoom.get(i).getReservationStartDate()%>&endDate=<%=basketRoom.get(i).getReservationEndDate()%>'">결제하러가기</button></td>
-  							<td><button type="button" onclick="#">삭제</button></td>
+  							<td><button type="button" onclick="location.href='<%=request.getContextPath()%>/mypage/myBasketDel?contentId=<%=basketRoom.get(i).getContentId()%>&userId=<%=userLoggedIn.getUserId()%>&roomName=<%=basketRoom.get(i).getRoomName() %>&startDate=<%=basketRoom.get(i).getReservationStartDate() %>&endDate=<%=basketRoom.get(i).getReservationEndDate() %>'">삭제</button></td>
   						</tr>
   						<%
   					}
