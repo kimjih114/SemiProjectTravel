@@ -27,16 +27,33 @@
 
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
- 
+  <script>
+ 	function searchGo(e){
+ 		
+ 		if(e.key=="Enter"){
+ 			var sido1="";
+ 			var gugun1="";
+ 			var area1 = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
+ 			
+ 			for(var i=0;i<area1.length;i++){
+ 				if(area1[i]==$("#searchKwd").val()){
+ 					sido1=1;
+ 					gugun1=i+1;					
+ 				}
+ 			}
+ 			location.href="<%=request.getContextPath() %>/travel/travelView?sido1="+sido1+"&gugun1="+gugun1;
+ 		}
+ 	}
+  </script>
  
    <!-- Header -->
   <header class="masthead">
     <div class="container">
       <div class="intro-text">
         <div class="intro-heading text-uppercase">지금 다양한 국내 여행지를 검색하세요.</div>
-         <form class="IndexsearchFrm" method="get">
-       		<input type="search" size="50" style="height:50px; padding:10px;" placeholder="찾으시는 여행지의 구/군을 입력해주세요." />
-       	</form>
+         <input type="search" size="50" style="height:50px;" placeholder="찾으시는 구/군을 입력해주세요." id="searchKwd" onkeyup="searchGo(event);"/>
+       		<br>
+       	 <span class="intro-lead-in">7월의 추천검색어 : <a href='#' style='color: orangered'>#해운대</a> <a href='#' style='color: orangered'>#강릉</a>  <a href='#' style='color: orangered'>#정선</a></span>
         
     </div>
   </header>
