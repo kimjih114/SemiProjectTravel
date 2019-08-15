@@ -393,7 +393,7 @@ function unblock(){
 		   			<td>메시지</td>
 		   		</tr>
 	   		<%} %>
-	   		<tr>
+	   		<tr id="gomsg">
 	   			<td>검색</td>
 	   		</tr>
 	   		
@@ -588,6 +588,7 @@ div#profile-header{
  })
 
  
+
  
  	$("#gohome").on("click", function(){
  		var param = {
@@ -646,7 +647,27 @@ div#profile-header{
 		
 	$("#QuestionList").on("click", function(){
 		location.href="<%=request.getContextPath()%>/boardquestion/boardList"; 
-	})
+	});
+ 	
+ 	
+ 	 
+ 	$("#gomsg").on("click", function(){
+
+ 			var url="<%=request.getContextPath()%>/story/memomsg";
+ 			var title="쪽지함"; 
+ 			var status = "width=300px, height=200px, left=50px, top=50px";
+ 			var popup = open("", title, status);
+ 			
+ 			var frm =  document.memomsgFrm;
+ 			frm.action = url; 
+ 			frm.method= "post"; 
+			frm.submit;
+ 		
+ 
+ 	});
 
 	</script>
+	<form action="" name="memomsgFrm">
+	<input type="hidden" name="memberId" />
+</form>
 	  

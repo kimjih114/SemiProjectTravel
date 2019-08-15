@@ -76,6 +76,7 @@ public class Board_QuestionFileDownloadServlet extends HttpServlet {
 				response.setHeader("Content-Disposition", 
 								   "attachment;filename="+resFileName);
 				
+				
 				//4.파일쓰기
 				int read = -1;
 				while((read=bis.read()) != -1) {

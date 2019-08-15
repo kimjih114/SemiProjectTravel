@@ -35,9 +35,6 @@ select * from qboard;
 
 SELECT * FROM ( SELECT ROWNUM AS RNUM, V.* FROM( SELECT * FROM QBOARD ORDER BY QBOARD_DATE DESC) V ) V WHERE RNUM BETWEEN ? AND ?;
 
-
-
-select *from qboard;
 --삭제게시글테이블
 create table qboard_deleted(
         qboard_no number,
@@ -46,7 +43,10 @@ create table qboard_deleted(
         qboard_content varchar2(2000),
         qboard_date date,
         qboard_readcnt number,
-        qboard_travel_ref number
+        qboard_travel_ref number,
+        qboard_filename varchar2(100),
+        qboard_newfilename varchar2(100),
+        qboard_state number
 );
 
 --삭제게시글 트리거
@@ -56,10 +56,9 @@ create or replace trigger trig_qboard_deleted
         for each row
 begin 
         insert into qboard_deleted
-        values(:old.qboard_no, :old.qboard_writer, :old.qboard_title, :old.qboard_content, :old.qboard_date, :old.qboard_readcnt, :old.qboard_travel_ref );
+        values(:old.qboard_no, :old.qboard_writer, :old.qboard_title, :old.qboard_content, :old.qboard_date, :old.qboard_readcnt, :old.qboard_travel_ref, :old.qboard_filename,:old.qboard_newfilename,:old.qboard_state );
 end;
 
-commit;
 
 
 

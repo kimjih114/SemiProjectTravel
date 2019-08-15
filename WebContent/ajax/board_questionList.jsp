@@ -150,8 +150,9 @@ text-align:center;
 	float:right;
 	margin: 0 0 8px;
 }
-table#tbl-board{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
-table#tbl-board th, table#tbl-board td {border:1px solid; padding: 5px 0; text-align:center;} 
+table#tbl-board{width:100%; margin:0 auto;  border-collapse:collapse; clear:both; }
+table#tbl-board th, table#tbl-board td {padding: 5px 0; text-align:center;} 
+table#tbl-board th{background: #fed136;}
 form#board_containerfrm{
 margin-left: 8px;
 margin-top:100px;
@@ -290,7 +291,7 @@ text-align:left;
 					<th>번호</th>
 					<th>제목</th> <!-- 첨부파일 같이 넣 -->
 					<th>작성자</th>
-
+					<th>조회수</th>
 					<th>작성일</th>
 					<th>진행상태</th>
 				</tr>
@@ -308,7 +309,7 @@ text-align:left;
 							<% }%>
 							</td>  <!-- 링크     -->
 						<td><%=bq.getQboardWriter() %></td>
-			
+						<td><%=bq.getQboardReadcnt() %></td>
 						<td><%=bq.getQboardDate() %></td>  <!-- 작성일 넣 -->
 						<td><%=(bq.getQboardStatus()==0)?"진행중":"처리완료"%></td> <!-- 진행상태넣 -->
 					</tr>
