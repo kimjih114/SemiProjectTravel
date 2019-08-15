@@ -23,8 +23,8 @@
 <%-- <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script> --%>
 <script>
 function checkIdDuplicate(){
+	<%System.out.println("하아아");%>
 	var userId_ = $("#userId").val().trim();
-	
 	if(userId_.length < 4){
 		alert("아이디는 4 글자 이상 입력하세요.");
 		return;
@@ -45,18 +45,18 @@ function checkIdDuplicate(){
 	
 }
 
-function enrollValidate(){
+ function enrollValidate(){
 	
-	if($("#idValid").val()==1){
-		alert("아이디 중복검사를 해주세요.");
-		return false;
-	}
+		if($("#idValid").val()==1){
+			alert("아이디 중복검사를 해주세요.");
+			return false;
+		}
 		
 		var regExp = /^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$/;
 		
 		if(regExp.test($('#userId').val())==false){
 			
-			alert("영어,숫자로 구성된 5~12자를 입력하세요.(영문으로 시작)");
+			alert(" 아이디는 영어,숫자로 구성된 5~12자로 구성되어야 합니다.(영문으로 시작)");
 			userId.focus();
 			return false;
 			
@@ -67,23 +67,25 @@ function enrollValidate(){
 				alert("닉네임을 입력하세요.");
 				usernickName.focus();
 				return false;
-			}
+		}
 		
-			var password = $('#userPassword').val();
-			var password2 = $('#password-chk').val();
+		var password = $('#userPassword').val();
+		var password2 = $('#password-chk').val();
 			if(password.trim().length==0){
 				alert("비밀번호를 입력하세요.");
 				return false;
-			}
+		}
 			
-			var regExp = /^....+$/;
-			if(regExp.test(password)==true){
-			}
-			else{
-				alert("비밀번호는 4자리 이상 입력해주세요.")
-				return false;
-			}
-			if(password !=password2){
+		var pass= /^[a-zA-Z0-9]{7,19}$/;
+		if(pass.test(password)==true){
+
+		}
+		else{
+			alert("비밀번호는 8자리 이상이며 영어, 숫자로 이루어져 있습니다.")
+			return false;
+		}
+			
+		if(password !=password2){
 				alert("비밀번호가 다릅니다.");
 				password = "";
 				password2 = "";
@@ -95,14 +97,14 @@ function enrollValidate(){
 			var birth = $('#userBirth').val();
 			
 			if(birth.trim().length==0){
-				alert("생일을 입력하세요.");
+				alert("생년월일을 입력하세요.");
 				return false;
-			}
-			var dayRegExp = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/
+			}				 
+			var dayRegExp = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
 			if(dayRegExp.test(birth)==true){	
 			}
 			else{
-				alert("생일을 정확히 입력해주세요.");
+				alert("생년월일을 2000-01-01식으로 적어주세요");
 				userBirth.focus();
 				return false;
 			}
@@ -113,7 +115,7 @@ function enrollValidate(){
 			alert("핸드폰 번호를 입력하세요.");
 			return false;
 			}
-			var regExp_phone= /(\d{3}).*(\d{3}).*(\d{4})/
+			var regExp_phone= /^(0)(\d{2}).*(\d{3}).*(\d{4})/
 			if(regExp_phone.test(phone)==true){
 			}
 			else{
@@ -123,7 +125,8 @@ function enrollValidate(){
 			}
 		
 		return true;	
-	}
+	} 
+ 
 function check_only(chk){
 	var obj = document.getElementsByName("userGender");
 	for(var i =0; i<obj.length; i++){
@@ -178,62 +181,66 @@ label{
 			  id="userEnrollFrm"
 			  method="post"
 			  enctype="multipart/form-data"
-			  onsubmit="return enrollValidate();"
-			  >
+			  onsubmit="return enrollValidate();">
 		
   <div class="form-group">
  	 <input type="text" name="userType" id="userType"
 			style="display:none;" value="D" />
     <label for="exampleInputEmail1">아이디</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ID" name="userId" required>
-    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+    <input type="text" class="form-control" id="userId" aria-describedby="emailHelp" placeholder="ID" name="userId" required>
+    <small id="emailHelp" class="form-text text-muted">영어,숫자로 구성된 5~12자를 입력하세요.(영문으로 시작)</small> 
   </div>
   <div class="form-group">
  	 <input type="text" name="userType" id="userType"
 			style="display:none;" value="D" />
     <label for="exampleInputEmail1">닉네임</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="NickName" name="usernickName">
+    <input type="text" class="form-control" id="usernickName" aria-describedby="emailHelp" placeholder="NickName" name="usernickName">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">비밀번호</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="userPassword" required>
+    <input type="password" class="form-control" id="userPassword" placeholder="Password" name="userPassword" required>
+    <small id="emailHelp" class="form-text text-muted">비밀번호는 영어, 숫자로 8글자 이상 적어주세요.</small> 
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">비밀번호 확인</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password-chk" required>
+    <input type="password" class="form-control" id="password-chk" placeholder="Password" name="password-chk" required>
+    <small id="emailHelp" class="form-text text-muted">위와 동일한 비밀번호를 적어주세요.</small> 
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">이름</label>
     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name" name="userName" required>
   </div>
    <div class="form-group">
-    <label for="exampleInputEmail1">생일</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="2000-01-01"name="userBirth">
-    <small id="emailHelp" class="form-text text-muted">2000-01-01 식으로 적어주세요.</small> 
+    <label for="exampleInputEmail1">생년월일</label>
+    <input type="text" class="form-control" id="userBirth" aria-describedby="emailHelp" placeholder="2000-01-01"name="userBirth">
+    <small id="emailHelp" class="form-text text-muted">2000-01-01식으로 적어주세요</small> 
   </div>
    <div class="form-group">
     <label for="exampleInputEmail1">이메일</label>
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="abc@naver.com"name="userEmail">
+    <small id="emailHelp" class="form-text text-muted">abc@trav.com 식으로 적어주세요.</small> 
   </div>
    <div class="form-group">
     <label for="exampleInputEmail1">휴대폰</label>
-    <input type="tel" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="(-없이)01012345678"name="userPhone"
+    <input type="tel" class="form-control" id="userPhone" aria-describedby="emailHelp" placeholder="(-없이)01012345678"name="userPhone"
     		maxlength="11" required>
+    <small id="emailHelp" class="form-text text-muted">'-'없이 11자리를 적어주세요.</small> 
   </div><br />
   <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" id="userGenderM" name="userGender" value="M" checked
+  <input class="form-check-input" type="checkbox" id="userGender" name="userGender" value="M" checked
     		onclick="check_only(this)">
   <label class="form-check-label" for="inlineCheckbox1">남</label>
 </div>
 <div class="form-check form-check-inline">
-  <input class="form-check-input" type="checkbox" name="userGender" id="userGenderF" value="F"
+  <input class="form-check-input" type="checkbox" name="userGender" id="userGender" value="F"
     		onclick="check_only(this)">
   <label class="form-check-label" for="inlineCheckbox2">여</label>
 </div><br /><br />
 <div class="form-group">
     <label for="exampleInputEmail1">사진등록</label><br />
     <input type="file" name="fileName" id="fileName" style="text-align:center;"/>
-  </div><br />
+  </div>
+    <small id="emailHelp" class="form-text text-muted">필수사항이 아닙니다.</small> 
   
   <br /><br />
  <div id="putt">
@@ -242,84 +249,6 @@ label{
   <button type="reset" class="btn btn-primary" >초기화</button>
  </div>
 
-
-				<!-- <input type="text" name="userType" id="userType"
-				style="display:none;" value="D" />
-				<h5>아이디</h5>
-				<input class="inpu" type="text" name="userId" id="userId" 
-						placeholder="아이디 4글자 이상" required/>
-					
-			   <label for="idCheck"></label>
-			   <input type="hidden" name="idValid"
-					value="1"/>
-		
-				<br /><br />
-				<h5>사진등록</h5>
-				<input type="file" name="fileName" id="fileName" />
-				
-				<br /><br />
-				<h5>닉네임</h5>
-					<input type="text" class="inpu" name="usernickName" id="usernickName" />				
-				<br /><br />
-				<h5>비밀번호</h5>
-				<input type="password" class="inpu" name="userPassword" id="userPassword" required/>
-				<br /><br />
-				<h5>비밀번호 확인</h5>
-				<input type="password" class="inpu" name="password-chk" id="password-chk" required/>
-				<br /><br />
-				<h5>이름</h5>
-				<input type="text" class="inpu" name="userName" id="userName" required/>
-				<br /><br />
-				<h5>생일</h5>
-				<input type="text" class="inpu" name="userBirth" id="userBirth" />
-				<br /><br />
-				<h5>이메일</h5>
-				<input type="email" class="inpu" name="userEmail" id="userEmail" />
-				<br /><br />	
-				<h5>휴대폰</h5>
-				<input type="tel" name="userPhone" 
-							id="userPhone" placeholder="(-없이)01012341234"
-							maxlength="11" class="inpu" required/>
-				<br /><br />
-				<h5>성별</h5>
-				<input type="radio" name="userGender" id="userGenderM" value="M" checked />
-				<label for="userGenderM">남</label>
-				<input type="radio" name="userGender" id="userGenderF" value="F" />
-				<label for="userGenderF">여</label>
-				<br /><br />
-
-			<h5 id="userDefaultPlace">관심여행지</h5><br>
-				
-					<input type="checkbox" name="location" id="location1" value="여행지1" />
-					<label for="location1">여행지1</label>
-					<input type="checkbox" name="location" id="location2" value="여행지2" />
-					<label for="location2">여행지2</label>
-					<input type="checkbox" name="location" id="location3" value="여행지3" />
-					<label for="location3">여행지3</label>
-					<input type="checkbox" name="location" id="location4" value="여행지4" />
-					<label for="location4">여행지4</label>
-					<input type="checkbox" name="location" id="location5" value="여행지5" />
-					<label for="location5">여행지5</label>
-				<br /><br />
-	
-			<h5 id="userDefaultActivity">관심프로그램</h5><br>
-				
-					<input type="checkbox" name="program" id="program1" value="프로그램1" />
-					<label for="program1">프로그램1</label>
-					<input type="checkbox" name="program" id="program2" value="프로그램2" />
-					<label for="program2">프로그램2</label>
-					<input type="checkbox" name="program" id="program3" value="프로그램3" />
-					<label for="program3">프로그램3</label>
-					<input type="checkbox" name="program" id="program4" value="프로그램4" />
-					<label for="program4">프로그램4</label>
-					<input type="checkbox" name="program" id="program5" value="프로그램5" />
-					<label for="program5">프로그램5</label>
-					<br /><br />
-		
-			  	<input type="submit" value="회원가입" />
-			  	<input type="reset" value="초기화" />
-		</form>
-		</div> -->
 </form>
 </div>
 

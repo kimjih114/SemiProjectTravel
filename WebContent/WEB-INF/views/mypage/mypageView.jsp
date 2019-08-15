@@ -72,6 +72,9 @@ $("#modifyUserInfo").on("click",function(){
 
 </script>
   <style>
+a{
+	color : black;
+}
 .page-top{
 	width: 1024px;
 }
@@ -193,7 +196,7 @@ p.userprofile-userId{
 
    <table id="tbl-usermenu0">
    	 <tr>
-   		<td id="modifyUserInfo"> <a href="<%=request.getContextPath()%>/user/userUpdateView?userId=<%=userLoggedIn.getUserId()%>">회원정보수정</a></td>
+   		<td id="modifyUserInfo"><a href="<%=request.getContextPath()%>/user/userUpdateView?userId=<%=userLoggedIn.getUserId()%>">회원정보수정</a></td>
    	</tr>
 	<tr>
    		<td>메시지</td>

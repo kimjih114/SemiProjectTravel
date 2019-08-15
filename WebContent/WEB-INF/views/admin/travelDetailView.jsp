@@ -245,7 +245,7 @@ section#page-top{
   </div>
   	<div class="form-group">
     <label for="exampleInputEmail1" id="userDefaultActivity">여행 타입</label><br />
-    <input type="checkbox" name="program" id="program1" value="P"  onclick="doOpenCheck(this);"/>
+    <input type="checkbox" name="program" id="program1" value="P" onclick="doOpenCheck(this);"/>
 	<label for="program1">여행지</label>
 	<input type="checkbox" name="program" id="program2" value="A" onclick="doOpenCheck(this);"/>
 	<label for="program2">숙소</label>
@@ -297,6 +297,19 @@ $("#fileUpdate").change(function(){
 });
 
 </script>
+<script>
+$(document).ready(()=>{
+	
+	switch(<%=trav.getTravelType()%>){
+	case "P" : $("input:checkbox[id='program1']").prop('checked',true);break;
+	case "A" : $("input:checkbox[id='program2']").prop('checked',true);break;
+	case "R" : $("input:checkbox[id='program3']").prop('checked',true);break;
+	case "E" : $("input:checkbox[id='program4']").prop('checked',true);break;
+	case "S" : $("input:checkbox[id='program5']").prop('checked',true);break;
+	}
 
+});
+	
+</script>
 </body>
 </html>
