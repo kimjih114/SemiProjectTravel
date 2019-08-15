@@ -337,6 +337,8 @@ function unblock(){
 
 	
 </script>
+
+
  <header class="masthead" style="height:300px;">
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
@@ -350,6 +352,10 @@ function unblock(){
      </div>
   </header>
   
+  <form action="" name="memomsgFrm">
+	<input type="hidden" name="msgform" />
+</form>
+	  
 <section class="page-top" style="padding:0px; !important;">
 	  <nav id="sideNav">
 		<div id="profile-header">
@@ -390,10 +396,10 @@ function unblock(){
 	   	<table class="tbl-usermenu" id="tbl-followmenu">
    	 		<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)) {%>
 		   		<tr>
-		   			<td>메시지</td>
+		   			<td id="gomsg">메시지</td>
 		   		</tr>
 	   		<%} %>
-	   		<tr id="gomsg">
+	   		<tr >
 	   			<td>검색</td>
 	   		</tr>
 	   		
@@ -654,20 +660,18 @@ div#profile-header{
  	$("#gomsg").on("click", function(){
 
  			var url="<%=request.getContextPath()%>/story/memomsg";
- 			var title="쪽지함"; 
- 			var status = "width=300px, height=200px, left=50px, top=50px";
+ 			var title="popup"; 
+ 			var status = "width=500px, height=400px, left=50px, top=50px";
  			var popup = open("", title, status);
  			
  			var frm =  document.memomsgFrm;
- 			frm.action = url; 
+ 			frm.action = url;
+ 			frm.target=title;
  			frm.method= "post"; 
-			frm.submit;
+			frm.submit();
  		
  
  	});
 
 	</script>
-	<form action="" name="memomsgFrm">
-	<input type="hidden" name="memberId" />
-</form>
-	  
+	

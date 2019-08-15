@@ -1,4 +1,4 @@
-package mypage;
+package storymsg.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import travel.model.service.TravelService;
-import travel.model.vo.RoomReservation;
+import storymsg.model.service.MsgService;
+import storymsg.model.vo.Msg;
 
 /**
- * Servlet implementation class MyReservationViewServlet
+ * Servlet implementation class MsgListServlet
  */
-@WebServlet("/mypage/myReservationView")
-public class MyReservationViewServlet extends HttpServlet {
+@WebServlet("/story/memomsg")
+public class MsgListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyReservationViewServlet() {
+    public MsgListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +31,15 @@ public class MyReservationViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId=request.getParameter("userId");
-		System.out.println("아이디는?="+userId);
-		List<RoomReservation> room=new TravelService().myReservationRoom(userId);
+		request.setCharacterEncoding("utf-8");
 		
-		request.setAttribute("room",room);
-		request.getRequestDispatcher("/WEB-INF/views/mypage/myReservationView.jsp").forward(request, response);
+		List<Msg> list =new MsgService().selectMsgList();
 		
+		
+		
+		
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("/WEB-INF/views/message/messageList.jsp").forward(request, response);
 	}
 
 	/**

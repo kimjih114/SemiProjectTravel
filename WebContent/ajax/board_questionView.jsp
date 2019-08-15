@@ -395,7 +395,7 @@ $(()=>{
 $(()=>{
 //삭제버튼 클릭시
 $(".btn-delete").click(function(){
-if(!confirm("정말 삭제하시겠습니까?")) return;
+if(!confirm("글을 삭제하시겠습니까?")) return;
 //삭제처리후 돌아올 현재게시판번호도 함께 전송함.
 	location.href="<%=request.getContextPath()%>/board/qboardCommentDelete?qboardNo=<%=bq.getQboardNo()%>&del="+$(this).val();
 });
@@ -541,7 +541,7 @@ if(!confirm("정말 삭제하시겠습니까?")) return;
 						<input type="hidden" name="qboardCommentLevel" value="1" /> <input
 							type="hidden" name="qboardCommentRef" value="0" />
 						<!-- 댓글인 경우 참조댓글이 없으므로 0으로 초기화 -->
-						<div class="input-group" style="">
+						<div class="input-group" style="margin-left: 80px;">
 							<div class="input-group-prepend">
 								<span class="input-group-text">댓글</span>
 								<textarea name="qboardCommentContent" id="qboardCommentContent"
@@ -557,7 +557,7 @@ if(!confirm("정말 삭제하시겠습니까?")) return;
 
 				</div>
 				<!-- 댓글목록테이블 -->
-				<table id="tbl-comment">
+				<table id="tbl-comment" style="margin-left: 79px;">
 					<%
 						if (commentList != null) {
 							for (Board_QuestionComment bc : commentList) {

@@ -198,7 +198,7 @@ li.post-font{
 text-align:left;
 
 </style>
-<script>
+<!-- <script>
 	function validate() {
 	
 			console.log($("#exampleInputEmail1".val().trim));
@@ -216,7 +216,7 @@ text-align:left;
 		return true;
 	}
 </script>
-
+ -->
 
 
 <!-- Header -->
@@ -311,7 +311,12 @@ text-align:left;
 						<td><%=bq.getQboardWriter() %></td>
 						<td><%=bq.getQboardReadcnt() %></td>
 						<td><%=bq.getQboardDate() %></td>  <!-- 작성일 넣 -->
-						<td><%=(bq.getQboardStatus()==0)?"진행중":"처리완료"%></td> <!-- 진행상태넣 -->
+						<td><% if(bq.getQboardStatus()==0){%>
+								진행중
+						<%} else{%>
+								처리완료
+							<%} %>	
+						</td> <!-- 진행상태넣 -->
 					</tr>
 
 

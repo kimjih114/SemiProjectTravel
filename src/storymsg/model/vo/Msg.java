@@ -2,6 +2,7 @@ package storymsg.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Time;
 
 public class Msg implements Serializable{
 
