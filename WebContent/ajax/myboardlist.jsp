@@ -8,7 +8,9 @@
 	
 <%
 	String mypage = request.getParameter("mypage");
-	int totalPage = Integer.parseInt(request.getParameter("totalPage"));
+	int totalContents = Integer.parseInt(request.getParameter("totalContents"));
+	int lastBoardNo = Integer.parseInt(request.getParameter("lastBoardNo"));
+	
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 	
 %>
@@ -41,39 +43,150 @@
 
 
 <script>
+
+var mcontentids = new Array();
+var mcontenttypes = new Array();
+var mcontentthumbnails = new Array();
+var mcontenttitles = new Array();
+var mcontentaddresses = new Array();
 $(()=>{
-	pageMore(1);
+	pageMore(10000);
 });
-function unfollower(btn){
-	var param={
-		userFollowing : '<%=userLoggedIn.getUserId() %>',
-		userFollowed : $(btn).val()
+
+function deleteBoardSNS(boardNo){
+	
+	if(!confirm("게시물을 삭제하시겠습니까?")){
+		return;
 	}
-
-	$.ajax({
-		url : '<%=request.getContextPath()%>/gson/sns/unFollow.do',
-		data : param,
-		dataType: 'json',
-		type : 'post',
-		success : function(data){	
-			
-			$(btn).parent().parent().parent().remove();
-			
-			
-		},
-		error : function(data){
-			console.log("ajax처리실패");
-		},
-		complete: function(data){
-		
-			
-		}
-	}) 
-
+	var param={
+		boardNo : boardNo
+	}
+	
+		$.ajax({
+			url : '<%=request.getContextPath()%>/gson/sns/deleteBoardSNS.do',
+			data : param,
+			dataType: 'json',
+			type : 'post',
+			success : function(data){				
+				$(document.querySelector('#boardNo'+boardNo)).remove();
+			},
+			error : function(data){
+				console.log("ajax처리실패");
+			}
+		}) 
+	
 }
-function pageMore(cPage){
+
+
+
+
+function updateBoardSNS(boardNo){
+	console.log();
+	
+	$(document.querySelector('#container'+boardNo)).html('');
+	
+	var param={
+			boardNo : boardNo
+		}
+			$.ajax({
+				url : '<%=request.getContextPath()%>/gson/sns/updateBoardSNSFrm.do',
+				data : param,
+				dataType: 'json',
+				type : 'post',
+				success : function(data){	
+					var html = '';
+					html += "<form action='' name='snsUpload'";
+					html += "class='snsUpload'";
+					html += "method='post'";
+					html += "enctype='multipart/form-data' style='border:1px solid black; padding: 10px; margin-bottom:10px;'>";
+					html += "<table class='postFrm' style='padding:10px;'>";
+					html += "<tr>";
+					html += "<td style='font-weight: 700; padding:10px; text-align:left;'>여행 후기를 수정합니다.</td>";
+					html += "</tr>";
+					html += "<tr>";
+					html += "<td style='style='font-weight: 700; float:left; padding:10px'>";
+					html += "<div class='travelsrchM' style='padding: 10px;'></div>";
+					html += "</td>";
+					html += "</tr>";
+					html += "<tr>";
+					html += "<td style='font-weight: 700; float:left; padding:10px;'>";
+					html += "<label for='reviewContent' style='font-weight: 700; float:left;'>어떤 여행을 하셨나요?</label>";
+					html += "<textarea name='reviewContent' id='reviewContent' cols='58' rows='5' required></textarea>";
+					html += "<div id='contentIdList'>";
+					html += "</div>";
+					html += "</td>";
+					html += "</tr>";
+					html += "<tr>";
+					html += "<td style='float:left; padding:10px; text-align:left;'>";
+					html += "<label for='' style='font-weight: 700;  float:left; margin-bottom:10px;'>첨부이미지</label>";
+					html += "<span style='font-size:0.5em; color:gray;'>최대 5개까지 등록 가능합니다.</span><br>";
+					html += "<input name='fileupload' id='fileupload' type='file' accept='image/*' style='margin-bottom:10px;' multiple />";
+					html += "<div style='display:table;'>";
+					html += "<div class='imgs_wrap'></div>";
+					html += "</div>";
+					html += "</td>";
+					html += "</tr>";
+					html += "<tr>";
+					html += "<td style='float:left; padding:10px;'>";
+					html += "<input type='radio' name='boardtype' id='public' value='P' checked />";
+					html += "<label for='public'>전체공개</label> &nbsp;";
+					html += "<input type='radio' name='boardtype' id='followOnly' value='F' />";
+					html += "<label for='followOnly'>팔로워공개</label> &nbsp;";
+					html += "<input type='radio' name='boardtype' id='locked' value='L' />";
+					html += "<label for='locked'>비공개</label>";
+					html += "<br>";
+					html += "<input type='submit' id='btnSubmit' value='포스트 등록' style='float:right; margin-top : 10px;''>";
+					html += "</td>";
+					html += "</tr>";
+					html += "</table>";
+					html += "</form>";
+					
+					$(document.querySelector('#container'+boardNo)).html(html);
+			
+					
+					if(data.gradeSNSList!=null){
+						for(var g=0; g<data.gradeSNSList.length; g++){
+							mcontentids.push(data.gradeSNSList[g].contentId);
+							mcontenttypes.push(data.gradeSNSList[g].contentType);
+							mcontentthumbnails.push(data.gradeSNSList[g].contentThumbnail);
+							mcontenttitles.push(data.gradeSNSList[g].contentTitle);
+							mcontentaddresses.push(data.gradeSNSList[g].contentAddress);
+						}
+					}
+					
+					var parameter = {
+							mcontentids : mcontentids,
+							mcontenttypes : mcontenttypes,
+							mcontentthumbnails : mcontentthumbnails,
+							mcontenttitles : mcontenttitles,
+							mcontentaddresses : mcontentaddresses
+					}
+					
+					jQuery.ajaxSettings.traditional = true;
+					
+					$.ajax({
+						url: "<%=request.getContextPath() %>/ajax/travelsrchM.jsp", 
+						data: parameter,
+						type: "post",
+						success: function(data){
+							$(".travelsrchM").html(data);
+						},
+						error: function(jqxhr, textStatus, errorThrown){
+							console.log("ajax처리실패!");
+							console.log(jqxhr, textStatus, errorThrown);
+						}
+					});
+				},
+				error : function(data){
+					console.log("ajax처리실패");
+				}
+			}) 
+	
+}
+
+function pageMore(boardNo){
 	var param = {
-			cPage:cPage,
+			boardNo : boardNo,
 			mypage:'<%=mypage %>'
 	}
 	$.ajax({
@@ -87,17 +200,17 @@ function pageMore(cPage){
 			var html = "";
 			
 			$.each(data,(i,tl)=>{
-				html+="<table class='tbl-boardsns'>"
+				html+="<div id='container"+tl.boardSNS.boardNo+"'>";
+				html+="<table class='tbl-boardsns' id='boardNo"+tl.boardSNS.boardNo+"'>"
 				html+="<tr>";
 				html+="<td class='timeline-boardcontent-sns'>";
 				html+="<img src='<%=request.getContextPath()%>/upload/profile/"+tl.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
 				html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>"+tl.profileSNS.userNickname+"</a></span>";
 				html+="<span style='font-size: 0.8em; color: gray;''>"+tl.boardSNS.boardDate+"</span>";
 				html+="<span style='float: right;'>";
-				if(tl.boardSNS.boardWriter!='<%=userLoggedIn.getUserId()%>'){
-					html+="<button type='button' class='btn btn-danger' class='followerBtn' value='"+tl.boardSNS.boardWriter+"' onclick='unfollower(this);'>Unfollow</button>";
-					html+="&nbsp;"
-					html+="<button type='button' class='btn btn-dark'>Block</button>";
+				if(tl.boardSNS.boardWriter=='<%=userLoggedIn.getUserId()%>'){
+					html+="<button class='btn btn-success' onclick='updateBoardSNS("+tl.boardSNS.boardNo+")' style='margin-right:2px;'>수정</button>";
+					html+="<button class='btn btn-danger' onclick='deleteBoardSNS("+tl.boardSNS.boardNo+");'>삭제</button>";
 				} 
 				
 				html+="</span>";
@@ -185,24 +298,23 @@ function pageMore(cPage){
 				html+="</td>";		
 				html+="</tr>";
 				html+="</table>"
+				html+="</div>";
 			});
-			if(<%=totalPage%> >0){
-				html+="<div id='trMore'>&nbsp;</div>";
+			
+			if((<%=new SNSService().selectBoardSNSCnt(mypage) %> - $(".tbl-boardsns").length) >0){
+				html+="<div id='trMore'>더보기</div>";
 			}
+			
 		$("#myBoardList").append(html);
 		
 
 		$("#trMore").click(function(e){
-			var nextPage = Number($(e.target).val()) + 1;
-			pageMore(nextPage);
+			pageMore($(this).prev().attr('id').substr(7));
 			$(this).remove();
 		});
 		
-		//cPage값을 #btn-more에 저장하기
-		$("#trMore").val(cPage).text("더보기("+cPage+"/<%=totalPage %>)");
-		
 		//마지막 페이지인 경우, 더보기 버튼 비활성화
-		if(cPage == <%=totalPage%>){
+		if($('.tbl-boardsns').last().attr('id').substr(7) <= '<%=lastBoardNo%>'){
 			$("#trMore").remove();
 		}
 			
@@ -234,7 +346,7 @@ function pageMore(cPage){
 .wrapper{
 	position:relative;
 }
-#autoComplete{
+#mautoComplete{
 	display: none;
 	background: white;
 	min-width: 253px;
@@ -245,20 +357,20 @@ function pageMore(cPage){
 	padding: 0;
 	margin: 0;
 }
-#autoComplete li{
+#mautoComplete li{
 	padding: 0 10px;
 	list-style: none;
 	cursor: pointer;
 }
-#autoComplete li.sel{
+#mautoComplete li.sel{
 	background: gray;
 	color: white;
 }
 
-#search{
+#msearch{
 	margin-bottom: 5px;
 }
-#searchFrm{
+#msearchFrm{
 	display: inline;
 	position: relative;
 }
@@ -437,15 +549,61 @@ p.card-text{
 	padding-bottom: 10px;
 }
 
+#postFrm{
+	width:540px;
+	margin:0 auto;
+	text-align:center;
+	position: absolute;
+	left:220px;
+	top: 50px;
+	display:none;
+	border : 1px solid;
+	border-collapse: collapse;
+	padding: 10px;
+	z-index: 99;
+	background: white;
+}
 
 
+#postFrm td{
+	padding: 10px;
+	width: 520px;
+	text-align:left;
+	/* border:1px solid;
+	border-collpase: collapse; */
+}
+#postFrm td.review-img{
+	padding-top: 0px;
+	width: 50px;
+	height: 50px;
+}
 
 
+.imgs_wrap{
+	display:none;
+	text-align: center;
+    vertical-align: middle;
+    table-layout: fixed;
+    width:100%;
+}
 
+.imgs_wrap img{
+	width: 95px;
+	height: 95px;
+	margin: 0 2px;
+}
 
-
-
-
+.imgs{
+	display: table-cell;
+	max-width: 100px;
+	font-size:0.8em;
+	
+	#post{
+	position: absolute;
+	top:10px;
+	left: 698px;
+	border: 1px solid;
+}
 
 
 </style>

@@ -38,15 +38,14 @@ public class SnsMainServlet extends HttpServlet {
 		//1.business logic
 		//총페이지 = 올림(총게시물/numPerPage)
 		int totalContents = new SNSService().selectBoardSNSCnt(userId);
-		final int numPerPage = 5;
-		int totalPage = (int)Math.ceil(totalContents*1.0/numPerPage);
-		System.out.println("totalPage="+totalPage);
-				
-		//2.view단 처리
-		request.setAttribute("totalPage", totalPage);
+		int lastBoardNo = new SNSService().selectLastBoardNo(userId);
 		
+				
+		//2.view단 처
 		if(profileSNS!=null) {
 			request.setAttribute("profileSNS", profileSNS);
+			request.setAttribute("totalContents", totalContents);
+			request.setAttribute("lastBoardNo", lastBoardNo);
 			request.getRequestDispatcher("/WEB-INF/views/story/storyMain.jsp").forward(request, response);
 		}
 		else if(profileSNS==null){

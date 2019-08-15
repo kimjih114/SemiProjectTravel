@@ -15,9 +15,9 @@
  	
 	List<String> blockLoggedInList = new SNSService().selectOneIdBlock(userLoggedIn.getUserId());
  	List<String> followLoggedInList = new SNSService().selectOneIdFollow(userLoggedIn.getUserId());
-	int totalPage = (Integer)request.getAttribute("totalPage");
+ 	int totalContents = (Integer)request.getAttribute("totalContents");
+	int lastBoardNo = (Integer)request.getAttribute("lastBoardNo");
 	
-	System.out.println("blockLoggedInList@jsp="+blockLoggedInList);
 	
 
 %> 
@@ -28,8 +28,8 @@
 function updateHeaderText(){
 	var headertext = $("#headerBefore").text();
 	
-	var html = "<input type='text' id='headerAfter' name='headerAfter' value='"+headertext+"'/>";
-	html += "<button id='headerAfterBtn' onclick='headerTextModify();' style='margin-left:10px;'>edit</button>"
+	var html = "<input type='text' id='headerAfter' name='headerAfter' value='"+headertext+"'/ size='20'>";
+	html += "<button id='headerAfterBtn' class='btn btn-light' onclick='headerTextModify();' style='margin-left:10px; width:60px;'>edit</button>"
 	$("#headerBeforeBtn").remove();
 	
 	$("#headerFrm").html(html);
@@ -40,7 +40,7 @@ function updateNickName(){
 	var nickname = $("#nickBefore").text();
 	
 	var html = "<input type='text' id='nickAfter' name='nickafter' value='"+nickname+"' size='10' />";
-	html += "<button id='nickAfterBtn' onclick='nickNameModify();' style='margin-left:10px;'>edit</button>"
+	html += "<button id='nickAfterBtn'class='btn btn-light' onclick='nickNameModify();' style='margin-left:10px; width:60px;'>edit</button>"
 	$("#nickBeforeBtn").remove();
 	
 	$("#nickFrm").html(html);
@@ -51,7 +51,7 @@ function updateIntroduce(){
 	var intro = $("#introBefore").text();
 	
 	var html = "<textarea name='introAfter' id='introAfter' cols='20' rows='4'>"+intro+"</textarea>";
-	html += "<button id='introAfterBtn' onclick='introModify();' style='float:right; margin-right: 14px;'>edit</button>"
+	html += "<button id='introAfterBtn' class='btn btn-light' onclick='introModify();' style='float:right; margin-right: 14px; width:60px;'>edit</button>"
 	$("#introBeforeBtn").remove();
 	
 	$("#introFrm").html(html);
@@ -77,7 +77,7 @@ function headerTextModify(){
 		type : "post",
 		success : function(data){
 			var html = "<span id='headerBefore'>"+headertext+"</span>";
-			html+="<button id='headerBeforeBtn' onclick='updateHeaderText();'>edit</button>";
+			html+="<button id='headerBeforeBtn' class='btn btn-light' style='width:60px;' onclick='updateHeaderText();'>edit</button>";
 			$("#headerFrm").html(html);
 		},
 		error : function(data){
@@ -107,7 +107,7 @@ function nickNameModify(){
 		type : "post",
 		success : function(data){
 			var html = "<span id='nickBefore'>"+nickname+"</span>";
-			html+="<button id='nickBeforeBtn' onclick='updateNickName();'>edit</button>";
+			html+="<button id='nickBeforeBtn' class='btn btn-light' style='width:60px; onclick='updateNickName();'>edit</button>";
 			$("#nickFrm").html(html);
 		},
 		error : function(data){
@@ -136,7 +136,7 @@ function introModify(){
 		type : "post",
 		success : function(data){
 			var html = "<span id='introBefore'>"+intro+"</span>";
-			html+="<button id='introBeforeBtn' onclick='updateIntroduce();'>edit</button>";
+			html+="<button id='introBeforeBtn' class='btn btn-light' style='width:60px; onclick='updateIntroduce();'>edit</button>";
 			$("#introFrm").html(html);
 		},
 		error : function(data){
@@ -160,11 +160,10 @@ function follow(){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
-				if(data>0){
 					if($('.followerTr').length>0){
 						$('.followerTr').remove();
 						$('.follower').remove();				
-					}
+					
 					var html = "<tr class='followerTr'><td class='follower'>팔로워</td></tr>";
 					$("#tbl-followmenu").append(html);
 					
@@ -235,7 +234,6 @@ function unfollow(){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){	
-				if(data>0){
 					$("#followBtn").removeClass("btn-danger");
 					$("#followBtn").addClass("btn-success");
 					$("#followBtn").html("Follow");
@@ -250,8 +248,6 @@ function unfollow(){
 					if($('#follower-container').length>0){
 						location.href='<%=request.getContextPath() %>/story/storyMain?mypage=<%=mypage %>';
 					}
-				}
-				
 			},
 			error : function(data){
 				console.log("ajax처리실패");
@@ -276,7 +272,6 @@ function block(){
 		dataType: 'json',
 		type : 'post',
 		success : function(data){
-			if(data>0){
 				$("#followBtn").remove();
 				$("#blockBtn").removeClass("btn-dark");
 				$("#blockBtn").addClass("btn-light");
@@ -285,8 +280,6 @@ function block(){
 				
 				$("#blockBtn").off("click");
 				$("#blockBtn").on("click", unblock);
-			}
-			
 		},
 		error : function(data){
 			console.log("ajax처리실패");
@@ -311,7 +304,6 @@ function unblock(){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
-				if(data>0){
 					$(".greenArea").append("<button type='button' class='btn btn-success' id='followBtn' onclick='follow();'>Follow</button>");
 					
 					$("#blockBtn").removeClass("btn-light");
@@ -321,8 +313,6 @@ function unblock(){
 					
 					$("#blockBtn").off("click");
 					$("#blockBtn").on("click", block);
-			
-				}
 			},
 			error : function(data){
 				console.log("ajax처리실패");
@@ -337,25 +327,19 @@ function unblock(){
 
 	
 </script>
-
-
  <header class="masthead" style="height:300px;">
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
        		<div id="headerFrm">
 				<span id="headerBefore"><%=profileSNS.getHeaderText()!=null? profileSNS.getHeaderText() : profileSNS.getUserNickname()+"의 홈" %></span>
 				<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
-					<button id="headerBeforeBtn" onclick="updateHeaderText();" style='margin-left:10px;'>edit</button>
+					<button id="headerBeforeBtn" onclick="updateHeaderText();" style='margin-left:10px;' class="btn btn-light">edit</button>
 				<%}%>
 			</div>
         </div>
      </div>
   </header>
   
-  <form action="" name="memomsgFrm">
-	<input type="hidden" name="msgform" />
-</form>
-	  
 <section class="page-top" style="padding:0px; !important;">
 	  <nav id="sideNav">
 		<div id="profile-header">
@@ -363,14 +347,15 @@ function unblock(){
 	      <div id="nickFrm">
 	      	<span id="nickBefore" style="font-weight: 700;"><%=profileSNS.getUserNickname() %></span>
 	      	<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
-	      		<button id="nickBeforeBtn" onclick="updateNickName();">edit</button>
+	      		<button id="nickBeforeBtn" onclick="updateNickName();" class="btn btn-light">edit</button>
 	      	<%}%>
+	      	</div>
 	      	<div id="introFrm" style="margin-top: 10px;">
 			<span id="introBefore"><%=profileSNS.getUserIntroduce()!=null? profileSNS.getUserIntroduce(): "안녕하세요. 저는 " + profileSNS.getUserNickname() +"입니다." %></span>
 			<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
-					<button id="introBeforeBtn" onclick="updateIntroduce();">edit</button>
+					<button id="introBeforeBtn" onclick="updateIntroduce();" class="btn btn-light">edit</button>
 			<%} %>
-	 	</div>
+	 		</div>
 	 
 	      	<% if(userLoggedIn!=null && !mypage.equals(userLoggedIn.getUserId())){%>
 					<%if(followLoggedInList.contains(mypage)){	%>
@@ -386,7 +371,6 @@ function unblock(){
 					<% }
 					}
 			} %>
-		</div>
 	   </div>
 	    <table class="tbl-usermenu">
 	   		<tr>
@@ -396,10 +380,10 @@ function unblock(){
 	   	<table class="tbl-usermenu" id="tbl-followmenu">
    	 		<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)) {%>
 		   		<tr>
-		   			<td id="gomsg">메시지</td>
+		   			<td>메시지</td>
 		   		</tr>
 	   		<%} %>
-	   		<tr >
+	   		<tr>
 	   			<td>검색</td>
 	   		</tr>
 	   		
@@ -568,16 +552,20 @@ div#profile-header{
 	width:105px;
 }
 
+#headerBeforeBtn, #nickBeforeBtn, #introBeforeBtn{
+	width: 60px;
+}
+
 </style>	  
 	  
 	  <script>
  $(()=>{
 	 var param = {
 			 mypage : '<%=mypage%>',
-			 totalPage : '<%=totalPage%>'
+			 totalContents : '<%=totalContents%>',
+			 lastBoardNo : '<%=lastBoardNo%>'
 		}
 		$.ajax({	 
-			
 			url: "<%=request.getContextPath() %>/ajax/home.jsp",
 			data:param,
 			success: function(data){
@@ -588,18 +576,18 @@ div#profile-header{
 				console.log(jqxhr, textStatus, errorThrown);
 			},
 			complete: function(){
-				console.log("complete!!!");
+	
 			}
 		});
  })
 
  
-
  
  	$("#gohome").on("click", function(){
  		var param = {
  				 mypage : '<%=mypage%>',
- 				 totalPage : '<%=totalPage%>'
+ 				 totalContents : '<%=totalContents%>',
+ 					lastBoardNo : '<%=lastBoardNo%>'
  			}
  			$.ajax({	 
  				
@@ -653,11 +641,9 @@ div#profile-header{
 		
 	$("#QuestionList").on("click", function(){
 		location.href="<%=request.getContextPath()%>/boardquestion/boardList"; 
-	});
- 	
- 	
- 	 
- 	$("#gomsg").on("click", function(){
+	})
+	
+	$("#gomsg").on("click", function(){
 
  			var url="<%=request.getContextPath()%>/story/memomsg";
  			var title="popup"; 
@@ -674,4 +660,4 @@ div#profile-header{
  	});
 
 	</script>
-	
+	  

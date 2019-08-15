@@ -41,8 +41,6 @@ public class EncryptFilter implements Filter {
 		HttpServletRequest httpReq = (HttpServletRequest)request;
 		EncryptWrapper encWrapper = new EncryptWrapper(httpReq); 
 		
-		System.out.println("[[암호화wrapper처리됨]]");
-		
 		chain.doFilter(request, response);
 	}
 

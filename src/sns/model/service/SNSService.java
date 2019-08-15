@@ -147,9 +147,9 @@ public class SNSService {
 		return totalContents;
 	}
 
-	public List<BoardSNS> selectBoardSNSMore(String mypage, int cPage, int numPerPage) {
+	public List<BoardSNS> selectBoardSNSMore(String mypage, int boardNo, int numPerPage) {
 		Connection conn = getConnection();
-		List<BoardSNS> list = new SNSDAO().selectBoardSNSMore(conn, mypage, cPage, numPerPage);
+		List<BoardSNS> list = new SNSDAO().selectBoardSNSMore(conn, mypage, boardNo, numPerPage);
 		close(conn);
 		return list;
 	}
@@ -212,6 +212,36 @@ public class SNSService {
 		List<String> blocedkOneList=new SNSDAO().selectOneIdBlocked(conn, userBlocked);
 		close(conn);
 		return blocedkOneList;
+	}
+
+	public int selectLastBoardNo(String userId) {
+		Connection conn = getConnection();
+		int result = new SNSDAO().selectLastBoardNo(conn, userId);
+		close(conn);
+		return result;
+	}
+
+	public int deleteBoardSNS(int boardNo) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().deleteBoardSNS(conn, boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public List<String> selectRenamedFileNames(int boardNo) {
+		Connection conn=getConnection();
+		List<String> list =new SNSDAO().selectRenamedFileNames(conn, boardNo);
+		close(conn);
+		return list;
+	}
+
+	public BoardSNS selectBoardSNS(int boardNo) {
+		Connection conn=getConnection();
+		BoardSNS boardSNS=new SNSDAO().selectBoardSNS(conn, boardNo);
+		close(conn);
+		return boardSNS;
 	}
 
 	

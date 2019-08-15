@@ -6,7 +6,9 @@
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 	String mypage = request.getParameter("mypage");
 	User mypageUser = new UserService().selectOne(mypage);
- 	int totalPage = Integer.parseInt(request.getParameter("totalPage"));
+ 	int totalContents = Integer.parseInt(request.getParameter("totalContents"));
+ 	int lastBoardNo= Integer.parseInt(request.getParameter("lastBoardNo"));
+ 	
 %>
 
 <style>
@@ -87,9 +89,8 @@
 #post{
 	position: absolute;
 	top:10px;
-	left: 705px;
+	left: 698px;
 	border: 1px solid;
-	padding: 0px 10px;
 }
 
 #post{
@@ -101,7 +102,7 @@
 	text-align:center;
 	position: absolute;
 	left:220px;
-	top: 40px;
+	top: 50px;
 	display:none;
 	border : 1px solid;
 	border-collapse: collapse;
@@ -110,10 +111,6 @@
 	background: white;
 }
 
-#postFrm tr{
-	/* border : 1px solid;
-	border-collapse: collapse; */
-}
 
 #postFrm td{
 	padding: 10px;
@@ -151,7 +148,7 @@
 
 </style>
     <!-- post폼 -->
-<div id="post">post</div>
+<button id="post" class="btn btn-primary">post</button>
 	<form action="" name="snsUpload"
 					id="snsUpload"
 					method="post"
@@ -333,7 +330,8 @@ $(function() {
 		if($(this).attr('data-tab')=='tab2'){	
 			var param = {
 					mypage : '<%=mypage %>',
-					totalPage : '<%=totalPage %>'
+					totalContents : '<%=totalContents %>',
+					lastBoardNo : '<%=lastBoardNo %>'
 			}
 			
 				$.ajax({
@@ -357,15 +355,31 @@ $(function() {
 });
 	
 $("#post").click(function(){
-
- 	contentids = [];
+	
+	$(this).text("back").css("left","695px");
 	
 	if($("#postFrm").css('display')=='block'){
 		$("#postFrm").css('display', 'none');
 		$("#tab-container").css("opacity", "1");
+		$("#post").text("post").css("left","698px");
 		return;
+	
 	}
 	
+	contentids = [];
+	grades=[];
+	filesTempArr=[];
+	contenttypes=[];
+	contentthumbnails  = [];
+	contenttitles = [];
+	contentaddresses = [];
+	
+	$("#postFrm").css('display', 'none');
+	$("#tab-container").css("opacity", "1");
+	$("#fileupload").val("");
+	$("#reviewContent").val('');
+	$(".imgs").remove();
+	$("#public").prop('checked', true);
 	
 	$("#postFrm").css('display', 'block');
 	$("#tab-container").css("opacity", "0.5");
@@ -430,7 +444,13 @@ function handleImgsFilesSelect(e){
 		var reader = new FileReader();
 		reader.onload = function(e){
 			var html = "<div class='imgs'><img src=\""+e.target.result+"\" />";
-			html += "<div><span>"+f.name+"</span><br>";
+		 	var filename = f.name;
+		 	
+		 	if(filename.length>7){
+		 		var dot = filename.substring(filename.indexOf('.'));
+		 		filename = filename.substr(0, 7) + "..." +  dot;
+		 	}
+			html += "<div><span>"+filename+"</span><br>";
 			html += "<span>("+(f.size)/1000+"kb)</span><div></div>";
 			$(".imgs_wrap").append(html);
 			
@@ -508,11 +528,16 @@ $("#btnSubmit").click(function(event){
 			grades=[];
 			filesTempArr=[];
 			contenttypes=[];
+			contentthumbnails  = [];
+			contenttitles = [];
+			contentaddresses = [];
+			
 			$("#postFrm").css('display', 'none');
 			$("#tab-container").css("opacity", "1");
 			$("#fileupload").val("");
 			$("#reviewContent").val('');
 			$(".imgs").remove();
+			$("#public").prop('checked', true);
 			
 	     }
 	 });

@@ -2,7 +2,6 @@ package sns.model.vo;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 
 public class BoardSNS implements Serializable {
 	/**

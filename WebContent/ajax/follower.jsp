@@ -362,10 +362,7 @@ function unfollower(btn){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){	
-				
 				$(btn).parent().parent().parent().remove();
-				
-				
 			},
 			error : function(data){
 				console.log("ajax처리실패");
@@ -389,9 +386,8 @@ function follower(btn){
 		data : param,
 		dataType: 'json',
 		type : 'post',
-		success : function(data){		
+		success : function(data){	
 			$(btn).parent().parent().parent().remove();
-			
 		},
 		error : function(data){
 			console.log("ajax처리실패");

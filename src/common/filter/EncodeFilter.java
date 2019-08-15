@@ -31,7 +31,6 @@ public class EncodeFilter implements Filter{
 		String encodeType = filterConfig.getInitParameter("encodeType"); 
 		
 		request.setCharacterEncoding(encodeType);
-		System.out.println("[[Encoding:"+encodeType+"처리됨!!]]");
 		
 		chain.doFilter(request, response);
 	}

@@ -1,20 +1,81 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	String[] mcontentids = request.getParameterValues("mcontentids");
+	String[] mcontenttypes = request.getParameterValues("mcontenttypes");
+	String[] mcontentthumbnails = request.getParameterValues("mcontentthumbnails");
+	String[] mcontenttitles = request.getParameterValues("mcontenttitles");
+	String[] mcontentaddresses = request.getParameterValues("mcontentaddresses");
+	
 
+%>
+    
  <script type="text/javascript">
-	var contentids = new Array();
-	var contenttypes = new Array();
-	var contentthumbnails = new Array();
-	var contenttitles = new Array();
-	var contentaddresses = new Array();
-	var sido1;
-	var gugun1;
+	var mcontentids = new Array();
+	var mcontenttypes = new Array();
+	var mcontentthumbnails = new Array();
+	var mcontenttitles = new Array();
+	var mcontentaddresses = new Array();
+	var msido1;
+	var mgugun1;
 
- 	
+$(()=>{
+	<%if(mcontentids!=null){%>
+	<%for(String contentid : mcontentids){%>
+		mcontentids.push('<%=contentid%>');
+	<%}%>
+	<%for(String contenttype : mcontenttypes){%>
+		mcontenttypes.push('<%=contenttype%>');
+	<%}%>
+	<%for(String contentthumbnail : mcontentthumbnails){%>
+	mcontentthumbnails.push('<%=contentthumbnail%>');
+	<%}%>
+	<%for(String contenttitle : mcontenttitles){%>
+	mcontenttitles.push('<%=contenttitle%>');
+	<%}%>
+	<%for(String contentaddress : mcontentaddresses){%>
+	mcontentaddresses.push('<%=contentaddress%>');
+<%}%>
+<%}%>
+	
+	if(mcontentids!=null){
+		
+		for(var q=0; q<mcontentids.length; q++){
+			var html='';
+			html+="<div class='card h-100'>";
+				html+="<a href='#' class='goInfo'><img class='card-img-top' src='"+mcontentthumbnails[q]+"'></a>";
+					html+="<div class='caption'>"
+						html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
+							html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+mcontentids[q]+"&contentTypeId="+mcontenttypes[q]+"' target='_blank'>"+mcontenttitles[q]+"</a>";
+							html+="<div class='contentid' style='display:none'>"+mcontentids[q]+"</div>"+"</h4>";
+							html+="<p class='card-text'>"+mcontentaddresses[q]+"</p>"
+					html+="</div>";
+				html+="</div>";
+				html+="<div class='starRev'>";
+					html+="<span class='mstarR on' onclick='star(this);'>별1</span>";
+					html+="<span class='mstarR' onclick='star(this);'>별2</span>";
+					html+="<span class='mstarR' onclick='star(this);'>별3</span>";
+					html+="<span class='mstarR' onclick='star(this);'>별4</span>";
+					html+="<span class='mstarR' onclick='star(this);'>별5</span>";
+					html+="</div>"
+					html+="</div>";
+					
+					$("#mcontents").append(html);
+			
+		}
+		
+		
+		
+	}
+	
+})
+	
+	
  function closeDiv(div){
-	 contentids.pop(contentids.indexOf($(div).next().children().html()));
+	 mcontentids.pop(mcontentids.indexOf($(div).next().children().html()));
 	 $(div).parent().parent().remove();
-	 console.log(contentids);
+	 console.log(mcontentids);
  }
  
  function star(span){
@@ -23,9 +84,9 @@
 	  return false;
  };
 
- 	$("#search").on("click", function(){
- 		sido1 = $("#sido1").val();
- 		gugun1 = $("#gugun1").val();
+ 	$("#msearch").on("click", function(){
+ 		msido1 = $("#msido1").val();
+ 		mgugun1 = $("#mgugun1").val();
  	});
  	
   $('document').ready(function() {
@@ -49,7 +110,7 @@
 	   var area17 = ["남제주군","북제주군","서귀포시","제주시"];
 
 
- $("select[name^=sido]").each(function() {
+ $("select[name^=msido]").each(function() {
 	  $selsido = $(this);
 	  $.each(eval(area0), function(idx) {
 	   	$selsido.append("<option value='"+idx+"'>"+this+"</option>");
@@ -58,11 +119,11 @@
  });
 
 
- $("select[name^=sido]").change(function() {
+ $("select[name^=msido]").change(function() {
   var area = "area"+$("option",$(this)).index($("option:selected",$(this)));
   var $gugun = $(this).next(); // 선택영역 군구 객체
   $("option",$gugun).remove(); // 구군 초기화
-  $("#search").val('');
+  $("#msearch").val('');
   
   
   if(area == "area0")
@@ -87,8 +148,9 @@
    }
 
    function searchList(e){
+	
    	var $sel = $(".sel");
-   	var $li = $("#autoComplete li");
+   	var $li = $("#mautoComplete li");
    	
    	if(e.key == "ArrowDown"){
    		if($sel.length == 0){
@@ -115,10 +177,10 @@
    	
    	else if(e.key == "Enter"){
    		$(e.target).val($sel.text());
-   		$("#search").val($(e.target).text().replace('+', ''));
-   		$("#autoComplete").hide().children().remove();
+   		$("#msearch").val($(e.target).text().replace('+', ''));
+   		$("#mautoComplete").hide().children().remove();
    		$.ajax({
-   			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=S0BJm1yXPPy5UgmsERf%2BnJjnz9RkRpbFJVQXS93Ql6%2B1xk5T%2FQa15nogO4%2BOrWRSf0fo7RFFcdGsODeGZ%2BW6dQ%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=S0BJm1yXPPy5UgmsERf%2BnJjnz9RkRpbFJVQXS93Ql6%2B1xk5T%2FQa15nogO4%2BOrWRSf0fo7RFFcdGsODeGZ%2BW6dQ%3D%3D&contentTypeId=&areaCode="+msido1+"&sigunguCode="+mgugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
 				type: "get",
 				dataType: "xml",
 				success:function(data){			
@@ -126,14 +188,14 @@
 					var $items=$root.find("item");
 					var html = "";
 					
-					if($(contentids).length>=3){
+					if($(mcontentids).length>=3){
 						alert("여행지는 3개까지 등록 가능합니다.");
 						return;
 					}
 					$items.each(function(i,m){
 						if($(m).find("title").text()==$sel.text().replace('+', '')){
-							if(contentids.length>0){
-								  if(contentids.indexOf($(m).find("contentid").text())!=-1){
+							if(mcontentids.length>0){
+								  if(mcontentids.indexOf($(m).find("contentid").text())!=-1){
 									  alert("이미 추가된 여행지입니다.");
 									  return;
 								  }
@@ -148,45 +210,46 @@
 									html+="</div>";
 								html+="</div>";
 								html+="<div class='starRev'>";
-									html+="<span class='starR on' onclick='star(this);'>별1</span>";
-									html+="<span class='starR' onclick='star(this);'>별2</span>";
-									html+="<span class='starR' onclick='star(this);'>별3</span>";
-									html+="<span class='starR' onclick='star(this);'>별4</span>";
-									html+="<span class='starR' onclick='star(this);'>별5</span>";
+									html+="<span class='mstarR on' onclick='star(this);'>별1</span>";
+									html+="<span class='mstarR' onclick='star(this);'>별2</span>";
+									html+="<span class='mstarR' onclick='star(this);'>별3</span>";
+									html+="<span class='mstarR' onclick='star(this);'>별4</span>";
+									html+="<span class='mstarR' onclick='star(this);'>별5</span>";
 									html+="</div>"
 									html+="</div>";
 									
 										
 									
-									contentids.push($(m).find("contentid").text());		
-									contenttypes.push($(m).find("contenttypeid").text());
+									mcontentids.push($(m).find("contentid").text());		
+									mcontenttypes.push($(m).find("contenttypeid").text());
 									
-									contentthumbnails.push($(m).find("firstimage").text());
-									contenttitles.push($(m).find("title").text());
-									contentaddresses.push($(m).find("addr1").text());
+									mcontentthumbnails.push($(m).find("firstimage").text());
+									mcontenttitles.push($(m).find("title").text());
+									mcontentaddresses.push($(m).find("addr1").text());
 									
 		
 						}	
 				
 			});
    			
-			 $("#contents").append(html);
-			 $("#search").val('');
+			 $("#mcontents").append(html);
+			 $("#msearch").val('');
    			},
    			error:function(jqxhr,textStatus,errorThrown){
    				
    			}
    		});
    		
+   		
    	}
    	else{
-   		var search = $("#search").val().trim();
+   		var search = $("#msearch").val().trim();
    		
    		if(search.length == 0){
    			return;
    		}else{
    			$.ajax({
-   				url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=S0BJm1yXPPy5UgmsERf%2BnJjnz9RkRpbFJVQXS93Ql6%2B1xk5T%2FQa15nogO4%2BOrWRSf0fo7RFFcdGsODeGZ%2BW6dQ%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   				url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=S0BJm1yXPPy5UgmsERf%2BnJjnz9RkRpbFJVQXS93Ql6%2B1xk5T%2FQa15nogO4%2BOrWRSf0fo7RFFcdGsODeGZ%2BW6dQ%3D%3D&contentTypeId=&areaCode="+msido1+"&sigunguCode="+mgugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    				type: "get",
    				dataType: "xml",
    				success:function(data){
@@ -197,23 +260,23 @@
    					$items.each(function(i,m){
    						
    						if($(m).find("title").text().indexOf(search)==-1){						
-   								$("#autoComplete").hide();							
+   								$("#mautoComplete").hide();							
    						}else{							
    								html += "<li><span style='float:left; color:orange' padding:10px;>+</span>"+$(m).find("title").text()+"</li>";
    														
-   							$("#autoComplete").html(html)
+   							$("#mautoComplete").html(html)
    											  .fadeIn(200);
    						}
    						
    					});
    					
-   					$("#autoComplete li").unbind("click").bind("click", (e=>{						
-   						$("#search").val($(e.target).text().replace('+', ''));
+   					$("#mautoComplete li").unbind("click").bind("click", (e=>{						
+   						$("#msearch").val($(e.target).text().replace('+', ''));
    						//#autoComplete 감춤
-   						$("#autoComplete").hide().children().remove();
+   						$("#mautoComplete").hide().children().remove();
    						
    						$.ajax({
-   							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=S0BJm1yXPPy5UgmsERf%2BnJjnz9RkRpbFJVQXS93Ql6%2B1xk5T%2FQa15nogO4%2BOrWRSf0fo7RFFcdGsODeGZ%2BW6dQ%3D%3D&contentTypeId=&areaCode="+sido1+"&sigunguCode="+gugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
+   							url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=S0BJm1yXPPy5UgmsERf%2BnJjnz9RkRpbFJVQXS93Ql6%2B1xk5T%2FQa15nogO4%2BOrWRSf0fo7RFFcdGsODeGZ%2BW6dQ%3D%3D&contentTypeId=&areaCode="+msido1+"&sigunguCode="+mgugun1+"&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=300&pageNo=1",
    							type: "get",
    							dataType: "xml",
    							success:function(data){			
@@ -223,15 +286,15 @@
    								
    								console.log($items);
    								
-   								if($("contentids").length>=3){
+   								if($("mcontentids").length>=3){
    									alert("여행지는 3개까지 등록 가능합니다.");
    									return;
    								}
    								$items.each(function(i,m){
    									
    									if($(m).find("title").text()==$(e.target).text().replace('+', '')){
-   										if(contentids.length>0){
-   	   									  if(contentids.indexOf($(m).find("contentid").text())!=-1){
+   										if(mcontentids.length>0){
+   	   									  if(mcontentids.indexOf($(m).find("contentid").text())!=-1){
    	   										  alert("이미 추가된 여행지입니다.");
    	   										  return;
    	   									  }
@@ -246,21 +309,21 @@
 														html+="</div>";
 													html+="</div>";
 													html+="<div class='starRev'>";
-														html+="<span class='starR on' onclick='star(this);'>별1</span>";
-														html+="<span class='starR' onclick='star(this);'>별2</span>";
-														html+="<span class='starR' onclick='star(this);'>별3</span>";
-														html+="<span class='starR' onclick='star(this);'>별4</span>";
-														html+="<span class='starR' onclick='star(this);'>별5</span>";
+														html+="<span class='mstarR on' onclick='star(this);'>별1</span>";
+														html+="<span class='mstarR' onclick='star(this);'>별2</span>";
+														html+="<span class='mstarR' onclick='star(this);'>별3</span>";
+														html+="<span class='mstarR' onclick='star(this);'>별4</span>";
+														html+="<span class='mstarR' onclick='star(this);'>별5</span>";
 														html+="</div>"
    													html+="</div>";
    													
    											console.log("imageroot="+$(m).find("firstimage").text());
-   											contentids.push($(m).find("contentid").text());	
+   											mcontentids.push($(m).find("contentid").text());	
    											
-   											contenttypes.push($(m).find("contenttypeid").text());
-   											contentthumbnails.push($(m).find("firstimage").text());
-   											contenttitles.push($(m).find("title").text());
-   											contentaddresses.push($(m).find("addr1").text());
+   											mcontenttypes.push($(m).find("contenttypeid").text());
+   											mcontentthumbnails.push($(m).find("firstimage").text());
+   											mcontenttitles.push($(m).find("title").text());
+   											mcontentaddresses.push($(m).find("addr1").text());
    											
    											
    										
@@ -268,8 +331,8 @@
    									}	
    					
    								});
-   								$("#contents").append(html);
-   							    $("#search").val('');
+   								$("#mcontents").append(html);
+   							    $("#msearch").val('');
    							},
    							error:function(jqxhr,textStatus,errorThrown){
    								
@@ -298,18 +361,18 @@
 	<div align="left">
 		<label for="" style="font-weight: 700;">여행지</label><span style="font-size:0.5em; color:gray;">최대 3개까지 등록 가능합니다.</span>
 		<br />
-		<select name="sido1" id="sido1"></select>
-		<select name="gugun1" id="gugun1"></select>
-		<div id="searchFrm">
+		<select name="msido1" id="msido1"></select>
+		<select name="mgugun1" id="mgugun1"></select>
+		<div id="msearchFrm">
 			<input hidden="hidden" />
-			<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" size="27" /> 
-			<ul id="autoComplete" style="z-index:99;">
+			<input type="search" name="search" id="msearch" placeholder="검색어입력" onkeyup="searchList(event);" size="27" /> 
+			<ul id="mautoComplete" style="z-index:99;">
 						
 			</ul>
 		</div>
 	</div>
-		<div class="row" id="contents" style="margin: 0 auto;">
-			<!-- ajax 내용 들어가는곳 -->									
+		<div class="row" id="mcontents" style="margin: 0 auto;">
+									
 		</div>
 		
 <style>
@@ -320,7 +383,7 @@
 .wrapper{
 	position:relative;
 }
-#autoComplete{
+#mautoComplete{
 	display: none;
 	background: white;
 	min-width: 253px;
@@ -331,28 +394,28 @@
 	padding: 0;
 	margin: 0;
 }
-#autoComplete li{
+#mautoComplete li{
 	padding: 0 10px;
 	list-style: none;
 	cursor: pointer;
 }
-#autoComplete li.sel{
+#mautoComplete li.sel{
 	background: gray;
 	color: white;
 }
 
-#search{
+#msearch{
 	margin-bottom: 5px;
 }
-#searchFrm{
+#msearchFrm{
 	display: inline;
 	position: relative;
 }
-#contents{
+#mcontents{
 padding: 0 10px;
 text-align: center;
 }
-#contents .card-img-top, .goInfo{
+#mcontents .card-img-top, .goInfo{
 width: 150px; height:  150px;
 position: relative;
 }
@@ -416,7 +479,7 @@ p.card-text{
 	curser:pointer;
 	
 }
-.starR{
+.mstarR{
   background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
   background-size: auto 100%;
   width: 30px;
@@ -425,9 +488,9 @@ p.card-text{
   text-indent: -9999px;
   cursor: pointer;
 }
-.starR.on{background-position:0 0;}
+.mstarR.on{background-position:0 0;}
 
-.starRev{
+.mstarRev{
 	margin:0 auto;
 }
 </style>

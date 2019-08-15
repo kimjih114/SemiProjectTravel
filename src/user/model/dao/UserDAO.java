@@ -22,7 +22,6 @@ public class UserDAO {
 		String fileName = UserDAO.class.getResource("/sql/user/user-query.properties").getPath();  
 		try {
 			prop.load(new FileReader(fileName));
-			System.out.println("[[prop loading 완료:"+fileName+"]]");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
