@@ -34,7 +34,6 @@ public class AdminTravelFinderServlet extends HttpServlet {
 		String searchType = request.getParameter("searchType");
 		String searchKeyword = request.getParameter("searchKeyword");
 
-		String type= request.getParameter("foo");
 		
 		final int numPerPage = 10;
 		int cPage = 1;

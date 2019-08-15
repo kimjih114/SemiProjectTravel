@@ -155,4 +155,34 @@ public class TravelService {
 		close(conn);
 		return gradeList;
 	}
+	
+	public Travel selectTravel(String contentId) {
+		Connection conn = getConnection();
+		Travel t = new TravelDAO().selectTravel(conn,contentId);
+		close(conn);
+		return t;
+	}
+
+	public int updateTravel(Travel t, String contentId) {
+		Connection conn = getConnection();
+		int result = new TravelDAO().updateTravel(conn,t);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int deleteTravel(String contentId_) {
+		Connection conn = getConnection();
+		int result = new TravelDAO().deleteTravel(conn,contentId_);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		
+		return result;
+	}
+	
 }

@@ -604,4 +604,81 @@ public class TravelDAO {
 		}
 		return gradeList;
 	}
+
+	public Travel selectTravel(Connection conn, String contentId) {
+		Travel t = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectTravel");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, contentId);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				t = new Travel();
+				
+				t.setContentId(rset.getString("content_id"));
+				t.setTravelName(rset.getString("travel_name"));
+				t.setTravelLocation(rset.getString("travel_location"));
+				t.setThumbnailOriginalFilename(rset.getString("thumbnail_original_filename"));
+				t.setThumbnailRenamedFilename(rset.getString("thumbnail_renamed_filename"));
+				t.setTravelDate(rset.getDate("travel_date"));
+				t.setTravelContent(rset.getString("travel_content"));
+				t.setTravelOfficierName(rset.getString("travel_officier_name"));
+				t.setTravelOfficierphone(rset.getString("travel_officer_phone"));
+				t.setTravelType(rset.getString("travel_type"));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return t;
+	}
+
+	public int updateTravel(Connection conn, Travel t) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateTravel");
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, t.getTravelName());
+			pstmt.setString(2, t.getTravelLocation());
+			pstmt.setString(3, t.getThumbnailOriginalFilename());
+			pstmt.setString(4, t.getThumbnailRenamedFilename());
+			pstmt.setString(5, t.getTravelContent());
+			pstmt.setString(6, t.getTravelOfficierName());
+			pstmt.setString(7, t.getTravelOfficierphone());
+			pstmt.setString(8, t.getTravelType());
+			pstmt.setString(9, t.getContentId());
+			
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteTravel(Connection conn, String contentId_) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteTravel");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, contentId_);
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

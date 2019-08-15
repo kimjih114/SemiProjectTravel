@@ -271,7 +271,7 @@ numPerPage{
   			</div>
   			</div>
   		<br /><br /><br />
-  		<table id="tbl-travel">
+  		<table id="tbl-travel"style="margin:0 auto;">
   			<thead>
   			<tr>
   				<th>업체 이름</th>
@@ -295,7 +295,12 @@ numPerPage{
   					<a href="<%=request.getContextPath()%>">
   					<%=t.getTravelName() %></a>
   				</td>
-  				<td><%=t.getTravelType() %></td>
+  				<td><%switch(t.getTravelType()){
+  					case "P" :%>여행지<%;break;
+					case "A" :%>숙소<%;break;
+					case "R" :%>맛집<%;break;
+					case "E" :%>놀거리<%;break;
+					case "S" :%>쇼핑<%;break;}%></td>
   				<td><%=t.getTravelOfficierName()%></td>
   				<td><%=t.getTravelOfficierphone()%></td>
   			</tr>
@@ -305,7 +310,7 @@ numPerPage{
   			%>
   			</tbody>
   		</table>
-  		<div id="pageBar">
+  		<div id="pageBar"style="text-align:center">
   			<%=pageBar %>
   		</div>
 </div>
