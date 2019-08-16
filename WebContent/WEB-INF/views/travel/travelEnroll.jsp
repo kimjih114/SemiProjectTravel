@@ -184,7 +184,7 @@ section#page-top{
    			<td id="business_List" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 목록</td>
    		</tr>
    		<tr>
-   			<td>블랙리스트 관리</td>
+   			<td>공지사항 메시지</td>
    		</tr>
    		<tr>
    			<td>문의관리</td>

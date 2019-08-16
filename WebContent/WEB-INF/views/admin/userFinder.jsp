@@ -227,7 +227,7 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
    			<td id="business_List" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 목록</td>
    		</tr>
    		<tr>
-   			<td>공지사항 등록</td>
+   			<td>공지사항 메시지</td>
    		</tr>
    		<tr>
    			<td>문의관리</td>
