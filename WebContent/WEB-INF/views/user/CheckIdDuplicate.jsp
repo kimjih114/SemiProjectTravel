@@ -10,7 +10,8 @@
 <meta charset="UTF-8">
 <title>아이디 중복검사</title>
 <script src = "<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
-s<link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
 <style>
 #checkId-container{
 	text-align : center;
@@ -20,7 +21,35 @@ span#duplicated{
 	color : red;
 	font-weight : bold;
 }
+#exit{
+	background-color : #FEC810;
+	border-style : none;
+	font-weight : bold;
+}
+#again{
+	background-color : #FEC810;
+	border-style : none;
+	font-weight : bold;
+	padding-top : 10px;
+	margin-top : 10px;
 
+}
+#uRam{
+	top:0;
+	background-color:#212529;
+	color : orange;
+	font-size : 30px;
+}
+.check_id{
+	font-size : 25px;
+	font-color : orange;
+	text-decoration : underline;
+}
+#userId_{
+	margin-left : 70px;
+	margin-top : 10px;
+	
+}
 </style>
 <script>
 function checkIdDuplicate(){
@@ -36,33 +65,49 @@ function checkIdDuplicate(){
 	frm.submit();
 }
 
+function checkIdDulplicate(){
+	
+	var userId_ = $("#userId").val().trim();
+	if(userId_.length < 4){
+		alert("아이디는 4 글자 이상 입력하세요.");
+		return;
+	}
+
+	
+	//폼과 팝업 연결
+	var frm = document.checkIdDuplicateFrm;
+	frm.userId.value = userId_;
+	frm.submit();
+	
+}
+
 </script>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-</nav>
-<div id="checkId-container">
+<div id="uRam">&nbsp;유람</div>
+
+<div id="checkId-container" style="padding-top : 20px;text-align:center;">
 	<% if(isUsable == true){ %>
-		[<span><%=userId%></span>]는 사용 가능합니다.
-		<br><br>
-		<button type="button" onclick="setUserId();" class="btn btn-primary">닫기</button>
+		<span class="check_id"><%=userId%></span> 는 사용 가능합니다.
+		<br>
+		<button type="button" onclick="setUserId();" class="btn btn-primary" id="exit">닫기</button>
 	<%} else { %>
-		[<span><%=userId%></span>]는 이미 사용중입니다. 
+		<span style="font-weight : bold;"><%=userId%></span>는 이미 사용중입니다. 
 		<form action="<%=request.getContextPath()%>/enroll/CheckIdDuplicate"
+			  id="checkIdDuplicateFrm"
 			  name="checkIdDuplicateFrm"
 			  method="post">
-			<input type="text" name="userId"
-				   id="userId"
-				   placeholder="아이디를 입력하세요." />
-			<button type="button" 
-				    onclick="checkIdDuplicate();">
+			      <input type="text" class="form-control" id="userId_" aria-describedby="emailHelp" placeholder="ID" name="userId_" style="width:200px;">
+			
+			<button type="button" class="btn btn-primary" id="again"
+				    onclick="checkIdDuplicate();" style="padding-top:5px;">
 				중복검사
 			</button>
 		</form>
 	
 	<% } %>
-		<br><br>
+		
 </div>
 <script>
 function setUserId(){
