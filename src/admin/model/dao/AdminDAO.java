@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import admin.model.vo.AdminRoom;
+import admin.model.vo.RoomImage;
 import user.model.vo.User;
 
 public class AdminDAO {
@@ -282,6 +284,55 @@ public class AdminDAO {
 			close(pstmt);
 		}
 		return totalUser;
+	}
+	public int adminRoomInsert(Connection conn, AdminRoom a) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		String sql=prop.getProperty("adminRoomInsert");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, a.getContentId());
+			pstmt.setString(2, a.getRoomName());
+			pstmt.setInt(3, a.getRoomWeekDayHighPrice());
+			pstmt.setInt(4, a.getRoomWeekDayLowPrice());
+			pstmt.setInt(5, a.getRoomWeekEndHighPrice());
+			pstmt.setInt(6, a.getRoomWeekEndLowPrice());
+			pstmt.setString(7, a.getRoomSize());
+			pstmt.setString(8, a.getRoomPerson());
+			pstmt.setString(9, a.getContent());
+			
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	public int adminRoomImageInsert(Connection conn, RoomImage r) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		String sql=prop.getProperty("adminRoomImageInsert");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, r.getContentId());
+			pstmt.setString(2, r.getRoomName());
+			pstmt.setString(3, r.getOriginalFileName1());
+			pstmt.setString(4, r.getRenameFileName1());
+			pstmt.setString(5, r.getOriginalFileName2());
+			pstmt.setString(6, r.getRenameFileName2());
+			pstmt.setString(7, r.getOriginalFileName3());
+			pstmt.setString(8, r.getRenameFileName3());
+						
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }

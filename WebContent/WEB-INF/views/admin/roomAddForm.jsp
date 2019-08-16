@@ -1,15 +1,9 @@
-<%@page import="travel.model.vo.Travel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="java.util.List"%>
-<%
-	List<Travel> list = (List<Travel>)request.getAttribute("list");
-	String pageBar = (String)request.getAttribute("pageBar");
-	int numPerPage = (int)request.getAttribute("numPerPage");
-%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
-<link rel="stylesheet" href="selectbox.min.css">
-<script src="selectbox.min.js"></script>
+<%
+	String contentId=request.getParameter("contentId");
+%>
 
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -37,40 +31,7 @@
 
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
-
-<script>
-
-$(()=>{
-	$("#numPerPage").on("change",()=>{
-		$("#numPerPageFrm").submit();
-	});
-	
-	
-	
-	
-});
-
-	$("#modifyUserInfo").click(function(){
-		
-		$.ajax({
-	        type : "GET",
-	        url : "<%=request.getContextPath() %>/my",
-	        dataType : "text",
-	        error : function() {
-	          alert('통신실패!!');
-	        },
-	        success : function(data) {
-	          $('#Context').html(data);
-	        }
-	 
-	  });
-
-
-})
-
-
-</script>
-  <style>
+ <style>
 .page-top{
 	width: 1024px;
 	position : relative;
@@ -127,7 +88,7 @@ table{
 	margin-bottom: 30px;
 }
 
-#tbl-usermenu0 tr :hover{
+table tr :hover{
 	cursor: pointer;
 	color: orangered;
 	
@@ -167,8 +128,8 @@ section#page-top{
 }
 #content{
 	position : absolute;
-	top : 8%;
-	left : 30%;
+	top : 5%;
+	left : 28%;
 }
 #content table{
 	border-collapse : collapse;
@@ -191,15 +152,6 @@ section#page-top{
 #content table tr:nth-child(2n){
 	background-color:#f7f2eb;
 }
-div#search-container{
-	margin : 0 0 10px;
-	padding : 3px;
-}
-div#search-travelName{display: inline-block;}
-numPerPage{
-	float : right;
-}
-
 </style>
   
  <header class="masthead" style="height:300px;">
@@ -222,14 +174,14 @@ numPerPage{
 
    <table id="tbl-usermenu0">
    	 <tr>
-	<td id="modifyUserInfo" onclick="location.href='<%=request.getContextPath()%>/admin/adminUpdateView'">관리자 정보 수정</td>
+   		<td id="modifyUserInfo">관리자 정보 수정</td>
    	</tr>
 	<tr>
    		<td id="userList" onclick="location.href='<%=request.getContextPath()%>/admin/adminUserList'">회원보기</td>
    	</tr>
 
    		<tr>
-   			<td id="business_registration" onclick="location.href='<%=request.getContextPath()%>/travel/travelEnroll.do'">업체 등록</td>
+   			<td id="business_registration" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 등록</td>
    		</tr>
    		<tr>
    			<td id="business_List" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 목록</td>
@@ -240,122 +192,77 @@ numPerPage{
    		<tr>
    			<td>문의관리</td>
    		</tr>
-   		<tr>
-   			<td>사업자 전환</td>
-   		</tr>
    	</table>
 
   </nav>   
  
-  	<div id="content" style="top:20%; text-align : center">
-  		<h2>업체 목록</h2>
-  		<br><br>
-  		<div id="head-wrapper">
-  			<div id="search-container">
-  			<div id="search-travelName" class="searchFrm">
-  				<form action="<%=request.getContextPath()%>/admin/travelFinder">
-  				검색타입 :
-  				<select name ="searchType" id="searchType">
-  					<option value="P">여행지</option>
-  					<option value="A">숙소</option>
-  					<option value="R">맛집</option>
-  					<option value="E">놀거리</option>
-  					<option value="S">쇼핑</option>
-  				</select>
-  			
-  				<input type="hidden"
-  						name="searchType" 
-  						value="travel_name"/>
-  				<input type="search"
-  					  name="searchKeyword"
-  					  size="25"
-  					  placeholder="검색할 업체 이름을 입력하세요."/>
-  				<input type="submit" value="검색"/>  
-  			</form>
-  			</div>
-  			</div>
-  			</div>
-  		<div id="numPerPage-container" class="wrapper">
-  		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
-  		<br>
-  		페이지 당 업체 수 
-  		<select name="numPerPage" id="numPerPage">
-  			<option value="20" <%=numPerPage==20?"selected":"" %>>20</option>
-  			<option value="10" <%=numPerPage==10?"selected":"" %>>10</option>
-  			<option value="5" <%=numPerPage==5?"selected":"" %>>5</option>
-  		</select>
-  		</form>
-  		
-  		</div>
-  		<br /><br /><br>
-  		<table id="tbl-travel"style="margin:0 auto; width:600px;">
-  			<thead>
-  			<tr>
-  				<th>업체 이름</th>
-  				<th>타입</th>
-  				<th>위치</th>
-  				<th>관리자 이름</th>
-  				<th>핸드폰 번호</th>
-  				<th></th>
-  			</tr>
-  			</thead>
-  			<tbody>
-  			<% if(list==null|| list.isEmpty()){%>
-  			<tr>
-  				<td colspan="4" align="center"> 검색 결과가 없습니다.</td>
-  			</tr>
-  			<%
-  			}
-  			else{
-  				for(Travel t : list){
-  			%>
-  			<tr>
-  				<td>
-  					<a href="<%=request.getContextPath()%>/travel/travelDetail?travelContentId=<%=t.getContentId() %>">
-  					<%=t.getTravelName() %></a>
-  				</td>
-  				<td><%switch(t.getTravelType()){
-  					case "P" :%>여행지<%;break;
-					case "A" :%>숙소<%;break;
-					case "R" :%>맛집<%;break;
-					case "E" :%>놀거리<%;break;
-					case "S" :%>쇼핑<%;break;}%></td>
-				<td><%=t.getTravelLocation() %></td>
-  				<td><%=t.getTravelOfficierName()%></td>
-  				<td><%=t.getTravelOfficierphone()%></td>
-  				<td>
-  				<%if(t.getTravelType().equals("A")){ %>
-  					<button type="button" onclick="location.href='<%=request.getContextPath()%>/admin/roomAddForm?contentId=<%=t.getContentId()%>'">방추가</button>			
-  				<%} %>
-  				</td>
-  			</tr>
-  			<%		
-  				}
-  			}
-  			%>
-  			</tbody>
-  		</table>
-  		<div id="pageBar"style="text-align:center">
-  			<%=pageBar %>
-  		</div>
-	</div>
+  	<div id="content">
+  	<form action="<%=request.getContextPath() %>/admin/roomAddEnd"
+  		  name="travelEnrollFrm"
+  		  id="travelEnrollFrm"
+  		  method = "post"
+  		  enctype="multipart/form-data"
+  		  style="width:500px;">
+  	 <div class="form-group">
+     <label for="exampleInputEmail1">방 이름</label>
+    <input type="text" class="form-control" id="roomName" aria-describedby="emailHelp" placeholder="Name" name="roomName" required>
+    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+  </div>
+  <input type="hidden" id="contentId" name="contentId" value="<%=contentId%>"/>
+  <div class="form-group">
+   <label for="exampleInputEmail1">방 사이즈:</label>
+    <input type="text" class="form-control" id="roomSize" aria-describedby="emailHelp" placeholder="size" name="roomSize" required>
+  </div>
+  <div class="form-group">
+   <label for="exampleInputEmail1">적정인원:</label>
+    <input type="text" class="form-control" id="roomPerson" aria-describedby="emailHelp" placeholder="person" name="roomPerson" required>
+  </div>
+  <div class="form-group">
+  <label for="exampleInputEmail1">성수기 평일 가격:</label>
+    <input type="number" class="form-control" id="roomWeekDayHighPrice" aria-describedby="emailHelp" placeholder="price" name="roomWeekDayHighPrice" required>
+  </div>
+  <div class="form-group">
+  <label for="exampleInputEmail1">성수기 주말 가격:</label>
+    <input type="number" class="form-control" id="roomWeekEndHighPrice" aria-describedby="emailHelp" placeholder="price" name="roomWeekEndHighPrice" required>
+  </div>
+  <div class="form-group">
+  <label for="exampleInputEmail1">비수기 평일 가격:</label>
+    <input type="number" class="form-control" id="roomWeekDaylowPrice" aria-describedby="emailHelp" placeholder="price" name="roomWeekDaylowPrice" required>
+  </div>
+  <div class="form-group">
+  <label for="exampleInputEmail1">비수기 주말 가격:</label>
+    <input type="number" class="form-control" id="roomWeekEndlowPrice" aria-describedby="emailHelp" placeholder="price" name="roomWeekEndlowPrice" required>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">방 사진1:</label><br />
+    <input type="file" name="fileName1" id="fileName1" style="text-align:center;"/>
+  </div>
+  
+	<div class="form-group">
+    <label for="exampleInputEmail1">방 사진2:</label><br />
+    <input type="file" name="fileName2" id="fileName2" style="text-align:center;"/>
+  </div>
+  
+	<div class="form-group">
+    <label for="exampleInputEmail1">방 사진3:</label><br />
+    <input type="file" name="fileName3" id="fileName3" style="text-align:center;"/>
+  </div>
+  	
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">방 설명</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="7"></textarea>
+  </div>
+
+	<div id="putt" style="text-align:center;">
+
+  <button type="submit" class="btn btn-primary" >등록</button>
+  <button type="reset" class="btn btn-primary" >초기화</button>
+ </div>
+<br><br><br><br>
+ </form>
+   	</div>
  </section>
 
- 
 
-<style>
-
-#numPerPageFrm{
-	text-align : center;
-}
-#numPerPage{
-	border-color : orange;
-	size : 20px;
-}
-
-#travelName{
-text-align : center;
-}
-</style>
 </body>
 </html>

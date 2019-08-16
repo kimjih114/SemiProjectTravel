@@ -1,12 +1,16 @@
 package admin.model.service;
 
 import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
 import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
 
 import admin.model.dao.AdminDAO;
+import admin.model.vo.AdminRoom;
+import admin.model.vo.RoomImage;
 import user.model.vo.User;
 
 
@@ -66,6 +70,28 @@ public class AdminService {
 		int totalUser = new AdminDAO().selectUserCountByUserPhone(conn,searchKeyword);
 		close(conn);
 		return totalUser;
+	}
+
+	public int adminRoomInsert(AdminRoom a) {
+		Connection conn=getConnection();
+		int result=new AdminDAO().adminRoomInsert(conn,a);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int adminRoomImageInsert(RoomImage r) {
+		Connection conn=getConnection();
+		int result=new AdminDAO().adminRoomImageInsert(conn,r);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
 	}
 
 }
