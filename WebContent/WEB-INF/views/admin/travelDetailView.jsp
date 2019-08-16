@@ -267,11 +267,19 @@ section#page-top{
   <button type="reset" class="btn btn-primary" >초기화</button>
  </div>
  </form>
-  <button class="btn btn-primary" style="float:right;" onclick="location.href='<%=request.getContextPath()%>/travel/travelDelete?contentId=<%=trav.getContentId() %>'">삭제</button>
+  <button class="btn btn-primary" style="float:right;" onclick="fun_confirm()">삭제</button>
    	</div>
  </section>
-
 <script>
+function fun_confirm(){
+	
+	if(confirm("업체를 삭제하시겠습니까?")==true){
+		location.href='<%=request.getContextPath()%>/travel/travelDelete?contentId=<%=trav.getContentId() %>'
+		
+	}else{
+		return;
+	}
+}
 function doOpenCheck(chk){
     var obj = document.getElementsByName("program");
     for(var i=0; i<obj.length; i++){

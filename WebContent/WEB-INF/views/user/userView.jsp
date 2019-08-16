@@ -358,12 +358,21 @@ p.userprofile-userId{
  	<button type="submit" class="btn btn-primary" >회원정보 수정</button>
  	 <button type="reset" class="btn btn-primary" >초기화</button>
  	 </form>
- 	   <button class="btn btn-primary" style="float:right;" onclick="location.href='<%=request.getContextPath()%>/user/userDelete?userId=<%=rUser.getUserId()%>'">탈퇴</button>
+ 	   <button class="btn btn-primary" style="float:right;" onclick="fun_confirm();">탈퇴</button>
   	</div>
 </table>
 </nav>
  </section>
 <script>
+function fun_confirm(){
+	
+	if(confirm("탈퇴하시겠습니까?")==true){
+		location.href='<%=request.getContextPath()%>/user/userDelete?userId=<%=rUser.getUserId()%>'
+		
+	}else{
+		return;
+	}
+}
 $("#fileUpdate").change(function(){
 	console.log($(this).val());
 	//사용자가 파일을 선택한 경우

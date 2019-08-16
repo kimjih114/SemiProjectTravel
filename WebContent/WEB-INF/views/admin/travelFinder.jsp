@@ -125,11 +125,13 @@ table{
 	margin: 10 auto;
 	margin-bottom: 30px;
 }
+
 #tbl-usermenu0 tr :hover{
 	cursor: pointer;
 	color: orangered;
 	
 }
+
 table td{
 	padding: 10px;
 	border-bottom: 1px solid #212529;
@@ -164,8 +166,8 @@ section#page-top{
 }
 #content{
 	position : absolute;
-	top : 5%;
-	left : 22%;
+	top : 8%;
+	left : 30%;
 }
 #content table{
 	border-collapse : collapse;
@@ -241,8 +243,9 @@ numPerPage{
 
   </nav>   
  
-  	<div id="content">
+  	<div id="content"style="top:20%; text-align : center">
   		<h2>업체 목록</h2>
+  		<br><br>
   		<div id="head-wrapper">
   			<div id="search-container">
   				검색타입 :
@@ -274,6 +277,7 @@ numPerPage{
   			<tr>
   				<th>업체 이름</th>
   				<th>타입</th>
+  				<th>위치</th>
   				<th>관리자 이름</th>
   				<th>핸드폰 번호</th>
   			</tr>
@@ -299,6 +303,7 @@ numPerPage{
 					case "R" :%>맛집<%;break;
 					case "E" :%>놀거리<%;break;
 					case "S" :%>쇼핑<%;break;}%></td>
+				<td><%=t.getTravelLocation() %></td>
   				<td><%=t.getTravelOfficierName()%></td>
   				<td><%=t.getTravelOfficierphone()%></td>
   			</tr>
