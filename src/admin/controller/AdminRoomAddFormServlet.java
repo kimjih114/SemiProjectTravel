@@ -26,7 +26,7 @@ public class AdminRoomAddFormServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("서블릿 넘어옴?");
+
 		request.getRequestDispatcher("/WEB-INF/views/admin/roomAddForm.jsp").forward(request, response);
 	}
 

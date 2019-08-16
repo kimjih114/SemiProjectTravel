@@ -288,7 +288,7 @@ numPerPage{
   		
   		</div>
   		<br /><br /><br>
-  		<table id="tbl-travel"style="margin:0 auto; width:600px;">
+  		<table id="tbl-travel"style="margin:0 auto; width:1000px;">
   			<thead>
   			<tr>
   				<th>업체 이름</th>
@@ -328,6 +328,7 @@ numPerPage{
   					<button type="button" onclick="location.href='<%=request.getContextPath()%>/admin/roomAddForm?contentId=<%=t.getContentId()%>'">방추가</button>			
   				<%} %>
   				</td>
+  				
   			</tr>
   			<%		
   				}

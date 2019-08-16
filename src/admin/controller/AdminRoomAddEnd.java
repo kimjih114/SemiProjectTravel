@@ -80,7 +80,16 @@ public class AdminRoomAddEnd extends HttpServlet {
 		RoomImage r=new RoomImage(contentId, roomName, originalFileName1, renameFileName1, originalFileName2, renameFileName2, originalFileName3, renameFileName3);
 		int result2=new AdminService().adminRoomImageInsert(r);
 		
-		
+		String msg="";
+		String loc="/travel/travelList";
+		if(result1>0&&result2>0) {
+			msg="방등록에 성공하였습니다.";
+		}else {
+			msg="방등록에 실패하였습니다.";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
 		
 	}
 

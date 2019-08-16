@@ -84,6 +84,8 @@ public class AdminTravelListServlet extends HttpServlet {
 			pageBar += "<a href='"+request.getContextPath()+"/travel/travelList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>[다음]</a>";
 		}
 		
+		//업체리스트뽑을때 숙소 방정보까지 뽑아서 보내주기
+		
 		request.setAttribute("list", list);
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("cPage", cPage);
