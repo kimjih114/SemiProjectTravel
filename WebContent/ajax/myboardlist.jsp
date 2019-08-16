@@ -25,6 +25,8 @@ var mcontenttitles = new Array();
 var mcontentaddresses = new Array();
 var mfilesTempArr = new Array();
 
+var mBeforeHtml = "";
+
 $(()=>{
 	pageMore(10000);
 });
@@ -120,8 +122,10 @@ function updateBoardSNS(boardNo){
 		return;
 	}
 	
+	mBeforeHtml=$(document.querySelector('#container'+boardNo)).html();
+	
+
 	$(".tbl-td").children(".starRev").css("margin-top", "23px");
-	$(document.querySelector('#container'+boardNo)).html('');
 	
 	var param={
 			boardNo : boardNo
@@ -138,7 +142,7 @@ function updateBoardSNS(boardNo){
 					html += "<form action='' name='snsModify'";
 					html += "class='snsModify'";
 					html += "method='post'";
-					html += "enctype='multipart/form-data' style='border:1px solid black; padding: 10px;'>";
+					html += "enctype='multipart/form-data' style='border:1px solid black; margin-bottom:10px; padding: 10px;'>";
 					html += "<table class='postFrm' style='padding:10px;'>";
 					html += "<tr>";
 					html += "<td style='padding: 10px; width: 508px; text-align:left; font-weight: 700'>여행 후기를 수정합니다.</td>";
@@ -192,33 +196,43 @@ function updateBoardSNS(boardNo){
 					html += "</div>";	
 					html += "</td>";
 					html +="</tr>";
-					
-				
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					html += "<tr>";
-					html += "<td style='padding: 10px; width: 508px; text-align:left;'>";
-					html += "<input type='radio' name='boardtype'  value='P' checked />";
-					html += "<label for='public'>전체공개</label> &nbsp;";
-					html += "<input type='radio' name='boardtype'  value='F' />";
-					html += "<label for='followOnly'>팔로워공개</label> &nbsp;";
-					html += "<input type='radio' name='boardtype'  value='L' />";
-					html += "<label for='locked'>비공개</label>";
+					html += "<td style='padding: 10px; width: 508px; text-align:left;'>";		
+					if(data.boardSNS.boardType=='P'){
+						html += "<input type='radio' name='boardtype' value='P' checked />";
+						html += "<label for='public'>전체공개</label> &nbsp;";
+						html += "<input type='radio' name='boardtype' value='F' />";
+						html += "<label for='followOnly'>팔로워공개</label> &nbsp;";
+						html += "<input type='radio' name='boardtype' value='L' />";
+						html += "<label for='locked'>비공개</label>";
+					}
+					else if(data.boardSNS.boardType=='F'){
+						html += "<input type='radio' name='boardtype' value='P' />";
+						html += "<label for='public'>전체공개</label> &nbsp;";
+						html += "<input type='radio' name='boardtype' value='F' checked />";
+						html += "<label for='followOnly'>팔로워공개</label> &nbsp;";
+						html += "<input type='radio' name='boardtype' value='L' />";
+						html += "<label for='locked'>비공개</label>";
+					}
+					if(data.boardSNS.boardType=='L'){
+						html += "<input type='radio' name='boardtype' value='P' />";
+						html += "<label for='public'>전체공개</label> &nbsp;";
+						html += "<input type='radio' name='boardtype' value='F' />";
+						html += "<label for='followOnly'>팔로워공개</label> &nbsp;";
+						html += "<input type='radio' name='boardtype' value='L' checked  />";
+						html += "<label for='locked'>비공개</label>";
+					}
 					html += "<br>";
+					html+="<span style='float: right;'>";
+					html+="<button class='btn btn-success' style='margin-right:2px;'>수정</button>";
+					html+="<button class='btn btn-dark' onclick='modifyCancel("+data.boardSNS.boardNo+");'>취소</button>";
+					html+="</span>";
 					html += "</td>";
 					html += "</tr>";
 					html += "</table>";
 					html += "</form>";
-					
+					$(document.querySelector('#container'+boardNo)).html('');
 					$(document.querySelector('#container'+boardNo)).html(html);
-			
 					
 					if(data.gradeSNSList!=null){
 						for(var g=0; g<data.gradeSNSList.length; g++){
@@ -359,7 +373,7 @@ function pageMore(boardNo){
 					}
 					
 					
-					html+="<t>";
+					html+="<tr>";
 					html+="<td>";
 					html+="<span style='float: right; margin:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/>1&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
 					html+="</td>";
@@ -400,15 +414,22 @@ function pageMore(boardNo){
 		error: function(jqxhr, textStatus, errorThrown){
 			console.log("ajax처리실패!");
 			console.log(jqxhr, textStatus, errorThrown);
+			
 		}
 	});
-	
-	
-	
-	
 }
 
 
+function modifyCancel(boardNo){
+	$(document.getElementById("container"+boardNo)).html('').html(mBeforeHtml);
+	
+	mcontentids = [];
+	mcontenttypes = [];
+	mcontentthumbnails = [];
+	mcontenttitles = [];
+	mcontentaddresses = [];
+	mfilesTempArr = [];
+}
 
 </script>	
 	<style>#tdMore{text-align:center; padding: 10px; cursor:pointer; }

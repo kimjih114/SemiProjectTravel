@@ -475,13 +475,14 @@ function unfollower(btn){
 					return;
 				}
 				
+				$(btn).parent().next().html("<button type='button' class='btn btn-dark' value='"+$(btn).val()+"' onclick='blocker(this);'>Block</button>");
+				
 				$(btn).removeClass("btn-danger");
 				$(btn).addClass("btn-success");
 				$(btn).html("Follow");
 				$(btn).off('click');
 				$(btn).on('click', follower);
 				
-				$('.darkArea').html("<button type='button' class='btn btn-dark' value='"+$(btn).val()+"' onclick='blocker(this);'>Block</button>");
 				
 				
 				
@@ -515,6 +516,7 @@ function follower(btn){
 				return;
 			}
 			
+			$(btn).parent().next().html('');
 			
 			$(btn).removeClass("btn-success");
 			$(btn).addClass("btn-danger");
@@ -522,7 +524,6 @@ function follower(btn){
 			$(btn).off('click')
 			$(btn).on('click', unfollower);
 			
-			$('.darkArea').html('');
 			
 			
 		},
@@ -580,6 +581,8 @@ function unblocker(btn){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
+				$(btn).parent().prev().html("<button type='button' class='btn btn-success' value='"+$(btn).val()+"' onclick='follower(this);'>Follow</button>");
+
 				$(btn).removeClass("btn-light");
 				$(btn).addClass("btn-dark");
 				$(btn).text("block");
@@ -587,10 +590,6 @@ function unblocker(btn){
 				
 				$(btn).off("click");
 				$(btn).on("click", blocker);
-				
-					$(".whiteArea").html("<button type='button' class='btn btn-success' value='"+$(btn).val()+"' onclick='follower(this);'>Follow</button>");
-					
-					
 			},
 			error : function(data){
 				console.log("ajax처리실패");

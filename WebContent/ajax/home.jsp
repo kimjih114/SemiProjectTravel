@@ -192,7 +192,7 @@
 					<input type="radio" name="boardtype" id="locked" value="L" />
 					<label for="locked">비공개</label>
 				<br>
-				<input type="submit" id="btnSubmit" value="포스트 등록" style="float:right; margin-top : 10px;">
+				<input type="submit" id="btnSubmit" class='btn btn-primary' value="포스트 등록" style="float:right; margin-top : 10px;">
 			</td>
 		</tr>
 	</table>
@@ -449,6 +449,11 @@ $("#btnSubmit").click(function(event){
 	     success : function(data) {
 	         alert("게시글 등록 성공 :D!");
 	         
+	         if($(".current").attr('id')=="tab2"){
+		
+							
+		
+			}
 	     },
 	     error : function(err) {
 	         alert(err.status);
