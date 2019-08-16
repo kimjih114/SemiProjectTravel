@@ -308,7 +308,7 @@ $(function() {
 									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
 									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-light' value='"+u.userId+"' onclick='unblocker(this);''>Unblock</button></div>";
 								} else {
-									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.userId+"' value='"+u.userId+"' onclick='follower(this);'>Follow</button></div>";
+									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.userId+"' onclick='follower(this);'>Follow</button></div>";
 									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.userId+"' onclick='blocker(this);'>Block</button></div>";
 								}
 							}
@@ -475,6 +475,15 @@ function unfollower(btn){
 					return;
 				}
 				
+				$(btn).removeClass("btn-danger");
+				$(btn).addClass("btn-success");
+				$(btn).html("Follow");
+				$(btn).off('click');
+				$(btn).on('click', follower);
+				
+				$('.darkArea').html("<button type='button' class='btn btn-dark' value='"+u.userId+"' onclick='blocker(this);'>Block</button>");
+				
+				
 				
 				
 			},
@@ -482,7 +491,7 @@ function unfollower(btn){
 				console.log("ajax처리실패");
 			},
 			complete: function(data){
-				followLoggedInList.remove($(btn).val());
+				followLoggedInList.splice(followLoggedInList.indexOf($(btn).val),1);
 			}
 		}) 
 
@@ -511,7 +520,7 @@ function follower(btn){
 			$(btn).addClass("btn-danger");
 			$(btn).html("Unfollow");
 			$(btn).off('click')
-			$(btn).on('click', unfollow);
+			$(btn).on('click', unfollower);
 			
 			$('.darkArea').html('');
 			
@@ -527,7 +536,72 @@ function follower(btn){
 	}) 
 
 }
+function blocker(btn){
+	var param={
+			userBlocking : '<%=userLoggedIn.getUserId() %>',
+			userBlocked : $(btn).val()    		
+		}
 
+		$.ajax({
+			url : '<%=request.getContextPath()%>/gson/sns/block.do',
+			data : param,
+			dataType: 'json',
+			type : 'post',
+			success : function(data){
+					$(btn).parent().prev().children().remove();
+					$(btn).removeClass("btn-dark");
+					$(btn).addClass("btn-light");
+					$(btn).text("Unblock");
+					$(btn).css("width", "105px");
+					
+					$(btn).off("click");
+					$(btn).on("click", unblocker);
+			},
+			error : function(data){
+				console.log("ajax처리실패");
+			},
+			complete: function(data){
+				blockLoggedInList.push($(btn).val);
+				
+			}
+		}) 
+	
+}
+
+function unblocker(btn){
+	var param={
+			userBlocking : '<%=userLoggedIn.getUserId() %>',
+			userBlocked : $(btn).val()    		
+		}
+
+		$.ajax({
+			url : '<%=request.getContextPath()%>/gson/sns/unblock.do',
+			data : param,
+			dataType: 'json',
+			type : 'post',
+			success : function(data){
+				$(btn).removeClass("btn-light");
+				$(btn).addClass("btn-dark");
+				$(btn).text("block");
+				$(btn).css("width", "81.36px");
+				
+				$(btn).off("click");
+				$(btn).on("click", blocker);
+				
+					$(".whiteArea").html("<button type='button' class='btn btn-success' value='"+$(btn).val()+"' onclick='follower(this);'>Follow</button>");
+					
+					
+			},
+			error : function(data){
+				console.log("ajax처리실패");
+			},
+			complete: function(data){
+				blockLoggedInList = [];
+				
+			}
+		}) 
+	
+}
 
 </script>
 
