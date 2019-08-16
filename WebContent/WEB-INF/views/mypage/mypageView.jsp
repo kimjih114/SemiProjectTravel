@@ -179,7 +179,7 @@ p.userprofile-userId{
 
 	<table id="tbl-usermenu4" style="margin-bottom:0px; !important">
     <tr>
-    	<td>FAQ</td>
+    	<td><a href="<%=request.getContextPath()%>/search/FAQ">FAQ</a></td>
     </tr>
     
     <tr>

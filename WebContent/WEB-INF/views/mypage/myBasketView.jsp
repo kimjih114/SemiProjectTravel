@@ -200,8 +200,8 @@ section#page-top{
    	</table>
 
 	<table id="tbl-usermenu4" style="margin-bottom:0px; !important">
-    <tr>
-    	<td>FAQ</td>
+	<tr>
+    	<td><a href="<%=request.getContextPath()%>/search/FAQ">FAQ</a></td>
     </tr>
     
     <tr>
