@@ -20,14 +20,14 @@ import user.model.vo.User;
 /**
  * Servlet implementation class BoardQuestionListServlet
  */
-@WebServlet("/boardquestion/boardList")
-public class Board_QuestionListServlet extends HttpServlet {
+@WebServlet("/boardquestion/adminboardList")
+public class AdminBoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Board_QuestionListServlet() {
+	public AdminBoardListServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -39,10 +39,7 @@ public class Board_QuestionListServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding("utf-8");
-		
 	
-		String userId = request.getParameter("userId");
-		System.out.println("userId"+userId);
 		
 		final int numPerPage = 5;
 		int cPage = 1;
@@ -52,9 +49,9 @@ public class Board_QuestionListServlet extends HttpServlet {
 
 		}
 
-		List<Board_Question> qboardList = new Board_QuestionService().selectBoardQuestionList(cPage, numPerPage,userId);
+		List<Board_Question> qboardList = new Board_QuestionService().selectAdminBoardQuestionList(cPage, numPerPage);
 
-		int totalBoardCount = new Board_QuestionService().selectBoardQuestionCount(userId);
+		int totalBoardCount = new Board_QuestionService().selectAdminBoardQuestionCount();
 
 		int totalPage = (int) Math.ceil((double) totalBoardCount / numPerPage);
 
@@ -68,7 +65,7 @@ public class Board_QuestionListServlet extends HttpServlet {
 		if (pageNo == 1) {
 			pageBar += "<span>[이전]</span>";
 		} else {
-			pageBar += "<a href='" + request.getContextPath() + "/board/boardList?cPage=" + (pageNo - 1)
+			pageBar += "<a href='" + request.getContextPath() + "/board/adminboardList?cPage=" + (pageNo - 1)
 					+ "'>[이전]</a> ";
 		}
 
@@ -78,7 +75,7 @@ public class Board_QuestionListServlet extends HttpServlet {
 			if (cPage == pageNo) {
 				pageBar += "<span class='cPage'>" + pageNo + "</span> ";
 			} else {
-				pageBar += "<a href='" + request.getContextPath() + "/boardquestion/boardList?userId="+userId+"&cPage=" + pageNo + "'>"
+				pageBar += "<a href='" + request.getContextPath() + "/boardquestion/adminboardList?cPage=" + pageNo + "'>"
 						+ pageNo + "</a> ";
 			}
 			pageNo++;
@@ -88,13 +85,13 @@ public class Board_QuestionListServlet extends HttpServlet {
 		if (pageNo > totalPage) {
 			pageBar += "<span>[다음]</span>";
 		} else {
-			pageBar += "<a href='" + request.getContextPath() + "/boardquestion/boardList?userId="+userId+"&cPage=" + pageNo
+			pageBar += "<a href='" + request.getContextPath() + "/boardquestion/adminboardList?cPage=" + pageNo
 					+ "'>[다음]</a>";
 		}
 
 		request.setAttribute("qboardList", qboardList);
 		request.setAttribute("pageBar", pageBar);
-		request.getRequestDispatcher("/ajax/board_questionList.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/admin/adminboard_questionList.jsp").forward(request, response);
 
 	}
 

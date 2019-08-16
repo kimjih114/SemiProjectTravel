@@ -658,7 +658,9 @@ div#profile-header{
 	})
 		
 	$("#QuestionList").on("click", function(){
-		location.href="<%=request.getContextPath()%>/boardquestion/boardList"; 
+		var userId = '<%=userLoggedIn.getUserId() %>';	
+		console.log("userLoggedIn"+userId);
+		location.href="<%=request.getContextPath()%>/boardquestion/boardList?userId="+userId; 
 	});
 	
 	$("#gomsg").on("click", function(){

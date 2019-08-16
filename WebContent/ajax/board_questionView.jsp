@@ -415,7 +415,7 @@ if(!confirm("글을 삭제하시겠습니까?")) return;
 	<div class="container">
 		<div class="intro-text" style="padding-top: 100px;">
 			<h1>
-				<a href="<%=request.getContextPath()%>/boardquestion/boardList"
+				<a href="<%=request.getContextPath()%>/boardquestion/adminboardList?userId=<%=userLoggedIn.getUserId() %>"
 					style='color: white;'>1:1문의</a>
 			</h1>
 			<!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"> -->
@@ -494,12 +494,12 @@ if(!confirm("글을 삭제하시겠습니까?")) return;
 							|| "admin".equals(userLoggedIn.getUserId()))) {
 				%>
 				<tr>
-					<th colspan="2"><input type="button" value="수정"
-						onclick="updateqBoard();" /> <input type="button" value="삭제"
+					<th colspan="2" style="padding-left: 547px;"><input type="button"  class="btn btn-info"value="수정"
+						onclick="updateqBoard();" /> <input type="button"  class="btn btn-danger"value="삭제"
 						onclick="deleteqBoard();" /></th>
 				</tr>
 
-				<form action="<%=request.getContextPath()%>/board/qboardDelete"
+				<form action="<%=request.getContextPath()%>/board/adminqboardDelete"
 					name="qboardDeleteFrm" method="post">
 					<input type="hidden" name="qboardNo" value="<%=bq.getQboardNo()%>" />
 					<input type="hidden" name="newFileName"
@@ -510,7 +510,7 @@ if(!confirm("글을 삭제하시겠습니까?")) return;
 				<script>
 		
 		function updateqBoard(){
-			location.href = "<%=request.getContextPath()%>/board/boardUpdateForm?qboardNo=<%=bq.getQboardNo()%>";
+			location.href = "<%=request.getContextPath()%>/board/adminboardUpdateForm?qboardNo=<%=bq.getQboardNo()%>";
 		}
 		
 		function deleteqBoard(){

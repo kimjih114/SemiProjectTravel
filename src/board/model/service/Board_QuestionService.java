@@ -16,16 +16,16 @@ import board.model.vo.Board_QuestionComment;
 
 public class Board_QuestionService {
 
-	public List<Board_Question> selectBoardQuestionList(int cPage, int numPerPage) {
+	public List<Board_Question> selectBoardQuestionList( int numPerPage, int cPage, String userId) {
 		Connection conn = getConnection(); 
-		List<Board_Question> list = new Board_QuestionDAO().selectBoardQuestionList(conn,cPage,numPerPage); 
+		List<Board_Question> list = new Board_QuestionDAO().selectBoardQuestionList(conn,cPage,numPerPage,userId); 
 		close(conn);
 		return list;
 	}
 
-	public int selectBoardQuestionCount() {
+	public int selectBoardQuestionCount(String userId) {
 		Connection conn = getConnection();
-		int totalBoardCount = new Board_QuestionDAO().selectBoardQuestionCount(conn);
+		int totalBoardCount = new Board_QuestionDAO().selectBoardQuestionCount(conn,userId);
 		close(conn);
 		return totalBoardCount;
 	}
@@ -130,6 +130,20 @@ public class Board_QuestionService {
 		close(conn);
 		
 		return result;
+	}
+
+	public List<Board_Question> selectAdminBoardQuestionList(int cPage, int numPerPage) {
+		Connection conn = getConnection(); 
+		List<Board_Question> list = new Board_QuestionDAO().selectAdminBoardQuestionList(conn,cPage,numPerPage); 
+		close(conn);
+		return list;
+	}
+
+	public int selectAdminBoardQuestionCount() {
+		Connection conn = getConnection();
+		int totalBoardCount = new Board_QuestionDAO().selectAdminBoardQuestionCount(conn);
+		close(conn);
+		return totalBoardCount;
 	}
 
 }

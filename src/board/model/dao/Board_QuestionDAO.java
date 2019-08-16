@@ -39,7 +39,7 @@ public class Board_QuestionDAO {
 		
 	}
 
-	public List<Board_Question> selectBoardQuestionList(Connection conn, int cPage, int numPerPage) {
+	public List<Board_Question> selectBoardQuestionList(Connection conn, int numPerPage, int cPage, String userId) {
 		
 		List<Board_Question> list = new ArrayList<>(); 
 		PreparedStatement pstmt = null; 
@@ -49,9 +49,10 @@ public class Board_QuestionDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
 			
-			pstmt.setInt(1, (cPage-1)*numPerPage+1);
-			pstmt.setInt(2, cPage*numPerPage);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
 			
 			rset = pstmt.executeQuery();
 			
@@ -86,7 +87,7 @@ public class Board_QuestionDAO {
 		return list;
 	}
 
-	public int selectBoardQuestionCount(Connection conn) {
+	public int selectBoardQuestionCount(Connection conn, String userId) {
 		
 		PreparedStatement pstmt = null; 
 		int totalUser = 0; 
@@ -96,6 +97,8 @@ public class Board_QuestionDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
 			rset =pstmt.executeQuery(); 
 			
 			while(rset.next()) {
@@ -131,7 +134,7 @@ public class Board_QuestionDAO {
 			pstmt.setInt(4,bq.getQboardTravel_ref());
 			pstmt.setString(5, bq.getQboardFileName());		
 			pstmt.setString(6, bq.getQboardNewFileName());		
-			
+			pstmt.setInt(7, bq.getQboardStatus());
 		
 			
 			result = pstmt.executeUpdate(); 
@@ -330,7 +333,7 @@ public class Board_QuestionDAO {
 			pstmt.setString(4, bq.getQboardNewFileName());
 			pstmt.setInt(5, bq.getQboardNo());
 			
-			System.out.println("결과결과결과@dao="+result);
+		
 			result = pstmt.executeUpdate(); 
 			
 		} catch (SQLException e) {
@@ -359,7 +362,7 @@ public class Board_QuestionDAO {
 			//oracle - number: null 
 			
 			pstmt.setString(5, bc.getQboardCommentRef()==0?null:bc.getQboardCommentRef()+"");
-			System.out.println("result="+result);
+		
 			result = pstmt.executeUpdate();
 			
 			
@@ -390,6 +393,83 @@ public class Board_QuestionDAO {
 			e.printStackTrace();
 		} 
 		return result;
+	}
+
+	public List<Board_Question> selectAdminBoardQuestionList(Connection conn, int cPage, int numPerPage) {
+		List<Board_Question> list = new ArrayList<>(); 
+		PreparedStatement pstmt = null; 
+		ResultSet rset = null; 
+		
+		String sql = prop.getProperty("selectAdminQBoardList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+		
+			
+			pstmt.setInt(1, (cPage-1)*numPerPage+1);
+			pstmt.setInt(2, cPage*numPerPage);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Board_Question qb = new Board_Question(); 
+				
+				qb.setQboardNo(rset.getInt("qboard_no"));
+				qb.setQboardWriter(rset.getString("qboard_writer"));
+				qb.setQboardTitle(rset.getString("qboard_title"));
+				qb.setQboardContent(rset.getString("qboard_content"));
+				qb.setQboardDate(rset.getDate("qboard_date"));
+				qb.setQboardReadcnt(rset.getInt("qboard_readcnt"));
+				qb.setQboardTravel_ref(rset.getInt("qboard_travel_ref"));
+				qb.setQboardFileName(rset.getString("qboard_filename"));
+				qb.setQboardNewFileName(rset.getString("qboard_newfilename"));
+				qb.setQboardStatus(rset.getInt("qboard_state"));
+				list.add(qb); 
+				
+		
+				
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset); 
+			close(pstmt);
+		}
+		
+
+		
+		return list;
+	}
+
+	public int selectAdminBoardQuestionCount(Connection conn) {
+
+		PreparedStatement pstmt = null; 
+		int totalUser = 0; 
+		ResultSet rset  = null; 
+		
+		String sql  =prop.getProperty("selectAdminQBoardCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset =pstmt.executeQuery(); 
+			
+			while(rset.next()) {
+				totalUser = rset.getInt("cnt"); 
+				
+			}
+		
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalUser;
 	}
 	
 	

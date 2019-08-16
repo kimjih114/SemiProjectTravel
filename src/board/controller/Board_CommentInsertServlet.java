@@ -40,7 +40,7 @@ public class Board_CommentInsertServlet extends HttpServlet {
 		
 		Board_QuestionComment bc = new Board_QuestionComment(0, qboardCommentLevel, qboardCommentWriter, qboardCommentContent, qboardref, qboardCommentRef, null); 
 
-		System.out.println("bcbcbccommentIIIInsert@servlet="+bc);
+		
 		
 		int result = new Board_QuestionService().insertQBoardComment(bc); 
 		

@@ -147,6 +147,10 @@ p.userprofile-userId{
     </div>
   </header>
   
+  <form action="" name="memomsgFrm">
+	<input type="hidden" name="userId" />
+</form>
+  
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
@@ -160,7 +164,7 @@ p.userprofile-userId{
    		<td id="modifyUserInfo"><a href="<%=request.getContextPath()%>/user/userUpdateView?userId=<%=userLoggedIn.getUserId()%>">회원정보수정</a></td>
    	</tr>
 	<tr>
-   		<td>메시지</td>
+   		<td id="gomsg">메시지</td>
    	</tr>
    	<table id="tbl-usermenu1">
    		<tr>
@@ -183,7 +187,7 @@ p.userprofile-userId{
     </tr>
     
     <tr>
-    	<td>1:1문의</td>
+    	<td id="QuestionList">1:1문의</td>
     </tr>
     
     <tr>
@@ -198,6 +202,37 @@ p.userprofile-userId{
 </table>
 </nav>
  </section>
+
+<script>
+
+$("#QuestionList").on("click", function(){
+	var userId = '<%=userLoggedIn.getUserId() %>';	
+	console.log("userLoggedIn"+userId);
+	location.href="<%=request.getContextPath()%>/boardquestion/boardList?userId="+userId; 
+});
+
+$("#gomsg").on("click", function(){
+		var userId = '<%=userLoggedIn.getUserId() %>';	
+		console.log("userLoggedIn"+userId);
+	 	
+	 	
+			var url="<%=request.getContextPath()%>/chat/chatroom.do?userId="+userId;
+			var title="popup"; 
+			var status = "width=600px, height=400px, left=150px, top=0px";
+			var popup = open("", title, status);
+			
+			var frm = document.memomsgFrm;
+			frm.userId.value= userId;
+			frm.action = url;
+			frm.target=title;
+			frm.method= "post"; 
+		frm.submit();
+		
+	});
+
+
+</script>
+
 
 </body>
 </html>

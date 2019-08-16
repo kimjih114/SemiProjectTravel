@@ -8,7 +8,7 @@
 
 List<Board_Question> list = (List<Board_Question>)request.getAttribute("qboardList"); 
 String pageBar = (String)request.getAttribute("pageBar");
-
+String userId= userLoggedIn.getUserId();
 
 %>
 
@@ -231,7 +231,9 @@ text-align:left;
 </header>
 
 
-
+<form action="">
+<input type="hidden" name="userId" value="<%=userLoggedIn.getUserId() %>" />
+</form>
 <!-- 메뉴폼 -->
 
  <div id="q-container">
@@ -269,7 +271,7 @@ text-align:left;
 			<script>
 			
 			function goqboardFrm(){
-				location.href="<%=request.getContextPath()%>/board/qboardForm";
+				location.href="<%=request.getContextPath()%>/board/adminqboardForm";
 			
 			}
 			</script>
