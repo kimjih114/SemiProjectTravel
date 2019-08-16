@@ -38,24 +38,6 @@
 
 <script>
 
-
-$(()=>{
-	$("#modifyUserInfo").click(function(){
-		$.ajax({
-	        type : "GET",
-	        url : "<%=request.getContextPath() %>/my",
-	        dataType : "text",
-	        error : function() {
-	          alert('통신실패!!');
-	        },
-	        success : function(data) {
-	          $('#Context').html(data);
-	        }
-	 
-	      });
-	})
-})
-
 $(()=>{
 	$("#searchType").on("change", (e)=>{
 		var type = $(e.target).val();
@@ -214,7 +196,7 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
 
    <table id="tbl-usermenu0">
    	 <tr>
-   		<td id="modifyUserInfo">관리자 정보 수정</td>
+   		<td id="modifyUserInfo" onclick="location.href='<%=request.getContextPath()%>/admin/adminUpdateView'">관리자 정보 수정</td>
    	</tr>
 	<tr>
    		<td id="userList" onclick="location.href='<%=request.getContextPath()%>/admin/adminUserList'">회원보기</td>
@@ -231,6 +213,9 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
    		</tr>
    		<tr>
    			<td>문의관리</td>
+   		</tr>
+   		<tr>
+   			<td>사업자 전환</td>
    		</tr>
    	</table>
 

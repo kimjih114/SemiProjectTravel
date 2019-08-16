@@ -171,7 +171,7 @@ section#page-top{
 
    <table id="tbl-usermenu0">
    	 <tr>
-   		<td id="modifyUserInfo">관리자 정보 수정</td>
+   		<td id="modifyUserInfo" onclick="location.href='<%=request.getContextPath()%>/admin/adminUpdateView'">관리자 정보 수정</td>
    	</tr>
 	<tr>
    		<td id="userList" onclick="location.href='<%=request.getContextPath()%>/admin/adminUserList'">회원보기</td>
@@ -188,6 +188,9 @@ section#page-top{
    		</tr>
    		<tr>
    			<td>문의관리</td>
+   		</tr>
+   		<tr>
+   			<td>사업자 전환</td>
    		</tr>
    	</table>
 

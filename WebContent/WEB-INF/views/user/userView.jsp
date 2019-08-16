@@ -216,7 +216,7 @@ section#page-top{
 	top:0;
 	left: 260px;
 	border:1px solid;
-	padding: 10px;
+	padding: 10px;		
 	
 }
 
@@ -355,11 +355,15 @@ p.userprofile-userId{
    <input type="hidden" name="oldOName" value="<%=rUser.getOriginalFileName()!=null?rUser.getOriginalFileName():"" %>" />
    <input type="hidden" name="oldRName" value="<%=rUser.getFileName()!=null?rUser.getFileName():"" %>" />
   </div><br />
+  <div id="putt" style="text-align:center;">
  	<button type="submit" class="btn btn-primary" >회원정보 수정</button>
  	 <button type="reset" class="btn btn-primary" >초기화</button>
+ 	 </div>
  	 </form>
+ 	 <br />
  	   <button class="btn btn-primary" style="float:right;" onclick="fun_confirm();">탈퇴</button>
   	</div>
+  	
 </table>
 </nav>
  </section>

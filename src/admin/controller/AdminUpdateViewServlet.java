@@ -1,4 +1,4 @@
-package user.controller;
+package admin.controller;
 
 import java.io.IOException;
 
@@ -12,16 +12,16 @@ import user.model.service.UserService;
 import user.model.vo.User;
 
 /**
- * Servlet implementation class CheckIdDuplicateServlet
+ * Servlet implementation class AdminUpdateViewServlet
  */
-@WebServlet("/enroll/CheckIdDuplicate")
-public class CheckIdDuplicateServlet extends HttpServlet {
+@WebServlet("/admin/adminUpdateView")
+public class AdminUpdateViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CheckIdDuplicateServlet() {
+    public AdminUpdateViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,20 +33,16 @@ public class CheckIdDuplicateServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String userId = request.getParameter("userId");
-		System.out.println("userId@CheckIdDuplicateServlet="+userId);
 		
-		User u = new UserService().selectOne(userId);
+		User user =  new UserService().selectOne(userId);
 		
-		boolean isUsable = u==null?true:false;
+		String view = "/WEB-INF/views/admin/adminUpdateView.jsp";
+		request.setAttribute("view", view);
 		
-		request.setAttribute("isUsable",isUsable);
-		request.setAttribute("user", u);
-		request.getRequestDispatcher("/WEB-INF/views/user/CheckIdDuplicate.jsp")
-			   .forward(request, response);
+		request.getRequestDispatcher(view).forward(request, response);
 		
-	
-	
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

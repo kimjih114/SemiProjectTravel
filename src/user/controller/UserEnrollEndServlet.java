@@ -73,8 +73,12 @@ public class UserEnrollEndServlet extends HttpServlet {
 		String userType = mrequest.getParameter("userType");
 		
 		String originalFileName = mrequest.getOriginalFileName("fileName");
-		
 		String fileName_ = mrequest.getFilesystemName("fileName");
+		
+		if(fileName_==null) {
+			fileName_ = "사용자.png";
+		}
+		
 		File f = mrequest.getFile("fileName_");
 		
 		

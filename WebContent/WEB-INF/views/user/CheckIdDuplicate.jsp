@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>아이디 중복검사</title>
 <script src = "<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
+s<link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <style>
 #checkId-container{
 	text-align : center;
@@ -19,6 +20,7 @@ span#duplicated{
 	color : red;
 	font-weight : bold;
 }
+
 </style>
 <script>
 function checkIdDuplicate(){
@@ -34,19 +36,19 @@ function checkIdDuplicate(){
 	frm.submit();
 }
 
-
-
 </script>
 </head>
+
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+</nav>
 <div id="checkId-container">
 	<% if(isUsable == true){ %>
-		[<span><%=userId %></span>]는 사용 가능합니다.
+		[<span><%=userId%></span>]는 사용 가능합니다.
 		<br><br>
-		<button type="button" onclick="setMemberId();">닫기</button>
-
+		<button type="button" onclick="setUserId();" class="btn btn-primary">닫기</button>
 	<%} else { %>
-		[<span><%=userId %></span>]는 이미 사용중입니다. 
+		[<span><%=userId%></span>]는 이미 사용중입니다. 
 		<form action="<%=request.getContextPath()%>/enroll/CheckIdDuplicate"
 			  name="checkIdDuplicateFrm"
 			  method="post">
@@ -63,13 +65,14 @@ function checkIdDuplicate(){
 		<br><br>
 </div>
 <script>
-function setMemberId(){
+function setUserId(){
 	var frm = opener.document.userEnrollFrm;
+	
 	frm.userId.value = '<%=userId%>';
 	frm.idValid.value = 0;
+	frm.usernickName.focus();
 	self.close();
 }
-
 </script>
 </body>
 </html>

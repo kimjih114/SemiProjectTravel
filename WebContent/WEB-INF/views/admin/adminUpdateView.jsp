@@ -1,14 +1,10 @@
-<%@page import="travel.model.vo.Travel"%>
-<%@page import="travel.model.service.TravelService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <%
-	String contentId  = request.getParameter("travelContentId");
-	
-	Travel trav = new TravelService().selectTravel(contentId);
-	System.out.println("Trav"+trav);
-	
+	User user = (User)session.getAttribute("userLoggedIn");
+
+	User rUser = new UserService().selectOne(user.getUserId());
 %>
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -36,6 +32,8 @@
 
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
+
+
  <style>
 .page-top{
 	width: 1024px;
@@ -134,7 +132,7 @@ section#page-top{
 #content{
 	position : absolute;
 	top : 5%;
-	left : 28%;
+	left : 22%;
 }
 #content table{
 	border-collapse : collapse;
@@ -159,7 +157,7 @@ section#page-top{
 }
 #fname{
 	position : absolute;
-	left : 17.8%;
+	left : 28%;
 	
 	background-color : white;
 }
@@ -178,21 +176,21 @@ section#page-top{
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
-      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/img/이동욱.jpg" alt="">
+      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt="">
       <p class="userprofile-userId">관리자님, 안녕하세요!
 
    </div>
 
    <table id="tbl-usermenu0">
    	 <tr>
-   		<td id="modifyUserInfo">관리자 정보 수정</td>
+   		<td id="modifyUserInfo" onclick="location.href='<%=request.getContextPath()%>/user/userUpdateView'">관리자 정보 수정</td>
    	</tr>
 	<tr>
    		<td id="userList" onclick="location.href='<%=request.getContextPath()%>/admin/adminUserList'">회원보기</td>
    	</tr>
 
    		<tr>
-   			<td id="business_registration" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 등록</td>
+   			<td id="business_registration" onclick="location.href='<%=request.getContextPath()%>/travel/travelEnroll.do'">업체 등록</td>
    		</tr>
    		<tr>
    			<td id="business_List" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 목록</td>
@@ -206,91 +204,89 @@ section#page-top{
    		<tr>
    			<td>사업자 전환</td>
    		</tr>
+
    	</table>
 
   </nav>   
- 
+
   	<div id="content">
-  	<form action="<%=request.getContextPath()%>/travel/travelUpdateEnd?contentId=<%=trav.getContentId() %>"
-  		  name="travelEnrollFrm"
-  		  id="travelEnrollFrm"
-  		  method = "post"
-  		  enctype="multipart/form-data"
-  		  style="width:500px;">
-  	 <div class="form-group">
-     <label for="exampleInputEmail1">시설 명칭 입력</label>
-    <input type="text" class="form-control" id="travelName" aria-describedby="emailHelp" 
-    	name="travelName" value="<%=trav.getTravelName()%>"required>
+  		<form action="<%=request.getContextPath()%>/update/userUpdateEnd?userId=<%=userLoggedIn.getUserId()%>"
+			  name="userUpdateFrm"
+			  id="userUpdateFrm"
+			  method="post"
+			  enctype="multipart/form-data"
+			  
+			  >
+
+  		 <div class="form-group">
+ 	 <input type="text" name="userType" id="userType"
+			style="display:none;" value="D" />
+    <label for="exampleInputEmail1">아이디</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ID" name="userId"
+    value = <%=rUser.getUserId() %> required readonly>
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
   <div class="form-group">
-   <label for="exampleInputEmail1">상세 주소 입력</label>
-    <input type="text" class="form-control" id="travelLocation" aria-describedby="emailHelp"
-    value="<%=trav.getTravelLocation()%>" name="travelLocation" required>
-    <small id="emailHelp" class="form-text text-muted">도로명 주소를 적어주세요.</small>
+ 	 <input type="text" name="userType" id="userType"
+			style="display:none;" value="D" />
+    <label for="exampleInputEmail1">닉네임</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="NickName" name="usernickName"
+    value="<%=rUser.getUsernickName()%>">
   </div>
-	<div class="form-group">
+  
+  <div class="form-group">
+    <label for="exampleInputEmail1">이름</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name" name="userName" 
+    value="<%=rUser.getUserName() %>" required>
+  </div>
+   <div class="form-group">
+    <label for="exampleInputEmail1">생일</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="2000-01-01"name="userBirth"
+    value="<%=rUser.getUserBirth()%>">
+    <small id="emailHelp" class="form-text text-muted">2000-01-01 식으로 적어주세요.</small> 
+  </div>
+   <div class="form-group">
+    <label for="exampleInputEmail1">이메일</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="abc@naver.com"name="userEmail"
+    value="<%=rUser.getUserEmail()%>">
+  </div>
+   <div class="form-group">
+    <label for="exampleInputEmail1">휴대폰</label>
+    <input type="tel" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="(-없이)01012345678"name="userPhone"
+    		maxlength="11" value="<%=rUser.getUserPhone() %>" required>
+  </div><br />
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="userGenderM" name="userGender" value="M" checked
+    		onclick="check_only(this)" value="<%=rUser.getUserGender()%>">
+  <label class="form-check-label" for="inlineCheckbox1">남</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" name="userGender" id="userGenderF" value="F"
+    		onclick="check_only(this)" value="<%=rUser.getUserGender()%>"> 
+  <label class="form-check-label" for="inlineCheckbox2">여</label>
+</div><br /><br />
+<div class="form-group">
     <label for="exampleInputEmail1">사진등록</label><br />
-    <input type="file" name="fileUpdate" id="fileUpdate" style="text-align:center;"/>
-    <span id="fname" style="width:200px"><%=trav.getThumbnailRenamedFilename()!=null?trav.getThumbnailRenamedFilename():"" %></span>
-  <input type="hidden" name="oldOName" value="<%=trav.getThumbnailOriginalFilename()!=null?trav.getThumbnailOriginalFilename():"" %>" />
-   <input type="hidden" name="oldRName" value="<%=trav.getThumbnailRenamedFilename()!=null?trav.getThumbnailRenamedFilename():"" %>" />
-  </div>
-  <div class="form-group">
-  <label for="exampleInputEmail1">사업 등록자 이름</label>
-    <input type="text" class="form-control" id="officierName" aria-describedby="emailHelp"
-    	   value="<%=trav.getTravelOfficierName() %>" name="officierName" required>
-  </div>
-  <div class="form-group">
-  	<label for="exampleInputEmail1">사업 등록자 전화번호</label>
-    <input type="text" class="form-control" id="officierPhone" aria-describedby="emailHelp" 
-    maxlength="11" value="<%=trav.getTravelOfficierphone() %>" name="officierPhone" required>
-  </div>
-  	<div class="form-group">
-    <label for="exampleInputEmail1" id="userDefaultActivity">여행 타입</label><br />
-    <input type="checkbox" name="program" id="program1" value="P" onclick="doOpenCheck(this);"/>
-	<label for="program1">여행지</label>
-	<input type="checkbox" name="program" id="program2" value="A" onclick="doOpenCheck(this);"/>
-	<label for="program2">숙소</label>
-	<input type="checkbox" name="program" id="program3" value="R" onclick="doOpenCheck(this);"/>
-	<label for="program3">맛집</label>
-	<input type="checkbox" name="program" id="program4" value="E" onclick="doOpenCheck(this);"/>
-	<label for="program4">놀거리</label>
-	<input type="checkbox" name="program" id="program5" value="S" onclick="doOpenCheck(this);" />
-	<label for="program5">쇼핑</label>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">시설 소개 내용</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="7"><%=trav.getTravelContent()%></textarea>
-  </div>
-
+   <input type="file" name="fileUpdate" id="fileUpdate"/>
+   <span id="fname"><%=rUser.getFileName()!=null?rUser.getFileName():"" %></span>
+   <%if(rUser.getFileName()!=null){ %>
+   <br>
+   <input type="checkbox" name="delFile" id="delFile">
+   <label for="exampleInputEmail1">파일 삭제</label>
+   <%} %>
+   <input type="hidden" name="oldOName" value="<%=rUser.getOriginalFileName()!=null?rUser.getOriginalFileName():"" %>" />
+   <input type="hidden" name="oldRName" value="<%=rUser.getFileName()!=null?rUser.getFileName():"" %>" />
+  </div><br />
 	<div id="putt" style="text-align:center;">
+ 	<button type="submit" class="btn btn-primary"  >관리자정보 수정</button>
+ 	 <button type="reset" class="btn btn-primary" >초기화</button>
+ 	 </div>
+ 	 </form>
+ 	</div>
 
-  <button type="submit" class="btn btn-primary" >수정</button>
-  <button type="reset" class="btn btn-primary" >초기화</button>
- </div>
- </form>
-  <button class="btn btn-primary" style="float:right;" onclick="fun_confirm()">삭제</button>
-   	</div>
  </section>
 <script>
-function fun_confirm(){
-	
-	if(confirm("업체를 삭제하시겠습니까?")==true){
-		location.href='<%=request.getContextPath()%>/travel/travelDelete?contentId=<%=trav.getContentId() %>'
-		
-	}else{
-		return;
-	}
-}
-function doOpenCheck(chk){
-    var obj = document.getElementsByName("program");
-    for(var i=0; i<obj.length; i++){
-        if(obj[i] != chk){
-            obj[i].checked = false;
-        }
-    }
-}
+
 $("#fileUpdate").change(function(){
 	console.log($(this).val());
 	//사용자가 파일을 선택한 경우
@@ -306,21 +302,14 @@ $("#fileUpdate").change(function(){
 		$("#delFile").show().next().show();
 	}
 });
-
 </script>
-<script>
-$(document).ready(()=>{
-	
-	switch(<%=trav.getTravelType()%>){
-	case "P" : $("input:checkbox[id='program1']").prop('checked',true);break;
-	case "A" : $("input:checkbox[id='program2']").prop('checked',true);break;
-	case "R" : $("input:checkbox[id='program3']").prop('checked',true);break;
-	case "E" : $("input:checkbox[id='program4']").prop('checked',true);break;
-	case "S" : $("input:checkbox[id='program5']").prop('checked',true);break;
-	}
 
-});
-	
-</script>
+ 
+
+<style>
+#travelName{
+text-align : center;
+}
+</style>
 </body>
 </html>

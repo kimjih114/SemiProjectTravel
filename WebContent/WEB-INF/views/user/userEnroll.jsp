@@ -2,28 +2,35 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp"%>
 
-<link
-	href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="<%=request.getContextPath()%>/vendor/fontawesome-free/css/all.min.css"
-	rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-	rel="stylesheet" type="text/css">
-<link href='https://fonts.googleapis.com/css?family=Kaushan+Script'
-	rel='stylesheet' type='text/css'>
-<link
-	href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic'
-	rel='stylesheet' type='text/css'>
-<link
-	href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700'
-	rel='stylesheet' type='text/css'>
-<link href="<%=request.getContextPath()%>/css/agency.min.css"
-	rel="stylesheet">
-<%-- <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script> --%>
+ <!-- Bootstrap core CSS -->
+  <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="<%=request.getContextPath() %>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="<%=request.getContextPath() %>/css/agency.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap core JavaScript -->
+  <script src="<%=request.getContextPath() %>/vendor/jquery/jquery.min.js"></script>
+  <script src="<%=request.getContextPath() %>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="<%=request.getContextPath() %>/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="<%=request.getContextPath() %>/js/jqBootstrapValidation.js"></script>
+  <script src="<%=request.getContextPath() %>/js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
 <script>
-function checkIdDuplicate(){
-	<%System.out.println("하아아");%>
+function checkIdDulplicate(){
+	
 	var userId_ = $("#userId").val().trim();
 	if(userId_.length < 4){
 		alert("아이디는 4 글자 이상 입력하세요.");
@@ -37,7 +44,7 @@ function checkIdDuplicate(){
 	
 	//폼과 팝업 연결
 	var frm = document.checkIdDuplicateFrm;
-	frm.userId.value = userId;
+	frm.userId.value = userId_;
 	frm.action = url;
 	frm.target = title;
 	frm.method = "post";
@@ -136,13 +143,6 @@ function check_only(chk){
 	}
 }
 </script>
-<header class="masthead">
-	<div class="container">
-		<div class="intro-text">
-			<h1 style="color:#fed136;">회원가입</h1>
-		</div>	
-	</div>
-</header>
 <style>
 #userEnrollFrm{
 	width : 480px;
@@ -155,24 +155,136 @@ function check_only(chk){
 /* 	text-align : center; */
 	right : 30%;
 }
-.inpu{
-z-index:1;
-font-size:16px;
-border: 1px solid orange;
-transition : 200ms ease-in-out;
-outline : none;
-padding : 0;
-marging : 0;
+
+a{
+	color:black;
 }
-label{
-	font-weight : bold;
+.page-top{
+	width: 1024px;
 }
+  
+#profile-header{
+	padding-bottom: 20px;
+	margin: 0;
+	background-color:#fed136;
+} 
+  
+#sideNav {
+    text-align: center;
+    top: 0;
+    left: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: fixed;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+	width: 250px;
+    /*height: 100vh;*/
+    background: #fed136; 
+
+}
+.profile-circle{
+	max-width: 10rem;
+    max-height: 10rem;
+    border: 0.5rem solid #212529;
+    border-radius: 100%;
+    min-width: 0;
+    min-height: 0;
+}
+#sideNav .navbar-nav .nav-item .nav-link {
+  font-weight: 800;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+}
+
+#sideNav .navbar-toggler:focus {
+  outline-color: #d48a6e;
+}
+
+a .nav-link js-scroll-trigger{
+	color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+
+}
+table{
+	margin: 10 auto;
+	margin-bottom: 30px;
+}
+
+table tr :hover{
+	cursor: pointer;
+	color: orangered;
+	
+}
+
+table td{
+	padding: 10px;
+	border-bottom: 1px solid #212529;
+	border-collapse: collapse;
+    border-right: 0;
+    border-left:0;
+    height: 50px;
+}
+
+#sideNav, table {
+	font-size: 90%;
+    font-weight: 400;
+   /* padding: .75em 0;*/
+    letter-spacing: 1px;
+}
+
+div#profile-header{
+	margin: 0 auto;
+}
+
+section#page-top{
+	position: relative;
+}
+
+.myPost{
+	position: absolute;
+	top:0;
+	left: 260px;
+	border:1px solid;
+	padding: 10px;		
+	
+}
+
+p.userprofile-userId{
+	margin-bottom: 40px;
+}
+#content{
+	position : absolute;
+	top : 7%;
+	left : 28%;
+}
+#fname{
+	position : absolute;
+	left : 28%;
+	
+	background-color : white;
+}
+
 #putt{
 	text-align: center;
 }
+
 </style>
-<form action="" name="CheckIdDuplicateFrm">
-	<input type="hidden" name="userId" />
+<header class="masthead" style="height:300px;">
+    <div class="container">
+      <div class="intro-text" style="padding-top:140px; !important">
+        <div class="intro-heading text-uppercase">
+       		회원가입
+        </div>
+     </div>
+    </div>
+  </header>
+<section id="page-top" style="padding:0px; !important;">
+<form action="" name="checkIdDuplicateFrm">
+	<input type="hidden" name="userId" /> 
 </form>
 <br />
 		<div class="form-input">
@@ -188,6 +300,9 @@ label{
 			style="display:none;" value="D" />
     <label for="exampleInputEmail1">아이디</label>
     <input type="text" class="form-control" id="userId" aria-describedby="emailHelp" placeholder="ID" name="userId" required>
+    <br />
+    <input type="button" value="check id" onclick="checkIdDulplicate();" style="float:right" class="btn btn-primary">
+    <input type="hidden" id="idValid" value="1"/>
     <small id="emailHelp" class="form-text text-muted">영어,숫자로 구성된 5~12자를 입력하세요.(영문으로 시작)</small> 
   </div>
   <div class="form-group">
@@ -243,13 +358,14 @@ label{
     <small id="emailHelp" class="form-text text-muted">필수사항이 아닙니다.</small> 
   
   <br /><br />
- <div id="putt">
-
+  	
+<div id="putt" style="text-align:center;">
   <button type="submit" class="btn btn-primary" >회원가입</button>
   <button type="reset" class="btn btn-primary" >초기화</button>
  </div>
 
 </form>
+</section>
 </div>
 
 
