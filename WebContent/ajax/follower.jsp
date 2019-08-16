@@ -481,7 +481,7 @@ function unfollower(btn){
 				$(btn).off('click');
 				$(btn).on('click', follower);
 				
-				$('.darkArea').html("<button type='button' class='btn btn-dark' value='"+u.userId+"' onclick='blocker(this);'>Block</button>");
+				$('.darkArea').html("<button type='button' class='btn btn-dark' value='"+$(btn).val()+"' onclick='blocker(this);'>Block</button>");
 				
 				
 				

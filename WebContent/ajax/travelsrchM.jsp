@@ -209,7 +209,7 @@ $(()=>{
 										html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
 									html+="</div>";
 								html+="</div>";
-								html+="<div class='starRev'>";
+								html+="<div class='mstarRev'>";
 									html+="<span class='mstarR on' onclick='star(this);'>별1</span>";
 									html+="<span class='mstarR' onclick='star(this);'>별2</span>";
 									html+="<span class='mstarR' onclick='star(this);'>별3</span>";

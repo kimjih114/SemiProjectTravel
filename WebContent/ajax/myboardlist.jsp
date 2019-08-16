@@ -14,32 +14,7 @@
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 	
 %>
-<!-- Bootstrap core CSS -->
-  <link href="/trav/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Custom fonts for this template -->
-  <link href="/trav/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
-
-  <!-- Custom styles for this template -->
-  <link href="/trav/css/agency.min.css" rel="stylesheet">
-  
-  <!-- Bootstrap core JavaScript -->
-  <script src="/trav/vendor/jquery/jquery.min.js"></script>
-  <script src="/trav/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Plugin JavaScript -->
-  <script src="/trav/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Contact form JavaScript -->
-  <script src="/trav/js/jqBootstrapValidation.js"></script>
-  <script src="/trav/js/contact_me.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="/trav/js/agency.min.js"></script>
 
 
 <script>
@@ -144,8 +119,8 @@ function updateBoardSNS(boardNo){
 	if($(".snsModify").length>0){
 		return;
 	}
-	console.log();
 	
+	$(".tbl-td").children(".starRev").css("margin-top", "23px");
 	$(document.querySelector('#container'+boardNo)).html('');
 	
 	var param={
@@ -156,64 +131,80 @@ function updateBoardSNS(boardNo){
 				data : param,
 				dataType: 'json',
 				type : 'post',
-				success : function(data){	
+				success : function(data){
+					console.log(data);
+					
 					var html = '';
 					html += "<form action='' name='snsModify'";
 					html += "class='snsModify'";
 					html += "method='post'";
-					html += "enctype='multipart/form-data' style='border:1px solid black; padding: 10px; margin-bottom:10px;'>";
+					html += "enctype='multipart/form-data' style='border:1px solid black; padding: 10px;'>";
 					html += "<table class='postFrm' style='padding:10px;'>";
 					html += "<tr>";
-					html += "<td style='font-weight: 700; padding:10px; text-align:left;'>여행 후기를 수정합니다.</td>";
+					html += "<td style='padding: 10px; width: 508px; text-align:left; font-weight: 700'>여행 후기를 수정합니다.</td>";
 					html += "</tr>";
 					html += "<tr>";
-					html += "<td style='style='font-weight: 700; float:left; padding:10px'>";
-					html += "<div class='travelsrchM' style='padding: 10px;'></div>";
+					html += "<td style='padding: 10px; width: 508px; text-align:left;'>";
+					html += "<div class='travelsrchM'></div>";
 					html += "</td>";
 					html += "</tr>";
 					html += "<tr>";
-					html += "<td style='font-weight: 700; float:left; padding:10px;'>";
-					html += "<label for='reviewContent' style='font-weight: 700; float:left;'>어떤 여행을 하셨나요?</label>";
-					html += "<textarea name='reviewContent' id='reviewContent' cols='58' rows='5' required>"+data.boardSNS.boardContent+"</textarea>";
+					html += "<td style='width: 508px; text-align:left; padding-left:10px;'>";
+					html += "<label for='reviewContent' style='font-weight: 700; margin-bottom:5px; float:left;'>어떤 여행을 하셨나요?</label>";
+					html += "<textarea name='reviewContent' id='reviewContent' cols='56' rows='5' required>"+data.boardSNS.boardContent+"</textarea>";
 					html += "<div id='contentIdList'>";
 					html += "</div>";
 					html += "</td>";
 					html += "</tr>";
-					html += "<tr>";
-					html += "<td style='float:left; padding:10px; text-align:left; float:left; width:506px;'>";
-					html += "<label for='' style='font-weight: 700;  float:left; margin-bottom:10px;'>첨부이미지</label>";
-					html += "<span style='font-size:0.5em; color:gray;'>최대 5개까지 등록 가능합니다.</span><br>";		
-					html+="<div style='position:relative; '>"
+					
+					
+					html+="<tr>";
+					html += "<td style='padding: 10px; width: 508px; text-align:left;'>";
+					html += "<label for='' style='font-weight: 700; float:left;'>첨부이미지</label>";
+					html += "<span style='font-size:0.5em; color:gray; float:left;'>최대 5개까지 등록 가능합니다.</span><br>";
+					html += "<input name='fileupload' type='file' accept='image/*' style='float:left; width:500px;' multiple />";
+					html += "<div style='display:table; '>";
+					
 					if(data.imageSNSList.length>0){
-						html +="<div class='panel' style='position:absolute; width: 400px; left:73px; top:6px; text-align:left; z-index:1; background:white;'>파일 "+data.imageSNSList.length+"개</div>"
+						html += "<div class='mimgs_wrap' style='display: block;  margin-top:10px; text-align: center; vertical-align: middle; table-layout: fixed; width:100%;'>";
 					}
 					else{
-						html +="<div class='panel' style='position:absolute; width: 400px; left:73px; top:6px; text-align:left; z-index:1; background:white;'>선택된 파일 없음</div>"
+						html += "<div class='mimgs_wrap' style='display:none; margin-top:10px;  text-align: center; vertical-align: middle; table-layout: fixed; width:100%;'>";
 					}
-					html += "<input name='fileModify' id='fileModify' type='file' accept='image/*' onchange='mHandleImgsFilesSelect(event)' style='margin-bottom:10px; position:absolute; top:4px; left:0px;' multiple />";
-					html+="</div>"
-					html += "<div style='display:table; height:100px;'>";
-					html += "<div class='mimgs_wrap' style=' text-align:center; vertical-align:middle; table-layout:fixed; width:100%; height:100px; display:block; margin-top:'>";
 					if(data.imageSNSList.length>0){
-						for(var e=0; e<data.imageSNSList.length; e++){
-							html+="<div class='mimgs' style='display:talbe-cell; max-width:100px; font-size:0.8em;'><img style='width:95px; height:95px; margin: 0 2px;' src='<%=request.getContextPath()%>/upload/board/"+data.imageSNSList[e].renamedFileName+"' />";
-							
-							if(data.imageSNSList[e].originalFileName.length>7){
-						 		var dot = data.imageSNSList[e].originalFileName.substring(data.imageSNSList[e].originalFileName.indexOf('.'));
-						 		var filename = data.imageSNSList[e].originalFileName.substr(0, 7) + "..." + dot;
+						for(var t=0; t<data.imageSNSList.length; t++){
+							html += "<div class='mimgs' style='display: table-cell; max-width: 100px; font-size:0.8em;'>";
+							html+="<img src='<%=request.getContextPath() %>/upload/board/"+data.imageSNSList[t].renamedFileName+"' style='width: 95px; height: 95px; margin: 0 2px;' />";
+						 	var filename = data.imageSNSList[t].originalFileName;
+						 	
+						 	if(filename.length>7){
+						 		var dot = filename.substring(filename.indexOf('.'));
+						 		filename = filename.substr(0, 7) + "..." +  dot;
 						 	}
-							
-							html+="<span>"+filename+"</span>"
-							html+="</div>";
+						 	
+							html += "<div><span>"+filename+"</span>";
+							html += "</div>";
+								html += "</div>";
 						}
 					}
-					html+="</div>";
 					
-					html += "</div>";
+					
+					html += "</div>";	
 					html += "</td>";
-					html += "</tr>";
+					html +="</tr>";
+					
+				
+					
+					
+					
+					
+					
+					
+					
+					
+					
 					html += "<tr>";
-					html += "<td style='float:left; padding:10px;'>";
+					html += "<td style='padding: 10px; width: 508px; text-align:left;'>";
 					html += "<input type='radio' name='boardtype'  value='P' checked />";
 					html += "<label for='public'>전체공개</label> &nbsp;";
 					html += "<input type='radio' name='boardtype'  value='F' />";
@@ -394,7 +385,7 @@ function pageMore(boardNo){
 			
 	
 			$("#trMore").click(function(e){
-				pageMore($(this).prev().attr('id').substr(7));
+				pageMore(parseInt($(this).prev().attr('id').substr(9)));
 				$(this).remove();
 			});
 			
@@ -614,7 +605,6 @@ p.card-text{
 .tbl-td	.starRev{
 	margin:0 auto;
 	width:150px;
-	marign:0 auto;
 }					
 
 
@@ -636,55 +626,7 @@ p.card-text{
 	padding-bottom: 10px;
 }
 
-#postFrm{
-	width:540px;
-	margin:0 auto;
-	text-align:center;
-	position: absolute;
-	left:220px;
-	top: 50px;
-	display:none;
-	border : 1px solid;
-	border-collapse: collapse;
-	padding: 10px;
-	z-index: 99;
-	background: white;
-}
 
-
-#postFrm td{
-	padding: 10px;
-	width: 520px;
-	text-align:left;
-	/* border:1px solid;
-	border-collpase: collapse; */
-}
-#postFrm td.review-img{
-	padding-top: 0px;
-	width: 50px;
-	height: 50px;
-}
-
-
-.mimgs_wrap{
-	display:none;
-	text-align: center;
-    vertical-align: middle;
-    table-layout: fixed;
-    width:100%;
-}
-
-.mimgs_wrap img{
-	width: 95px;
-	height: 95px;
-	margin: 0 2px;
-}
-
-.mimgs{
-	display: table-cell;
-	max-width: 100px;
-	font-size:0.8em;
-}
 
 </style>
 	

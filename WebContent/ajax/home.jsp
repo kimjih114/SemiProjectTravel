@@ -176,7 +176,10 @@
 					
 					<input name="fileupload" id="fileupload" type="file" accept="image/*" style="margin-bottom:10px;" multiple />
 					<div style="display:table;">
-						<div class="imgs_wrap"></div>
+						<div class="imgs_wrap">
+						
+						
+						</div>
 					</div>	
 			</td>
 		</tr>
@@ -241,30 +244,6 @@ document.addEventListener('keydown', function(event) {
     }
 }, true);
 
-$(()=>{
-var param = {
-				mypage : '<%=mypage %>',
-				totalContents : '<%=totalContents %>',
-				lastBoardNo : '<%=lastBoardNo %>'
-		}
-		
-			$.ajax({
-				
-				url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
-				data: param,
-				type: "get",
-				dataType: "html",
-				success: function(data){
-					$("#tab1").html(data);
-				},
-				error: function(jqxhr, textStatus, errorThrown){
-					console.log("ajax처리실패!");
-					console.log(jqxhr, textStatus, errorThrown);
-				}
-			});
-
-	
-})
 
 var filesTempArr = [];
 
@@ -277,30 +256,7 @@ $(function() {
 		$('#' + activeTab).addClass('current');
 
 
-		if($(this).attr('data-tab')=='tab1'){	
-			var param = {
-					mypage : '<%=mypage %>',
-					totalContents : '<%=totalContents %>',
-					lastBoardNo : '<%=lastBoardNo %>'
-			}
-			
-				$.ajax({
-					
-					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
-					data: param,
-					type: "get",
-					dataType: "html",
-					success: function(data){
-						$("#tab1").html(data);
-					},
-					error: function(jqxhr, textStatus, errorThrown){
-						console.log("ajax처리실패!");
-						console.log(jqxhr, textStatus, errorThrown);
-					}
-				});
-
-			
-		}
+	
 		
 		if($(this).attr('data-tab')=='tab2'){	
 			var param = {
@@ -326,31 +282,7 @@ $(function() {
 
 			
 		}
-		
-		if($(this).attr('data-tab')=='tab3'){	
-			var param = {
-					mypage : '<%=mypage %>',
-					totalContents : '<%=totalContents %>',
-					lastBoardNo : '<%=lastBoardNo %>'
-			}
-			
-				$.ajax({
-					
-					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
-					data: param,
-					type: "get",
-					dataType: "html",
-					success: function(data){
-						$("#tab3").html(data);
-					},
-					error: function(jqxhr, textStatus, errorThrown){
-						console.log("ajax처리실패!");
-						console.log(jqxhr, textStatus, errorThrown);
-					}
-				});
 
-			
-		}
 	})
 });
 	
@@ -474,11 +406,7 @@ $("#btnSubmit").click(function(event){
 		   	grades.push(grade);
 		});
 	}
-	 	
-	console.log(contentids);
-	console.log(grades);
-	console.log(contenttypes);
-	
+
 	
 	
 	 formData.append("boardWriter",'<%=userLoggedIn.getUserId() %>');
@@ -544,15 +472,6 @@ $("#btnSubmit").click(function(event){
 	     }
 	 });
 
-	$(function() {
-		$('ul.tab li').click(function() {
-			var activeTab = $(this).attr('data-tab');
-			$('ul.tab li').removeClass('current');
-			$('.tabcontent').removeClass('current');
-			$(this).addClass('current');
-			$('#' + activeTab).addClass('current');
-		})
-	});
 		
 	
 	
