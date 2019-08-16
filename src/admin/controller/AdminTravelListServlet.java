@@ -1,6 +1,7 @@
 package admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import admin.model.service.AdminService;
+import admin.model.vo.AdminRoom;
 import travel.model.service.TravelService;
 import travel.model.vo.Travel;
 
@@ -84,7 +87,9 @@ public class AdminTravelListServlet extends HttpServlet {
 			pageBar += "<a href='"+request.getContextPath()+"/travel/travelList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>[다음]</a>";
 		}
 		
-		//업체리스트뽑을때 숙소 방정보까지 뽑아서 보내주기
+		//업체가 숙소인 방리스트 뽑기
+		List<AdminRoom> roomList=new AdminService().selectAdminRoomList();
+		request.setAttribute("roomList", roomList);
 		
 		request.setAttribute("list", list);
 		request.setAttribute("pageBar", pageBar);

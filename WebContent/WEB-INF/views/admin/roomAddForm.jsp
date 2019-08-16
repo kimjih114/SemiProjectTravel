@@ -211,11 +211,11 @@ section#page-top{
   <input type="hidden" id="contentId" name="contentId" value="<%=contentId%>"/>
   <div class="form-group">
    <label for="exampleInputEmail1">방 사이즈:</label>
-    <input type="text" class="form-control" id="roomSize" aria-describedby="emailHelp" placeholder="size" name="roomSize" required>
+    <input type="number" class="form-control" id="roomSize" aria-describedby="emailHelp" placeholder="size" name="roomSize" required>
   </div>
   <div class="form-group">
    <label for="exampleInputEmail1">적정인원:</label>
-    <input type="text" class="form-control" id="roomPerson" aria-describedby="emailHelp" placeholder="person" name="roomPerson" required>
+    <input type="number" class="form-control" id="roomPerson" aria-describedby="emailHelp" placeholder="person" name="roomPerson" required>
   </div>
   <div class="form-group">
   <label for="exampleInputEmail1">성수기 평일 가격:</label>

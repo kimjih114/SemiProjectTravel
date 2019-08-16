@@ -94,4 +94,11 @@ public class AdminService {
 		return result;
 	}
 
+	public List<AdminRoom> selectAdminRoomList() {
+		Connection conn=getConnection();
+		List<AdminRoom> roomList=new AdminDAO().selectAdminRoomList(conn);
+		close(conn);
+		return roomList;
+	}
+
 }

@@ -334,5 +334,34 @@ public class AdminDAO {
 		}
 		return result;
 	}
+	public List<AdminRoom> selectAdminRoomList(Connection conn) {
+		List<AdminRoom> roomList=new ArrayList<AdminRoom>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectAdminRoomList");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				String contentId=rset.getString("content_id");
+				String roomName=rset.getString("room_name");
+				int roomWeekDayHighPrice=rset.getInt("room_weekday_high_price");
+				int roomWeekDayLowPrice=rset.getInt("room_weekday_low_price");
+				int roomWeekEndHighPrice=rset.getInt("room_weekend_high_price");
+				int roomWeekEndLowPrice=rset.getInt("room_weekend_low_price");
+				String roomSize=rset.getString("room_size");
+				String roomPerson=rset.getString("room_person");
+				String content=rset.getString("room_content");
+				AdminRoom a=new AdminRoom(contentId, roomName, roomWeekDayHighPrice, roomWeekDayLowPrice, roomWeekEndHighPrice, roomWeekEndLowPrice, roomSize, roomPerson, content);
+				roomList.add(a);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return roomList;
+	}
 
 }

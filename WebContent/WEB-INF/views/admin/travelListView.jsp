@@ -1,3 +1,4 @@
+<%@page import="admin.model.vo.AdminRoom"%>
 <%@page import="travel.model.vo.Travel"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -6,6 +7,9 @@
 	List<Travel> list = (List<Travel>)request.getAttribute("list");
 	String pageBar = (String)request.getAttribute("pageBar");
 	int numPerPage = (int)request.getAttribute("numPerPage");
+	List<AdminRoom> roomList=(List<AdminRoom>)request.getAttribute("roomList");
+	System.out.println("roomList는?"+roomList);
+	int index=1;
 %>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <link rel="stylesheet" href="selectbox.min.css">
@@ -68,7 +72,14 @@ $(()=>{
 
 })
 
-
+function roomUpdateForm(index){
+		var roomName=$("#roomName"+index+"").val();
+		if(roomName=="null"){
+			alert("방을 선택해주세요");
+			return;
+		}
+		//여기서부터 내일하자
+}
 </script>
   <style>
 .page-top{
@@ -325,12 +336,26 @@ numPerPage{
   				<td><%=t.getTravelOfficierphone()%></td>
   				<td>
   				<%if(t.getTravelType().equals("A")){ %>
-  					<button type="button" onclick="location.href='<%=request.getContextPath()%>/admin/roomAddForm?contentId=<%=t.getContentId()%>'">방추가</button>			
+  					<button type="button" onclick="location.href='<%=request.getContextPath()%>/admin/roomAddForm?contentId=<%=t.getContentId()%>'">방추가</button>
+  					<button type="button" onclick="roomUpdateForm(<%=index%>);">방수정</button>			
+  					<select id="roomName<%=index%>">
+  					<option value="null">방을선택해주세요</option>
   				<%} %>
+  				
+  				<%if(roomList!=null){ %>
+  				<%for(int i=0;i<roomList.size();i++){ %>
+  					<%if(t.getContentId().equals(roomList.get(i).getContentId())){ %> 						
+  					<option value="<%=roomList.get(i).getRoomName() %>,<%=roomList.get(i).getContentId()%>"><%=roomList.get(i).getRoomName() %></option> 
+  													
+  					<%} %>			
+  				<%} %>
+  				<%} %>
+  					</select>
+  					
   				</td>
   				
   			</tr>
-  			<%		
+  			<%	index++;	
   				}
   			}
   			%>
