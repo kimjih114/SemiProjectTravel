@@ -106,7 +106,7 @@ background-image:url(<%=request.getContextPath()%>/img/header-new.jpg);
          	</li>
           	 <li class="nav-item">
 	           <a class="nav-link js-scroll-trigger" style="padding-top: 5px !important" href='<%=request.getContextPath() %>/admin/adminView'>
-	           		<img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="header-profile-circle"  width="40" height="40" />
+	           		<img src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" class="header-profile-circle"  width="40" height="40" />
 	           </a> <!-- userLogin.jsp로 이동하는 서블릿 -->
 	         </li> 
           <% }

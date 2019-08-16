@@ -61,6 +61,8 @@ public class UserDeleteServlet extends HttpServlet {
 		System.out.println("삭제(파일이동)여부: "+bool);
 		}
 		
+		
+		
 		String view ="/WEB-INF/views/common/msg.jsp";
 		String msg = "";
 		String loc = "/";
@@ -70,11 +72,25 @@ public class UserDeleteServlet extends HttpServlet {
 		else
 			msg = "회원 탈퇴에 실패했습니다.";
 		
+		
+		
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
 		
+		
+		
+		
 		RequestDispatcher reqDispatcher = request.getRequestDispatcher(view);
 		reqDispatcher.forward(request, response);
+		
+		HttpSession session_ = request.getSession(false);
+		
+		//세션 무효화 
+		if(session_ !=null) {
+			session_.invalidate();
+		}
+		//리다이렉트 
+		response.sendRedirect(request.getContextPath());
 		
 	}
 

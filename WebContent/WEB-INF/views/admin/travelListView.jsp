@@ -215,14 +215,14 @@ numPerPage{
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
-      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/img/이동욱.jpg" alt="">
+      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt="">
       <p class="userprofile-userId">관리자님, 안녕하세요!
 
    </div>
 
    <table id="tbl-usermenu0">
    	 <tr>
-   		<td id="modifyUserInfo">관리자 정보 수정</td>
+   		<td id="modifyUserInfo" onclick="location.href='<%=request.getContextPath()%>/user/userUpdateView'">관리자 정보 수정</td>
    	</tr>
 	<tr>
    		<td id="userList" onclick="location.href='<%=request.getContextPath()%>/admin/adminUserList'">회원보기</td>
