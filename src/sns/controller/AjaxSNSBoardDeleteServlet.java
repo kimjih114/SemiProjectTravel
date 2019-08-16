@@ -18,13 +18,13 @@ import sns.model.service.SNSService;
  * Servlet implementation class AjaxSNSDeleteBoardSNSServlet
  */
 @WebServlet("/gson/sns/deleteBoardSNS.do")
-public class AjaxSNSDeleteBoardSNSServlet extends HttpServlet {
+public class AjaxSNSBoardDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxSNSDeleteBoardSNSServlet() {
+    public AjaxSNSBoardDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

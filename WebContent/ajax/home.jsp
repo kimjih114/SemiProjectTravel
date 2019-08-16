@@ -205,75 +205,7 @@
 			</ul>
 		
 			<div id="tab1" class="tabcontent current">
-				<div class="timeline-sns">
-					<table class="timeline-board-sns">
-						<tr>
-							<td class="timeline-boardcontent-sns"><img src="<%=request.getContextPath() %>/img/profile.jpg" class="header-profile-circle"  width="30" height="30" />
-							    <span style="font-weight:600">@닉네임 </span><span style="font-size:0.8em; color:gray;">2019/08/11</span>
-							  	<span style="float:right;">메뉴</span>
-						</tr>
-						<tr>
-							<td class="timeline-boardcontent-sns" id="boardcontent_img">
-								<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-								  <div class="carousel-inner">
-								    <div class="carousel-item active">
-								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
-								    </div>
-								    <div class="carousel-item">
-								      <img src="<%=request.getContextPath() %>/img/profile.jpg" class="d-block w-100" alt="...">
-								    </div>
-								    <div class="carousel-item">
-								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
-								    </div>
-								    <div class="carousel-item">
-								      <img src="<%=request.getContextPath() %>/img/profile.jpg" class="d-block w-100" alt="...">
-								    </div>
-								    <div class="carousel-item">
-								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
-								    </div>
-								  </div>
-								  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								    <span class="sr-only">Previous</span>
-								  </a>
-								  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-								    <span class="sr-only">Next</span>
-								  </a>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<table style="border: 1px solid;">
-									<tr>
-										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 1</td>
-										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 2</td>
-										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 3</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						<tr>
-							<td class="timeline-boardcontent-sns">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A tempore labore atque tenetur dolore recusandae nemo sunt commodi aliquid aut voluptatum hic nostrum velit aperiam consectetur temporibus eius harum cumque?</td>
-						</tr>
-						<tr>
-							<td class="timeline-boardcontent-sns"><span style="float:right;">좋아요(12)&nbsp;&nbsp;스크랩(2)</span></td>
-						</tr>
-						<tr>
-							<td class="timeline-boardcontent-sns">댓글(3)</td>
-						</tr>
-						<tr>
-							<td class="timeline-boardcontent-sns"><span class="nick_sns">@abcde</span>&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus necessitatibus sequi dignissimos obcaecati non harum laudantium sed delectus at alias ducimus porro odio aut dolores vel totam aperiam ex eaque. <span style="float:right;">&nbsp;&nbsp;좋아요&nbsp;&nbsp;팔로잉&nbsp;&nbsp;블랙리스트</span></td>		
-						</tr>
-						<tr>
-							<td class="timeline-boardcontent-sns"><span class="nick_sns">@qwerty</span>&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum enim reprehenderit delectus itaque distinctio maxime optio nobis impedit magnam repellendus incidunt quaerat ex architecto nemo quod dolore officia amet accusantium.</td>
-						</tr>
-						<tr>
-							<td class="timeline-boardcontent-sns"><span class="nick_sns">@seulgi</span>&nbsp;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae magni minus a quos non veritatis ut omnis praesentium hic repellat suscipit libero voluptatem iste totam impedit id necessitatibus et tenetur.</td>
-						</tr>
-					</table>
-		    	</div>
+			
 			</div>
 		
 			<div id="tab2" class="tabcontent">
@@ -281,12 +213,10 @@
 			</div>
 		
 			<div id="tab3" class="tabcontent">
-				<h3>스크랩</h3>
-					<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
-				</div>
-		</div>
+
+			</div>
 		
-		<table id="rightNav">
+		<!--  <table id="rightNav">
 			<tr>
 				<td><input type="search" id="searchSNS" placeholder="검색" onfocus='popupSearchFrm' /></td>
 			</tr>
@@ -301,7 +231,7 @@
 				</td>
 			</tr>
 			
-	    </table>
+	    </table>-->
 		
 		
 <script>
@@ -311,9 +241,30 @@ document.addEventListener('keydown', function(event) {
     }
 }, true);
 
-/* $(()=>{
-	location.href="#"
-}) */
+$(()=>{
+var param = {
+				mypage : '<%=mypage %>',
+				totalContents : '<%=totalContents %>',
+				lastBoardNo : '<%=lastBoardNo %>'
+		}
+		
+			$.ajax({
+				
+				url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
+				data: param,
+				type: "get",
+				dataType: "html",
+				success: function(data){
+					$("#tab1").html(data);
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					console.log("ajax처리실패!");
+					console.log(jqxhr, textStatus, errorThrown);
+				}
+			});
+
+	
+})
 
 var filesTempArr = [];
 
@@ -324,8 +275,32 @@ $(function() {
 		$('.tabcontent').removeClass('current');
 		$(this).addClass('current');
 		$('#' + activeTab).addClass('current');
-		
-		
+
+
+		if($(this).attr('data-tab')=='tab1'){	
+			var param = {
+					mypage : '<%=mypage %>',
+					totalContents : '<%=totalContents %>',
+					lastBoardNo : '<%=lastBoardNo %>'
+			}
+			
+				$.ajax({
+					
+					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
+					data: param,
+					type: "get",
+					dataType: "html",
+					success: function(data){
+						$("#tab1").html(data);
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						console.log("ajax처리실패!");
+						console.log(jqxhr, textStatus, errorThrown);
+					}
+				});
+
+			
+		}
 		
 		if($(this).attr('data-tab')=='tab2'){	
 			var param = {
@@ -342,6 +317,31 @@ $(function() {
 					dataType: "html",
 					success: function(data){
 						$("#tab2").html(data);
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						console.log("ajax처리실패!");
+						console.log(jqxhr, textStatus, errorThrown);
+					}
+				});
+
+			
+		}
+		
+		if($(this).attr('data-tab')=='tab3'){	
+			var param = {
+					mypage : '<%=mypage %>',
+					totalContents : '<%=totalContents %>',
+					lastBoardNo : '<%=lastBoardNo %>'
+			}
+			
+				$.ajax({
+					
+					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
+					data: param,
+					type: "get",
+					dataType: "html",
+					success: function(data){
+						$("#tab3").html(data);
 					},
 					error: function(jqxhr, textStatus, errorThrown){
 						console.log("ajax처리실패!");

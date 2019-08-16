@@ -34,20 +34,20 @@ public class AjaxSnsFollowedOneListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		
 		String userLoggedIn = request.getParameter("userLoggedIn");
-		System.out.println("userLoggedIn@serlvet="+userLoggedIn);
 		
 		//2.business logic
 		List<String> followedOneList = new SNSService().selectOneIdFollowed(userLoggedIn);
-		List<String> followOneList = new SNSService().selectOneIdFollow(userLoggedIn); 
-		if(followedOneList!=null) {
-			for(String followed : followedOneList) {
-				if(followOneList!=null) {
-					for(String follow : followOneList) {
-						if(followed.equals(follow)){
-							followedOneList.remove(followed);
-						}
-					}
+		List<String> followOneList = new SNSService().selectOneIdFollow(userLoggedIn);
+		List<String> followerOneList = new SNSService().selectOneIdFollower(userLoggedIn, followOneList);
+		
+		if(followedOneList!=null && followerOneList!=null) {
+			for(String er : followerOneList) {
+				System.out.println(er);
+				if(followedOneList.contains(er)) {
+					followedOneList.remove(followedOneList.indexOf(er));
 				}
 			}
 		}

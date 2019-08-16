@@ -280,128 +280,129 @@ function pageMore(boardNo){
 		type: "get",
 		dataType: "json",
 		success: function(data){
-			console.log(data);
-			
-			var html = "";
-			
-			$.each(data,(i,tl)=>{
-				html+="<div id='container"+tl.boardSNS.boardNo+"'>";
-				html+="<table class='tbl-boardsns' id='boardNo"+tl.boardSNS.boardNo+"'>"
-				html+="<tr>";
-				html+="<td class='timeline-boardcontent-sns'>";
-				html+="<img src='<%=request.getContextPath()%>/upload/profile/"+tl.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
-				html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>"+tl.profileSNS.userNickname+"</a></span>";
-				html+="<span style='font-size: 0.8em; color: gray;''>"+tl.boardSNS.boardDate+"</span>";
-				html+="<span style='float: right;'>";
-				if(tl.boardSNS.boardWriter=='<%=userLoggedIn.getUserId()%>'){
-					html+="<button class='btn btn-success' onclick='updateBoardSNS("+tl.boardSNS.boardNo+")' style='margin-right:2px;'>수정</button>";
-					html+="<button class='btn btn-danger' onclick='deleteBoardSNS("+tl.boardSNS.boardNo+");'>삭제</button>";
-				} 
+			if(data!=null){
+				var html = "";
 				
-				html+="</span>";
-				html+="</td>";
-				html+="</tr>";
-				if(tl.imageSNSList!=null){
+				$.each(data,(i,tl)=>{
+					html+="<div id='container"+tl.boardSNS.boardNo+"'>";
+					html+="<table class='tbl-boardsns' id='boardNo"+tl.boardSNS.boardNo+"'>"
 					html+="<tr>";
-					html+="<td>"
-					html+="<div id='carouselExampleControls"+tl.boardSNS.boardNo+"' class='carousel slide' data-ride='carousel'>";
-					html+="<div class='carousel-inner'>";
-					for(j=0; j<tl.imageSNSList.length; j++){
-						if(j==0){
-							html+="<div class='carousel-item active'>";
-						} else if(j>0){
-							html+="<div class='carousel-item'>";
-						}
-						html+="<img src='<%=request.getContextPath()%>/upload/board/"+tl.imageSNSList[j].renamedFileName+"' class='d-block w-100' alt='...'>";
-						html+="</div>";		
-					}
-					html+="</div>";
-					html+="<a class='carousel-control-prev' href='#carouselExampleControls"+tl.boardSNS.boardNo+"' role='button' data-slide='prev'>";
-					html+="<span class=;carousel-control-prev-icon' aria-hidden='true'></span>"
-					html+="<span class='sr-only'>Previous</span>";
-					html+="</a>";
-					html+="<a class='carousel-control-next' href='#carouselExampleControls"+tl.boardSNS.boardNo+"' role='button' data-slide='next'>";
-					html+="<span class='carousel-control-next-icon' aria-hidden='true'></span>";
-					html+="<span class='sr-only'>Next</span>";
-					html+="</a>";
-					html+="</div>";
+					html+="<td class='timeline-boardcontent-sns'>";
+					html+="<img src='<%=request.getContextPath()%>/upload/profile/"+tl.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
+					html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>"+tl.profileSNS.userNickname+"</a></span>";
+					html+="<span style='font-size: 0.8em; color: gray;''>"+tl.boardSNS.boardDate+"</span>";
+					html+="<span style='float: right;'>";
+					if(tl.boardSNS.boardWriter=='<%=userLoggedIn.getUserId()%>'){
+						html+="<button class='btn btn-success' onclick='updateBoardSNS("+tl.boardSNS.boardNo+")' style='margin-right:2px;'>수정</button>";
+						html+="<button class='btn btn-danger' onclick='deleteBoardSNS("+tl.boardSNS.boardNo+");'>삭제</button>";
+					} 
+					
+					html+="</span>";
 					html+="</td>";
 					html+="</tr>";
-				}
-				if(tl.gradeSNSList!=null){
-					html+="<tr>";
-					html+="<td style='padding:1px !important;'>";
-					html+="<table>";
-					html+="<tr>"
-					for(k=0; k<tl.gradeSNSList.length; k++){
-						html+="<td class='tbl-td'>";
-						html+="<div class='card h-100'>";
-							html+="<a href='#' class='goInfo'>";
-							html+="<img class='card-img-top' src='"+tl.gradeSNSList[k].contentThumbnail+"'></a>";
-							html+="<div class='caption'>";
-							html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+tl.gradeSNSList[k].contentId+"&contentTypeId="+tl.gradeSNSList[k].contentType+"' target='_blank'>"+tl.gradeSNSList[k].contentTitle+"</a>";
-							html+="<div class='contentid' style='display:none'>"+tl.gradeSNSList[k].contentId+"</div></h4>"
-							html+="<p class='card-text'>"+tl.gradeSNSList[k].contentAddress+"</p>"
-							html+="</div>"
-							html+="</div>"
-							html+="</div>"
-							
-							html+="<div class='starRev'>"
-								for(var l=0; l<tl.gradeSNSList[k].grade; l++){
-									html+="<span class='starR on'>별</span>";
-								}
-								for(var m=0; m<5-tl.gradeSNSList[k].grade; m++){
-									html+="<span class='starR'>별</span>";
-								}
-							html+="</div>";
-							html+="</td>";
-					}
-						html+="</tr>";
-						html+="</table>";
+					if(tl.imageSNSList!=null){
+						html+="<tr>";
+						html+="<td>"
+						html+="<div id='carouselExampleControls"+tl.boardSNS.boardNo+"' class='carousel slide' data-ride='carousel'>";
+						html+="<div class='carousel-inner'>";
+						for(j=0; j<tl.imageSNSList.length; j++){
+							if(j==0){
+								html+="<div class='carousel-item active'>";
+							} else if(j>0){
+								html+="<div class='carousel-item'>";
+							}
+							html+="<img src='<%=request.getContextPath()%>/upload/board/"+tl.imageSNSList[j].renamedFileName+"' class='d-block w-100' alt='...'>";
+							html+="</div>";		
+						}
+						html+="</div>";
+						html+="<a class='carousel-control-prev' href='#carouselExampleControls"+tl.boardSNS.boardNo+"' role='button' data-slide='prev'>";
+						html+="<span class=;carousel-control-prev-icon' aria-hidden='true'></span>"
+						html+="<span class='sr-only'>Previous</span>";
+						html+="</a>";
+						html+="<a class='carousel-control-next' href='#carouselExampleControls"+tl.boardSNS.boardNo+"' role='button' data-slide='next'>";
+						html+="<span class='carousel-control-next-icon' aria-hidden='true'></span>";
+						html+="<span class='sr-only'>Next</span>";
+						html+="</a>";
+						html+="</div>";
 						html+="</td>";
+						html+="</tr>";
+					}
+					if(tl.gradeSNSList!=null){
+						html+="<tr>";
+						html+="<td style='padding:1px !important;'>";
+						html+="<table>";
+						html+="<tr>"
+						for(k=0; k<tl.gradeSNSList.length; k++){
+							html+="<td class='tbl-td'>";
+							html+="<div class='card h-100'>";
+								html+="<a href='#' class='goInfo'>";
+								html+="<img class='card-img-top' src='"+tl.gradeSNSList[k].contentThumbnail+"'></a>";
+								html+="<div class='caption'>";
+								html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+tl.gradeSNSList[k].contentId+"&contentTypeId="+tl.gradeSNSList[k].contentType+"' target='_blank'>"+tl.gradeSNSList[k].contentTitle+"</a>";
+								html+="<div class='contentid' style='display:none'>"+tl.gradeSNSList[k].contentId+"</div></h4>"
+								html+="<p class='card-text'>"+tl.gradeSNSList[k].contentAddress+"</p>"
+								html+="</div>"
+								html+="</div>"
+								html+="</div>"
+								
+								html+="<div class='starRev'>"
+									for(var l=0; l<tl.gradeSNSList[k].grade; l++){
+										html+="<span class='starR on'>별</span>";
+									}
+									for(var m=0; m<5-tl.gradeSNSList[k].grade; m++){
+										html+="<span class='starR'>별</span>";
+									}
+								html+="</div>";
+								html+="</td>";
+						}
+							html+="</tr>";
+							html+="</table>";
+							html+="</td>";
+						html+="</tr>";
+					}		
+					
+					if(tl.boardSNS.boardContent!=null){
+						html+="<tr>";
+						html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>@"+tl.boardSNS.boardWriter+"</a>&nbsp;"+tl.boardSNS.boardContent+"</td>";
+						html+="</tr>";
+					}
+					
+					
+					html+="<t>";
+					html+="<td>";
+					html+="<span style='float: right; margin:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/>1&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+					html+="</td>";
 					html+="</tr>";
-				}		
-				
-				if(tl.boardSNS.boardContent!=null){
 					html+="<tr>";
-					html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>@"+tl.boardSNS.boardWriter+"</a>&nbsp;"+tl.boardSNS.boardContent+"</td>";
+					html+="<td class='timeline-boardcontent-sns' >댓글(3)</td>";
 					html+="</tr>";
+					html+="<tr>";
+					html+="<td class='timeline-boardcontent-sns'>";
+					html+="<span class='nick_sns'>@abcde</span>&nbsp;";
+					html+="<span style='float:right;'>좋아요&nbsp;&nbsp;신고</span>";
+					html+="</td>";		
+					html+="</tr>";
+					html+="</table>"
+					html+="</div>";
+				});
+				
+				if((<%=new SNSService().selectBoardSNSCnt(mypage) %> - $(".tbl-boardsns").length) >0){
+					html+="<div id='trMore'>더보기</div>";
 				}
 				
-				
-				html+="<t>";
-				html+="<td>";
-				html+="<span style='float: right; margin:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/>1&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
-				html+="</td>";
-				html+="</tr>";
-				html+="<tr>";
-				html+="<td class='timeline-boardcontent-sns' >댓글(3)</td>";
-				html+="</tr>";
-				html+="<tr>";
-				html+="<td class='timeline-boardcontent-sns'>";
-				html+="<span class='nick_sns'>@abcde</span>&nbsp;";
-				html+="<span style='float:right;'>좋아요&nbsp;&nbsp;신고</span>";
-				html+="</td>";		
-				html+="</tr>";
-				html+="</table>"
-				html+="</div>";
+			$("#myBoardList").append(html);
+			
+	
+			$("#trMore").click(function(e){
+				pageMore($(this).prev().attr('id').substr(7));
+				$(this).remove();
 			});
 			
-			if((<%=new SNSService().selectBoardSNSCnt(mypage) %> - $(".tbl-boardsns").length) >0){
-				html+="<div id='trMore'>더보기</div>";
+			//마지막 페이지인 경우, 더보기 버튼 비활성화
+			if($('.tbl-boardsns').last().attr('id').substr(7) <= '<%=lastBoardNo%>'){
+				$("#trMore").remove();
 			}
-			
-		$("#myBoardList").append(html);
-		
-
-		$("#trMore").click(function(e){
-			pageMore($(this).prev().attr('id').substr(7));
-			$(this).remove();
-		});
-		
-		//마지막 페이지인 경우, 더보기 버튼 비활성화
-		if($('.tbl-boardsns').last().attr('id').substr(7) <= '<%=lastBoardNo%>'){
-			$("#trMore").remove();
+				
 		}
 			
 		},

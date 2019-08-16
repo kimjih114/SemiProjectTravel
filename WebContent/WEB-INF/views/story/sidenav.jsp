@@ -163,6 +163,7 @@ function follow(){
 					if($('.followerTr').length>0){
 						$('.followerTr').remove();
 						$('.follower').remove();				
+					}
 					
 					var html = "<tr class='followerTr'><td class='follower'>팔로워</td></tr>";
 					$("#tbl-followmenu").append(html);
@@ -212,7 +213,7 @@ function follow(){
 				 	});
 					
 				}
-			},
+			,
 			error : function(data){
 				console.log("ajax처리실패");
 			},
@@ -587,7 +588,7 @@ div#profile-header{
  		var param = {
  				 mypage : '<%=mypage%>',
  				 totalContents : '<%=totalContents%>',
- 					lastBoardNo : '<%=lastBoardNo%>'
+ 				lastBoardNo : '<%=lastBoardNo%>'
  			}
  			$.ajax({	 
  				
@@ -605,11 +606,19 @@ div#profile-header{
  				}
  			});
  	});
- 
+
+ 	
  	$(".follower").on("click", function(){
+ 		
+ 		
+ 		var param = {
+ 				mypage : '<%=mypage %>'
+ 		}
+ 		
+ 	 	
  		$.ajax({
 			url: "<%=request.getContextPath() %>/ajax/follower.jsp",
-			data:"mypage="+'<%=mypage%>',
+			data:param,
 			success: function(data){
 				$("#container-sns").html(data);
 				console.log("ajax처리성공!");

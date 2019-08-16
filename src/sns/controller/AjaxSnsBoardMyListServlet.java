@@ -25,13 +25,13 @@ import sns.model.vo.TotalSNS;
  * Servlet implementation class AjaxMyBoardSNSListServlet
  */
 @WebServlet("/gson/sns/myBoardSNSList.do")
-public class AjaxMyBoardSNSListServlet extends HttpServlet {
+public class AjaxSnsBoardMyListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxMyBoardSNSListServlet() {
+    public AjaxSnsBoardMyListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

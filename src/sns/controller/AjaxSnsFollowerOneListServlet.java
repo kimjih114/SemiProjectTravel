@@ -37,7 +37,6 @@ response.setContentType("application/json; charset=utf-8");
 		
 		//1.parameter handling
 		String mypage = request.getParameter("mypage");
-		System.out.println("userFollowing@serlvet="+mypage);
 		
 		//2.business logic
 		List<String> followOneList = new SNSService().selectOneIdFollow(mypage);
