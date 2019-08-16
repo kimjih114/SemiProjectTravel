@@ -12,7 +12,7 @@
 	String mypage = request.getParameter("mypage");
 	User mypageUser = new UserService().selectOne(mypage);
  	ProfileSNS profileSNS = (ProfileSNS)request.getAttribute("profileSNS");
- 	
+ 	userLoggedIn = (User)session.getAttribute("userLoggedIn");
 	List<String> blockLoggedInList = new SNSService().selectOneIdBlock(userLoggedIn.getUserId());
  	List<String> followLoggedInList = new SNSService().selectOneIdFollow(userLoggedIn.getUserId());
  	int totalContents = (Integer)request.getAttribute("totalContents");
@@ -341,6 +341,15 @@ function unblock(){
      </div>
   </header>
   
+  
+  
+  
+  <form action="" name="memomsgFrm">
+	<input type="hidden" name="userId" />
+</form>
+  
+  
+  
 <section class="page-top" style="padding:0px; !important;">
 	  <nav id="sideNav">
 		<div id="profile-header">
@@ -381,7 +390,7 @@ function unblock(){
 	   	<table class="tbl-usermenu" id="tbl-followmenu">
    	 		<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)) {%>
 		   		<tr>
-		   			<td>메시지</td>
+		   			<td id="gomsg">메시지</td>
 		   		</tr>
 	   		<%} %>
 	   		<tr>
@@ -650,22 +659,25 @@ div#profile-header{
 		
 	$("#QuestionList").on("click", function(){
 		location.href="<%=request.getContextPath()%>/boardquestion/boardList"; 
-	})
+	});
 	
 	$("#gomsg").on("click", function(){
-
- 			var url="<%=request.getContextPath()%>/story/memomsg";
+			var userId = '<%=userLoggedIn.getUserId() %>';	
+			console.log("userLoggedIn"+userId);
+		 	
+		 	
+ 			var url="<%=request.getContextPath()%>/chat/chatroom.do?userId="+userId;
  			var title="popup"; 
- 			var status = "width=500px, height=400px, left=50px, top=50px";
+ 			var status = "width=600px, height=400px, left=150px, top=0px";
  			var popup = open("", title, status);
  			
- 			var frm =  document.memomsgFrm;
+ 			var frm = document.memomsgFrm;
+ 			frm.userId.value= userId;
  			frm.action = url;
  			frm.target=title;
  			frm.method= "post"; 
 			frm.submit();
  		
- 
  	});
 
 	</script>
