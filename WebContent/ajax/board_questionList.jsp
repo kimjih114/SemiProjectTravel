@@ -297,6 +297,7 @@ text-align:left;
 				</tr>
 
 				<tbody>
+				
 					<% for(Board_Question bq: list){ %>
 					
 					<tr class="tr_notice">

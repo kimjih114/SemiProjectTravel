@@ -27,13 +27,16 @@
 	overflow-y: scroll;
 }
 
+.jumbotron{
+width: 600px;
+height: 200px;
+}
 </style>
 </head>
 
 <body>
 
-		<div class="jumbotron">
-	  <h1 class="display-4">Hello WebSocket</h1>
+	<div class="jumbotron">
 	  <p class="lead">안녕하세요, 유람 채팅방입니다.</p>
 	  <hr class="my-4">
 	</div>
@@ -78,7 +81,7 @@
 		</div>		
 	
 	</section>
-
+	
 
 </body>
 </html>
