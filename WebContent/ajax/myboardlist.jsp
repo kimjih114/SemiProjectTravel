@@ -43,15 +43,71 @@
 
 
 <script>
-
 var mcontentids = new Array();
 var mcontenttypes = new Array();
 var mcontentthumbnails = new Array();
 var mcontenttitles = new Array();
 var mcontentaddresses = new Array();
+var mfilesTempArr = new Array();
+
 $(()=>{
 	pageMore(10000);
 });
+
+
+var msel_files=[];
+
+function mHandleImgsFilesSelect(e){
+	if($(".mimgs").length>0){
+		$(".mimgs").each(function(){
+			$(this).remove();
+		})
+	};
+		$(".mimgs_wrap").css("display", "block");
+	
+	var mfiles = e.target.files;
+	var mfilesArr = Array.prototype.slice.call(mfiles);
+	var mfilesArrLen = mfilesArr.length;
+	var mfilesTempArrLen = mfilesTempArr.length;
+	
+	if(mfilesArrLen>5){	
+		$("#fileModify").val("");
+		alert("첨부파일은 5개까지만 가능합니다.");
+		return;
+	}
+
+	for(var i=0; i<mfilesArrLen; i++){
+		mfilesTempArr.push(mfilesArr[i]);
+	}
+	
+	mfilesArr.forEach(function(f){
+		if(!f.type.match("image.*")){
+			$("#fileModify").val("");
+			alert(f.name+"은(는) 이미지가 아닙니다.");
+			return;
+		}
+	
+		msel_files.push(f);
+		
+		var mreader = new FileReader();
+		mreader.onload = function(e){
+			var html = "<div class='mimgs'><img src=\""+e.target.result+"\" />";
+		 	var mfilename = f.name;
+		 	
+		 	if(mfilename.length>7){
+		 		var mdot = mfilename.substring(mfilename.indexOf('.'));
+		 		mfilename = mfilename.substr(0, 7) + "..." + mdot;
+		 	}
+			html += "<div><span>"+mfilename+"</span><br>";
+			html += "<span>("+(f.size)/1000+"kb)</span><div></div>";
+			$(".mimgs_wrap").append(html);
+			
+		}
+		mreader.readAsDataURL(f);
+		
+		$(".panel").remove();
+	});
+}
 
 function deleteBoardSNS(boardNo){
 	
@@ -81,6 +137,13 @@ function deleteBoardSNS(boardNo){
 
 
 function updateBoardSNS(boardNo){
+	
+	if($("#postFrm").css('display')=='block'){
+		return;
+	}
+	if($(".snsModify").length>0){
+		return;
+	}
 	console.log();
 	
 	$(document.querySelector('#container'+boardNo)).html('');
@@ -95,8 +158,8 @@ function updateBoardSNS(boardNo){
 				type : 'post',
 				success : function(data){	
 					var html = '';
-					html += "<form action='' name='snsUpload'";
-					html += "class='snsUpload'";
+					html += "<form action='' name='snsModify'";
+					html += "class='snsModify'";
 					html += "method='post'";
 					html += "enctype='multipart/form-data' style='border:1px solid black; padding: 10px; margin-bottom:10px;'>";
 					html += "<table class='postFrm' style='padding:10px;'>";
@@ -111,31 +174,53 @@ function updateBoardSNS(boardNo){
 					html += "<tr>";
 					html += "<td style='font-weight: 700; float:left; padding:10px;'>";
 					html += "<label for='reviewContent' style='font-weight: 700; float:left;'>어떤 여행을 하셨나요?</label>";
-					html += "<textarea name='reviewContent' id='reviewContent' cols='58' rows='5' required></textarea>";
+					html += "<textarea name='reviewContent' id='reviewContent' cols='58' rows='5' required>"+data.boardSNS.boardContent+"</textarea>";
 					html += "<div id='contentIdList'>";
 					html += "</div>";
 					html += "</td>";
 					html += "</tr>";
 					html += "<tr>";
-					html += "<td style='float:left; padding:10px; text-align:left;'>";
+					html += "<td style='float:left; padding:10px; text-align:left; float:left; width:506px;'>";
 					html += "<label for='' style='font-weight: 700;  float:left; margin-bottom:10px;'>첨부이미지</label>";
-					html += "<span style='font-size:0.5em; color:gray;'>최대 5개까지 등록 가능합니다.</span><br>";
-					html += "<input name='fileupload' id='fileupload' type='file' accept='image/*' style='margin-bottom:10px;' multiple />";
-					html += "<div style='display:table;'>";
-					html += "<div class='imgs_wrap'></div>";
+					html += "<span style='font-size:0.5em; color:gray;'>최대 5개까지 등록 가능합니다.</span><br>";		
+					html+="<div style='position:relative; '>"
+					if(data.imageSNSList.length>0){
+						html +="<div class='panel' style='position:absolute; width: 400px; left:73px; top:6px; text-align:left; z-index:1; background:white;'>파일 "+data.imageSNSList.length+"개</div>"
+					}
+					else{
+						html +="<div class='panel' style='position:absolute; width: 400px; left:73px; top:6px; text-align:left; z-index:1; background:white;'>선택된 파일 없음</div>"
+					}
+					html += "<input name='fileModify' id='fileModify' type='file' accept='image/*' onchange='mHandleImgsFilesSelect(event)' style='margin-bottom:10px; position:absolute; top:4px; left:0px;' multiple />";
+					html+="</div>"
+					html += "<div style='display:table; height:100px;'>";
+					html += "<div class='mimgs_wrap' style=' text-align:center; vertical-align:middle; table-layout:fixed; width:100%; height:100px; display:block; margin-top:'>";
+					if(data.imageSNSList.length>0){
+						for(var e=0; e<data.imageSNSList.length; e++){
+							html+="<div class='mimgs' style='display:talbe-cell; max-width:100px; font-size:0.8em;'><img style='width:95px; height:95px; margin: 0 2px;' src='<%=request.getContextPath()%>/upload/board/"+data.imageSNSList[e].renamedFileName+"' />";
+							
+							if(data.imageSNSList[e].originalFileName.length>7){
+						 		var dot = data.imageSNSList[e].originalFileName.substring(data.imageSNSList[e].originalFileName.indexOf('.'));
+						 		var filename = data.imageSNSList[e].originalFileName.substr(0, 7) + "..." + dot;
+						 	}
+							
+							html+="<span>"+filename+"</span>"
+							html+="</div>";
+						}
+					}
+					html+="</div>";
+					
 					html += "</div>";
 					html += "</td>";
 					html += "</tr>";
 					html += "<tr>";
 					html += "<td style='float:left; padding:10px;'>";
-					html += "<input type='radio' name='boardtype' id='public' value='P' checked />";
+					html += "<input type='radio' name='boardtype'  value='P' checked />";
 					html += "<label for='public'>전체공개</label> &nbsp;";
-					html += "<input type='radio' name='boardtype' id='followOnly' value='F' />";
+					html += "<input type='radio' name='boardtype'  value='F' />";
 					html += "<label for='followOnly'>팔로워공개</label> &nbsp;";
-					html += "<input type='radio' name='boardtype' id='locked' value='L' />";
+					html += "<input type='radio' name='boardtype'  value='L' />";
 					html += "<label for='locked'>비공개</label>";
 					html += "<br>";
-					html += "<input type='submit' id='btnSubmit' value='포스트 등록' style='float:right; margin-top : 10px;''>";
 					html += "</td>";
 					html += "</tr>";
 					html += "</table>";
@@ -245,7 +330,7 @@ function pageMore(boardNo){
 				}
 				if(tl.gradeSNSList!=null){
 					html+="<tr>";
-					html+="<td>";
+					html+="<td style='padding:1px !important;'>";
 					html+="<table>";
 					html+="<tr>"
 					for(k=0; k<tl.gradeSNSList.length; k++){
@@ -282,6 +367,7 @@ function pageMore(boardNo){
 					html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>@"+tl.boardSNS.boardWriter+"</a>&nbsp;"+tl.boardSNS.boardContent+"</td>";
 					html+="</tr>";
 				}
+				
 				
 				html+="<t>";
 				html+="<td>";
@@ -579,7 +665,7 @@ p.card-text{
 }
 
 
-.imgs_wrap{
+.mimgs_wrap{
 	display:none;
 	text-align: center;
     vertical-align: middle;
@@ -587,24 +673,17 @@ p.card-text{
     width:100%;
 }
 
-.imgs_wrap img{
+.mimgs_wrap img{
 	width: 95px;
 	height: 95px;
 	margin: 0 2px;
 }
 
-.imgs{
+.mimgs{
 	display: table-cell;
 	max-width: 100px;
 	font-size:0.8em;
-	
-	#post{
-	position: absolute;
-	top:10px;
-	left: 698px;
-	border: 1px solid;
 }
-
 
 </style>
 	

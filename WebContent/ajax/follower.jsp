@@ -445,7 +445,10 @@ function follower(btn){
 					
 					</table>
 		    	</div>
-		    <% } %>
+		    <% } else{%>
+		    
+		    
+		   	<% %>
 		    </div>
 
 		</div>

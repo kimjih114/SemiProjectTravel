@@ -145,7 +145,6 @@
 	max-width: 100px;
 	font-size:0.8em;
 }
-
 </style>
     <!-- post폼 -->
 <button id="post" class="btn btn-primary">post</button>
@@ -174,6 +173,7 @@
 			<td style="margin-bottom:3px;">
 					<label for="" style="font-weight: 700;">첨부이미지</label>
 					<span style="font-size:0.5em; color:gray;">최대 5개까지 등록 가능합니다.</span><br>
+					
 					<input name="fileupload" id="fileupload" type="file" accept="image/*" style="margin-bottom:10px;" multiple />
 					<div style="display:table;">
 						<div class="imgs_wrap"></div>
@@ -356,6 +356,10 @@ $(function() {
 	
 $("#post").click(function(){
 	
+	if($(".snsModify").length>0){
+		return;
+	}
+	
 	$(this).text("back").css("left","695px");
 	
 	if($("#postFrm").css('display')=='block'){
@@ -408,8 +412,6 @@ $(document).ready(function(){
 });
 
 function handleImgsFilesSelect(e){
-
-	
 	if($(".imgs").length>0){
 		$(".imgs").each(function(){
 			$(this).remove();
