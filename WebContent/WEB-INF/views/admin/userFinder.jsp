@@ -145,8 +145,8 @@ section#page-top{
 }
 #content{
 	position : absolute;
-	top : 5%;
-	left : 22%;
+	top : 8%;
+	left : 27%;
 }
 #content table{
 	border-collapse : collapse;
@@ -221,8 +221,9 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
 
   </nav>   
  
-  	<div id="content">
+  	<div id="content"style="top:20%; text-align : center;width:600px;">
   		<h2>회원 목록</h2>
+  		<br><br>
   		<div id="head-wrapper">
   			<div id="search-container">
   				검색타입 :
@@ -275,7 +276,7 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
   			
   		</div>
   		<br /><br /><br />
-  		<table id="tbl-user">
+  		<table id="tbl-user"style="margin:0 auto; width:680px;">
   			<thead>
   			<tr>
   				<th>아이디</th>
@@ -310,6 +311,7 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
   			%>
   			</tbody>
   		</table>
+  		<br><br>
   		<div id="pageBar">
   			<%=pageBar %>
   		</div>

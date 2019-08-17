@@ -313,9 +313,6 @@ numPerPage{
   		</select>
   		</form>
   		
-  		
-  		
-  		
   		</div>
   		</div>
   		<br><br><br>
@@ -356,6 +353,7 @@ numPerPage{
   			%>
   			</tbody>
   		</table>
+  		<br><br>
   		<div id="pageBar" style="text-align:center">
   			<%=pageBar %>
   		</div>

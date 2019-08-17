@@ -74,22 +74,22 @@ public class AdminTravelFinderServlet extends HttpServlet {
 		if(pageNo==1) {
 			
 		}else {
-			pageBar +="<a href='"+request.getContextPath()+"/admin/travelFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-pageBarSize)+"&numPerPage="+numPerPage+"'>[이전]</a>";
+			pageBar +="<a href='"+request.getContextPath()+"/admin/travelFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+(pageNo-pageBarSize)+"&numPerPage="+numPerPage+"'>[이전]&nbsp;&nbsp;</a>";
 		}
 		
 		while(!(pageNo>pageEnd || pageNo>totalPage)) {
 			if(cPage==pageNo) {
-				pageBar +="<span class='cPage'>"+pageNo+"</span>";
+				pageBar +="<span class='cPage'>&nbsp;&nbsp;"+pageNo+"&nbsp;&nbsp;</span>";
 			}
 			else {
-				pageBar +="<a href='"+request.getContextPath()+"/admin/travelFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a>";
+				pageBar +="<a href='"+request.getContextPath()+"/admin/travelFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"&numPerPage="+numPerPage+"'>&nbsp;&nbsp;"+pageNo+"</a>&nbsp;&nbsp;";
 			}
 			pageNo++;
 		}
 		if(pageNo>totalPage) {
 			
 		}else {
-			pageBar +="<a href='"+request.getContextPath()+"/admin/travelFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"&numPerPage="+numPerPage+"'>[다음]</a>";
+			pageBar +="<a href='"+request.getContextPath()+"/admin/travelFinder?searchType="+searchType+"&searchKeyword="+searchKeyword+"&cPage="+pageNo+"&numPerPage="+numPerPage+"'>&nbsp;&nbsp;[다음]</a>";
 			
 		}
 		request.setAttribute("list", list);

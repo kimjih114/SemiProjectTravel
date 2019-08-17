@@ -61,8 +61,6 @@ public class UserDeleteServlet extends HttpServlet {
 		System.out.println("삭제(파일이동)여부: "+bool);
 		}
 		
-		
-		
 		String view ="/WEB-INF/views/common/msg.jsp";
 		String msg = "";
 		String loc = "/";

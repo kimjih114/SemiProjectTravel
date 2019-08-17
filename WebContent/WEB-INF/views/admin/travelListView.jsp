@@ -179,7 +179,7 @@ section#page-top{
 #content{
 	position : absolute;
 	top : 8%;
-	left : 30%;
+	left : 27%;
 }
 #content table{
 	border-collapse : collapse;
@@ -258,7 +258,7 @@ numPerPage{
 
   </nav>   
  
-  	<div id="content" style="top:20%; text-align : center">
+  	<div id="content" style="top:20%; text-align : center;width:600px;">
   		<h2>업체 목록</h2>
   		<br><br>
   		<div id="head-wrapper">
@@ -289,7 +289,7 @@ numPerPage{
   		<div id="numPerPage-container" class="wrapper">
   		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
   		<br>
-  		페이지 당 업체 수 
+  		&nbsp;&nbsp;페이지 당 업체 수 
   		<select name="numPerPage" id="numPerPage">
   			<option value="20" <%=numPerPage==20?"selected":"" %>>20</option>
   			<option value="10" <%=numPerPage==10?"selected":"" %>>10</option>
@@ -299,7 +299,7 @@ numPerPage{
   		
   		</div>
   		<br /><br /><br>
-  		<table id="tbl-travel"style="margin:0 auto; width:1000px;">
+  		<table id="tbl-travel"style="margin:0 auto; width:680px;">
   			<thead>
   			<tr>
   				<th>업체 이름</th>
@@ -307,13 +307,13 @@ numPerPage{
   				<th>위치</th>
   				<th>관리자 이름</th>
   				<th>핸드폰 번호</th>
-  				<th></th>
+  				<th>방 추가</th>
   			</tr>
   			</thead>
   			<tbody>
   			<% if(list==null|| list.isEmpty()){%>
   			<tr>
-  				<td colspan="4" align="center"> 검색 결과가 없습니다.</td>
+  				<td colspan="5" align="center"> 검색 결과가 없습니다.</td>
   			</tr>
   			<%
   			}
@@ -361,6 +361,7 @@ numPerPage{
   			%>
   			</tbody>
   		</table>
+  		<br><br>
   		<div id="pageBar"style="text-align:center">
   			<%=pageBar %>
   		</div>

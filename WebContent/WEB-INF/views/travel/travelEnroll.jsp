@@ -196,7 +196,7 @@ section#page-top{
 
   </nav>   
  
-  	<div id="content">
+  	<div id="content" style="margin-left : 80px;">
   	<form action="<%=request.getContextPath()%>/travel/travelEnrollEnd"
   		  name="travelEnrollFrm"
   		  id="travelEnrollFrm"

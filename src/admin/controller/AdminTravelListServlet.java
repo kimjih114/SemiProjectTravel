@@ -64,27 +64,27 @@ public class AdminTravelListServlet extends HttpServlet {
 		int pageNo = pageStart;
 		
 		if(pageNo==1) {
-			pageBar += "<span>[이전]</span>";
+			pageBar += "<span> [이전]&nbsp;&nbsp; </span>";
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/travel/travelList?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'>[이전]</a>";
+			pageBar += "&nbsp;&nbsp;<a href='"+request.getContextPath()+"/travel/travelList?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'>&nbsp;&nbsp;[이전]</a>";
 		}
 		while(pageNo<=pageEnd && pageNo <=totalPage) {
 			if(pageNo == cPage) {
-				pageBar +="<span class ='cPage'>"+pageNo+"</span>";
+				pageBar +="<span class ='cPage'>&nbsp;&nbsp;"+pageNo+"&nbsp;&nbsp;</span>";
 			}
 			else {
-				pageBar +="<a href='"+request.getContextPath()+"/travel/travelList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a>";
+				pageBar +="&nbsp;&nbsp;<a href='"+request.getContextPath()+"/travel/travelList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"&nbsp;&nbsp;</a>";
 			}
 			
 			pageNo++;
 		}
 		
 		if(pageNo>totalPage) {
-			pageBar += "<span>[다음]</span>";
+			pageBar += "<span>&nbsp;&nbsp;[다음] </span>";
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/travel/travelList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>[다음]</a>";
+			pageBar += "<a href='"+request.getContextPath()+"/travel/travelList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>&nbsp;&nbsp;[다음] </a>";
 		}
 		
 		//업체가 숙소인 방리스트 뽑기

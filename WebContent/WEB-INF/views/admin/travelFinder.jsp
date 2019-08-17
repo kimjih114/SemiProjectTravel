@@ -1,4 +1,5 @@
 <%@page import="travel.model.vo.Travel"%>
+<%@page import="admin.model.vo.AdminRoom"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
@@ -7,6 +8,9 @@
 	String searchType = request.getParameter("searchType");
 	String searchKeyword = request.getParameter("searchKeyword");
 	String pageBar = (String)request.getAttribute("pageBar");
+	List<AdminRoom> roomList=(List<AdminRoom>)request.getAttribute("roomList");
+	System.out.println("roomList는?"+roomList);
+	int index=1;
 %>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <link rel="stylesheet" href="selectbox.min.css">
@@ -251,17 +255,17 @@ numPerPage{
   		<br><br>
   		<div id="head-wrapper">
   			<div id="search-container">
+  			<div id="search-travelName" class="searchFrm">
+  				<form action="<%=request.getContextPath()%>/admin/travelFinder">
   				검색타입 :
-  				<select id="searchType">
+  				<select name ="searchType" id="searchType">
   					<option value="P">여행지</option>
   					<option value="A">숙소</option>
   					<option value="R">맛집</option>
   					<option value="E">놀거리</option>
   					<option value="S">쇼핑</option>
-  					
   				</select>
-  			<div id="search-travelName" class="searchFrm">
-  				<form action="<%=request.getContextPath()%>/admin/travelFinder">
+  			
   				<input type="hidden"
   						name="searchType" 
   						value="travel_name"/>
@@ -275,7 +279,7 @@ numPerPage{
   			</div>
   			</div>
   		<br /><br /><br />
-  		<table id="tbl-travel"style="margin:0 auto;">
+  		<table id="tbl-travel"style="margin:0 auto; width:680px;">
   			<thead>
   			<tr>
   				<th>업체 이름</th>
@@ -283,6 +287,7 @@ numPerPage{
   				<th>위치</th>
   				<th>관리자 이름</th>
   				<th>핸드폰 번호</th>
+  				<th>방추가</th>
   			</tr>
   			</thead>
   			<tbody>
@@ -309,6 +314,25 @@ numPerPage{
 				<td><%=t.getTravelLocation() %></td>
   				<td><%=t.getTravelOfficierName()%></td>
   				<td><%=t.getTravelOfficierphone()%></td>
+  				<td>
+  				<%if(t.getTravelType().equals("A")){ %>
+  					<button type="button" onclick="location.href='<%=request.getContextPath()%>/admin/roomAddForm?contentId=<%=t.getContentId()%>'">방추가</button>
+  					<button type="button" onclick="roomUpdateForm(<%=index%>);">방수정</button>			
+  					<select id="roomName<%=index%>">
+  					<option value="null">방을선택해주세요</option>
+  				<%} %>
+  				
+  				<%if(roomList!=null){ %>
+  				<%for(int i=0;i<roomList.size();i++){ %>
+  					<%if(t.getContentId().equals(roomList.get(i).getContentId())){ %> 						
+  					<option value="<%=roomList.get(i).getRoomName() %>,<%=roomList.get(i).getContentId()%>"><%=roomList.get(i).getRoomName() %></option> 
+  													
+  					<%} %>			
+  				<%} %>
+  				<%} %>
+  					</select>
+  					
+  				</td>
   			</tr>
   			<%		
   				}
@@ -316,6 +340,7 @@ numPerPage{
   			%>
   			</tbody>
   		</table>
+  		<br><br>
   		<div id="pageBar"style="text-align:center">
   			<%=pageBar %>
   		</div>

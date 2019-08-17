@@ -361,9 +361,8 @@ p.userprofile-userId{
  	<button type="reset" class="btn btn-primary" onclick="updatePassword();">비밀번호 변겅</button>
  	 </div>
  	 <br>
- 	   <button class="btn btn-primary" style="float:right;"
- 	    onclick="fun_confirm();">탈퇴</button>
  	 </form>
+ 	   <button class="btn btn-primary" style="float:right;"onclick="fun_confirm();">탈퇴</button>
  	 
   	</div>
   	
