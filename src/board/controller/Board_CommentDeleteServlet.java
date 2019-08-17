@@ -35,7 +35,7 @@ public class Board_CommentDeleteServlet extends HttpServlet {
 		int qboardCommentNo = Integer.parseInt(request.getParameter("del"));
 		
 		int result =  new Board_QuestionService().deleteBoardComment(qboardCommentNo); 
-		System.out.println("코멘트 삭제 서블릿 결과 값 "+ result);
+		
 	
 		String view = "/WEB-INF/views/common/msg.jsp"; 
 		String msg = ""; 

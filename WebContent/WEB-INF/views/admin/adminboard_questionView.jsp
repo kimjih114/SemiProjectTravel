@@ -15,7 +15,7 @@
 
  List<Board_QuestionComment> commentList = (List<Board_QuestionComment>)request.getAttribute("commentList");
 
- String userId= userLoggedIn.getUserId();
+ 
 %>
 
 <!-- Bootstrap core CSS -->
@@ -324,7 +324,7 @@ table#tbl-comment tr:hover button.btn-delete {
 	  });
 	}); */
   
- 
+ <%-- 
 function fileDownload(oName, rName){
 	//ie에서 요청한 한글파일명은 오류를 유발하므로,
 	//유니코드 문자로 직접변환함.
@@ -335,7 +335,7 @@ function fileDownload(oName, rName){
 	location.href = "<%=request.getContextPath()%>/board/qboardFileDownload"
 				  + "?oName=" + oName
 				  + "&rName=" + rName;
-}
+} --%>
 
  
  $(()=>{
@@ -415,7 +415,7 @@ if(!confirm("글을 삭제하시겠습니까?")) return;
 	<div class="container">
 		<div class="intro-text" style="padding-top: 100px;">
 			<h1>
-				<a href="<%=request.getContextPath()%>/boardquestion/boardList?userId=<%=userLoggedIn.getUserId() %>"
+				<a href="<%=request.getContextPath()%>/boardquestion/adminboardList?userId=<%=userLoggedIn.getUserId() %>"
 					style='color: white;'>1:1문의</a>
 			</h1>
 			<!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"> -->
@@ -478,11 +478,13 @@ if(!confirm("글을 삭제하시겠습니까?")) return;
 			
 
 				<tr>
-				<th>내용</th>
 					<td>
-				
-  				<textarea class="form-control" aria-label="With textarea" cols="50" rows="3"><%= bq.getQboardContent() %></textarea>
-		
+						<div class="input-group" style="left:163px;width:388px;">
+  				<div class="input-group-prepend">
+   				 <span class="input-group-text">내용</span>
+  			</div>
+  			<textarea class="form-control" aria-label="With textarea" cols="50" rows="3"><%= bq.getQboardContent() %></textarea>
+			</div>
 					</td>
 
 				</tr>
@@ -491,14 +493,18 @@ if(!confirm("글을 삭제하시겠습니까?")) return;
 					if (userLoggedIn != null && (bq.getQboardWriter().equals(userLoggedIn.getUserId()))) {
 				%>
 				<tr>
-					<th colspan="2" style="padding-left: 547px;"><input type="button"  class="btn btn-info"value="수정"
-						onclick="updateqBoard();" /> <input type="button"  class="btn btn-danger"value="삭제"
-						onclick="deleteqBoard();" /></th>
+					<th colspan="2" style="padding-left: 547px;">
+						<input type="button"  class="btn btn-info"value="수정" onclick="updateqBoard();" /> 
+						<input type="button"  class="btn btn-danger"value="삭제" onclick="deleteqBoard();" />
+					</th>
 				</tr>
 
-				<form action="<%=request.getContextPath()%>/board/qboardDelete"
+				<%
+					}
+				%>
+				
+				<form action="<%=request.getContextPath()%>/board/adminqboardDelete"
 					name="qboardDeleteFrm" method="post">
-					<input type="hidden" name="userId" value="<%=userLoggedIn.getUserId() %>" />
 					<input type="hidden" name="qboardNo" value="<%=bq.getQboardNo()%>" />
 					<input type="hidden" name="newFileName"
 						value="<%=bq.getQboardNewFileName() != null ? bq.getQboardNewFileName() : ""%>" />
@@ -507,9 +513,9 @@ if(!confirm("글을 삭제하시겠습니까?")) return;
 
 				<script>
 		
-		function updateqBoard(){
-			location.href = "<%=request.getContextPath()%>/board/boardUpdateForm?qboardNo=<%=bq.getQboardNo()%>";
-		}
+			function updateqBoard(){
+				location.href = "<%=request.getContextPath()%>/board/adminboardUpdateForm?qboardNo=<%=bq.getQboardNo()%>";
+			}
 		
 		function deleteqBoard(){
 			if(!confirm("정말 삭제 하시겠습니까?")){
@@ -519,10 +525,6 @@ if(!confirm("글을 삭제하시겠습니까?")) return;
 		}
 	
 		</script>
-
-				<%
-					}
-				%>
 
 			</table>
 
@@ -541,7 +543,7 @@ if(!confirm("글을 삭제하시겠습니까?")) return;
 						<!-- 댓글인 경우 참조댓글이 없으므로 0으로 초기화 -->
 						<div class="input-group" style="margin-left: 80px;">
 							<div class="input-group-prepend">
-								<span class="input-group-text">문의 댓글</span>
+								<span class="input-group-text">댓글</span>
 								<textarea name="qboardCommentContent" id="qboardCommentContent"
 									cols="60" rows="3"></textarea>
 							</div>

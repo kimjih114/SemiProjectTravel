@@ -1,28 +1,29 @@
-package board.controller;
+package storymsg.controller;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
-
-import board.model.exception.BoardQuestionException;
-import board.model.service.Board_QuestionService;
-import board.model.vo.Board_Question;
+import com.google.gson.Gson;
 
 /**
- * Servlet implementation class Board_QuestionupdateFrm
+ * Servlet implementation class MessageListServlet
  */
-@WebServlet("/board/adminboardUpdateForm")
-public class AdminBoard_QuestionupdateFrm extends HttpServlet {
+@WebServlet("/chat/msgList.do")
+public class MessageListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminBoard_QuestionupdateFrm() {
+    public MessageListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,18 +33,13 @@ public class AdminBoard_QuestionupdateFrm extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int qboardNo ; 
-		 try {
-			 qboardNo =Integer.parseInt(request.getParameter("qboardNo"));
-			 
-		 }catch(NumberFormatException e) {
-			 throw new BoardQuestionException("유효하지 않은 게시글 요청입니다."); 
-		 }
+		Map<String, Session> clients =  messageChatsocket.clients; 
+		Set<String> userIdSet =  clients.keySet(); 
+		System.out.println("userIdKEYSET!!@@@@msgLISTSERVELT="+userIdSet);
 		
-		 Board_Question bq = new Board_QuestionService().selectOne(qboardNo);
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(userIdSet, response.getWriter()); 
 		
-		 request.setAttribute("bq", bq);
-		 request.getRequestDispatcher("/WEB-INF/views/admin/adminboard_questionUpdateForm.jsp").forward(request, response);
 		
 	}
 

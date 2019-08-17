@@ -42,7 +42,7 @@ public class Board_QuestionListServlet extends HttpServlet {
 		
 	
 		String userId = request.getParameter("userId");
-		System.out.println("userId"+userId);
+		
 		
 		final int numPerPage = 5;
 		int cPage = 1;

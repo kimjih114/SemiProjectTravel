@@ -271,7 +271,7 @@ text-align:left;
 			<script>
 			
 			function goqboardFrm(){
-				location.href="<%=request.getContextPath()%>/board/qboardForm";
+				location.href="<%=request.getContextPath()%>/board/adminqboardForm";
 			
 			}
 			</script>
@@ -306,7 +306,7 @@ text-align:left;
 						<td><%=bq.getQboardNo() %></td> 
 						<td>
 						
-							<a href="<%=request.getContextPath()%>/board/qboardView?qboardNo=<%=bq.getQboardNo() %>" >
+							<a href="<%=request.getContextPath()%>/board/adminqboardView?qboardNo=<%=bq.getQboardNo() %>" >
 							<%=bq.getQboardTitle() %>
 							</a><% if(bq.getQboardFileName() != null){ %><img src="<%=request.getContextPath() %>/images/file.png" width=16px>
 							<% }%>
@@ -314,7 +314,9 @@ text-align:left;
 						<td><%=bq.getQboardWriter() %></td>
 						<td><%=bq.getQboardReadcnt() %></td>
 						<td><%=bq.getQboardDate() %></td>  <!-- 작성일 넣 -->
-						<td><% if(bq.getQboardStatus()==0){%>
+						<td><% if(bq.getQboardStatus()==0){
+								
+						%>
 								진행중
 						<%} else{%>
 								처리완료

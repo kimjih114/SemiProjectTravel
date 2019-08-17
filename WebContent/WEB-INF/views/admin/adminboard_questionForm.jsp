@@ -1,16 +1,23 @@
+<%@page import="user.model.vo.User"%>
+<%@page import="user.controller.UserLoginEndServlet"%>
+<%@page import="user.controller.UserLogoutServlet"%>
 <%@page import="board.model.vo.Board_Question"%>
 <%@page import="java.util.List"%>
+<%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp"%>
-
 <%
 
-List<Board_Question> list = (List<Board_Question>)request.getAttribute("qboardList"); 
-String pageBar = (String)request.getAttribute("pageBar");
-String userId= userLoggedIn.getUserId();
+	userLoggedIn = (User)session.getAttribute("userLoggedIn");
 
+  List<Board_Question> list = (List<Board_Question>)request.getAttribute("list"); 
+ 
+ Board_Question qb = new Board_Question();
+
+ 
 %>
+
 
 <!-- Bootstrap core CSS -->
 <link
@@ -60,8 +67,7 @@ String userId= userLoggedIn.getUserId();
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
-
-
+<style>
 <style>
 header{
 height: 200px;
@@ -78,9 +84,8 @@ div#container {
 }
 
 
-.btn.btn-primary{
-width: 294px;
-}
+
+
 #q-container {
 	width:700px;
 	margin:0 auto;
@@ -89,7 +94,7 @@ width: 294px;
 	left:265px;
 	transition: 0.5s;
 	top:100px;
-	margin-bottom: 100px;
+	    margin-bottom: 100px;
 }
 
 #q-container .tab {
@@ -138,6 +143,33 @@ width: 294px;
 	border-top: 0px;
 }
 
+#postFrm {
+	width: 550px;
+	margin: 0 auto;
+	text-align: center;
+	position: absolute;
+	left: 240px;
+	top: 50px;
+	border: 1px solid;
+}
+
+#post {
+	position: absolute;
+	top: 10px;
+	left: 730px;
+}
+
+#timline-sns {
+	border: 1px solid;
+}
+
+#timeline-board-sns {
+	border: 1px solid;
+}
+
+#timeline-board-sns td {
+	padding: 10px;
+}
 
 board_containerfrm{
 width: 600px; 
@@ -150,14 +182,14 @@ text-align:center;
 	float:right;
 	margin: 0 0 8px;
 }
-table#tbl-board{width:100%; margin:0 auto;  border-collapse:collapse; clear:both; }
-table#tbl-board th, table#tbl-board td {padding: 5px 0; text-align:center;} 
-table#tbl-board th{background: #fed136;}
+table#tbl-board{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
+table#tbl-board th, table#tbl-board td {border:1px solid; padding: 5px 0; text-align:center;} 
 form#board_containerfrm{
 margin-left: 8px;
 margin-top:100px;
 
 }
+
 
 div.board_search{
 width:700px;
@@ -187,7 +219,6 @@ ul.post_con{
 padding-left: 20px;
 /* padding-bottom: 25px; */
 padding-right: 20px;
-padding-top:30px;
 height: 241px;
 }
 
@@ -196,49 +227,81 @@ border: 3px solid rgb(00,00,66);
 }
 li.post-font{
 text-align:left;
+}
+#tbl-board>table{
+border-collapse: collapse;
+border-radius: 10px;
 
+}
+
+#tbl-board>table, #tbl-board>table>td{
+width:700px;
+border : 1px solid gray;
+
+
+
+}
+#post_font_a:hover{
+	color:#007bff;
+}
+
+#tbl-board>table>tbody>tr:first-child{
+background:#fed136;
+}
+
+
+.form-control{
+width: 200px;
+margin-bottom: 10px;
+margin-top: 10px;
+}
 </style>
-<!-- <script>
-	function validate() {
-	
-			console.log($("#exampleInputEmail1".val().trim));
-		if ($("#exampleInputEmail1").val().trim.length == 0) {
-			alert("아이디를 입력하세요");
-			$("#exampleInputEmail1").focus();
-			return false;
-		}
-		if ($(".userPassword").val().trim().length == 0) {
-			alert("비밀번호를 입력하세요.");
-			$(".userPassword").focus();
-			return false;
-		}
 
-		return true;
+<script>
+ $(()=>{
+	location.href="#"
+})
+
+$(function() {
+	  var select = $("select#color");
+
+	  select.change(function() {
+	    var select_name = $(this).children("option:selected").text();
+	    $(this).siblings("label").text(select_name);
+	  });
+	});
+
+
+function qboardValidate(){
+	var content = $("[name= qboardContent]").val(); 
+	if(content.trim().length==0) {
+		alert("내용을 입력해주세요!"); 
+		return false; 
 	}
+	
+	return true;
+}
+
+ 
+ 
+ 
+
 </script>
- -->
-
-
-<!-- Header -->
 
 <header class="masthead">
 	<div class="container">
 		<div class="intro-text" style="padding-top:100px;">
-			<h1>1:1문의</h1>
+			<h1><a href="<%=request.getContextPath()%>/boardquestion/adminboardList" style='color:white;'>1:1문의</a></h1>
 			<!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"> -->
 		</div>
 	</div>
 </header>
 
-
-<form action="">
-<input type="hidden" name="userId" value="<%=userLoggedIn.getUserId() %>" />
-</form>
 <!-- 메뉴폼 -->
 
  <div id="q-container">
 
-	<form action="" id="board_containerfrm">
+	<div  id="board_containerfrm">
  		<div class="sub_content">
                             <hr />
                         <div class="postscript_area">
@@ -247,7 +310,8 @@ text-align:left;
                                 <li class="post_font">
                                 		업무와 관련 문의 및 요청사항을 작성하는 게시판입니다. <br />
                                 		1:1 문의는 타인에게 내용이 공개되지 않으므로 더 자세한 답변을 받을 수 있습니다. <br /> <br />
-                                		유람은 고객님의 목소리를 소중히 여깁니다. <br />
+                      
+                                		<br />유람은 고객님의 목소리를 소중히 여깁니다. <br />
                                 		문의주신 내용은 확인 즉시 , 빠르게 답변 드리겠습니다.  <br />
                                 		답변은 전화상담이 아닌 온라인으로만 진행됩니다.<br />
                                     <br />
@@ -259,83 +323,56 @@ text-align:left;
                         </div>
  </div>
 		<div class="board_search">
-
-			<fieldset style="padding-right:10px;">
-	
-			<%
-				if (true) {
-			%>
-			<input type="button" class="btn btn-secondary btn-sm" id="btn-add" value="글쓰기" onclick="goqboardFrm();">
-			<!-- 로그인한 경우 글쓰기 가능하게 하기  -->
-
-			<script>
+		
+			<form action="<%=request.getContextPath() %>/board/adminboardQuestionFrmEnd" method="post"
+	      enctype="multipart/form-data">
+		<table id="tbl-board-view">
+			<tr>
+				<th>제목</th>
+				<td><input class="form-control" type="text" name="qboardTitle" required/></td>
+			</tr>		
+			<tr>
+				<th>작성자</th>
+				<td> <input class="form-control" type="text"  name="qboardWriter"
+					 value="<%=userLoggedIn.getUserId()%>" required readonly> </td>
+			</tr>		
+			<tr>
+				<th>첨부파일</th>
+				<td><input type="file" name="upFile"/></td>
+			</tr>
 			
-			function goqboardFrm(){
-				location.href="<%=request.getContextPath()%>/board/qboardForm";
-			
-			}
-			</script>
-
-			<%
-				}
-			%>
-				</fieldset>
-			</div>
-			</form>
-
-
-			<!-- //게시판 검색폼 -->
-			<!-- board s -->
-
-			<table id="tbl-board">
-
-				<tr>
-					<th>번호</th>
-					<th>제목</th> <!-- 첨부파일 같이 넣 -->
-					<th>작성자</th>
-					<th>조회수</th>
-					<th>작성일</th>
-					<th>진행상태</th>
-				</tr>
-
-				<tbody>
-				
-					<% for(Board_Question bq: list){ %>
 					
-					<tr class="tr_notice">
-						<td><%=bq.getQboardNo() %></td> 
-						<td>
-						
-							<a href="<%=request.getContextPath()%>/board/qboardView?qboardNo=<%=bq.getQboardNo() %>" >
-							<%=bq.getQboardTitle() %>
-							</a><% if(bq.getQboardFileName() != null){ %><img src="<%=request.getContextPath() %>/images/file.png" width=16px>
-							<% }%>
-							</td>  <!-- 링크     -->
-						<td><%=bq.getQboardWriter() %></td>
-						<td><%=bq.getQboardReadcnt() %></td>
-						<td><%=bq.getQboardDate() %></td>  <!-- 작성일 넣 -->
-						<td><% if(bq.getQboardStatus()==0){%>
-								진행중
-						<%} else{%>
-								처리완료
-							<%} %>	
-						</td> <!-- 진행상태넣 -->
-					</tr>
-
-
-
-	<% } %>
-				</tbody>
-			</table>
-
-
-
-	<div id='pageBar'>
-		<%=pageBar %>
+			<tr>
+				<th class="text-control">내용</th>
+				<td>
+				<div class="input-group">
+  					<div class="input-group-prepend">
+    				
+  					</div>
+ 					<textarea class="text-control" aria-label="With textarea" 
+ 					 		name="qboardContent"  required></textarea>	
+					</div>	 	  
+				</td>
+			</tr>		
+			<tr>
+				<th colspan="2">
+					<input type="submit" 
+						   value="등록" 
+						   onclick="return qboardValidate();"/>
+				</th>
+			</tr>		
+		
+		</table>
+	</form>
+			
+			</div>
 	</div>
 
 
-	</div>
+		
+			
 
+	</div>
+			
 	</body>
-	</html>
+</html>

@@ -16,14 +16,14 @@ import board.model.service.Board_QuestionService;
 /**
  * Servlet implementation class Board_QuestionDeleteServlet
  */
-@WebServlet("/board/qboardDelete")
-public class Board_QuestionDeleteServlet extends HttpServlet {
+@WebServlet("/board/adminqboardDelete")
+public class AdminBoard_QuestionDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Board_QuestionDeleteServlet() {
+    public AdminBoard_QuestionDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,7 +38,7 @@ public class Board_QuestionDeleteServlet extends HttpServlet {
 		int qboardNo = Integer.parseInt(request.getParameter("qboardNo")); 
 		
 		String newFileName= request.getParameter("newFileName");
-		int result = new Board_QuestionService().deleteQBoard(qboardNo);
+		int result = new Board_QuestionService().AdmindeleteQBoard(qboardNo);
 		
 		if(result >0 && !"".equals(newFileName)) {
 			String saveDirectory = getServletContext().getRealPath("/upload/board"); 
@@ -56,8 +56,8 @@ public class Board_QuestionDeleteServlet extends HttpServlet {
 		
 		String view = "/WEB-INF/views/common/msg.jsp"; 
 		String msg ="";
-		String loc = "/boardquestion/boardList?userId="+userId+"";  
-		System.out.println("loc"+loc);
+		String loc = "/boardquestion/adminboardList";  
+		System.out.println("loc="+loc);
 		
 		if(result>0) {
 			msg="게시글 삭제 성공"; 

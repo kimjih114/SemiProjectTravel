@@ -163,6 +163,11 @@ section#page-top{
     </div>
   </header>
   
+    
+  <form action="" name="memomsgFrm">
+	<input type="hidden" name="userId" />
+</form>
+  
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">

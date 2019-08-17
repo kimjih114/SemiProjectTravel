@@ -471,6 +471,90 @@ public class Board_QuestionDAO {
 		
 		return totalUser;
 	}
+
+	public int AdmindeleteQBoard(Connection conn, int qboardNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("AdmindeleteQBoard"); 
+		
+		try {
+			//미완성쿼리문을 가지고 객체생성.
+			pstmt = conn.prepareStatement(query);
+			//쿼리문미완성
+			pstmt.setInt(1, qboardNo);
+			
+			//쿼리문실행 : 완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+			//DML은 executeUpdate()
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int AdmininsertQBoard(Connection conn, Board_Question bq) {
+		int result = 0; 
+		PreparedStatement pstmt = null; 
+		String sql = prop.getProperty("AdmininsertQBoard"); 
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			
+			pstmt.setString(1, bq.getQboardWriter());		
+			pstmt.setString(2, bq.getQboardTitle());
+			pstmt.setString(3, bq.getQboardContent());
+			pstmt.setInt(4,bq.getQboardTravel_ref());
+			pstmt.setString(5, bq.getQboardFileName());		
+			pstmt.setString(6, bq.getQboardNewFileName());		
+			pstmt.setInt(7, bq.getQboardStatus());
+		
+			
+			result = pstmt.executeUpdate(); 
+			
+					
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); 
+		}
+	
+		
+		return result;
+	}
+
+	public int AdminupdateqBoard(Connection conn, Board_Question bq) {
+		int result = 0; 
+		PreparedStatement pstmt = null; 
+		String sql =prop.getProperty("AdminupdateQBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, bq.getQboardTitle());
+			pstmt.setString(2, bq.getQboardContent());
+			pstmt.setString(3, bq.getQboardFileName());
+			pstmt.setString(4, bq.getQboardNewFileName());
+			pstmt.setInt(5, bq.getQboardNo());
+			
+		
+			result = pstmt.executeUpdate(); 
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); 
+		}
+		
+		
+		return result;
+	}
 	
 	
 	

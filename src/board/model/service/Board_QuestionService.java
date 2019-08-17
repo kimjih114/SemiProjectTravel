@@ -146,4 +146,47 @@ public class Board_QuestionService {
 		return totalBoardCount;
 	}
 
+	public int AdmindeleteQBoard(int qboardNo) {
+		Connection conn = getConnection(); 
+		int result = new Board_QuestionDAO().AdmindeleteQBoard(conn,qboardNo);
+		
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn); 
+		close(conn); 
+		
+		return result;
+	}
+
+	public int AdmininsertQBoard(Board_Question bq) {
+		Connection conn = getConnection(); 
+		int result = new Board_QuestionDAO().AdmininsertQBoard(conn, bq); 
+		if(result >0) {
+			result = new Board_QuestionDAO().selectLastSeq(conn); 
+			
+			commit(conn); 
+			
+		}else 
+			rollback(conn);
+		
+		close(conn); 
+		
+		return result;
+	}
+
+	public int AdminupdateqBoard(Board_Question bq) {
+		Connection conn= getConnection(); 
+		int result = new Board_QuestionDAO().AdminupdateqBoard(conn,bq); 
+		if(result>0) {
+			commit(conn); 
+		}else 
+			rollback(conn); 
+		
+		close(conn); 
+		
+		
+		return result;
+	}
+
 }
