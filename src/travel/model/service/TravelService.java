@@ -184,5 +184,12 @@ public class TravelService {
 		
 		return result;
 	}
+
+	public int selectDay(String startDate, String endDate) {
+		Connection conn=getConnection();
+		int day=new TravelDAO().selectDay(conn,startDate,endDate);
+		close(conn);
+		return day;
+	}
 	
 }

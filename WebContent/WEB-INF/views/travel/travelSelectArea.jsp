@@ -55,6 +55,60 @@
 
 });
 </script>
+<style>
+.where {
+  display: block;
+  margin: 25px 15px;
+  font-size: 11px;
+  color: #000;
+  text-decoration: none;
+  font-family: verdana;
+  font-style: italic;
+} 
+
+select {
+  width: 200px;
+  padding: .8em .5em;
+  font-family: inherit;
+  background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%;  
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: 1px solid #999;
+  border-radius: 0px;
+}
+
+select::-ms-expand { /* for IE 11 */
+    display: none;
+}
+
+#button {
+
+    width:100px;
+
+    background: orange;
+
+    border: none;
+
+    color:#fff;
+
+    padding: 15px 0;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    display: inline-block;
+
+    font-size: 15px;
+
+    margin: 4px;
+
+    cursor: pointer;
+
+}
+
+</style>
 </head>
 <body>
 	<header class="masthead" style="height:300px;">
@@ -71,7 +125,7 @@
 	<form action="<%=request.getContextPath() %>/travel/travelView" method="get">
 		<select name="sido1" id="sido1"></select>
 		<select name="gugun1" id="gugun1"></select>
-		<input type="submit" value="이동"/>
+		<input type="submit" id="button" value="이동"/>
 	</form>
 	</div>
 	<br>

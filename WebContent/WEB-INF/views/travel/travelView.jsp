@@ -81,7 +81,7 @@ $(function(){
 						
 					}else{
 						if(i==9){
-							pageMore+="<input type='button' value='더보기' onclick='conMore();'/>";
+							pageMore+="<input type='button' id='button' value='더보기' onclick='conMore();'/>";
 						}
 						
 						html+="<div class='col-lg-4 col-sm-6 mb-4' id='hiddenContents"+hiddenCount+"' style='display: none'>";
@@ -275,8 +275,8 @@ function searchList(e){
 <style>
 #header>a{margin-left: 45px;}
 .card-img-top{
-	width: 349px;
-	height: 300px;
+	width: 288px;
+	height: 250px;
 }
 
 .wrapper{
@@ -300,6 +300,31 @@ function searchList(e){
 #autoComplete li.sel{
 	background: gray;
 	color: white;
+}
+#button {
+
+    width:100px;
+
+    background: orange;
+
+    border: none;
+
+    color:#fff;
+
+    padding: 15px 0;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    display: inline-block;
+
+    font-size: 15px;
+
+    margin: 4px;
+
+    cursor: pointer;
+
 }
 </style>
 

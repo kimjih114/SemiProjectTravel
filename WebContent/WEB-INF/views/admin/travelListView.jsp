@@ -73,12 +73,16 @@ $(()=>{
 })
 
 function roomUpdateForm(index){
-		var roomName=$("#roomName"+index+"").val();
-		if(roomName=="null"){
+		var roomList=$("#roomName"+index+"").val();
+		if(roomList=="null"){
 			alert("방을 선택해주세요");
 			return;
 		}
-		//여기서부터 내일하자
+		var roomLists=roomList.split(",");
+		var roomName=roomLists[0];
+		var contentId=roomLists[1];
+		location.href="<%=request.getContextPath()%>/admin/roomUpdateForm?contentId="+contentId+"&roomName="+roomName;
+		
 }
 </script>
   <style>
@@ -179,7 +183,7 @@ section#page-top{
 #content{
 	position : absolute;
 	top : 8%;
-	left : 27%;
+	left : 30%;
 }
 #content table{
 	border-collapse : collapse;
@@ -258,7 +262,7 @@ numPerPage{
 
   </nav>   
  
-  	<div id="content" style="top:20%; text-align : center;width:600px;">
+  	<div id="content" style="top:20%; text-align : center">
   		<h2>업체 목록</h2>
   		<br><br>
   		<div id="head-wrapper">
@@ -289,7 +293,7 @@ numPerPage{
   		<div id="numPerPage-container" class="wrapper">
   		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
   		<br>
-  		&nbsp;&nbsp;페이지 당 업체 수 
+  		페이지 당 업체 수 
   		<select name="numPerPage" id="numPerPage">
   			<option value="20" <%=numPerPage==20?"selected":"" %>>20</option>
   			<option value="10" <%=numPerPage==10?"selected":"" %>>10</option>
@@ -304,16 +308,15 @@ numPerPage{
   			<tr>
   				<th>업체 이름</th>
   				<th>타입</th>
-  				<th>위치</th>
-  				<th>관리자 이름</th>
+  				<th>사업자 이름</th>
   				<th>핸드폰 번호</th>
-  				<th>방 추가</th>
+  				<th></th>
   			</tr>
   			</thead>
   			<tbody>
   			<% if(list==null|| list.isEmpty()){%>
   			<tr>
-  				<td colspan="5" align="center"> 검색 결과가 없습니다.</td>
+  				<td colspan="6" align="center"> 검색 결과가 없습니다.</td>
   			</tr>
   			<%
   			}
@@ -331,7 +334,6 @@ numPerPage{
 					case "R" :%>맛집<%;break;
 					case "E" :%>놀거리<%;break;
 					case "S" :%>쇼핑<%;break;}%></td>
-				<td><%=t.getTravelLocation() %></td>
   				<td><%=t.getTravelOfficierName()%></td>
   				<td><%=t.getTravelOfficierphone()%></td>
   				<td>
@@ -361,7 +363,6 @@ numPerPage{
   			%>
   			</tbody>
   		</table>
-  		<br><br>
   		<div id="pageBar"style="text-align:center">
   			<%=pageBar %>
   		</div>

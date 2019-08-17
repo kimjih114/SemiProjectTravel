@@ -7,6 +7,7 @@
 	List<RoomReservation> room=(List<RoomReservation>)request.getAttribute("room");
 	List<RoomReservation> friendRoom=(List<RoomReservation>)request.getAttribute("friendRoom");
 	System.out.println("friendRoom값은?"+friendRoom);
+	System.out.println("room값은?"+room);
 %>
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -159,7 +160,110 @@ section#page-top{
 	background-color:#f7f2eb;
 }
 </style>
-<body>
+  <style>
+a{
+	color : black;
+}
+.page-top{
+	width: 1024px;
+}
+  
+#profile-header{
+	padding-bottom: 20px;
+	margin: 0;
+	background-color:#fed136;
+} 
+  
+#sideNav {
+    text-align: center;
+    top: 0;
+    left: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: fixed;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+	width: 250px;
+    /*height: 100vh;*/
+    background: #fed136; 
+
+}
+.profile-circle{
+	max-width: 10rem;
+    max-height: 10rem;
+    border: 0.5rem solid #212529;
+    border-radius: 100%;
+    min-width: 0;
+    min-height: 0;
+}
+#sideNav .navbar-nav .nav-item .nav-link {
+  font-weight: 800;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+}
+
+#sideNav .navbar-toggler:focus {
+  outline-color: #d48a6e;
+}
+
+a .nav-link js-scroll-trigger{
+	color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+
+}
+table{
+	margin: 10 auto;
+	margin-bottom: 30px;
+}
+
+table tr :hover{
+	cursor: pointer;
+	color: orangered;
+	
+}
+
+table td{
+	padding: 10px;
+	border-bottom: 1px solid #212529;
+	border-collapse: collapse;
+    border-right: 0;
+    border-left:0;
+    height: 50px;
+}
+
+#sideNav, table {
+	font-size: 90%;
+    font-weight: 400;
+   /* padding: .75em 0;*/
+    letter-spacing: 1px;
+}
+
+div#profile-header{
+	margin: 0 auto;
+}
+
+section#page-top{
+	position: relative;
+}
+
+.myPost{
+	position: absolute;
+	top:0;
+	left: 260px;
+	border:1px solid;
+	padding: 10px;
+	
+}
+
+p.userprofile-userId{
+	margin-bottom: 40px;
+}
+
+
+</style>
 	<header class="masthead" style="height:300px;">
     <div class="container">
       <div class="intro-text" style="padding-top:140px; !important">
@@ -180,12 +284,11 @@ section#page-top{
 
    <table id="tbl-usermenu0">
    	 <tr>
-   		<td id="modifyUserInfo">회원정보수정</td>
+   		<td id="modifyUserInfo"><a href="<%=request.getContextPath()%>/user/userUpdateView?userId=<%=userLoggedIn.getUserId()%>">회원정보수정</a></td>
    	</tr>
 	<tr>
-   		<td>메시지</td>
+   		<td id="gomsg">메시지</td>
    	</tr>
-   	</table>
    	<table id="tbl-usermenu1">
    		<tr>
    			<td><a href="<%=request.getContextPath()%>/mypage/myReservationView?userId=<%=userLoggedIn.getUserId()%>">예약내역</a></td>
@@ -207,18 +310,18 @@ section#page-top{
     </tr>
     
     <tr>
-    	<td>1:1문의</td>
+    	<td id="QuestionList">1:1문의</td>
     </tr>
     
     <tr>
     	<td>공지사항</td>
     </tr> 	
 	</table>
-  </nav>   
+  </nav>  
 	
 	<div id="content">
-  		<h2>예약 내역</h2>
-  		<table id="tbl-user">
+  		<h2 style="margin-left: 100px;">예약 내역</h2>
+  		<table id="tbl-user" style="margin-left: 100px; width: 600px;">
   			<thead>
   			<tr>
   				<th>숙소이름</th>
@@ -230,7 +333,8 @@ section#page-top{
   			</tr>
   			</thead>
   			<tbody>
-  				<%if(room==null&&friendRoom==null){ %>
+  				<%if(room.isEmpty()&&friendRoom.isEmpty()){ %>
+  				
   				<tr>
   					<td colspan="5">예약내역이 없습니다.</td>
   				</tr>

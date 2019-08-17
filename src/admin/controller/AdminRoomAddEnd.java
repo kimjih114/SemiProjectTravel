@@ -36,15 +36,12 @@ public class AdminRoomAddEnd extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-
-		String root =  getServletContext().getRealPath("/");
+		String root = getServletContext().getRealPath("/");
+		String saveDirectory = root +"upload"+File.separator+"profile";
 		
-		String saveDirectory = root +"upload"+File.separator+"travel";
+		int maxPostSize = 1024 * 1024* 10;
 		
-		int maxPostSize = 1024 * 1024 * 10;
-		
-		FileRenamePolicy policy
-			= new MVCRenamePolicy();
+		FileRenamePolicy policy = new MVCRenamePolicy();
 		
 		MultipartRequest mrequest = new MultipartRequest(request, 
 				 saveDirectory, 
@@ -73,6 +70,10 @@ public class AdminRoomAddEnd extends HttpServlet {
 		String originalFileName3 = mrequest.getOriginalFileName("fileName3");
 		String renameFileName3 = mrequest.getFilesystemName("fileName3");
 		mrequest.getFile("renameFileName3");
+		
+		File f1 = mrequest.getFile("fileName1");
+		File f2 = mrequest.getFile("fileName2");
+		File f3 = mrequest.getFile("fileName3");
 		
 		AdminRoom a=new AdminRoom(contentId, roomName, roomWeekDayHighPrice, roomWeekDaylowPrice, roomWeekEndHighPrice, roomWeekEndlowPrice, roomSize, roomPerson, content);
 		int result1=new AdminService().adminRoomInsert(a);

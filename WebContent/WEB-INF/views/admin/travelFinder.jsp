@@ -71,7 +71,18 @@ $(()=>{
 	
 })
 
-
+function roomUpdateForm(index){
+		var roomList=$("#roomName"+index+"").val();
+		if(roomList=="null"){
+			alert("방을 선택해주세요");
+			return;
+		}
+		var roomLists=roomList.split(",");
+		var roomName=roomLists[0];
+		var contentId=roomLists[1];
+		location.href="<%=request.getContextPath()%>/admin/roomUpdateForm?contentId="+contentId+"&roomName="+roomName;
+		
+}
 </script>
   <style>
 .page-top{
@@ -284,16 +295,15 @@ numPerPage{
   			<tr>
   				<th>업체 이름</th>
   				<th>타입</th>
-  				<th>위치</th>
-  				<th>관리자 이름</th>
+  				<th>사업자 이름</th>
   				<th>핸드폰 번호</th>
-  				<th>방추가</th>
+  				<th></th>
   			</tr>
   			</thead>
   			<tbody>
   			<% if(list==null|| list.isEmpty()){%>
   			<tr>
-  				<td colspan="4" align="center"> 검색 결과가 없습니다.</td>
+  				<td colspan="5" align="center"> 검색 결과가 없습니다.</td>
   			</tr>
   			<%
   			}
@@ -311,7 +321,6 @@ numPerPage{
 					case "R" :%>맛집<%;break;
 					case "E" :%>놀거리<%;break;
 					case "S" :%>쇼핑<%;break;}%></td>
-				<td><%=t.getTravelLocation() %></td>
   				<td><%=t.getTravelOfficierName()%></td>
   				<td><%=t.getTravelOfficierphone()%></td>
   				<td>

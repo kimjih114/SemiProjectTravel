@@ -8,6 +8,32 @@
 	String contentTypeId=request.getParameter("contentTypeId");
 	double avgGrade=(double)request.getAttribute("avgGrade");
 %>
+<!-- Bootstrap core CSS -->
+  <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="<%=request.getContextPath() %>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="<%=request.getContextPath() %>/css/agency.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap core JavaScript -->
+  <script src="<%=request.getContextPath() %>/vendor/jquery/jquery.min.js"></script>
+  <script src="<%=request.getContextPath() %>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="<%=request.getContextPath() %>/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="<%=request.getContextPath() %>/js/jqBootstrapValidation.js"></script>
+  <script src="<%=request.getContextPath() %>/js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
 
 <script>
 	$(function(){
@@ -45,6 +71,11 @@
 						html1+="<a href='#' id='s5'>★</a>";
 						html1+="</p>";
 						html1+="<button onclick='map();'>지도보기</button>";
+						
+						<%if(contentTypeId.equals("32")&&userLoggedIn!=null){%>
+						html1+="<button type='button' onclick='reservationForm();'>예약하러가기</button>";
+					 	<%} %> 
+						
 						html1+="<div id='map' style='width:400px;height:300px;'></div>";
 						html1+="</div>";													
 					
@@ -145,6 +176,31 @@
 	.star_rating a:first-child {margin-left:0;}
 	.star_rating a.on {color:#777;}
 
+button {
+
+    width:100px;
+
+    background: orange;
+
+    border: none;
+
+    color:#fff;
+
+    padding: 15px 0;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    display: inline-block;
+
+    font-size: 15px;
+
+    margin: 4px;
+
+    cursor: pointer;
+
+}
 </style>
 </head>
 <body>
@@ -162,9 +218,7 @@
   <!-- Page Content -->
   <div class="container">
 	
-	<%if(contentTypeId.equals("32")&&userLoggedIn!=null){%>
-		<button type="button" onclick="reservationForm();">예약하러가기</button>
-	 <%} %>  
+	 
     
     <!-- Heading Row -->
     <div class="row align-items-center my-5" id="content1">

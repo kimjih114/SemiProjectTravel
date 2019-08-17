@@ -360,8 +360,120 @@ public class AdminDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
 		}
 		return roomList;
+	}
+	public List<AdminRoom> roomUpdateForm(Connection conn, String contentId, String roomName) {
+		List<AdminRoom> roomList=new ArrayList<AdminRoom>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("roomUpdateForm");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, contentId);
+			pstmt.setString(2, roomName);
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int roomWeekDayHighPrice=rset.getInt("room_weekday_high_price");
+				int roomWeekDayLowPrice=rset.getInt("room_weekday_low_price");
+				int roomWeekEndHighPrice=rset.getInt("room_weekend_high_price");
+				int roomWeekEndLowPrice=rset.getInt("room_weekend_low_price");
+				String roomSize=rset.getString("room_size");
+				String roomPerson=rset.getString("room_person");
+				String content=rset.getString("room_content");
+				AdminRoom a=new AdminRoom(contentId, roomName, roomWeekDayHighPrice, roomWeekDayLowPrice, roomWeekEndHighPrice, roomWeekEndLowPrice, roomSize, roomPerson, content);
+				roomList.add(a);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return roomList;
+	}
+	public List<RoomImage> roomImageUpdateForm(Connection conn, String contentId, String roomName) {
+		List<RoomImage> roomImage=new ArrayList<RoomImage>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("roomImageUpdateForm");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, contentId);
+			pstmt.setString(2, roomName);
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				String originalFileName1=rset.getString("room1_original_filename");
+				String renameFileName1=rset.getString("room1_renamed_filename");
+				String originalFileName2=rset.getString("room2_original_filename");
+				String renameFileName2=rset.getString("room2_renamed_filename");
+				String originalFileName3=rset.getString("room3_original_filename");
+				String renameFileName3=rset.getString("room3_renamed_filename");
+				RoomImage r=new RoomImage(contentId, roomName, originalFileName1, renameFileName1, originalFileName2, renameFileName2, originalFileName3, renameFileName3);
+				roomImage.add(r);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return roomImage;
+	}
+	public int roomUpdateEnd(Connection conn, AdminRoom a) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		String sql=prop.getProperty("roomUpdateEnd");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, a.getRoomWeekDayHighPrice());
+			pstmt.setInt(2, a.getRoomWeekDayLowPrice());
+			pstmt.setInt(3, a.getRoomWeekEndHighPrice());
+			pstmt.setInt(4, a.getRoomWeekEndLowPrice());
+			pstmt.setString(5, a.getRoomSize());
+			pstmt.setString(6, a.getRoomPerson());
+			pstmt.setString(7, a.getContent());
+			pstmt.setString(8, a.getContentId());
+			pstmt.setString(9, a.getRoomName());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	public int roomImageUpdateEnd(Connection conn, RoomImage r) {
+		int result=0;
+		PreparedStatement pstmt=null;
+		String sql=prop.getProperty("roomImageUpdateEnd");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, r.getOriginalFileName1());
+			pstmt.setString(2, r.getRenameFileName1());
+			pstmt.setString(3, r.getOriginalFileName2());
+			pstmt.setString(4, r.getRenameFileName2());
+			pstmt.setString(5, r.getOriginalFileName3());
+			pstmt.setString(6, r.getRenameFileName3());
+			pstmt.setString(7, r.getContentId());
+			pstmt.setString(8, r.getRoomName());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }

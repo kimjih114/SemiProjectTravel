@@ -681,4 +681,28 @@ public class TravelDAO {
 		}
 		return result;
 	}
+
+	public int selectDay(Connection conn, String startDate, String endDate) {
+		int day=0;
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectDay");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, endDate);
+			pstmt.setString(2, startDate);
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				day=rset.getInt("day");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return day;
+	}
 }

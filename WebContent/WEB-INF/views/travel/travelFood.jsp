@@ -9,6 +9,33 @@
 %>
 
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
+<!-- Bootstrap core CSS -->
+  <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="<%=request.getContextPath() %>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="<%=request.getContextPath() %>/css/agency.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap core JavaScript -->
+  <script src="<%=request.getContextPath() %>/vendor/jquery/jquery.min.js"></script>
+  <script src="<%=request.getContextPath() %>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="<%=request.getContextPath() %>/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="<%=request.getContextPath() %>/js/jqBootstrapValidation.js"></script>
+  <script src="<%=request.getContextPath() %>/js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
+
 <script>
 
 var hiddenCount=0;
@@ -59,7 +86,7 @@ $(function(){
 						
 					}else{
 						if(i==9){
-							pageMore+="<input type='button' value='더보기' onclick='conMore();'/>";
+							pageMore+="<input type='button' id='button' value='더보기' onclick='conMore();'/>";
 						}
 						
 						html+="<div class='col-lg-4 col-sm-6 mb-4' id='hiddenContents"+hiddenCount+"' style='display: none'>";
@@ -253,8 +280,8 @@ function searchList(e){
 <style>
 #header>a{margin-left: 45px;}
 .card-img-top{
-	width: 349px;
-	height: 300px;
+	width: 288px;
+	height: 250px;
 }
 
 .wrapper{
@@ -278,6 +305,31 @@ function searchList(e){
 #autoComplete li.sel{
 	background: gray;
 	color: white;
+}
+#button {
+
+    width:100px;
+
+    background: orange;
+
+    border: none;
+
+    color:#fff;
+
+    padding: 15px 0;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    display: inline-block;
+
+    font-size: 15px;
+
+    margin: 4px;
+
+    cursor: pointer;
+
 }
 </style>
 </head>

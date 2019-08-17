@@ -101,4 +101,40 @@ public class AdminService {
 		return roomList;
 	}
 
+	public List<AdminRoom> roomUpdateForm(String contentId, String roomName) {
+		Connection conn=getConnection();
+		List<AdminRoom> roomList=new AdminDAO().roomUpdateForm(conn,contentId,roomName);
+		close(conn);
+		return roomList;
+	}
+
+	public List<RoomImage> roomImageUpdateForm(String contentId, String roomName) {
+		Connection conn=getConnection();
+		List<RoomImage> roomImage=new AdminDAO().roomImageUpdateForm(conn,contentId,roomName);
+		close(conn);
+		return roomImage;
+	}
+
+	public int roomUpdateEnd(AdminRoom a) {
+		Connection conn=getConnection();
+		int result=new AdminDAO().roomUpdateEnd(conn,a);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public int roomImageUpdateEnd(RoomImage r) {
+		Connection conn=getConnection();
+		int result=new AdminDAO().roomImageUpdateEnd(conn,r);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
 }

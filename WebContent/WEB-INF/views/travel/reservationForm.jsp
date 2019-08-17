@@ -4,6 +4,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
+<!-- Bootstrap core CSS -->
+  <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="<%=request.getContextPath() %>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="<%=request.getContextPath() %>/css/agency.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap core JavaScript -->
+  <script src="<%=request.getContextPath() %>/vendor/jquery/jquery.min.js"></script>
+  <script src="<%=request.getContextPath() %>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="<%=request.getContextPath() %>/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="<%=request.getContextPath() %>/js/jqBootstrapValidation.js"></script>
+  <script src="<%=request.getContextPath() %>/js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
+
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -23,6 +50,7 @@
 	Date date=new Date();
 	System.out.println(date.getMonth()+1); //현재 월
 %>
+
 <script>
 	
 	$(function(){
@@ -81,9 +109,11 @@
 			    */
 			    
 				if("basket"=="<%=basket%>"){
+					$("#search").css("display","block");
+					$("#h5").css("margin-left","350px");
 					 $("#sdate").datepicker( "setDate", "<%=sDate%>");
 					 $("#edate").datepicker( "setDate", "<%=eDate%>");
-					
+					var day=0;
 					var roomList=new Array;
 					
 					$.ajax({
@@ -97,6 +127,21 @@
 								roomList.push(u.roomName);
 				
 							});
+						},
+						error:function(jqxhr,textStatus,errorThrown){
+							
+						}
+						
+					});
+					
+					$.ajax({
+						type : "get",
+						url : "<%=request.getContextPath()%>/travel/dateDay.do?sDate=<%=sDate%>&eDate=<%=eDate%>",
+						dataType : "json",
+						async : false,
+						success:function(data){
+							day=data;
+							
 						},
 						error:function(jqxhr,textStatus,errorThrown){
 							
@@ -168,11 +213,11 @@
 											html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";															
 																			
 											<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-											html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee2").text()+"원 예약하기</button></h3>";
+											html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></h3>";
 											<%}else{%>
-											html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee1").text()+"원 예약하기</button></h3>";
+											html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></h3>";
 											<%}%>
-											html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
+											html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
 											
 											html1+="</div></div>";
 											html1+="<h3 class='my-4'></h3>";	
@@ -199,11 +244,11 @@
 										html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";							
 										html1+="<input type='hidden' id='roomTitle' value='"+$(m).find("roomtitle").text()+"'>";									
 										<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-										html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee2").text()+"원 예약하기</button></h3>";
+										html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></h3>";
 										<%}else{%>
-										html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee1").text()+"원 예약하기</button></h3>";
+										html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></h3>";
 										<%}%>
-										html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
+										html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
 										
 										html1+="</div></div>";
 										html1+="<h3 class='my-4'></h3>";	
@@ -229,7 +274,9 @@
 	});
 	
 	function search(){
-		
+		$("#search").css("display","block");
+		$("#h5").css("margin-left","350px");
+		var day=0;
 		var roomList=new Array;
 		var queryString = $("form[name=searchForm]").serialize();
 		
@@ -246,6 +293,22 @@
 					
 					
 				});
+			},
+			error:function(jqxhr,textStatus,errorThrown){
+				
+			}
+			
+		});
+		var sDate=$("#sdate").val();
+		var eDate=$("#edate").val();
+		$.ajax({
+			type : "get",
+			url : "<%=request.getContextPath()%>/travel/dateDay.do?sDate="+sDate+"&eDate="+eDate+"",
+			dataType : "json",
+			async : false,
+			success:function(data){
+				day=data;
+				
 			},
 			error:function(jqxhr,textStatus,errorThrown){
 				
@@ -317,11 +380,11 @@
 								html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";															
 																
 								<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-								html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee2").text()+"원 예약하기</button></h3>";
+								html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></h3>";
 								<%}else{%>
-								html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee1").text()+"원 예약하기</button></h3>";
+								html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></h3>";
 								<%}%>
-								html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
+								html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
 								
 								html1+="</div></div>";
 								html1+="<h3 class='my-4'></h3>";	
@@ -348,11 +411,11 @@
 							html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";							
 							html1+="<input type='hidden' id='roomTitle' value='"+$(m).find("roomtitle").text()+"'>";									
 							<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-							html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee2").text()+"원 예약하기</button></h3>";
+							html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></h3>";
 							<%}else{%>
-							html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>가격:"+$(m).find("roomoffseasonminfee1").text()+"원 예약하기</button></h3>";
+							html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></h3>";
 							<%}%>
-							html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
+							html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
 							
 							html1+="</div></div>";
 							html1+="<h3 class='my-4'></h3>";	
@@ -463,7 +526,7 @@
 	}
 	
 	function basketCheck(price,roomTitle){
-		
+		console.log("가격은?="+price);
 		var startDate=$("#sdate").val();
 		var endDate=$("#edate").val();
 		var friendId=$("#search").val();
@@ -544,9 +607,10 @@
 	min-width: 159px;
 	border: 1px solid gray;
 	position: absolute;
-	top: 475px;
+	top: 495px;
 	padding: 0;
 	margin: 0;
+	right: 498px;
 }
 #autoComplete li{
 	padding: 0 10px;
@@ -557,6 +621,37 @@
 	background: gray;
 	color: white;
 }
+button {
+
+    width:100px;
+
+    background: orange;
+
+    border: none;
+
+    color:#fff;
+
+    padding: 15px 0;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    display: inline-block;
+
+    font-size: 15px;
+
+    margin: 4px;
+
+    cursor: pointer;
+
+}
+input[type="text"]{ 
+height: auto; /* 높이 초기화 */ 
+line-height: normal; /* line-height 초기화 */ 
+padding: .8em .5em; /* 여백 설정 */ 
+}
+
 </style>
 <body>
 	
@@ -579,10 +674,10 @@
   	<input type="text" id="sdate" name="sdate">
   	<input type="text" id="edate" name="edate">
   	<input type="hidden" name="contentId" value="<%=contentId%>"/>
-  	<button type="button" onclick="search();">검색</button>
+  	<button type="button" id="button" onclick="search();">검색</button>
   	</form>
   	</div>
-  	<h5 align="center" style="margin-top: 10px;">같이 숙박할 친구 id<input type='search' name='search' id='search' placeholder='선택사항' onkeyup='searchList(event);' /></h5>
+  	<h5 align="center" id="h5" style="margin-top: 10px;"><input type='search' name='search' id='search' placeholder='친구아이디 입력(선택사항)' onkeyup='searchList(event);' style="display: none;"/></h5>
 	<ul id='autoComplete' style="margin-left: 930px; margin-top: -50px;">
 		
 	</ul>
