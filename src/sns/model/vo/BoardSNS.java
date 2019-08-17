@@ -14,20 +14,21 @@ public class BoardSNS implements Serializable {
 	private String boardContent;
 	private String boardType;
 	private Timestamp boardDate;
+	private Timestamp boardUpdateDate;
 	public BoardSNS() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public BoardSNS(int boardNo, String boardWriter, String boardContent, String boardType, Timestamp boardDate) {
+	public BoardSNS(int boardNo, String boardWriter, String boardContent, String boardType, Timestamp boardDate,
+			Timestamp boardUpdateDate) {
 		super();
 		this.boardNo = boardNo;
 		this.boardWriter = boardWriter;
 		this.boardContent = boardContent;
 		this.boardType = boardType;
 		this.boardDate = boardDate;
+		this.boardUpdateDate = boardUpdateDate;
 	}
-	
-	
 	public int getBoardNo() {
 		return boardNo;
 	}
@@ -58,13 +59,19 @@ public class BoardSNS implements Serializable {
 	public void setBoardDate(Timestamp boardDate) {
 		this.boardDate = boardDate;
 	}
+	public Timestamp getBoardUpdateDate() {
+		return boardUpdateDate;
+	}
+	public void setBoardUpdateDate(Timestamp boardUpdateDate) {
+		this.boardUpdateDate = boardUpdateDate;
+	}
 	@Override
 	public String toString() {
 		return "BoardSNS [boardNo=" + boardNo + ", boardWriter=" + boardWriter + ", boardContent=" + boardContent
-				+ ", boardType=" + boardType + ", boardDate=" + boardDate + "]";
+				+ ", boardType=" + boardType + ", boardDate=" + boardDate + ", boardUpdateDate=" + boardUpdateDate
+				+ "]";
 	}
 	
 	
-
 }
 	

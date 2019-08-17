@@ -217,6 +217,8 @@
 			
 			</div>	
 			
+			<div id="tab2Content"></div>
+			
 			</div>
 		
 			<div id="tab3" class="tabcontent">
@@ -271,7 +273,8 @@ $(function() {
 					type: "get",
 					dataType: "html",
 					success: function(data){
-						$("#tab2").append(data);
+						$("#tab2Content").html(data);
+						$("#newPost").html('');
 					},
 					error: function(jqxhr, textStatus, errorThrown){
 						console.log("ajax처리실패!");
@@ -392,7 +395,7 @@ function handleImgsFilesSelect(e){
 }
 
 $("#btnSubmit").click(function(event){
-	 var formData = new FormData();
+	var formData = new FormData();
 	
 	event.preventDefault();
 	
@@ -405,8 +408,6 @@ $("#btnSubmit").click(function(event){
 		});
 	}
 
-	
-	
 	 formData.append("boardWriter",'<%=userLoggedIn.getUserId() %>');
 	 formData.append("boardContent", $("#reviewContent").val());
 	 formData.append("boardType", $('input[name="boardtype"]:checked').val());
@@ -463,8 +464,8 @@ $("#btnSubmit").click(function(event){
 								html+="<tr>";
 								html+="<td class='timeline-boardcontent-sns'>";
 								html+="<img src='<%=request.getContextPath()%>/upload/profile/"+data.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
-								html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>"+data.profileSNS.userNickname+"</a></span>";
-								html+="<span style='font-size: 0.8em; color: gray;''>"+data.boardSNS.boardDate+"</span>";
+								html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>"+data.profileSNS.profileUserNickname+"</a></span>";
+								html+="<span style='font-size: 0.8em; color: gray;''>"+data.boardSNS.boardUpdateDate+"</span>";
 								html+="<span style='float: right;'>";
 								if(data.boardSNS.boardWriter=='<%=userLoggedIn.getUserId()%>'){
 									html+="<button class='btn btn-success' onclick='updateBoardSNSFrm("+data.boardSNS.boardNo+")' style='margin-right:2px;'>수정</button>";

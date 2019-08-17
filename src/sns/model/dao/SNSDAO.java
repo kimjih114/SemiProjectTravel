@@ -78,10 +78,10 @@ public class SNSDAO {
 			if(rset.next()) {
 				profileSNS = new ProfileSNS();
 				
-				profileSNS.setUserId(rset.getString("user_id"));
-				profileSNS.setUserNickname(rset.getString("user_nickname"));
-				profileSNS.setUserIntroduce(rset.getString("user_introduce"));
-				profileSNS.setUserType(rset.getString("user_type"));
+				profileSNS.setProfileUserId(rset.getString("profile_user_id"));
+				profileSNS.setProfileUserNickname(rset.getString("profile_user_nickname"));
+				profileSNS.setProfileUserIntroduce(rset.getString("profile_user_introduce"));
+				profileSNS.setProfileUserType(rset.getString("profile_user_type"));
 				profileSNS.setProfileOriginalFilename(rset.getString("profile_original_filename"));
 				profileSNS.setProfileRenamedFilename(rset.getString("profile_renamed_filename"));
 				profileSNS.setHeaderOriginalFilename(rset.getString("header_original_filename"));
@@ -344,7 +344,7 @@ public class SNSDAO {
 		ProfileSNS profileSNS = null;
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
-		String sql=prop.getProperty("selectOneProfileFollow");
+		String sql=prop.getProperty("selectOneProfile");
 		
 		try {
 				pstmt=conn.prepareStatement(sql);
@@ -357,10 +357,10 @@ public class SNSDAO {
 					while(rset.next()) {
 						profileSNS = new ProfileSNS();
 						
-						profileSNS.setUserId(rset.getString("user_id"));
-						profileSNS.setUserNickname(rset.getString("user_nickname"));
-						profileSNS.setUserIntroduce(rset.getString("user_introduce"));
-						profileSNS.setUserType(rset.getString("user_type"));
+						profileSNS.setProfileUserId(rset.getString("profile_user_id"));
+						profileSNS.setProfileUserNickname(rset.getString("profile_user_nickname"));
+						profileSNS.setProfileUserIntroduce(rset.getString("profile_user_introduce"));
+						profileSNS.setProfileUserType(rset.getString("profile_user_type"));
 						profileSNS.setProfileOriginalFilename(rset.getString("profile_original_filename"));
 						profileSNS.setProfileRenamedFilename(rset.getString("profile_renamed_filename"));
 						profileSNS.setHeaderOriginalFilename(rset.getString("header_original_filename"));
@@ -493,6 +493,7 @@ public class SNSDAO {
 				bs.setBoardWriter(rset.getString("board_writer"));
 				bs.setBoardContent(rset.getString("board_content"));
 				bs.setBoardType(rset.getString("board_type"));
+				bs.setBoardUpdateDate(rset.getTimestamp("board_update_date"));
 				bs.setBoardDate(rset.getTimestamp("board_date"));
 				
 				list.add(bs);
@@ -865,6 +866,7 @@ public class SNSDAO {
 				boardSNS.setBoardWriter(rset.getString("board_writer"));
 				boardSNS.setBoardContent(rset.getString("board_content"));
 				boardSNS.setBoardType(rset.getString("board_type"));
+				boardSNS.setBoardUpdateDate(rset.getTimestamp("board_date"));	
 				boardSNS.setBoardDate(rset.getTimestamp("board_date"));	
 			}
 		
@@ -879,6 +881,66 @@ public class SNSDAO {
 		return boardSNS;
 	}
 
+	public int updateBoardSNS(Connection conn, int boardNo, BoardSNS boardSNS) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateBoardSNS");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, boardSNS.getBoardContent());
+			pstmt.setString(2, boardSNS.getBoardType());
+			pstmt.setInt(3, boardNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteImageSNS(Connection conn, int boardNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteImageSNS");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteGradeSNS(Connection conn, int boardNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteGradeSNS");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	
 	
 	
 }

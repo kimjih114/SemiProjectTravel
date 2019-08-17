@@ -330,7 +330,7 @@ function unblock(){
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
        		<div id="headerFrm">
-				<span id="headerBefore"><%=profileSNS.getHeaderText()!=null? profileSNS.getHeaderText() : profileSNS.getUserNickname()+"의 홈" %></span>
+				<span id="headerBefore"><%=profileSNS.getHeaderText()!=null? profileSNS.getHeaderText() : profileSNS.getProfileUserNickname()+"의 홈" %></span>
 				<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
 					<button id="headerBeforeBtn" onclick="updateHeaderText();" style='margin-left:10px;' class="btn btn-light">edit</button>
 				<%}%>
@@ -353,13 +353,13 @@ function unblock(){
 		<div id="profile-header">
 	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=mypageUser.getFileName()%>" alt="">
 	      <div id="nickFrm">
-	      	<span id="nickBefore" style="font-weight: 700;"><%=profileSNS.getUserNickname() %></span>
+	      	<span id="nickBefore" style="font-weight: 700;"><%=profileSNS.getProfileUserNickname() %></span>
 	      	<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
 	      		<button id="nickBeforeBtn" onclick="updateNickName();" class="btn btn-light">edit</button>
 	      	<%}%>
 	      	</div>
 	      	<div id="introFrm" style="margin-top: 10px;">
-			<span id="introBefore"><%=profileSNS.getUserIntroduce()!=null? profileSNS.getUserIntroduce(): "안녕하세요. 저는 " + profileSNS.getUserNickname() +"입니다." %></span>
+			<span id="introBefore"><%=profileSNS.getProfileUserIntroduce()!=null? profileSNS.getProfileUserIntroduce(): "안녕하세요. 저는 " + profileSNS.getProfileUserNickname() +"입니다." %></span>
 			<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
 					<button id="introBeforeBtn" onclick="updateIntroduce();" class="btn btn-light">edit</button>
 			<%} %>
@@ -564,12 +564,11 @@ div#profile-header{
 	width: 60px;
 }
 
-</style>	  
-	  
-	  <script>
-	  $(()=>{
-			var param = {
-					 mypage : '<%=mypage%>'
+</style>
+<script>
+$(()=>{
+var param = {
+mypage : '<%=mypage%>'
 				}
 				$.ajax({	 
 					

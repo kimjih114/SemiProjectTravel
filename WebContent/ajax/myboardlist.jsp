@@ -12,9 +12,8 @@
 	
 %>
 
-
-
 <script>
+var mBeforeHtml = '';
 var mcontentids = new Array();
 var mcontenttypes = new Array();
 var mcontentthumbnails = new Array();
@@ -22,9 +21,8 @@ var mcontenttitles = new Array();
 var mcontentaddresses = new Array();
 var mfilesTempArr = new Array();
 var mcontentgrades = new Array();
+var mcontentoldfilenames = new Array();
 
-var mBeforeHtml = "";
-var newPostHtmp ="";
 
 $(()=>{
 	pageMore(10000);
@@ -55,7 +53,6 @@ function deleteBoardSNS(boardNo){
 }
 
 function updateBoardSNSFrm(boardNo){
-	
 	if($("#postFrm").css('display')=='block'){
 		return;
 	}
@@ -64,7 +61,16 @@ function updateBoardSNSFrm(boardNo){
 	}
 	
 	mBeforeHtml=$(document.querySelector('#container'+boardNo)).html();
-
+	
+	mcontentids = [];
+	mcontenttypes = [];
+	mcontentthumbnails = [];
+	mcontenttitles = [];
+	mcontentaddresses = [];
+	mfilesTempArr = [];
+	mcontentgrades = [];
+	mcontentoldfilenames = [];
+	
 	var param={
 			boardNo : boardNo
 		}
@@ -74,6 +80,8 @@ function updateBoardSNSFrm(boardNo){
 				dataType: 'json',
 				type : 'post',
 				success : function(data){	
+					$(document.getElementById("container"+boardNo)).html('');
+					
 					var html = '';
 					html += "<form action='' name='snsModify'";
 					html += "class='snsModify'";
@@ -105,7 +113,6 @@ function updateBoardSNSFrm(boardNo){
 							var fdot = fname.substring(fname.indexOf("."));
 							fnmae = fname.substr(0, 7) + "..." + fdot;
 						}
-						
 						html += "<div class='mpanel' style='position: absolute; left:83px; top:41px; background:white; z-index:1; width:200px;'>"+fname+"</div>";
 					} else if (data.imageSNSList.length>1){
 						html += "<div class='mpanel'  style='position: absolute; left:83px; top:41px; background:white; z-index:1;  width:200px;'>파일 "+data.imageSNSList.length+"개</div>";
@@ -124,6 +131,8 @@ function updateBoardSNSFrm(boardNo){
 					}
 					if(data.imageSNSList.length>0){
 						for(var t=0; t<data.imageSNSList.length; t++){
+							mcontentoldfilenames.push(data.imageSNSList[t].renamedFileName);
+							
 							html += "<div class='mimgs' style='display: table-cell; max-width: 100px; font-size:0.8em;'>";
 							html+="<img src='<%=request.getContextPath() %>/upload/board/"+data.imageSNSList[t].renamedFileName+"' style='width: 95px; height: 95px; margin: 0 2px;' />";
 						 	var filename = data.imageSNSList[t].originalFileName;
@@ -133,35 +142,38 @@ function updateBoardSNSFrm(boardNo){
 						 		filename = filename.substr(0, 7) + "..." +  dot;
 						 	}
 						 	html+="<span>"+filename+"</span></div>";
+							html += "</div>";
 						}
+						html+="<input type='checkbox' name='delFile' id='delFile' />";
+						html+="<label for='delFile'>첨부파일삭제</label>";
 					}
-					html += "</div>";	
+					html += "</div>";
 					html += "</td>";
 					html +="</tr>";
 					html += "<tr>";
 					html += "<td style='padding: 10px; width: 508px; text-align:left;'>";		
 					if(data.boardSNS.boardType=='P'){
-						html += "<input type='radio' name='boardtype' value='P' checked />";
+						html += "<input type='radio' name='mboardtype' value='P' checked />";
 						html += "<label for='public'>전체공개</label> &nbsp;";
-						html += "<input type='radio' name='boardtype' value='F' />";
+						html += "<input type='radio' name='mboardtype' value='F' />";
 						html += "<label for='followOnly'>팔로워공개</label> &nbsp;";
-						html += "<input type='radio' name='boardtype' value='L' />";
+						html += "<input type='radio' name='mboardtype' value='L' />";
 						html += "<label for='locked'>비공개</label>";
 					}
 					else if(data.boardSNS.boardType=='F'){
-						html += "<input type='radio' name='boardtype' value='P' />";
+						html += "<input type='radio' name='mboardtype' value='P' />";
 						html += "<label for='public'>전체공개</label> &nbsp;";
-						html += "<input type='radio' name='boardtype' value='F' checked />";
+						html += "<input type='radio' name='mboardtype' value='F' checked />";
 						html += "<label for='followOnly'>팔로워공개</label> &nbsp;";
-						html += "<input type='radio' name='boardtype' value='L' />";
+						html += "<input type='radio' name='mboardtype' value='L' />";
 						html += "<label for='locked'>비공개</label>";
 					}
 					if(data.boardSNS.boardType=='L'){
-						html += "<input type='radio' name='boardtype' value='P' />";
+						html += "<input type='radio' name='mboardtype' value='P' />";
 						html += "<label for='public'>전체공개</label> &nbsp;";
-						html += "<input type='radio' name='boardtype' value='F' />";
+						html += "<input type='radio' name='mboardtype' value='F' />";
 						html += "<label for='followOnly'>팔로워공개</label> &nbsp;";
-						html += "<input type='radio' name='boardtype' value='L' checked  />";
+						html += "<input type='radio' name='mboardtype' value='L' checked  />";
 						html += "<label for='locked'>비공개</label>";
 					}
 					html += "<br>";
@@ -224,13 +236,7 @@ function updateBoardSNSFrm(boardNo){
 					console.log("ajax처리실패");
 					
 				}, complete :  function(data){
-					mcontentids = [];
-					mcontenttypes = [];
-					mcontentthumbnails = [];
-					mcontenttitles = [];
-					mcontentaddresses = [];
-					mfilesTempArr = [];
-					mcontentgrades = [];
+				
 				}
 			}) 
 	
@@ -243,7 +249,6 @@ function mHandleImgsFilesSelect(e){
 	var mfiles = e.target.files;
 	var mfilesArr = Array.prototype.slice.call(mfiles);
 	var mfilesArrLen = mfilesArr.length;
-	var mfilesTempArrLen = mfilesTempArr.length;
 	
 	if(mfilesArrLen>5){	
 		$("#fileModify").val("");
@@ -301,36 +306,229 @@ function mHandleImgsFilesSelect(e){
 
 
 function updateBoardSNS(boardNo){
+	event.preventDefault();
+	var formData = new FormData();
 	
-	var boardNo = boardNo;
-	
-	
-		$.ajax({
-			url : '<%=request.getContextPath()%>/gson/sns/deleteBoardSNS.do',
-			data : param,
-			dataType: 'json',
-			type : 'post',
-			success : function(data){				
-				$(document.querySelector('#boardNo'+boardNo)).remove();
-				
-				
-				
-				
-				
-				
-				pageMore(10000);
-			},
-			error : function(data){
-				console.log("ajax처리실패");
-			}
-		}) 
+	var mcontentgrades = [];
 	
 	
 	
+	if($(".mcontentid").length>0){
+		$(".mcontentid").each(function(i, elem){
+			var grade = $(this).parent().parent().parent().children('.mstarRev').children('.mstarR.on').length;
+		   	mcontentgrades.push(grade);
+		});
+	}
 	
+	console.log(mcontentids);
+	console.log(mcontenttypes);
+	console.log(mcontentthumbnails);
+	console.log(mcontenttitles);
+	console.log(mfilesTempArr);
+	console.log(mcontentgrades);
+	console.log(mcontentoldfilenames);
+
+	 formData.append("boardNo", boardNo);
+	 formData.append("boardContent", $("#mreviewContent").val());
+	 formData.append("boardWriter", '<%=userLoggedIn.getUserId() %>');
+	 formData.append("boardType", $('input[name="mboardtype"]:checked').val());
+	 formData.append("contentId1",mcontentids[0]);
+	 formData.append("contentId2",mcontentids[1]);
+	 formData.append("contentId3",mcontentids[2]);
+	 formData.append("contentType1", mcontenttypes[0]);
+	 formData.append("contentType2", mcontenttypes[1]);
+	 formData.append("contentType3", mcontenttypes[2]);
+	 formData.append("contentThumbnail1", mcontentthumbnails[0]);
+	 formData.append("contentThumbnail2", mcontentthumbnails[1]);
+	 formData.append("contentThumbnail3", mcontentthumbnails[2]);
+	 formData.append("contentTitle1", mcontenttitles[0]);
+	 formData.append("contentTitle2", mcontenttitles[1]);
+	 formData.append("contentTitle3", mcontenttitles[2]);
+	 formData.append("contentAddress1", mcontentaddresses[0]);
+	 formData.append("contentAddress2", mcontentaddresses[1]);
+	 formData.append("contentAddress3", mcontentaddresses[2]);
+	 formData.append("grade1",mcontentgrades[0]);
+	 formData.append("grade2",mcontentgrades[1]);
+	 formData.append("grade3",mcontentgrades[2]);
+	 formData.append("oldname1",mcontentoldfilenames[0]);
+	 formData.append("oldname2",mcontentoldfilenames[1]);
+	 formData.append("oldname3",mcontentoldfilenames[2]);
+	 formData.append("oldname4",mcontentoldfilenames[3]);
+	 formData.append("oldname5",mcontentoldfilenames[4]);
+	 formData.append("delFile", $("#delFile").val());
+	 formData.append("file1", mfilesTempArr[0]);
+	 formData.append("file2", mfilesTempArr[1]);
+	 formData.append("file3", mfilesTempArr[2]);
+	 formData.append("file4", mfilesTempArr[3]);
+	 formData.append("file5", mfilesTempArr[4]);
+	 
+		
+	// 파일 데이터
+	 for(var i=0; i<mfilesTempArr.length; i++) {
+	    formData.append("file"+(i+1), mfilesTempArr[i]);
+	 }
+
+	
+	$.ajax({
+	     type : "POST",
+	     url : "<%=request.getContextPath()%>/gson/sns/updateBoardSNS.do",
+	     data : formData,
+	     enctype:"multipart/form-data",
+	     processData: false,
+	     contentType: false,
+	     success : function(data) {
+	$(".tbl-td").children(".starRev").css("margin-top", "0px");
+	    	 
+	    	 $.ajax({
+					url: "<%=request.getContextPath()%>/gson/sns/boardOne.do",
+					data: "boardNo="+data,
+					type: "get",
+					dataType: "json",
+					success: function(data){
+						if(data!=null){
+							
+							console.log(data);
+							var html = "";
+						
+								html+="<div id='container"+data.boardSNS.boardNo+"'>";
+								html+="<table class='tbl-boardsns' id='boardNo"+data.boardSNS.boardNo+"'>"
+								html+="<tr>";
+								html+="<td class='timeline-boardcontent-sns'>";
+								html+="<img src='<%=request.getContextPath()%>/upload/profile/"+data.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
+								html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>"+data.profileSNS.profileUserNickname+"</a></span>";
+								html+="<span style='font-size: 0.8em; color: gray;''>"+data.boardSNS.boardUpdateDate+"</span>";
+								html+="<span style='float: right;'>";
+								if(data.boardSNS.boardWriter=='<%=userLoggedIn.getUserId()%>'){
+									html+="<button class='btn btn-success' onclick='updateBoardSNSFrm("+data.boardSNS.boardNo+")' style='margin-right:2px;'>수정</button>";
+									html+="<button class='btn btn-danger' onclick='deleteBoardSNS("+data.boardSNS.boardNo+");'>삭제</button>";
+								} 
+								
+								html+="</span>";
+								html+="</td>";
+								html+="</tr>";
+								if(data.imageSNSList.length>0){
+									html+="<tr>";
+									html+="<td>"
+									html+="<div id='carouselExampleControls"+data.boardSNS.boardNo+"' class='carousel slide' data-ride='carousel'>";
+									html+="<div class='carousel-inner'>";
+									for(j=0; j<data.imageSNSList.length; j++){
+										if(j==0){
+											html+="<div class='carousel-item active'>";
+										} else if(j>0){
+											html+="<div class='carousel-item'>";
+										}
+										html+="<img src='<%=request.getContextPath()%>/upload/board/"+data.imageSNSList[j].renamedFileName+"' class='d-block w-100' alt='...'>";
+										html+="</div>";		
+									}
+									html+="</div>";
+									html+="<a class='carousel-control-prev' href='#carouselExampleControls"+data.boardSNS.boardNo+"' role='button' data-slide='prev'>";
+									html+="<span class=;carousel-control-prev-icon' aria-hidden='true'></span>"
+									html+="<span class='sr-only'>Previous</span>";
+									html+="</a>";
+									html+="<a class='carousel-control-next' href='#carouselExampleControls"+data.boardSNS.boardNo+"' role='button' data-slide='next'>";
+									html+="<span class='carousel-control-next-icon' aria-hidden='true'></span>";
+									html+="<span class='sr-only'>Next</span>";
+									html+="</a>";
+									html+="</div>";
+									html+="</td>";
+									html+="</tr>";
+								}
+								if(data.gradeSNSList.length>0){
+									html+="<tr>";
+									html+="<td style='padding:1px !important;'>";
+									html+="<table>";
+									html+="<tr>"
+									for(k=0; k<data.gradeSNSList.length; k++){
+										html+="<td class='tbl-td'>";
+										html+="<div class='card h-100'>";
+											html+="<a href='#' class='goInfo'>";
+											html+="<img class='card-img-top' src='"+data.gradeSNSList[k].contentThumbnail+"'></a>";
+											html+="<div class='caption'>";
+											html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+data.gradeSNSList[k].contentId+"&contentTypeId="+data.gradeSNSList[k].contentType+"' target='_blank'>"+data.gradeSNSList[k].contentTitle+"</a>";
+											html+="<div class='contentid' style='display:none'>"+data.gradeSNSList[k].contentId+"</div></h4>"
+											if(data.gradeSNSList[k].contentAddress!=null){
+												html+="<p class='card-text'>"+data.gradeSNSList[k].contentAddress+"</p>"
+											}
+											html+="</div>"
+											html+="</div>"
+											html+="</div>"
+											
+											html+="<div class='starRev'>"
+												for(var l=0; l<data.gradeSNSList[k].grade; l++){
+													html+="<span class='starR on'>별</span>";
+												}
+												for(var m=0; m<5-data.gradeSNSList[k].grade; m++){
+													html+="<span class='starR'>별</span>";
+												}
+											html+="</div>";
+											html+="</td>";
+									}
+										html+="</tr>";
+										html+="</table>";
+										html+="</td>";
+									html+="</tr>";
+								}		
+								
+								if(data.boardSNS.boardContent!=null){
+									html+="<tr>";
+									html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>@"+data.boardSNS.boardWriter+"</a>&nbsp;"+data.boardSNS.boardContent;
+
+									html+="<span style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/>1&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+									
+									html+="</td>";
+									html+="</tr>";
+								}
+							
+								html+="<tr>";
+								html+="<td class='timeline-boardcontent-sns' >댓글(3)</td>";
+								html+="</tr>";
+								html+="<tr>";
+								html+="<td class='timeline-boardcontent-sns'>";
+								html+="<span class='nick_sns'>@abcde</span>&nbsp;";
+								html+="<span style='float:right;'>좋아요&nbsp;&nbsp;신고</span>";
+								html+="</td>";		
+								html+="</tr>";
+								html+="</table>";
+								html+="</div>";
+							}
+						
+						
+						$(document.querySelector('#container'+boardNo)).html(html);
+						
+							
+						},
+						error: function(jqxhr, textStatus, errorThrown){
+							console.log("ajax처리실패!");
+							console.log(jqxhr, textStatus, errorThrown);
+							
+						}
+					});	
+	    	 
+	   
+	    	 
+	     },
+	     error : function(err) {
+	         alert(err.status);
+	     },
+	     complete: function(){
+	    	 
+	    	 mcontentids = [];
+	    	 mcontenttypes = [];
+	    	 mcontentthumbnails = [];
+	    	 mcontenttitles = [];
+	    	 mcontentaddresses = [];
+	    	 mfilesTempArr = [];
+	    	 mcontentgrades = [];
+			 
+			$("#fileupModify").val("");
+			$("#mreviewContent").val('');
+			$(".mimgs").remove();
+			
+			
+			
+	     }
+	})
 }
-
-
 
 function pageMore(boardNo){
 	var param = {
@@ -344,6 +542,7 @@ function pageMore(boardNo){
 		dataType: "json",
 		success: function(data){
 			if(data!=null){
+				
 				var html = "";
 				
 				$.each(data,(i,tl)=>{
@@ -352,8 +551,8 @@ function pageMore(boardNo){
 					html+="<tr>";
 					html+="<td class='timeline-boardcontent-sns'>";
 					html+="<img src='<%=request.getContextPath()%>/upload/profile/"+tl.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
-					html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>"+tl.profileSNS.userNickname+"</a></span>";
-					html+="<span style='font-size: 0.8em; color: gray;''>"+tl.boardSNS.boardDate+"</span>";
+					html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>"+tl.profileSNS.profileUserNickname+"</a></span>";
+					html+="<span style='font-size: 0.8em; color: gray;''>"+tl.boardSNS.boardUpdateDate+"</span>";
 					html+="<span style='float: right;'>";
 					if(tl.boardSNS.boardWriter=='<%=userLoggedIn.getUserId()%>'){
 						html+="<button class='btn btn-success' onclick='updateBoardSNSFrm("+tl.boardSNS.boardNo+")' style='margin-right:2px;'>수정</button>";
@@ -456,7 +655,6 @@ function pageMore(boardNo){
 				}
 				
 			$("#myBoardList").append(html);
-			
 	
 			$("#trMore").click(function(e){
 				pageMore(parseInt($(this).prev().attr('id').substr(9)));
@@ -485,7 +683,6 @@ function pageMore(boardNo){
 
 function modifyCancel(boardNo){
 	$(".tbl-td").children(".starRev").css("margin-top", "0px");
-	
 	$(document.getElementById("container"+boardNo)).html('').html(mBeforeHtml);
 	
 	mcontentids = [];
@@ -495,6 +692,11 @@ function modifyCancel(boardNo){
 	mcontentaddresses = [];
 	mfilesTempArr = [];
 	mcontentgrades = [];
+	
+	$("#fileModify").val("");
+	$("#mreviewContent").val('');
+	$(".mimgs").remove();
+	
 }
 
 
@@ -724,5 +926,3 @@ p.card-text{
 
 
 </div>
-
-

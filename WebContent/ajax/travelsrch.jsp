@@ -148,7 +148,7 @@
 									html+="</div>";
 								html+="</div>";
 								html+="<div class='starRev'>";
-									html+="<span class='starR on' onclick='star(this);'>별1</span>";
+									html+="<span class='starR' onclick='star(this);'>별1</span>";
 									html+="<span class='starR' onclick='star(this);'>별2</span>";
 									html+="<span class='starR' onclick='star(this);'>별3</span>";
 									html+="<span class='starR' onclick='star(this);'>별4</span>";
@@ -161,7 +161,11 @@
 									contentids.push($(m).find("contentid").text());		
 									contenttypes.push($(m).find("contenttypeid").text());
 									
-									contentthumbnails.push($(m).find("firstimage").text());
+									if($(m).find("firstimage").text()!=null){
+										contentthumbnails.push($(m).find("firstimage").text());
+									}else {
+										contentthumbnails.push("undefined");
+									}
 									contenttitles.push($(m).find("title").text());
 									contentaddresses.push($(m).find("addr1").text());
 									
@@ -246,7 +250,7 @@
 														html+="</div>";
 													html+="</div>";
 													html+="<div class='starRev'>";
-														html+="<span class='starR on' onclick='star(this);'>별1</span>";
+														html+="<span class='starR' onclick='star(this);'>별1</span>";
 														html+="<span class='starR' onclick='star(this);'>별2</span>";
 														html+="<span class='starR' onclick='star(this);'>별3</span>";
 														html+="<span class='starR' onclick='star(this);'>별4</span>";
@@ -258,7 +262,11 @@
    											contentids.push($(m).find("contentid").text());	
    											
    											contenttypes.push($(m).find("contenttypeid").text());
-   											contentthumbnails.push($(m).find("firstimage").text());
+   											if($(m).find("firstimage").text()!=null){
+   												contentthumbnails.push($(m).find("firstimage").text());
+   											}else {
+   												contentthumbnails.push("undefined");
+   											}
    											contenttitles.push($(m).find("title").text());
    											contentaddresses.push($(m).find("addr1").text());
    											

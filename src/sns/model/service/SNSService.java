@@ -244,6 +244,34 @@ public class SNSService {
 		return boardSNS;
 	}
 
+	public int updateBoardSNS(int boardNo, BoardSNS boardSNS) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().updateBoardSNS(conn, boardNo, boardSNS);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+
+	public void deleteImageSNS(int boardNo) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().deleteImageSNS(conn, boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		
+	}
+
+	public void deleteGrade(int boardNo) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().deleteGradeSNS(conn, boardNo);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		
+		
+	}
+
 
 	
 	

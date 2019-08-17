@@ -53,13 +53,13 @@ $(()=>{
 					html+="<div class='caption'>"
 						html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
 							html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+mcontentids[q]+"&contentTypeId="+mcontenttypes[q]+"' target='_blank'>"+mcontenttitles[q]+"</a>";
-							html+="<div class='contentid' style='display:none'>"+mcontentids[q]+"</div>"+"</h4>";
+							html+="<div class='mcontentid' style='display:none'>"+mcontentids[q]+"</div>"+"</h4>";
 							if(mcontentaddresses[q]!=null){
 								html+="<p class='card-text'>"+mcontentaddresses[q]+"</p>"
 							}
 					html+="</div>";
 				html+="</div>";
-				html+="<div class='starRev'>";
+				html+="<div class='mstarRev'>";
 					for(var r=0; r<mcontentgrades[q]; r++){	
 						html+="<span class='mstarR on' onclick='star(this);'>별1</span>";
 					}
@@ -81,8 +81,13 @@ $(()=>{
 	
  function closeDiv(div){
 	 mcontentids.pop(mcontentids.indexOf($(div).next().children().html()));
+	 mcontenttypes.pop(mcontentids.indexOf($(div).next().children().html()));
+	 mcontentthumbnails.pop(mcontentids.indexOf($(div).next().children().html()));
+	 mcontenttitles.pop(mcontentids.indexOf($(div).next().children().html()));
+	 mcontentaddresses.pop(mcontentids.indexOf($(div).next().children().html()));
+	 mcontentgrades.pop(mcontentids.indexOf($(div).next().children().html()));
+	
 	 $(div).parent().parent().remove();
-	 console.log(mcontentids);
  }
  
  function star(span){
@@ -212,12 +217,12 @@ $(()=>{
 									html+="<div class='caption'>"
 										html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
 										html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find('contenttypeid').text()+"' target='_blank'>"+$(m).find("title").text()+"</a>";
-											html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
+											html+="<div class='mcontentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
 										html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
 									html+="</div>";
 								html+="</div>";
 								html+="<div class='mstarRev'>";
-									html+="<span class='mstarR on' onclick='star(this);'>별1</span>";
+									html+="<span class='mstarR' onclick='star(this);'>별1</span>";
 									html+="<span class='mstarR' onclick='star(this);'>별2</span>";
 									html+="<span class='mstarR' onclick='star(this);'>별3</span>";
 									html+="<span class='mstarR' onclick='star(this);'>별4</span>";
@@ -230,7 +235,11 @@ $(()=>{
 									mcontentids.push($(m).find("contentid").text());		
 									mcontenttypes.push($(m).find("contenttypeid").text());
 									
-									mcontentthumbnails.push($(m).find("firstimage").text());
+									if($(m).find("firstimage").text()!=null){
+										mcontentthumbnails.push($(m).find("firstimage").text());
+									}else {
+										mcontentthumbnails.push("undefined");
+									}
 									mcontenttitles.push($(m).find("title").text());
 									mcontentaddresses.push($(m).find("addr1").text());
 									
@@ -311,12 +320,12 @@ $(()=>{
 	   												html+="<div class='caption'>"
 	   													html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
 	   														html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find('contenttypeid').text()+"' target='_blank'>"+$(m).find("title").text()+"</a>";
-	   														html+="<div class='contentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
+	   														html+="<div class='mcontentid' style='display:none'>"+$(m).find("contentid").text()+"</div>"+"</h4>";
 	   														html+="<p class='card-text'>"+$(m).find("addr1").text()+"</p>"
 														html+="</div>";
 													html+="</div>";
-													html+="<div class='starRev'>";
-														html+="<span class='mstarR on' onclick='star(this);'>별1</span>";
+													html+="<div class='mstarRev'>";
+														html+="<span class='mstarR' onclick='star(this);'>별1</span>";
 														html+="<span class='mstarR' onclick='star(this);'>별2</span>";
 														html+="<span class='mstarR' onclick='star(this);'>별3</span>";
 														html+="<span class='mstarR' onclick='star(this);'>별4</span>";
@@ -328,7 +337,11 @@ $(()=>{
    											mcontentids.push($(m).find("contentid").text());	
    											
    											mcontenttypes.push($(m).find("contenttypeid").text());
-   											mcontentthumbnails.push($(m).find("firstimage").text());
+   											if($(m).find("firstimage").text()!=null){
+   												mcontentthumbnails.push($(m).find("firstimage").text());
+   											}else {
+   												mcontentthumbnails.push("undefined");
+   											}
    											mcontenttitles.push($(m).find("title").text());
    											mcontentaddresses.push($(m).find("addr1").text());
    											

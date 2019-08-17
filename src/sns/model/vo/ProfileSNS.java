@@ -7,10 +7,10 @@ public class ProfileSNS implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String userId;
-    private String userNickname;
-    private String userIntroduce;
-    private String userType;
+	private String profileUserId;
+    private String profileUserNickname;
+    private String profileUserIntroduce;
+    private String profileUserType;
     private String profileOriginalFilename;
     private String profileRenamedFilename;
     private String headerOriginalFilename;
@@ -21,14 +21,14 @@ public class ProfileSNS implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ProfileSNS(String userId, String userNickname, String userIntroduce, String userType,
-			String profileOriginalFilename, String profileRenamedFilename, String headerOriginalFilename,
-			String headerRenamedFilename, String headerText, String themeColor) {
+	public ProfileSNS(String profileUserId, String profileUserNickname, String profileUserIntroduce,
+			String profileUserType, String profileOriginalFilename, String profileRenamedFilename,
+			String headerOriginalFilename, String headerRenamedFilename, String headerText, String themeColor) {
 		super();
-		this.userId = userId;
-		this.userNickname = userNickname;
-		this.userIntroduce = userIntroduce;
-		this.userType = userType;
+		this.profileUserId = profileUserId;
+		this.profileUserNickname = profileUserNickname;
+		this.profileUserIntroduce = profileUserIntroduce;
+		this.profileUserType = profileUserType;
 		this.profileOriginalFilename = profileOriginalFilename;
 		this.profileRenamedFilename = profileRenamedFilename;
 		this.headerOriginalFilename = headerOriginalFilename;
@@ -36,29 +36,29 @@ public class ProfileSNS implements Serializable{
 		this.headerText = headerText;
 		this.themeColor = themeColor;
 	}
-	public String getUserId() {
-		return userId;
+	public String getProfileUserId() {
+		return profileUserId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setProfileUserId(String profileUserId) {
+		this.profileUserId = profileUserId;
 	}
-	public String getUserNickname() {
-		return userNickname;
+	public String getProfileUserNickname() {
+		return profileUserNickname;
 	}
-	public void setUserNickname(String userNickname) {
-		this.userNickname = userNickname;
+	public void setProfileUserNickname(String profileUserNickname) {
+		this.profileUserNickname = profileUserNickname;
 	}
-	public String getUserIntroduce() {
-		return userIntroduce;
+	public String getProfileUserIntroduce() {
+		return profileUserIntroduce;
 	}
-	public void setUserIntroduce(String userIntroduce) {
-		this.userIntroduce = userIntroduce;
+	public void setProfileUserIntroduce(String profileUserIntroduce) {
+		this.profileUserIntroduce = profileUserIntroduce;
 	}
-	public String getUserType() {
-		return userType;
+	public String getProfileUserType() {
+		return profileUserType;
 	}
-	public void setUserType(String userType) {
-		this.userType = userType;
+	public void setProfileUserType(String profileUserType) {
+		this.profileUserType = profileUserType;
 	}
 	public String getProfileOriginalFilename() {
 		return profileOriginalFilename;
@@ -98,13 +98,13 @@ public class ProfileSNS implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "ProfileSNS [userId=" + userId + ", userNickname=" + userNickname + ", userIntroduce=" + userIntroduce
-				+ ", userType=" + userType + ", profileOriginalFilename=" + profileOriginalFilename
-				+ ", profileRenamedFilename=" + profileRenamedFilename + ", headerOriginalFilename="
-				+ headerOriginalFilename + ", headerRenamedFilename=" + headerRenamedFilename + ", headerText="
-				+ headerText + ", themeColor=" + themeColor + "]";
+		return "ProfileSNS [profileUserId=" + profileUserId + ", profileUserNickname=" + profileUserNickname
+				+ ", profileUserIntroduce=" + profileUserIntroduce + ", profileUserType=" + profileUserType
+				+ ", profileOriginalFilename=" + profileOriginalFilename + ", profileRenamedFilename="
+				+ profileRenamedFilename + ", headerOriginalFilename=" + headerOriginalFilename
+				+ ", headerRenamedFilename=" + headerRenamedFilename + ", headerText=" + headerText + ", themeColor="
+				+ themeColor + "]";
 	}
-   
-    
+	
     
 }
