@@ -363,7 +363,7 @@ function pageMore(boardNo){
 					html+="</span>";
 					html+="</td>";
 					html+="</tr>";
-					if(tl.imageSNSList.length<0){
+					if(tl.imageSNSList.length>0){
 						html+="<tr>";
 						html+="<td>"
 						html+="<div id='carouselExampleControls"+tl.boardSNS.boardNo+"' class='carousel slide' data-ride='carousel'>";

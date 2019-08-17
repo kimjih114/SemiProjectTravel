@@ -446,7 +446,6 @@ $("#btnSubmit").click(function(event){
 	     contentType: false,
 	     success : function(data) {
 	         alert("게시글 등록 성공 :D!");
-	         console.log(data);
 	         
 	         $.ajax({
 					url: "<%=request.getContextPath()%>/gson/sns/boardOne.do",
@@ -455,6 +454,8 @@ $("#btnSubmit").click(function(event){
 					dataType: "json",
 					success: function(data){
 						if(data!=null){
+							
+							console.log(data);
 							var html = "";
 						
 								html+="<div id='container"+data.boardSNS.boardNo+"'>";
@@ -473,7 +474,7 @@ $("#btnSubmit").click(function(event){
 								html+="</span>";
 								html+="</td>";
 								html+="</tr>";
-								if(data.imageSNSList.length<0){
+								if(data.imageSNSList.length>0){
 									html+="<tr>";
 									html+="<td>"
 									html+="<div id='carouselExampleControls"+data.boardSNS.boardNo+"' class='carousel slide' data-ride='carousel'>";
@@ -511,7 +512,7 @@ $("#btnSubmit").click(function(event){
 											html+="<a href='#' class='goInfo'>";
 											html+="<img class='card-img-top' src='"+data.gradeSNSList[k].contentThumbnail+"'></a>";
 											html+="<div class='caption'>";
-											html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+data.gradeSNSList[k].contentId+"&contentTypeId="+data.gradeSNSList[k].contentType+"' target='_blank'>"+data.gradeSNSList[k].contentTidatae+"</a>";
+											html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+data.gradeSNSList[k].contentId+"&contentTypeId="+data.gradeSNSList[k].contentType+"' target='_blank'>"+data.gradeSNSList[k].contentTitle+"</a>";
 											html+="<div class='contentid' style='display:none'>"+data.gradeSNSList[k].contentId+"</div></h4>"
 											if(data.gradeSNSList[k].contentAddress!=null){
 												html+="<p class='card-text'>"+data.gradeSNSList[k].contentAddress+"</p>"
@@ -572,12 +573,7 @@ $("#btnSubmit").click(function(event){
 							console.log(jqxhr, textStatus, errorThrown);
 							
 						}
-					});		
-				
-	         
-	         
-	         
-	        
+					});	
 	         
 	     },
 	     error : function(err) {
