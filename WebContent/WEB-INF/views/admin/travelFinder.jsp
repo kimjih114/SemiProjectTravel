@@ -171,7 +171,7 @@ section#page-top{
 #content{
 	position : absolute;
 	top : 8%;
-	left : 30%;
+	left : 27%;
 }
 #content table{
 	border-collapse : collapse;
@@ -250,7 +250,7 @@ numPerPage{
 
   </nav>   
  
-  	<div id="content"style="top:20%; text-align : center">
+  	<div id="content"style="top:20%; text-align : center;width:600px;">
   		<h2>업체 목록</h2>
   		<br><br>
   		<div id="head-wrapper">

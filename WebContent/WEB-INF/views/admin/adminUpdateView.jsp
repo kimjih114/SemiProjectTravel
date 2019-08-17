@@ -183,7 +183,7 @@ section#page-top{
 
    <table id="tbl-usermenu0">
    	 <tr>
-   		<td id="modifyUserInfo" onclick="location.href='<%=request.getContextPath()%>/user/userUpdateView'">관리자 정보 수정</td>
+   		<td id="modifyUserInfo" onclick="location.href='<%=request.getContextPath()%>/admin/adminUpdateView'">관리자 정보 수정</td>
    	</tr>
 	<tr>
    		<td id="userList" onclick="location.href='<%=request.getContextPath()%>/admin/adminUserList'">회원보기</td>
