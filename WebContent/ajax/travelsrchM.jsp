@@ -7,6 +7,7 @@
 	String[] mcontentthumbnails = request.getParameterValues("mcontentthumbnails");
 	String[] mcontenttitles = request.getParameterValues("mcontenttitles");
 	String[] mcontentaddresses = request.getParameterValues("mcontentaddresses");
+	String[] mcontentgrades = request.getParameterValues("mcontentgrades");
 	
 
 %>
@@ -17,6 +18,7 @@
 	var mcontentthumbnails = new Array();
 	var mcontenttitles = new Array();
 	var mcontentaddresses = new Array();
+	var mcontentgrades = new Array();
 	var msido1;
 	var mgugun1;
 
@@ -36,6 +38,9 @@ $(()=>{
 	<%}%>
 	<%for(String contentaddress : mcontentaddresses){%>
 	mcontentaddresses.push('<%=contentaddress%>');
+	<%for(String contentgrade : mcontentgrades){%>
+	mcontentgrades.push('<%=contentgrade%>');
+<%}%>
 <%}%>
 <%}%>
 	
@@ -49,24 +54,26 @@ $(()=>{
 						html+="<div class='cc' onclick='closeDiv(this);'>x</div>"
 							html+="<div class='caption-text' ><a href='<%=request.getContextPath()%>/travel/detailPage?contentId="+mcontentids[q]+"&contentTypeId="+mcontenttypes[q]+"' target='_blank'>"+mcontenttitles[q]+"</a>";
 							html+="<div class='contentid' style='display:none'>"+mcontentids[q]+"</div>"+"</h4>";
-							html+="<p class='card-text'>"+mcontentaddresses[q]+"</p>"
+							if(mcontentaddresses[q]!=null){
+								html+="<p class='card-text'>"+mcontentaddresses[q]+"</p>"
+							}
 					html+="</div>";
 				html+="</div>";
 				html+="<div class='starRev'>";
-					html+="<span class='mstarR on' onclick='star(this);'>별1</span>";
-					html+="<span class='mstarR' onclick='star(this);'>별2</span>";
-					html+="<span class='mstarR' onclick='star(this);'>별3</span>";
-					html+="<span class='mstarR' onclick='star(this);'>별4</span>";
-					html+="<span class='mstarR' onclick='star(this);'>별5</span>";
+					for(var r=0; r<mcontentgrades[q]; r++){	
+						html+="<span class='mstarR on' onclick='star(this);'>별1</span>";
+					}
+					for(var t=0; t<5-mcontentgrades[q]; t++){	
+						html+="<span class='mstarR' onclick='star(this);'>별2</span>";
+					}
+					
 					html+="</div>"
 					html+="</div>";
 					
 					$("#mcontents").append(html);
 			
 		}
-		
-		
-		
+	
 	}
 	
 })
@@ -286,7 +293,7 @@ $(()=>{
    								
    								console.log($items);
    								
-   								if($("mcontentids").length>=3){
+   								if($(mcontentids).length>=3){
    									alert("여행지는 3개까지 등록 가능합니다.");
    									return;
    								}

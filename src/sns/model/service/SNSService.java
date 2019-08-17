@@ -244,6 +244,7 @@ public class SNSService {
 		return boardSNS;
 	}
 
+
 	
 	
 }

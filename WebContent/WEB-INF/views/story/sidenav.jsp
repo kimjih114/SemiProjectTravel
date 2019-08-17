@@ -15,9 +15,7 @@
  	userLoggedIn = (User)session.getAttribute("userLoggedIn");
 	List<String> blockLoggedInList = new SNSService().selectOneIdBlock(userLoggedIn.getUserId());
  	List<String> followLoggedInList = new SNSService().selectOneIdFollow(userLoggedIn.getUserId());
- 	int totalContents = (Integer)request.getAttribute("totalContents");
-	int lastBoardNo = (Integer)request.getAttribute("lastBoardNo");
-	
+ 
 	
 
 %> 
@@ -350,7 +348,7 @@ function unblock(){
   
   
   
-<section class="page-top" style="padding:0px; !important;">
+<section class="page-top" style="padding:0px;">
 	  <nav id="sideNav">
 		<div id="profile-header">
 	      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=mypageUser.getFileName()%>" alt="">
@@ -522,7 +520,7 @@ div#profile-header{
     width: 56%;
     /*height: 100vh;*/
     background: lightgray;
-    
+
     /*min-width: 800px;*/
 	
 }
@@ -569,35 +567,30 @@ div#profile-header{
 </style>	  
 	  
 	  <script>
- $(()=>{
-	 var param = {
-			 mypage : '<%=mypage%>',
-			 totalContents : '<%=totalContents%>',
-			 lastBoardNo : '<%=lastBoardNo%>'
-		}
-		$.ajax({	 
-			url: "<%=request.getContextPath() %>/ajax/home.jsp",
-			data:param,
-			success: function(data){
-				$("#container-sns").html(data);
-			},
-			error: function(jqxhr, textStatus, errorThrown){
-				console.log("ajax처리실패!");
-				console.log(jqxhr, textStatus, errorThrown);
-			},
-			complete: function(){
-	
-			}
-		});
- })
+	  $(()=>{
+			var param = {
+					 mypage : '<%=mypage%>'
+				}
+				$.ajax({	 
+					
+					url: "<%=request.getContextPath() %>/ajax/home.jsp",
+					data:param,
+					success: function(data){
+						$("#container-sns").html(data);
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						console.log("ajax처리실패!");
+						console.log(jqxhr, textStatus, errorThrown);
+					},
+					complete: function(){
+						console.log("complete!!!");
+					}
+				});
+	});
 
- 
- 
  	$("#gohome").on("click", function(){
  		var param = {
- 				 mypage : '<%=mypage%>',
- 				 totalContents : '<%=totalContents%>',
- 				lastBoardNo : '<%=lastBoardNo%>'
+ 				 mypage : '<%=mypage%>'
  			}
  			$.ajax({	 
  				
@@ -662,7 +655,6 @@ div#profile-header{
 		console.log("userLoggedIn"+userId);
 		location.href="<%=request.getContextPath()%>/boardquestion/boardList?userId="+userId; 
 	});
-	
 	$("#gomsg").on("click", function(){
 			var userId = '<%=userLoggedIn.getUserId() %>';	
 			console.log("userLoggedIn"+userId);
@@ -681,6 +673,5 @@ div#profile-header{
 			frm.submit();
  		
  	});
-
-	</script>
+</script>
 	  

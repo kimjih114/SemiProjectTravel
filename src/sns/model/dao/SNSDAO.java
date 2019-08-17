@@ -799,7 +799,7 @@ public class SNSDAO {
 	public int deleteBoardSNS(Connection conn, int boardNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = prop.getProperty("deleteBoardSNSw");
+		String sql = prop.getProperty("deleteBoardSNS");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);

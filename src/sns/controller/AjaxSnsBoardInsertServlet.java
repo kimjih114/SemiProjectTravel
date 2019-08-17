@@ -222,10 +222,8 @@ public class AjaxSnsBoardInsertServlet extends HttpServlet {
 
 		}
 		  
-		if(resultImage>0 && resultGrade>0) {
-			new Gson().toJson(boardSNS, response.getWriter());
-		}
-		
+			new Gson().toJson(boardNo, response.getWriter());
+	
 	}
 
 	/**
