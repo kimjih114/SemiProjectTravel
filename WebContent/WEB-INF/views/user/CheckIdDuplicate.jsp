@@ -45,43 +45,12 @@ span#duplicated{
 	font-color : orange;
 	text-decoration : underline;
 }
-#userId_{
+.form-control{
 	margin-left : 70px;
 	margin-top : 10px;
 	
 }
 </style>
-<script>
-function checkIdDuplicate(){
-	var userId = $("#userId").val().trim();
-	
-	if(userId.length < 4){
-		alert("아이디는 4글자 이상 입력하세요.");
-		return;
-	}
-	
-	var frm = document.checkIdDuplicateFrm;
-	frm.userId.value = userId;
-	frm.submit();
-}
-
-function checkIdDulplicate(){
-	
-	var userId_ = $("#userId").val().trim();
-	if(userId_.length < 4){
-		alert("아이디는 4 글자 이상 입력하세요.");
-		return;
-	}
-
-	
-	//폼과 팝업 연결
-	var frm = document.checkIdDuplicateFrm;
-	frm.userId.value = userId_;
-	frm.submit();
-	
-}
-
-</script>
 </head>
 
 <body>
@@ -89,8 +58,9 @@ function checkIdDulplicate(){
 
 <div id="checkId-container" style="padding-top : 20px;text-align:center;">
 	<% if(isUsable == true){ %>
+	<br>
 		<span class="check_id"><%=userId%></span> 는 사용 가능합니다.
-		<br>
+		<br><br>
 		<button type="button" onclick="setUserId();" class="btn btn-primary" id="exit">닫기</button>
 	<%} else { %>
 		<span style="font-weight : bold;"><%=userId%></span>는 이미 사용중입니다. 
@@ -98,10 +68,9 @@ function checkIdDulplicate(){
 			  id="checkIdDuplicateFrm"
 			  name="checkIdDuplicateFrm"
 			  method="post">
-			      <input type="text" class="form-control" id="userId_" aria-describedby="emailHelp" placeholder="ID" name="userId_" style="width:200px;">
-			
+			      <input type="text" class="form-control" id="userId" aria-describedby="emailHelp" placeholder="ID" name="userId" style="width:170px;">
 			<button type="button" class="btn btn-primary" id="again"
-				    onclick="checkIdDuplicate();" style="padding-top:5px;">
+				    onclick="checkIdDulplicate();" >
 				중복검사
 			</button>
 		</form>
@@ -110,6 +79,21 @@ function checkIdDulplicate(){
 		
 </div>
 <script>
+function checkIdDulplicate(){
+	
+	var userId = $("#userId").val().trim();
+	if(userId.length < 4){
+		alert("아이디는 4 글자 이상 입력하세요.");
+		return;
+	}
+
+	//폼과 팝업 연결
+	var frm = document.checkIdDuplicateFrm;
+	frm.userId.value = userId;
+	frm.submit();
+	
+}
+
 function setUserId(){
 	var frm = opener.document.userEnrollFrm;
 	

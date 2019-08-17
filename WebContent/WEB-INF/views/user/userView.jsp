@@ -230,8 +230,8 @@ p.userprofile-userId{
 }
 #fname{
 	position : absolute;
-	left : 28%;
-	
+	left : 26%;
+	margin-top : 2px;
 	background-color : white;
 }
 </style>
@@ -288,7 +288,7 @@ p.userprofile-userId{
 	</table>
   </nav>   
 
-  	<div id="content">
+  	<div id="content" style="margin-left : 180px;">
   		<form action="<%=request.getContextPath()%>/update/userUpdateEnd?userId=<%=userLoggedIn.getUserId()%>"
 			  name="userUpdateFrm"
 			  id="userUpdateFrm"
@@ -349,8 +349,8 @@ p.userprofile-userId{
    <span id="fname"><%=rUser.getFileName()!=null?rUser.getFileName():"" %></span>
    <%if(rUser.getFileName()!=null){ %>
    <br>
-   <input type="checkbox" name="delFile" id="delFile">
-   <label for="exampleInputEmail1">파일 삭제</label>
+<!--    <input type="checkbox" name="delFile" id="delFile">
+   <label for="exampleInputEmail1">파일 삭제</label> -->
    <%} %>
    <input type="hidden" name="oldOName" value="<%=rUser.getOriginalFileName()!=null?rUser.getOriginalFileName():"" %>" />
    <input type="hidden" name="oldRName" value="<%=rUser.getFileName()!=null?rUser.getFileName():"" %>" />
@@ -358,16 +358,29 @@ p.userprofile-userId{
   <div id="putt" style="text-align:center;">
  	<button type="submit" class="btn btn-primary" >회원정보 수정</button>
  	 <button type="reset" class="btn btn-primary" >초기화</button>
+ 	<button type="reset" class="btn btn-primary" onclick="updatePassword();">비밀번호 변겅</button>
  	 </div>
+ 	 <br>
+ 	   <button class="btn btn-primary" style="float:right;"
+ 	    onclick="fun_confirm();">탈퇴</button>
  	 </form>
- 	 <br />
- 	   <button class="btn btn-primary" style="float:right;" onclick="fun_confirm();">탈퇴</button>
+ 	 
   	</div>
   	
 </table>
 </nav>
  </section>
 <script>
+function updatePassword(){
+	
+	var url = "<%=request.getContextPath()%>/user/updatePassword?memberId=<%=rUser.getUserId()%>";
+    var title = "updatePassword";
+    var status =  "left=500px, top=100px, width=400px, height=400px";
+    
+	var popup = window.open(url,title,status);
+	
+}
+
 function fun_confirm(){
 	
 	if(confirm("탈퇴하시겠습니까?")==true){

@@ -94,7 +94,6 @@ public class UserUpdateEndServlet extends HttpServlet {
 				//기존파일이 있다면, 삭제
 				File delFile 
 				= new File(saveDirectory+File.separator+mrequest.getParameter("oldRName"));
-				System.out.println("delFIle+"+delFile);
 				boolean bool = delFile.delete();
 				System.out.println(bool?"파일 삭제 성공":"파일 삭제 실패");
 				
@@ -121,8 +120,6 @@ public class UserUpdateEndServlet extends HttpServlet {
 			originalFileName = oldOName;
 			renamedFileName = oldRName;
 		}
-		
-		
 		
 		u.setUsernickName(nickName);
 		u.setUserName(userName);

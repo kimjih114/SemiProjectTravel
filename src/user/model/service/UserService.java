@@ -14,7 +14,7 @@ public class UserService {
 	public static final int WRONG_PASSWORD = 0; //패스워드 잘못침 
 	public static final int ID_NOT_EXIST = -1; //존재하지 않는 아이디 
 	
-	public int loginCheck(User user) {
+	public static int loginCheck(User user) {
 		Connection conn =getConnection();
 		int result = new UserDAO().loginCheck(conn,user);
 		close(conn);

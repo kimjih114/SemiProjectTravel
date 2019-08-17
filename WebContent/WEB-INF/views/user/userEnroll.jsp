@@ -145,7 +145,7 @@ function check_only(chk){
 </script>
 <style>
 #userEnrollFrm{
-	width : 480px;
+	width : 400px;
 	margin-left : auto;
 	margin-right : auto;
 }
@@ -271,7 +271,7 @@ p.userprofile-userId{
 #putt{
 	text-align: center;
 }
-
+z
 </style>
 <header class="masthead" style="height:300px;">
     <div class="container">
@@ -299,42 +299,50 @@ p.userprofile-userId{
  	 <input type="text" name="userType" id="userType"
 			style="display:none;" value="D" />
     <label for="exampleInputEmail1">아이디</label>
+    <br>
     <input type="text" class="form-control" id="userId" aria-describedby="emailHelp" placeholder="ID" name="userId" required>
     <br />
     <input type="button" value="check id" onclick="checkIdDulplicate();" style="float:right" class="btn btn-primary">
     <input type="hidden" id="idValid" value="1"/>
-    <small id="emailHelp" class="form-text text-muted">영어,숫자로 구성된 5~12자를 입력하세요.(영문으로 시작)</small> 
+    <small id="emailHelp" class="form-text text-muted">영어,숫자로 구성된 5~12자를 입력하세요.<br>(영문으로 시작)</small> 
   </div>
+  <br>
   <div class="form-group">
  	 <input type="text" name="userType" id="userType"
 			style="display:none;" value="D" />
     <label for="exampleInputEmail1">닉네임</label>
     <input type="text" class="form-control" id="usernickName" aria-describedby="emailHelp" placeholder="NickName" name="usernickName">
   </div>
+  <br>
   <div class="form-group">
     <label for="exampleInputPassword1">비밀번호</label>
     <input type="password" class="form-control" id="userPassword" placeholder="Password" name="userPassword" required>
     <small id="emailHelp" class="form-text text-muted">비밀번호는 영어, 숫자로 8글자 이상 적어주세요.</small> 
   </div>
+  <br>
   <div class="form-group">
     <label for="exampleInputPassword1">비밀번호 확인</label>
     <input type="password" class="form-control" id="password-chk" placeholder="Password" name="password-chk" required>
     <small id="emailHelp" class="form-text text-muted">위와 동일한 비밀번호를 적어주세요.</small> 
   </div>
+  <br>
   <div class="form-group">
     <label for="exampleInputEmail1">이름</label>
     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name" name="userName" required>
   </div>
+  <br>
    <div class="form-group">
     <label for="exampleInputEmail1">생년월일</label>
     <input type="text" class="form-control" id="userBirth" aria-describedby="emailHelp" placeholder="2000-01-01"name="userBirth">
     <small id="emailHelp" class="form-text text-muted">2000-01-01식으로 적어주세요</small> 
   </div>
+  <br>
    <div class="form-group">
     <label for="exampleInputEmail1">이메일</label>
     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="abc@naver.com"name="userEmail">
     <small id="emailHelp" class="form-text text-muted">abc@trav.com 식으로 적어주세요.</small> 
   </div>
+  <br>
    <div class="form-group">
     <label for="exampleInputEmail1">휴대폰</label>
     <input type="tel" class="form-control" id="userPhone" aria-describedby="emailHelp" placeholder="(-없이)01012345678"name="userPhone"

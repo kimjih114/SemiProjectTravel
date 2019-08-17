@@ -209,7 +209,7 @@ section#page-top{
 
   </nav>   
 
-  	<div id="content">
+  	<div id="content" style="margin-left : 180px;">
   		<form action="<%=request.getContextPath()%>/update/userUpdateEnd?userId=<%=userLoggedIn.getUserId()%>"
 			  name="userUpdateFrm"
 			  id="userUpdateFrm"
@@ -278,7 +278,7 @@ section#page-top{
    <input type="hidden" name="oldRName" value="<%=rUser.getFileName()!=null?rUser.getFileName():"" %>" />
   </div><br />
 	<div id="putt" style="text-align:center;">
- 	<button type="submit" class="btn btn-primary"  >관리자정보 수정</button>
+ 	<button type="submit" class="btn btn-primary"  >관리자정보 수정</button>&nbsp;&nbsp;&nbsp;
  	 <button type="reset" class="btn btn-primary" >초기화</button>
  	 </div>
  	 </form>

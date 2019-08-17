@@ -133,7 +133,7 @@ section#page-top{
 }
 #content{
 	position : absolute;
-	top : 5%;
+	top : 7%;
 	left : 28%;
 }
 #content table{
@@ -210,7 +210,7 @@ section#page-top{
 
   </nav>   
  
-  	<div id="content">
+  	<div id="content" style="margin-left:180px;">
   	<form action="<%=request.getContextPath()%>/travel/travelUpdateEnd?contentId=<%=trav.getContentId() %>"
   		  name="travelEnrollFrm"
   		  id="travelEnrollFrm"
