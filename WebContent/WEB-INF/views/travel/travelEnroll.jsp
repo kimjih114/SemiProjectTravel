@@ -155,7 +155,7 @@ section#page-top{
     <div class="container">
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
-       		관리자페이지
+       		업체 등록
         </div>
      </div>
     </div>
@@ -164,7 +164,8 @@ section#page-top{
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
-      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt="">
+	<a href="<%=request.getContextPath()%>/admin/adminView">
+      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt=""></a>
       <p class="userprofile-userId">관리자님, 안녕하세요!
 
    </div>

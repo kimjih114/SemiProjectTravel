@@ -180,7 +180,7 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
     <div class="container">
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
-       		관리자페이지
+       		회원 목록
         </div>
      </div>
     </div>
@@ -189,7 +189,8 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
-      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt="">
+	<a href="<%=request.getContextPath()%>/admin/adminView">
+      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt=""></a>
       <p class="userprofile-userId">관리자님, 안녕하세요!
 
    </div>
@@ -223,8 +224,7 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
   </nav>   
  
   	<div id="content"style="top:10%; text-align : center;width:600px;">
-  		<h2>회원 목록</h2>
-  		<br><br>
+
   		<div id="head-wrapper">
   			<div id="search-container">
   				검색타입 :

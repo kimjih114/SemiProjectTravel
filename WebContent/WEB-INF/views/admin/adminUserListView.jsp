@@ -5,7 +5,6 @@
 	List<User> list=(List<User>)request.getAttribute("list");
 	String pageBar = (String)request.getAttribute("pageBar");
 	int numPerPage = (int)request.getAttribute("numPerPage");
-	System.out.println("numPerpage"+numPerPage);
 %>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <link rel="stylesheet" href="selectbox.min.css">
@@ -213,7 +212,7 @@ numPerPage{
     <div class="container">
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
-       		관리자페이지
+       		회원 목록
         </div>
      </div>
     </div>
@@ -222,7 +221,8 @@ numPerPage{
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
-      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt="">
+	<a href="<%=request.getContextPath()%>/admin/adminView">
+      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt=""></a>
       <p class="userprofile-userId">관리자님, 안녕하세요!
 
    </div>
@@ -255,9 +255,7 @@ numPerPage{
   </nav>   
  
   	<div id="content" style="top:10%; text-align : center">
-  		<h2>회원 목록</h2>
-  		<br><br>
-  		<div id="head-wrapper">
+  	<div id="head-wrapper">
   			<div id="search-container">
   				검색타입 :
   				<select id="searchType">
@@ -303,19 +301,16 @@ numPerPage{
   			</div>
   			</div>
   		<div id="numPerPage-container" class="wrapper">
+  		<br><br>
   		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
-  		<br>
   		페이지 당 회원 수 
   		<select name="numPerPage" id="numPerPage">
   			<option value="20" <%=numPerPage==20?"selected":"" %>>20</option>
   			<option value="10" <%=numPerPage==10?"selected":"" %>>10</option>
   			<option value="5" <%=numPerPage==5?"selected":"" %>>5</option>
   		</select>
+  		<br><br>
   		</form>
-  		
-  		</div>
-  		</div>
-  		<br><br><br>
   		<table id="tbl-user" style="margin:0 auto; width:600px;">
   			<thead>
   			<tr>

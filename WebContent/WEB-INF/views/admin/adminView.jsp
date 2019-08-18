@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@page import="java.util.List"%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
-
+<%
+	List<User> list=(List<User>)request.getAttribute("list");
+	String pageBar = (String)request.getAttribute("pageBar");
+	int numPerPage = (int)request.getAttribute("numPerPage");
+%>
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -152,7 +157,55 @@ section#page-top{
 	background-color:#f7f2eb;
 }
 </style>
-  
+<script language="javascript" type="text/javascript">
+var today = new Date(); // 오늘 날짜//지신의 컴퓨터를 기준으로
+//today 에 Date객체를 넣어줌 //ex)5일  
+function prevCalendar() {
+
+
+today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+buildCalendar(); // 현재 달 
+}
+
+function nextCalendar() {
+
+
+today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+buildCalendar();
+}
+
+function buildCalendar() {// 현재 달fur
+var nMonth = new Date(today.getFullYear(), today.getMonth(), 1);  // 이번 달의 첫째 날
+var lastDate = new Date(today.getFullYear(), today.getMonth()+1, 0); // 이번 달의 마지막 날
+var tblCalendar = document.getElementById("calendar");     // 테이블 달력을 만들 테이블
+var tblCalendarYM = document.getElementById("calendarYM");    // yyyy년 m월 출력할 곳
+tblCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth() + 1) + "월";  // yyyy년 m월 출력
+//기존 테이블에 뿌려진 줄, 칸 삭제
+
+
+while (tblCalendar.rows.length > 2) {
+tblCalendar.deleteRow(tblCalendar.rows.length - 1);
+}
+var row = null;
+row = tblCalendar.insertRow();
+var cnt = 0;
+//1일이 시작되는 칸을 맞추어 줌
+for (i=0; i<nMonth.getDay(); i++) {
+cell = row.insertCell();
+cnt = cnt + 1;
+}
+
+for (i=1; i<=lastDate.getDate(); i++) { 
+cell = row.insertCell();
+cell.innerHTML = i;
+cnt = cnt + 1;
+if (cnt%7 == 0)// 1주일이 7일 이므로
+ row = calendar.insertRow();// 줄 추가
+}
+
+}
+
+</script>
  <header class="masthead" style="height:300px;">
     <div class="container">
       <div class="intro-text" style="padding-top:140px; !important">
@@ -171,7 +224,8 @@ section#page-top{
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
-      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt="">
+	<a href="<%=request.getContextPath()%>/admin/adminView">
+      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt=""></a>
       <p class="userprofile-userId">관리자님, 안녕하세요!
 
    </div>
@@ -204,9 +258,75 @@ section#page-top{
 
   </nav>   
  
-  	<div id="content">
-  	
+  	<div id="content" style="width:600px;">
+  		<table id="calendar" boarder="3" align="center" style="width: 600px; margin-left:90px;">
+ <tr>
+     <td><label onclick="prevCalendar()"><</label></td>
+        <td colspan="5" align="center" id="calendarYM">yyyy년 m월</td>
+        <td><label onclick="nextCalendar()">>
+           
+        </label></td>
+    </tr>
+    <tr>
+     <td align="center">일</td>
+     <td align="center">월</td>
+     <td align="center">화</td>
+     <td align="center">수</td>
+     <td align="center">목</td>
+     <td align="center">금</td>
+     <td align="center">토</td>
+   </tr>
+ 
+ 
+</table>
+<script language="javascript" type="text/javascript">
+buildCalendar();
+</script>
+<div class="form-group">
+    <label for="exampleInputEmail1" style="margin-left:90px;">관리자 명단</label>
+  </div>
+<table id="tbl-user" align="center" style="width: 600px; margin-left:90px;">
+  			<thead>
+  			<tr>
+  				<th>아이디</th>
+  				<th>닉네임</th>
+  				<th>이름</th>
+  				<th>성별</th>
+  				<th>이메일</th>
+  				<th>핸드폰 번호</th>
+  			</tr>
+  			</thead>
+  			<tbody>
+  			<% if(list==null|| list.isEmpty()){%>
+  			<tr>
+  				<td colspan="9" align="center"> 검색 결과가 없습니다.</td>
+  			</tr>
+  			<%
+  			}
+  			else{
+  				for(User u : list){
+  			%>
+  			<tr>
+  			<%if("A".equals(u.getUserType())){ %>
+  				<td>
+  					<%=u.getUserId() %></a>
+  				</td>
+  				<td><%=u.getUsernickName() %></td>
+  				<td><%=u.getUserName() %></td>
+  				<td><%="M".equals(u.getUserGender())?"남":"여" %></td>
+  				<td><%=u.getUserEmail() %></td>
+  				<td><%=u.getUserPhone() %></td>
+  				<%} %>
+  			</tr>
+  			<%		
+  				}
+  			}
+  			%>
+  			</tbody>
+  		</table>
+  		<br><br>
   	</div>
+
 
  </section>
 
