@@ -63,4 +63,15 @@ public class UserService {
 		return result;
 	}
 
+	public int changeUser(String userId) {
+		Connection conn = getConnection();
+		int result = new UserDAO().changeUser(conn, userId);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
 }
