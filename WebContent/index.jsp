@@ -27,6 +27,7 @@
 
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
+ 
   <script>
  	function searchGo(e){
  		

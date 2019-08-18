@@ -715,12 +715,13 @@ function pageMore(boardNo){
 									if(tl.likeSNSList[y].userId=='<%=userLoggedIn.getUserId()%>'){
 										cnt++;
 									}
-									if(cnt>0){
-										html+="<span style='float: right; margin-right:10px; cursor:pointer' ><img class='likes' onclick='like(this);' boardNo='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/afterlike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>"+tl.likeSNSList.length+"</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
-									}
-									else {
-										html+="<span style='float: right; margin-right:10px; cursor:pointer' ><img class='likes' onclick='like(this);' boardNo='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>"+tl.likeSNSList.length+"</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
-									}
+								}
+								
+								if(cnt>0){
+									html+="<span style='float: right; margin-right:10px; cursor:pointer' ><img class='likes' onclick='like(this);' boardNo='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/afterlike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>"+tl.likeSNSList.length+"</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+								}
+								else {
+									html+="<span style='float: right; margin-right:10px; cursor:pointer' ><img class='likes' onclick='like(this);' boardNo='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>"+tl.likeSNSList.length+"</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
 								}
 							}
 						}else{
@@ -744,11 +745,49 @@ function pageMore(boardNo){
 					} else{
 						html+="<td class='timeline-boardcontent-sns' style='cursor:pointer;'>댓글(0)</td>";
 					}
+					
+					html+="<div class='comment-editor'>"
+					html+="<form action='' name='boardCommentFrm'method='post'>";
+					html+="<input type='hidde'" name='boardRef' value='' />";
+					html+="<input type='hidden' name='boardCommentWriter' value='' />";
+					html+="<input type='hidden' name="boardCommentLevel' value='1' />";
+					html+="<input type='hidden' name='boardCommentRef' value='0' />";
+					html+="<textarea name='boardCommentContent' class='boardCommentContent' cols='60' rows='3'></textarea>";
+					html+="<button type='button' clss='btn-insert'>등록</button>";	
+					html+="</form>";
+					html+="</div>";
+					<!-- 댓글목록테이블 -->
+					html+="<table class='tbl-comment'>";
+					html+="<tr class=level1>";
+					html+="<td class='timeline-boardcontent-sns' style='width:508px;'>";
+					html+="<span class=comment-writer>작성자</span>";
+					html+="<span class=comment-date>대댓날짜</span>";
+					html+="<br />";
+					html+="여긴 내용";
+					html+="<button class='btn-reply' value='' style='float:right;'>답글</button>";
+					html+="<button class='btn-delete' value="" style='float:right;'>삭제</button>	";	
+					html+="</td>";
 					html+="</tr>";
-					html+="<tr>";
-					html+="<td class='timeline-boardcontent-sns'>";
-					html+="<span class='nick_sns'>@abcde</span>&nbsp;";
-					html+="<span style='float:right;'>좋아요&nbsp;&nbsp;신고</span>";
+					html+="<tr class=level2>";
+					html+="<td>";
+					html+="<span class=comment-writer>대댓작성자</span>";
+					html+="<span class=comment-date>대댓날짜 </span>";
+					html+="<br />";
+					html+="여기내용";
+					html+="<button class='btn-delete' value="" style='float:right;'>삭제</button>";
+					html+="</td>";
+					html+="</tr>";
+				
+				
+					html+="</table>";
+					
+					
+					
+					
+					
+					
+					
+					
 					html+="</td>";		
 					html+="</tr>";
 					html+="</table>"
