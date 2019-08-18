@@ -204,8 +204,8 @@ public class Board_QuestionDAO {
 					qb.setQboardReadcnt(rset.getInt("qboard_readcnt"));
 					qb.setQboardTravel_ref(rset.getInt("qboard_travel_ref"));
 					qb.setQboardFileName(rset.getString("qboard_filename"));
-					qb.setQboardNewFileName(rset.getString("qboard_state"));
-					
+					qb.setQboardNewFileName(rset.getString("qboard_newfileName"));
+					qb.setQboardStatus(rset.getInt("qboard_state"));
 			
 					
 				}

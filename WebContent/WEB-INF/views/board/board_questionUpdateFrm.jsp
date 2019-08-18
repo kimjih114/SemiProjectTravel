@@ -289,14 +289,16 @@ li.post-font {
 							- 기존파일만 삭제하는 경우(delFile): upFile=null
 						
 					 --> <!-- 파일태그 value속성은 보안상 이유로 임의 변경이 불가함. -->
-					  <input type="file" name="upFile" /> <span id="fname">
-					  <%=bq.getQboardFileName()!=null? bq.getQboardNewFileName():""%></span> <%--첨부파일이 있는 경우 기존파일 삭제용 --%> <%if(bq.getQboardFileName()!=null){ %><br /> 
+					  <input type="file" name="upFile" /> 
+					  <span id="fname"> 
+					  <%=bq.getQboardFileName()!=null? bq.getQboardNewFileName():""%>
+					  </span> <%--첨부파일이 있는 경우 기존파일 삭제용 --%>
+					   <%if(bq.getQboardFileName()!=null){ %><br /> 
 						<input type="checkbox" name="delFile" id="delFile" /> 
-						<label for="delFile">첨부파일삭제</label> <% } %> <input type="hidden"
-							name="oldOName"
-							value="<%=bq.getQboardFileName()!=null?bq.getQboardFileName():""%>" />
-							<input type="hidden" name="oldRName"
-							value="<%=bq.getQboardNewFileName()!=null?bq.getQboardNewFileName():""%>" />
+						<label for="delFile">첨부파일삭제</label>
+						 <% } %> 
+						<input type="hidden" name="oldOName" value="<%=bq.getQboardFileName()!=null?bq.getQboardFileName():""%>" />
+						<input type="hidden" name="oldRName" value="<%=bq.getQboardNewFileName()!=null?bq.getQboardNewFileName():""%>" />
 						</td>
 					</tr>
 					<tr>

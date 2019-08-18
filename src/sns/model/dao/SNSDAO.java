@@ -1012,6 +1012,36 @@ public class SNSDAO {
 		return result;
 	}
 
+	public int updateSetting(Connection conn, ProfileSNS ps) {
+		int result = 0; 
+		PreparedStatement pstmt = null; 
+		String sql =prop.getProperty("updateSetting");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, ps.getProfileUserNickname());
+			pstmt.setString(2, ps.getProfileOriginalFilename());
+			pstmt.setString(3, ps.getProfileRenamedFilename());
+			pstmt.setString(4, ps.getHeaderOriginalFilename());
+			pstmt.setString(5, ps.getHeaderRenamedFilename());
+			pstmt.setString(6, ps.getThemeColor());
+			pstmt.setString(7, ps.getProfileUserId());
+			
+		
+			result = pstmt.executeUpdate(); 
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); 
+		}
+		
+		
+		return result;
+	}
+
 	
 	
 	

@@ -466,13 +466,12 @@ if(!confirm("글을 삭제하시겠습니까?")) return;
 							if (bq.getQboardFileName() != null) {
 						%> <a
 						href="javascript:fileDownload('<%=bq.getQboardFileName()%>','<%=bq.getQboardNewFileName()%>');">
-							<img src="<%=request.getContextPath()%>/images/file.png" alt="" />
-							<!-- 사용자가 업로드한 파일명 --> <%=bq.getQboardFileName()%>
-					</a> <%
- 	}else{%>
- 					첨부파일이 없습니다.	
- <%	}
- %>
+							<img src="<%=request.getContextPath()%>/img/file.png" alt="" />
+							<!-- 사용자가 업로드한 파일명 --> 
+							<%=bq.getQboardFileName()%>
+					</a> 
+					<%}%>
+
 					</td>
 				</tr>
 			

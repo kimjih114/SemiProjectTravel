@@ -8,6 +8,7 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import board.model.dao.Board_QuestionDAO;
 import sns.model.dao.SNSDAO;
 import sns.model.vo.BoardSNS;
 import sns.model.vo.CommentSNS;
@@ -296,6 +297,21 @@ public class SNSService {
 		else rollback(conn);
 		close(conn);
 		return list;
+	}
+
+
+	public int updateSetting(ProfileSNS ps) {
+		Connection conn= getConnection(); 
+		int result = new SNSDAO().updateSetting(conn,ps); 
+		if(result>0) {
+			commit(conn); 
+		}else 
+			rollback(conn); 
+		
+		close(conn); 
+		
+		
+		return result;
 	}
 
 

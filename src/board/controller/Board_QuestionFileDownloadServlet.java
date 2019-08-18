@@ -36,7 +36,7 @@ public class Board_QuestionFileDownloadServlet extends HttpServlet {
 		//1.파라미터핸들링
 				String oName = request.getParameter("oName");
 				String rName = request.getParameter("rName");
-				System.out.printf("oName=%s, rName=%s\n", oName, rName);
+				
 				
 				
 				String saveDirectory 
