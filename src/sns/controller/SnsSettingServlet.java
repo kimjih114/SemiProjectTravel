@@ -63,10 +63,9 @@ public class SnsSettingServlet extends HttpServlet {
 				 "UTF-8", 
 				 policy);
 		String profileUserId = mreq.getParameter("setName");
-		System.out.println("Setting에  유저 아이디는"+profileUserId);
-	
-		String setnickName = mreq.getParameter("SmodifyNick"); 
 		
+		String setnickName = mreq.getParameter("SmodifyNick"); 
+		String setheaderText = mreq.getParameter("SmodifyText"); 
 		String setThema = mreq.getParameter("themaColor");
 		
 		String renamedProfileName=  mreq.getFilesystemName("SmodifyProfile"); 
@@ -139,8 +138,8 @@ public class SnsSettingServlet extends HttpServlet {
 			//3.첨부한 파일이 없는 경우
 			else {
 				//기존파일명을 다시 대입
-				originalHeaderfileName = oldprofileOName;
-				renamedHeaderfileName = oldprofileRName;
+				originalHeaderfileName = oldHeaderRName;
+				renamedHeaderfileName = oldHeaderRName;
 			}
 		}
 		
@@ -148,12 +147,13 @@ public class SnsSettingServlet extends HttpServlet {
 		
 		ProfileSNS ps = new ProfileSNS(); 
 		ps.setProfileUserId(profileUserId);
-		ps.setProfileUserNickname(setnickName);
+		ps.setHeaderText(setheaderText);
 		ps.setThemeColor(setThema);
 		ps.setProfileOriginalFilename(originalProfileName);
 		ps.setProfileRenamedFilename(renamedProfileName);
 		ps.setHeaderOriginalFilename(originalHeaderfileName);
 		ps.setHeaderRenamedFilename(renamedHeaderfileName);
+		ps.setProfileUserNickname(setnickName);
 		
 		int result = new SNSService().updateSetting(ps);		
 		String view = "/WEB-INF/views/common/msg.jsp"; 

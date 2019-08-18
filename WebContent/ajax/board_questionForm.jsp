@@ -237,9 +237,6 @@ border-radius: 10px;
 #tbl-board>table, #tbl-board>table>td{
 width:700px;
 border : 1px solid gray;
-
-
-
 }
 #post_font_a:hover{
 	color:#007bff;
@@ -249,10 +246,19 @@ border : 1px solid gray;
 background:#fed136;
 }
 
-
 .form-control{
 width: 200px;
 margin-bottom: 10px;
+margin-top: 10px;
+}
+form{
+margin-left: 210px;
+}
+td{
+padding-top: 10px;
+}
+
+input.btn-outline-success {
 margin-top: 10px;
 }
 </style>
@@ -350,14 +356,14 @@ function qboardValidate(){
     				
   					</div>
  					<textarea class="text-control" aria-label="With textarea" 
- 					 		name="qboardContent"  required></textarea>	
+ 					 		name="qboardContent" style='height: 120px; width: 360px;' required></textarea>	
 					</div>	 	  
 				</td>
 			</tr>		
 			<tr>
 				<th colspan="2">
 					<input type="submit" 
-						   value="등록" 
+						   value="등록" class="btn btn-outline-success"
 						   onclick="return qboardValidate();"/>
 				</th>
 			</tr>		

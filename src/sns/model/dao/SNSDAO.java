@@ -1026,7 +1026,8 @@ public class SNSDAO {
 			pstmt.setString(4, ps.getHeaderOriginalFilename());
 			pstmt.setString(5, ps.getHeaderRenamedFilename());
 			pstmt.setString(6, ps.getThemeColor());
-			pstmt.setString(7, ps.getProfileUserId());
+			pstmt.setString(7, ps.getHeaderText());
+			pstmt.setString(8, ps.getProfileUserId());
 			
 		
 			result = pstmt.executeUpdate(); 

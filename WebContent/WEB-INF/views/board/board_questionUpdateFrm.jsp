@@ -213,6 +213,17 @@ hr {
 li.post-font {
 	text-align: left;
 }
+
+form{
+margin-left: 210px;
+}
+td{
+padding-top: 10px;
+}
+
+input.btn-outline-success {
+margin-top: 10px;
+}
 </style>
 
 <script>
@@ -303,11 +314,11 @@ li.post-font {
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td><textarea name="qboardContent" cols="40" rows="5" required><%=bq.getQboardContent() %></textarea>
+						<td><textarea name="qboardContent" cols="40" rows="5" style='height: 120px; width: 360px;' required><%=bq.getQboardContent() %></textarea>
 						</td>
 					</tr>
 					<tr>
-						<th colspan="2"><input type="submit" value="수정"
+						<th colspan="2"><input type="submit" value="수정" class="btn btn-outline-success"
 							onclick="return qboardValidate();" /></th>
 					</tr>
 

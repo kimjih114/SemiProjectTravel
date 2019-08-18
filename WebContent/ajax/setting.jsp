@@ -74,8 +74,8 @@
 							<td><span class="sectionTitle">프로필 수정</span></td>
 						</tr>
 						<tr>
-							<td class="sectionContent">닉네임 <input type="text"
-								name="SmodifyNick" id="SmodifyNick"
+							<td class="sectionContent">닉네임 
+							<input type="text" name="SmodifyNick" id="SmodifyNick"
 								value="<%=profile.getProfileUserNickname()%>" />
 							</td>
 						</tr>
@@ -83,7 +83,7 @@
 							<td class="sectionContent" id="profileSection">프로필 이미지
 							 <img src='<%=request.getContextPath()%>/upload/profile/<%=profile.getProfileRenamedFilename()%>'
 								class='header-profile-circle' width='40' height='40' />
-							<input type="file" name="SmodifyProfile" id="SmodifyProfile" /> <br />
+							<input type="file" name="SmodifyProfile" id="SmodifyProfile" class="btn btn-outline-secondary"/> <br />
 							  <span id="fname"> 
 					 		 <%=profile.getProfileOriginalFilename()!=null? profile.getProfileRenamedFilename():""%>
 					  		</span> <%--첨부파일이 있는 경우 기존파일 삭제용 --%>
@@ -105,7 +105,12 @@
 				<td>
 					<table>
 						<tr>
-							<td><span class="sectionTitle">레이아웃</span>
+							
+							<th class="sectionTitle">레이아웃</th>
+							<td>
+								<input type="text" name="SmodifyText" id="SmodifyText"
+								value='<%=profile.getHeaderText()%>'/>
+							
 							</td>
 
 						</tr>
@@ -129,15 +134,18 @@
 						</tr>
 						<tr>
 							<td class="sectionContent">테마 
-							<input type="radio" value="defalut"  name="themaColor"  id="themaColor" class="orange"
-							<% if(profile.getThemeColor() == null){%>checked<%}%>/>
+							<input type="radio" value="#fec503"  name="themaColor"  id="themaColor" class="orange"
+							<% if(profile.getThemeColor() == null){%>checked<%}%>/>기본
 							<input type="radio" value="red"  name="themaColor"   id="themaColor" class="red"
-							 <% if("red".equals(profile.getThemeColor())){%>checked<%}%>/>
+							 <% if("red".equals(profile.getThemeColor())){%>checked<%}%>/>빨강
+							<input type="radio" value="#007bff"  name="themaColor"   id="themaColor" class="red"
+							 <% if("#007bff".equals(profile.getThemeColor())){%>checked<%}%>/>파랑
+							<input type="radio" value="green"  name="themaColor"   id="themaColor" class="red"
+							 <% if("green".equals(profile.getThemeColor())){%>checked<%}%>/>초록
 						</tr>
 						
 						<tr>
-							<th colspan="2"><input type="submit" value="변경하기"
- /></th>
+							<th colspan="2"><input type="submit" class="btn btn-outline-warning" value="변경하기"/></th>
 						
 						</tr>
 					</table>
