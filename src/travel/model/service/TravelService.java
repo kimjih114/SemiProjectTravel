@@ -191,5 +191,12 @@ public class TravelService {
 		close(conn);
 		return day;
 	}
+
+	public RoomReservation basketCheck(RoomReservation r) {
+		Connection conn=getConnection();
+		RoomReservation basket=new TravelDAO().basketCheck(conn,r);
+		close(conn);
+		return basket;
+	}
 	
 }

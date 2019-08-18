@@ -526,10 +526,35 @@
 	}
 	
 	function basketCheck(price,roomTitle){
+		var bCheck="";
+		
 		console.log("가격은?="+price);
 		var startDate=$("#sdate").val();
 		var endDate=$("#edate").val();
 		var friendId=$("#search").val();
+		
+		//장바구니에 넣음 상품 있는지 없는지 체크
+		$.ajax({
+			type : "get",
+			url : "<%=request.getContextPath()%>/travel/basketCheck?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>",			
+			dataType : "json",
+			async : false,
+			success:function(data){
+				bCheck=data;
+				
+			},
+			error:function(jqxhr,textStatus,errorThrown){
+				
+			}
+			
+		});
+		
+		if(bCheck!=null){
+			alert("이미 장바구니에 있습니다.");
+			return;
+		}
+		
+		
 		
 		$.ajax({
 			type : "get",
@@ -551,6 +576,22 @@
 		var startDate=$("#sdate").val();
 		var endDate=$("#edate").val();
 		var friendId=$("#search").val();
+
+		//결제하는 순간 장바구니에 같은 상품이있으면 제거하는 코드
+		
+		$.ajax({
+			type : "get",
+			url : "<%=request.getContextPath()%>/mypage/reservationAfterBasketDel?contentId=<%=contentId%>&userId=<%=userLoggedIn.getUserId()%>&roomName="+roomTitle+"&startDate="+startDate+"&endDate="+endDate,			
+			dataType : "json",
+			async : false,
+			success:function(data){
+	
+			},
+			error:function(jqxhr,textStatus,errorThrown){
+				
+			}
+			
+		});
 
 		location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
 		

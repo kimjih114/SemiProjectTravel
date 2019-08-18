@@ -209,7 +209,7 @@ section#page-top{
   		  style="width:500px;">
   	 <div class="form-group">
      <label for="exampleInputEmail1">방 이름</label>
-    <input type="text" class="form-control" id="roomName" aria-describedby="emailHelp" placeholder="Name" name="roomName" value="<%=room.get(0).getRoomName() %>" required>
+    <input type="text" class="form-control" id="roomName" aria-describedby="emailHelp" placeholder="Name" name="roomName" value="<%=room.get(0).getRoomName() %>" readonly="readonly" required>
     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
   </div>
   <input type="hidden" id="contentId" name="contentId" value="<%=room.get(0).getContentId()%>"/>
