@@ -23,8 +23,6 @@ var mfilesTempArr = new Array();
 var mcontentgrades = new Array();
 var mcontentoldfilenames = new Array();
 
-var flag = 1;
-
 $(()=>{
 	pageMore(10000);
 });
@@ -531,22 +529,17 @@ function updateBoardSNS(boardNo){
 								
 								if(data.boardSNS.boardContent!=null){
 									html+="<tr>";
-									html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>@"+data.boardSNS.boardWriter+"</a>&nbsp;"+data.boardSNS.boardContent;
+									html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px; border:none;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>@"+data.boardSNS.boardWriter+"</a>&nbsp;"+data.boardSNS.boardContent;
 
 							
 									if(data.LikeSNSList.length>0){
-										if('<%=userLoggedIn.getUserId() %>' == tl.boardSNS.boardWriter){
-											html+="<span style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span>"+data.likeSNSList.length+"</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
-										} else{
-											html+="<span style='float: right; margin-right:10px; cursor:pointer' ><img boardNo='"+data.boardSNS.boardNo+"'  src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>"+data.likeSNSList.length+"</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
-										}
+									
+											html+="<span style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/afterlike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span>"+data.likeSNSList.length+"</span></span>";
+										
 									}else{
-										if('<%=userLoggedIn.getUserId() %>' == tl.boardSNS.boardWriter){
-											html+="<span style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span>0/span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
-										} else{
-											html+="<span style='float: right; margin-right:10px; cursor:pointer' ><img boardNo='"+data.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>0</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
-											
-										}
+										
+											html+="<span style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span>0/span></span>";
+										
 									}
 									
 									
@@ -557,7 +550,11 @@ function updateBoardSNS(boardNo){
 								}
 							
 								html+="<tr>";
-								html+="<td class='timeline-boardcontent-sns' >댓글(3)</td>";
+								if(data.commentSNSList.length>0){
+									html+="<td class='timeline-boardcontent-sns' style='cursor:pointer; onclick='openComment()'' >댓글("+data.commentSNSList.length+")</td>";
+								} else{
+									html+="<td class='timeline-boardcontent-sns' style='cursor:pointer;'>댓글(0)</td>";
+								}
 								html+="</tr>";
 								html+="<tr>";
 								html+="<td class='timeline-boardcontent-sns'>";
@@ -706,13 +703,13 @@ function pageMore(boardNo){
 					
 					if(tl.boardSNS.boardContent!=null){
 						html+="<tr>";
-						html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>@"+tl.boardSNS.boardWriter+"</a>&nbsp;"+tl.boardSNS.boardContent;
+						html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px; border:none;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>@"+tl.boardSNS.boardWriter+"</a>&nbsp;"+tl.boardSNS.boardContent;
 						
 						if(tl.likeSNSList.length>0){
 							var cnt = 0;
 							
 							if('<%=userLoggedIn.getUserId() %>' == tl.boardSNS.boardWriter){
-								html+="<span style='float: right; margin-right:10px;' ><img vale='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/afterlike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span>"+tl.likeSNSList.length+"</span><img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+								html+="<span style='float: right; margin-right:10px;' ><img vale='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/afterlike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span>"+tl.likeSNSList.length+"</span></span>";
 							} else{
 								for(var y=0; y<tl.likeSNSList.length; y++){
 									if(tl.likeSNSList[y].userId=='<%=userLoggedIn.getUserId()%>'){
@@ -728,7 +725,7 @@ function pageMore(boardNo){
 							}
 						}else{
 							if('<%=userLoggedIn.getUserId() %>' == tl.boardSNS.boardWriter){
-								html+="<span style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span>0</span><img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+								html+="<span style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span>0</span></span>";
 							} else{
 								html+="<span style='float: right; margin-right:10px; cursor:pointer'><img vale='"+tl.boardSNS.boardNo+"' class='likes' onclick='like(this);' boardNo='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>0</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
 							}
@@ -742,7 +739,11 @@ function pageMore(boardNo){
 					
 				
 					html+="<tr>";
-					html+="<td class='timeline-boardcontent-sns' >댓글(3)</td>";
+					if(tl.commentSNSList.length>0){
+						html+="<td class='timeline-boardcontent-sns' style='cursor:pointer; onclick=openComment();'>댓글("+tl.commentSNSList.length+")</td>";
+					} else{
+						html+="<td class='timeline-boardcontent-sns' style='cursor:pointer;'>댓글(0)</td>";
+					}
 					html+="</tr>";
 					html+="<tr>";
 					html+="<td class='timeline-boardcontent-sns'>";

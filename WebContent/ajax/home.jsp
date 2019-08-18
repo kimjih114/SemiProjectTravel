@@ -210,7 +210,128 @@
 			</ul>
 		
 			<div id="tab1" class="tabcontent current">
-			
+
+	
+	
+
+				<div class="timeline-sns">
+					<table class="timeline-board-sns">
+						<tr>
+							<td class="timeline-boardcontent-sns"><img src="<%=request.getContextPath() %>/img/profile.jpg" class="header-profile-circle"  width="30" height="30" />
+							    <span style="font-weight:600">@닉네임 </span><span style="font-size:0.8em; color:gray;">2019/08/11</span>
+							  	<span style="float:right;">메뉴</span>
+						</tr>
+						<tr>
+							<td class="timeline-boardcontent-sns" id="boardcontent_img">
+								<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+								  <div class="carousel-inner">
+								    <div class="carousel-item active">
+								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
+								    </div>
+								    <div class="carousel-item">
+								      <img src="<%=request.getContextPath() %>/img/profile.jpg" class="d-block w-100" alt="...">
+								    </div>
+								    <div class="carousel-item">
+								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
+								    </div>
+								    <div class="carousel-item">
+								      <img src="<%=request.getContextPath() %>/img/profile.jpg" class="d-block w-100" alt="...">
+								    </div>
+								    <div class="carousel-item">
+								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
+								    </div>
+								  </div>
+								  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								    <span class="sr-only">Previous</span>
+								  </a>
+								  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								    <span class="sr-only">Next</span>
+								  </a>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<table style="border: 1px solid;">
+									<tr>
+										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 1</td>
+										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 2</td>
+										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 3</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td class="timeline-boardcontent-sns">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A tempore labore atque tenetur dolore recusandae nemo sunt commodi aliquid aut voluptatum hic nostrum velit aperiam consectetur temporibus eius harum cumque?</td>
+						</tr>
+						<tr>
+							<td class="timeline-boardcontent-sns"><span style="float:right;">좋아요(12)&nbsp;&nbsp;스크랩(2)</span></td>
+						</tr>
+						<tr>
+				
+							<td class="timeline-boardcontent-sns">
+								<div id="comment-container">
+		<div class="comment-editor">
+			<form action=""
+				  name="boardCommentFrm"
+				  method="post">
+				<input type="hidden" name="boardRef" 
+					   value="" />
+				<input type="hidden" name="boardCommentWriter" 
+					   value="" />
+				<input type="hidden" name="boardCommentLevel" 
+					   value="1" />
+				<input type="hidden" name="boardCommentRef" 
+					   value="0" /> <!-- 댓글인 경우 참조댓글이 없으므로 0으로 초기화 -->
+				<textarea name="boardCommentContent" 
+						  id="boardCommentContent" 
+						  cols="60" rows="3"></textarea>
+				<button type="submit"
+					    id="btn-insert">등록</button>			
+			</form>
+		</div>
+		<!-- 댓글목록테이블 -->
+		<table id="tbl-comment">
+			<tr class=level1>
+					<td class='timeline-boardcontent-sns'  style='width:508px;;'>
+						<span class=comment-writer>작성자</span>
+						<span class=comment-date>대댓날짜</span>
+						<br />
+							여긴 내용
+						<button class="btn-reply" 
+								value=""
+								style='float:right;'>답글</button>
+						<button class="btn-delete" value="" style='float:right;'>삭제</button>		
+					</td>
+			</tr>
+					<tr class=level2>
+						<td>
+							<span class=comment-writer>대댓작성자</span>
+							<span class=comment-date>대댓날짜 </span>
+							<br />
+								여기내용
+							<button class="btn-delete" value="" style='float:right;'>삭제</button>
+						</td>
+					
+					</tr>
+		
+		
+		</table>
+		
+							
+							
+							</td>
+							</tr>
+					</table>
+		    	</div>
+				
+				
+				
+				
+				
+				
 			</div>
 		
 			<div id="tab2" class="tabcontent">
@@ -245,6 +366,8 @@
 			
 	    </table>-->
 		
+	
+	</div>
 		
 <script>
 var newPostHtml = '';
@@ -264,8 +387,32 @@ $(function() {
 		$('.tabcontent').removeClass('current');
 		$(this).addClass('current');
 		$('#' + activeTab).addClass('current');
+		
 
-		if($(this).attr('data-tab')=='tab2'){
+		 if($(this).attr('data-tab')=='tab2'){
+			var param = {
+					mypage : '<%=mypage %>'
+			}
+			
+				$.ajax({
+					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
+					data: param,
+					type: "get",
+					dataType: "html",
+					success: function(data){
+						$("#tab2Content").html(data);
+						$("#newPost").html('');
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						console.log("ajax처리실패!");
+						console.log(jqxhr, textStatus, errorThrown);
+					}
+				});
+
+			
+		}
+		
+		if($(this).attr('data-tab')=='tab3'){
 			var param = {
 					mypage : '<%=mypage %>'
 			}
@@ -301,9 +448,6 @@ $(()=>{
  				type: "get",
  				dataType: "html",
  				success: function(data){
- 					
- 					
- 					
  					$(this).removeClass('unlikes');
  					$(this).addClass('likes');
  					$(this).children('img').html('').html("<img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/>");
@@ -477,7 +621,7 @@ $("#btnSubmit").click(function(event){
 	     contentType: false,
 	     success : function(data) {
 	         alert("게시글 등록 성공 :D!");
-	         
+	         <%if(userLoggedIn.getUserId().equals(mypage)){%>
 	         $.ajax({
 					url: "<%=request.getContextPath()%>/gson/sns/boardOne.do",
 					data: "boardNo="+data,
@@ -572,7 +716,7 @@ $("#btnSubmit").click(function(event){
 									html+="<tr>";
 									html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>@"+data.boardSNS.boardWriter+"</a>&nbsp;"+data.boardSNS.boardContent;
 									
-									if('<%=userLoggedIn.getUserId() %>' == tl.boardSNS.boardWriter){
+									if('<%=userLoggedIn.getUserId() %>' == data.boardSNS.boardWriter){
 										html+="<span class='likes' style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span></span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
 									} else{
 										html+="<span class='likes' value='"+tl.boardSNS.boardNo+"' style='float: right; margin-right:10px; cursor:pointer' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span></span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
@@ -598,6 +742,7 @@ $("#btnSubmit").click(function(event){
 						html += newPostHtml;
 						
 						$("#newPost").html(html);
+				
 						
 						newPostHtml = html;
 						
@@ -609,6 +754,7 @@ $("#btnSubmit").click(function(event){
 							
 						}
 					});	
+	     <%}%>
 	         
 	     },
 	     error : function(err) {

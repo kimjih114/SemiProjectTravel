@@ -58,6 +58,13 @@ function updateIntroduce(){
 
 function headerTextModify(){
 	var headertext = $("#headerAfter").val();
+
+	if(headertext.length>20){
+		alert('최대 20글자까지 가능합니다.');
+		return;
+	}
+	
+	
 	var userid = '<%=userLoggedIn.getUserId() %>';
 	var param = {
 			headertext : headertext,
@@ -74,8 +81,8 @@ function headerTextModify(){
 		dataType: "json",
 		type : "post",
 		success : function(data){
-			var html = "<span id='headerBefore'>"+headertext+"</span>";
-			html+="<button id='headerBeforeBtn' class='btn btn-light' style='width:60px;' onclick='updateHeaderText();'>edit</button>";
+			var html = "<a href='<%=request.getContextPath() %>/story/storyMain?mypage=<%=mypage %>' style='color:white' id='headerBefore'>"+headertext+"</a>";
+			html+="&nbsp;<button id='headerBeforeBtn' class='btn btn-light' style='width:60px;' onclick='updateHeaderText();'>edit</button>";
 			$("#headerFrm").html(html);
 		},
 		error : function(data){
@@ -88,6 +95,13 @@ function headerTextModify(){
 }
 function nickNameModify(){
 	var nickname = $("#nickAfter").val();
+	
+
+	if(nickname.length>8){
+		alert('최대 8글자까지 가능합니다.');
+		return;
+	}
+	
 	var userid = '<%=userLoggedIn.getUserId() %>';
 	var param = {
 			nickname : nickname,
@@ -105,7 +119,9 @@ function nickNameModify(){
 		type : "post",
 		success : function(data){
 			var html = "<span id='nickBefore'>"+nickname+"</span>";
-			html+="<button id='nickBeforeBtn' class='btn btn-light' style='width:60px; onclick='updateNickName();'>edit</button>";
+			html+="<button id='nickBeforeBtn' class='btn btn-light' onclick='updateNickName();' style='width:60px;'>edit</button>";
+			
+			
 			$("#nickFrm").html(html);
 		},
 		error : function(data){
@@ -118,6 +134,13 @@ function nickNameModify(){
 }
 function introModify(){
 	var intro = $("#introAfter").val();
+	
+
+	if(intro.length>20){
+		alert('최대 20글자까지 가능합니다.');
+		return;
+	}
+	
 	var userid = '<%=userLoggedIn.getUserId() %>';
 	var param = {
 			intro : intro,
@@ -134,7 +157,7 @@ function introModify(){
 		type : "post",
 		success : function(data){
 			var html = "<span id='introBefore'>"+intro+"</span>";
-			html+="<button id='introBeforeBtn' class='btn btn-light' style='width:60px; onclick='updateIntroduce();'>edit</button>";
+			html+="<button id='introBeforeBtn' class='btn btn-light' style='width:60px;' onclick='updateIntroduce();'>edit</button>";
 			$("#introFrm").html(html);
 		},
 		error : function(data){
@@ -330,7 +353,7 @@ function unblock(){
       <div class="intro-text" style="padding-top:140px; !important">
         <div class="intro-heading text-uppercase">
        		<div id="headerFrm">
-				<span id="headerBefore"><%=profileSNS.getHeaderText()!=null? profileSNS.getHeaderText() : profileSNS.getProfileUserNickname()+"의 홈" %></span>
+				<a href='<%=request.getContextPath() %>/story/storyMain?mypage=<%=mypage %>' style='color:white' id="headerBefore"><%=profileSNS.getHeaderText()!=null? profileSNS.getHeaderText() : profileSNS.getProfileUserNickname()+"의 홈" %></a>
 				<%if(userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) { %>
 					<button id="headerBeforeBtn" onclick="updateHeaderText();" style='margin-left:10px;' class="btn btn-light">edit</button>
 				<%}%>
