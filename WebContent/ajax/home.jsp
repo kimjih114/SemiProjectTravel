@@ -144,6 +144,9 @@
 	max-width: 100px;
 	font-size:0.8em;
 }
+
+
+
 </style>
     <!-- post폼 -->
 <button id="post" class="btn btn-primary">post</button>
@@ -287,7 +290,34 @@ $(function() {
 
 	})
 });
-	
+
+
+$(()=>{
+ 
+ 	$(".unlikes").on('click', function(){
+ 		if($(this).val()!=null){
+ 			$.ajax({
+ 				url: "<%=request.getContextPath() %>/ajax/travelsrch.jsp", 
+ 				type: "get",
+ 				dataType: "html",
+ 				success: function(data){
+ 					
+ 					
+ 					
+ 					$(this).removeClass('unlikes');
+ 					$(this).addClass('likes');
+ 					$(this).children('img').html('').html("<img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/>");
+ 				
+ 				},
+ 				error: function(jqxhr, textStatus, errorThrown){
+ 					console.log("ajax처리실패!");
+ 					console.log(jqxhr, textStatus, errorThrown);
+ 				}
+ 			});
+ 		}
+ 	})	
+})
+
 $("#post").click(function(){
 	
 	if($(".snsModify").length>0){
@@ -541,8 +571,12 @@ $("#btnSubmit").click(function(event){
 								if(data.boardSNS.boardContent!=null){
 									html+="<tr>";
 									html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>@"+data.boardSNS.boardWriter+"</a>&nbsp;"+data.boardSNS.boardContent;
-
-									html+="<span style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/>1&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+									
+									if('<%=userLoggedIn.getUserId() %>' == tl.boardSNS.boardWriter){
+										html+="<span class='likes' style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span></span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+									} else{
+										html+="<span class='likes' value='"+tl.boardSNS.boardNo+"' style='float: right; margin-right:10px; cursor:pointer' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span></span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+									}
 									
 									html+="</td>";
 									html+="</tr>";

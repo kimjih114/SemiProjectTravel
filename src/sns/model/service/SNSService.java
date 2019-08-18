@@ -193,9 +193,9 @@ public class SNSService {
 		return result;
 	}
 
-	public List<LikeSNS> selectLikeSNS(int boardNo) {
+	public List<LikeSNS> selectLikeSNSList(int boardNo) {
 		Connection conn=getConnection();
-		List<LikeSNS> likeSNSList=new SNSDAO().selectLikeSNS(conn, boardNo);
+		List<LikeSNS> likeSNSList=new SNSDAO().selectLikeSNSList(conn, boardNo);
 		close(conn);
 		return likeSNSList;
 	}
@@ -270,6 +270,32 @@ public class SNSService {
 		close(conn);
 		
 		
+	}
+
+	public List<LikeSNS> insertLikeSNS(String userId, int boardNo) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().insertLikeSNS(conn, userId, boardNo);
+		List<LikeSNS> list = null;
+		if(result>0) {
+			list = new SNSDAO().selectLikeSNSList(conn, boardNo);
+			commit(conn);
+		}
+		else rollback(conn);
+		close(conn);
+		return list;
+	}
+
+	public List<LikeSNS> deleteLikeSNS(String userId, int boardNo) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().deleteLikeSNS(conn, userId, boardNo);
+		List<LikeSNS> list = null;
+		if(result>0) {
+			list = new SNSDAO().selectLikeSNSList(conn, boardNo);
+			commit(conn);
+		}
+		else rollback(conn);
+		close(conn);
+		return list;
 	}
 
 

@@ -70,7 +70,7 @@ public class AjaxSnsBoardMyListServlet extends HttpServlet {
 				
 				commentSNSList = new SNSService().selectCommentSNS(bs.getBoardNo());
 				
-				likeSNSList = new SNSService().selectLikeSNS(bs.getBoardNo());
+				likeSNSList = new SNSService().selectLikeSNSList(bs.getBoardNo());
 				
 				followerOneList = new SNSService().selectOneIdFollower(bs.getBoardWriter(), new SNSService().selectOneIdFollow(bs.getBoardWriter()));
 				

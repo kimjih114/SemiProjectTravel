@@ -122,6 +122,8 @@ margin-bottom: 10px
 var followLoggedInList = new Array();
 var blockLoggedInList = new Array();
 
+console.log(followLoggedInList);
+console.log(blockLoggedInList);
 
 
 
@@ -136,6 +138,9 @@ $(()=>{
 	blockLoggedInList.push('<%=id%>');
 	<%} }%>
 	
+	console.log(followLoggedInList);
+	console.log(blockLoggedInList);
+	
 	var param = {
 			mypage : '<%=mypage%>'
 	}
@@ -148,37 +153,36 @@ $(()=>{
 		success: function(data){
 			$(data).each((i,u)=>{
 				var html = '';
-				if(u.userIntroduce==undefined){
-					u.userIntroduce='안녕하세요. 저는 '+u.userNickname+'입니다.';
-				} 
-				
-				if(u.userIntroduce.length >= 10){
-					u.userIntroduce= u.userIntroduce.substr(0, 10) + "...";
-				}
 				
 				html+="<tr>";
 				html+="<td>";
 				html+="<div class='firstRow'>";
 				html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
-				html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.userId+"' class='followerURL'>"+u.userNickname+"</a>";
-				if(u.userType=='S'){
+				html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.profileUserId+"' class='followerURL'>"+u.profileUserNickname+"</a>";
+				if(u.profileUserType=='S'){
 					html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
 				}		
-				html+="&nbsp;<span class='followerIntro'>@"+u.userId+"</span>";
+				html+="&nbsp;<span class='followerIntro'>@"+u.profileUserId+"</span>";
 				html+="</div>"
 				html+="<div class='ub-btns'>"
-					if(u.userId != '<%=userLoggedIn.getUserId() %>'){
-						if(followLoggedInList.includes(u.userId)){
-							html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-danger' class='followerBtn' style='margin-right:2px;' value='"+u.userId+"' onclick='unfollower(this);'>Unfollow</button></div>";
+					if(u.profileUserId != '<%=userLoggedIn.getUserId()%>'){
+						if(followLoggedInList.includes(u.profileUserId)){
+							html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-danger' class='followerBtn' style='margin-right:2px;' value='"+u.profileUserId+"' onclick='unfollower(this);'>Unfollow</button></div>";
 							html+="<div class='darkArea' style='display:inline;'></div>";
-						} else if(blockLoggedInList.includes(u.userId)) {
-							html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
-							html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.userId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
-						} else {
-							html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.userId+"' onclick='follower(this);'>Follow</button></div>";
-							html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.userId+"' onclick='block(this);'>Block</button></div>";
 						}
+						else if(blockLoggedInList.includes(u.profileUserId)){
+							html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
+							html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
+						}
+						else {
+							html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.profileUserId+"' onclick='follower(this);'>Follow</button></div>";
+							html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='block(this);'>Block</button></div>";
+						}
+					}else if(u.profileUserId == '<%=userLoggedIn.getUserId()%>'){
+						
 					}
+
+					
 				html+="</div>";	
 				html+="</td>";
 				html+="</tr>";
@@ -221,37 +225,35 @@ $(function() {
 					$("#followerList").html('');
 					$(data).each((i,u)=>{
 						var html = '';
-						if(u.userIntroduce==undefined){
-							u.userIntroduce='안녕하세요. 저는 '+u.userNickname+'입니다.';
-						} 
-						
-						if(u.userIntroduce.length >= 10){
-							u.userIntroduce= u.userIntroduce.substr(0, 10) + "...";
-						}
 						
 						html+="<tr>";
 						html+="<td>";
 						html+="<div class='firstRow'>";
 						html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
-						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.userId+"' class='followerURL'>"+u.userNickname+"</a>";
-						if(u.userType=='S'){
+						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.profileUserId+"' class='followerURL'>"+u.profileUserNickname+"</a>";
+						if(u.profileUserType=='S'){
 							html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
 						}		
-						html+="&nbsp;<span class='followerId'>@"+u.userId+"</span>";
+						html+="&nbsp;<span class='followerId'>@"+u.profileUserId+"</span>";
 						html+="</div>"
 						html+="<div class='ub-btns'>"
-							if(u.userId != '<%=userLoggedIn.getUserId() %>'){
-								if(followLoggedInList.includes(u.userId)){
-									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-danger' class='followerBtn' style='margin-right:2px;' value='"+u.userId+"' onclick='unfollower(this);'>Unfollow</button></div>";
+							if(u.profileUserId != '<%=userLoggedIn.getUserId()%>'){
+								if(followLoggedInList.includes(u.profileUserId)){
+									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-danger' class='followerBtn' style='margin-right:2px;' value='"+u.profileUserId+"' onclick='unfollower(this);'>Unfollow</button></div>";
 									html+="<div class='darkArea' style='display:inline;'></div>";
-								} else if(blockLoggedInList.includes(u.userId)) {
-									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
-									html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.userId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
-								} else if(followLoggedInList.includes(u.userId)==false) {
-									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success'id='followBtn' value='"+u.userId+"' onclick='follower(this);'>Follow</button></div>";
-									html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.userId+"' class='btn btn-dark' onclick='blocker(this);'>Block</button></div>";
 								}
+								else if(blockLoggedInList.includes(u.profileUserId)){
+									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
+									html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
+								}
+								else {
+									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.profileUserId+"' onclick='follower(this);'>Follow</button></div>";
+									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='block(this);'>Block</button></div>";
+								}
+							}else if(u.profileUserId == '<%=userLoggedIn.getUserId()%>'){
+								
 							}
+
 						html+="</div>";	
 						html+="</td>";
 						html+="</tr>";
@@ -281,37 +283,35 @@ $(function() {
 				
 					$(data).each((i,u)=>{
 						var html = '';
-						if(u.userIntroduce==undefined){
-							u.userIntroduce='안녕하세요. 저는 '+u.userNickname+'입니다.';
-						} 
-						
-						if(u.userIntroduce.length >= 10){
-							u.userIntroduce= u.userIntroduce.substr(0, 10) + "...";
-						}
 						
 						html+="<tr>";
 						html+="<td>";
 						html+="<div class='firstRow'>";
 						html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
-						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.userId+"' class='followerURL'>"+u.userNickname+"</a>";
-						if(u.userType=='S'){
+						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.profileUserId+"' class='followerURL'>"+u.profileUserNickname+"</a>";
+						if(u.profileUserType=='S'){
 							html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
 						}		
-						html+="&nbsp;<span class='followerIntro'>@"+u.userId+"</span>";
+						html+="&nbsp;<span class='followerIntro'>@"+u.profileUserId+"</span>";
 						html+="</div>"
 						html+="<div class='ub-btns'>"
-							if(u.userId != '<%=userLoggedIn.getUserId() %>'){
-								if(followLoggedInList.includes(u.userId)){
-									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-danger' class='followerBtn' style='margin-right:2px;' value='"+u.userId+"' onclick='unfollower(this);'>Unfollow</button></div>";
+							if(u.profileUserId != '<%=userLoggedIn.getUserId()%>'){
+								if(followLoggedInList.includes(u.profileUserId)){
+									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-danger' class='followerBtn' style='margin-right:2px;' value='"+u.profileUserId+"' onclick='unfollower(this);'>Unfollow</button></div>";
 									html+="<div class='darkArea' style='display:inline;'></div>";
-								} else if(blockLoggedInList.includes(u.userId)) {
-									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
-									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-light' value='"+u.userId+"' onclick='unblocker(this);''>Unblock</button></div>";
-								} else {
-									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.userId+"' onclick='follower(this);'>Follow</button></div>";
-									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.userId+"' onclick='blocker(this);'>Block</button></div>";
 								}
+								else if(blockLoggedInList.includes(u.profileUserId)){
+									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
+									html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
+								}
+								else {
+									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.profileUserId+"' onclick='follower(this);'>Follow</button></div>";
+									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='block(this);'>Block</button></div>";
+								}
+							}else if(u.profileUserId == '<%=userLoggedIn.getUserId()%>'){
+								
 							}
+
 						html+="</div>";	
 						html+="</td>";
 						html+="</tr>";
@@ -348,37 +348,35 @@ $(function() {
 						
 						$(data).each((i,u)=>{
 							var html = '';
-							if(u.userIntroduce==undefined){
-								u.userIntroduce='안녕하세요. 저는 '+u.userNickname+'입니다.';
-							} 
 							
-							if(u.userIntroduce.length >= 10){
-								u.userIntroduce= u.userIntroduce.substr(0, 10) + "...";
-							}
 							
 							html+="<tr>";
 							html+="<td>";
 							html+="<div class='firstRow'>";
 							html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
-							html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.userId+"' class='followerURL'>"+u.userNickname+"</a>";
-							if(u.userType=='S'){
+							html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.profileUserId+"' class='followerURL'>"+u.profileUserNickname+"</a>";
+							if(u.profileUserType=='S'){
 								html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
 							}		
-							html+="&nbsp;<span class='followerIntro'>@"+u.userId+"</span>";
+							html+="&nbsp;<span class='followerIntro'>@"+u.profileUserId+"</span>";
 							html+="</div>"
 							html+="<div class='ub-btns'>"
-								if(u.userId != '<%=userLoggedIn.getUserId() %>'){
-									if(followLoggedInList.includes(u.userId)){
-										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-danger' class='followerBtn' style='margin-right:2px;' value='"+u.userId+"' onclick='unfollower(this);'>Unfollow</button></div>";
-										html+="<div class='darkArea' display:inline;></div>";
-									} else if(blockLoggedInList.includes(u.userId)) {
-										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
-										html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.userId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
-									} else {
-										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success'value='"+u.userId+"' onclick='follower(this);'>Follow</button></div>";
-										html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.userId+"' class='btn btn-dark' onclick='blocker(this);'>Block</button></div>";
-									}
+							if(u.profileUserId != '<%=userLoggedIn.getUserId()%>'){
+								if(followLoggedInList.includes(u.profileUserId)){
+									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-danger' class='followerBtn' style='margin-right:2px;' value='"+u.profileUserId+"' onclick='unfollower(this);'>Unfollow</button></div>";
+									html+="<div class='darkArea' style='display:inline;'></div>";
 								}
+								else if(blockLoggedInList.includes(u.profileUserId)){
+									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
+									html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
+								}
+								else {
+									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.profileUserId+"' onclick='follower(this);'>Follow</button></div>";
+									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='block(this);'>Block</button></div>";
+								}
+							}else if(u.profileUserId == '<%=userLoggedIn.getUserId()%>'){
+								
+							}
 							html+="</div>";	
 							html+="</td>";
 							html+="</tr>";
@@ -406,36 +404,34 @@ $(function() {
 					
 						$(data).each((i,u)=>{							
 							var html = '';
-							if(u.userIntroduce==undefined){
-								u.userIntroduce='안녕하세요. 저는 '+u.userNickname+'입니다.';
-							} 
 							
-							if(u.userIntroduce.length >= 10){
-								u.userIntroduce= u.userIntroduce.substr(0, 10) + "...";
-							}
 							
 							html+="<tr>";
 							html+="<td>";
 							html+="<div class='firstRow'>";
 							html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
-							html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.userId+"' class='followerURL'>"+u.userNickname+"</a>";
-							if(u.userType=='S'){
+							html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.profileUserId+"' class='followerURL'>"+u.profileUserNickname+"</a>";
+							if(u.profileUserType=='S'){
 								html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
 							}		
-							html+="&nbsp;<span class='followerIntro'>@"+u.userId+"</span>";
+							html+="&nbsp;<span class='followerIntro'>@"+u.profileUserId+"</span>";
 							html+="</div>"
 							html+="<div class='ub-btns'>"
-								if(u.userId != '<%=userLoggedIn.getUserId() %>'){
-									if(followLoggedInList.includes(u.userId)){
-										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-danger' style='margin-right:2px; value='"+u.userId+"' onclick='unfollower(this);'>Unfollow</button></div>";
+								if(u.profileUserId != '<%=userLoggedIn.getUserId()%>'){
+									if(followLoggedInList.includes(u.profileUserId)){
+										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-danger' class='followerBtn' style='margin-right:2px;' value='"+u.profileUserId+"' onclick='unfollower(this);'>Unfollow</button></div>";
 										html+="<div class='darkArea' style='display:inline;'></div>";
-									} else if(blockLoggedInList.includes(u.userId)) {
-										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
-										html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-light' value='"+u.userId+"' onclick='unblocker(this);'>Unblock</button></div>";
-									} else {
-										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success'value='"+u.userId+"' onclick='follower(this);'>Follow</button></div>";
-										html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.userId+"'  class='btn btn-dark' onclick='blocker(this);'>Block</button></div>";
 									}
+									else if(blockLoggedInList.includes(u.profileUserId)){
+										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
+										html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
+									}
+									else {
+										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.profileUserId+"' onclick='follower(this);'>Follow</button></div>";
+										html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='block(this);'>Block</button></div>";
+									}
+								}else if(u.profileUserId == '<%=userLoggedIn.getUserId()%>'){
+									
 								}
 							html+="</div>";	
 							html+="</td>";
@@ -459,6 +455,7 @@ $(function() {
 });
 
 function unfollower(btn){
+	console.log($(btn).prop('value'));
 		var param={
 			userFollowing : '<%=userLoggedIn.getUserId() %>',
 			userFollowed : $(btn).val()
@@ -474,6 +471,7 @@ function unfollower(btn){
 					$(btn).parent().parent().parent().remove();
 					return;
 				}
+				followLoggedInList.pop($(btn).val())
 				
 				$(btn).parent().next().html("<button type='button' class='btn btn-dark' value='"+$(btn).val()+"' onclick='blocker(this);'>Block</button>");
 				
@@ -499,6 +497,7 @@ function unfollower(btn){
 	}
 	
 function follower(btn){
+	console.log($(btn).prop('value'));
 	var param={
 		userFollowing : '<%=userLoggedIn.getUserId() %>',
 		userFollowed : $(btn).val()
@@ -510,6 +509,9 @@ function follower(btn){
 		dataType: 'json',
 		type : 'post',
 		success : function(data){	
+			
+			
+			followLoggedInList.push($(btn).val())
 
 			if('<%=userLoggedIn.getUserId()%>'=='<%=mypage %>'){
 				$(btn).parent().parent().parent().remove();
@@ -538,6 +540,7 @@ function follower(btn){
 
 }
 function blocker(btn){
+	console.log($(btn).prop('value'));
 	var param={
 			userBlocking : '<%=userLoggedIn.getUserId() %>',
 			userBlocked : $(btn).val()    		
@@ -549,6 +552,8 @@ function blocker(btn){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
+				blockLoggedInList.push($(btn).val())
+				
 					$(btn).parent().prev().children().remove();
 					$(btn).removeClass("btn-dark");
 					$(btn).addClass("btn-light");
@@ -581,6 +586,8 @@ function unblocker(btn){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
+				blockLoggedInList.pop($(btn).val())
+				
 				$(btn).parent().prev().html("<button type='button' class='btn btn-success' value='"+$(btn).val()+"' onclick='follower(this);'>Follow</button>");
 
 				$(btn).removeClass("btn-light");

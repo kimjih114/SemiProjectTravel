@@ -71,7 +71,7 @@
 					</tr>
 					<tr>
 						<td class="sectionContent">닉네임
-							<input type="text" name="SmodifyNick" id="SmodifyNick" value="<%=profile.getUserNickname() %>" />
+							<input type="text" name="SmodifyNick" id="SmodifyNick" value="<%=profile.getProfileUserNickname() %>" />
 						</td>
 					</tr>
 					<tr>

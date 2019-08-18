@@ -667,7 +667,7 @@ public class SNSDAO {
 		return result;
 	}
 
-	public List<LikeSNS> selectLikeSNS(Connection conn, int boardNo) {
+	public List<LikeSNS> selectLikeSNSList(Connection conn, int boardNo) {
 		List<LikeSNS> likeSNSList=new ArrayList<>();
 		LikeSNS likeSNS = null;
 		PreparedStatement pstmt=null;
@@ -929,6 +929,78 @@ public class SNSDAO {
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, boardNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertLikeSNS(Connection conn, String userId, int boardNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertLikeSNS");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public LikeSNS selectLikeSNS(Connection conn, int boardNo) {
+		LikeSNS likeSNS = null;
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("selectLikeSNS");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, boardNo);
+
+			rset=pstmt.executeQuery();
+				
+			while(rset.next()) {
+				likeSNS = new LikeSNS();
+				
+				likeSNS.setBoardNo(boardNo);
+				likeSNS.setUserId(rset.getString("user_id"));
+				likeSNS.setLikeDate(rset.getTimestamp("like_date"));
+			}
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return likeSNS;
+	}
+
+	public int deleteLikeSNS(Connection conn, String userId, int boardNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteLikeSNS");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			pstmt.setString(2, userId);
 			
 			result = pstmt.executeUpdate();
 			
