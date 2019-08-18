@@ -12,9 +12,20 @@
     
     List<String> followLoggedInList = new SNSService().selectOneIdFollow(userLoggedIn.getUserId());
     List<String> blockLoggedInList = new SNSService().selectOneIdBlock(userLoggedIn.getUserId());
+    List<String> blockedLoggedInList = new SNSService().selectOneIdBlocked(userLoggedIn.getUserId());
     
 %>
 <style>
+#followerSearch {
+	width:540px;
+	margin:0 auto;
+	position: absolute;
+	float:left;
+	text-align:left;
+	left:10px;
+	transition: 0.5s;
+	top:10px;
+}
 #follower-container {
 	width:540px;
 	margin:0 auto;
@@ -22,7 +33,7 @@
 	position: absolute;
 	left:220px;
 	transition: 0.5s;
-	top:10px;
+	top:30px;
 }
 
 
@@ -121,9 +132,12 @@ margin-bottom: 10px
 
 var followLoggedInList = new Array();
 var blockLoggedInList = new Array();
+var blockedLoggedInList = new Array();
+
 
 console.log(followLoggedInList);
 console.log(blockLoggedInList);
+console.log(blockedLoggedInList);
 
 
 
@@ -137,9 +151,14 @@ $(()=>{
 	<%for(String id : blockLoggedInList){%>
 	blockLoggedInList.push('<%=id%>');
 	<%} }%>
+	<%if(blockedLoggedInList!=null){%>
+	<%for(String id : blockedLoggedInList){%>
+	blockedLoggedInList.push('<%=id%>');
+	<%} }%>
 	
 	console.log(followLoggedInList);
 	console.log(blockLoggedInList);
+	console.log(blockedLoggedInList);
 	
 	var param = {
 			mypage : '<%=mypage%>'
@@ -171,12 +190,13 @@ $(()=>{
 							html+="<div class='darkArea' style='display:inline;'></div>";
 						}
 						else if(blockLoggedInList.includes(u.profileUserId)){
+							if('<%=userLoggedIn.getUserId()%>' == '<%=mypage %>' || blockedLoggedInList.includes(u.profileUserId)) return;
 							html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
 							html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
 						}
 						else {
 							html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.profileUserId+"' onclick='follower(this);'>Follow</button></div>";
-							html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='block(this);'>Block</button></div>";
+							html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='blocker(this);'>Block</button></div>";
 						}
 					}else if(u.profileUserId == '<%=userLoggedIn.getUserId()%>'){
 						
@@ -243,12 +263,13 @@ $(function() {
 									html+="<div class='darkArea' style='display:inline;'></div>";
 								}
 								else if(blockLoggedInList.includes(u.profileUserId)){
+									if('<%=userLoggedIn.getUserId()%>' == '<%=mypage %>' || blockedLoggedInList.includes(u.profileUserId)) return;
 									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
 									html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
 								}
 								else {
 									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.profileUserId+"' onclick='follower(this);'>Follow</button></div>";
-									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='block(this);'>Block</button></div>";
+									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='blocker(this);'>Block</button></div>";
 								}
 							}else if(u.profileUserId == '<%=userLoggedIn.getUserId()%>'){
 								
@@ -301,12 +322,13 @@ $(function() {
 									html+="<div class='darkArea' style='display:inline;'></div>";
 								}
 								else if(blockLoggedInList.includes(u.profileUserId)){
+									if('<%=userLoggedIn.getUserId()%>' == '<%=mypage %>' || blockedLoggedInList.includes(u.profileUserId)) return;
 									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
 									html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
 								}
 								else {
 									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.profileUserId+"' onclick='follower(this);'>Follow</button></div>";
-									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='block(this);'>Block</button></div>";
+									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='blocker(this);'>Block</button></div>";
 								}
 							}else if(u.profileUserId == '<%=userLoggedIn.getUserId()%>'){
 								
@@ -367,12 +389,13 @@ $(function() {
 									html+="<div class='darkArea' style='display:inline;'></div>";
 								}
 								else if(blockLoggedInList.includes(u.profileUserId)){
+									if('<%=userLoggedIn.getUserId()%>' == '<%=mypage %>' || blockedLoggedInList.includes(u.profileUserId)) return;
 									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
 									html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
 								}
 								else {
 									html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.profileUserId+"' onclick='follower(this);'>Follow</button></div>";
-									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='block(this);'>Block</button></div>";
+									html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='blocker(this);'>Block</button></div>";
 								}
 							}else if(u.profileUserId == '<%=userLoggedIn.getUserId()%>'){
 								
@@ -423,12 +446,13 @@ $(function() {
 										html+="<div class='darkArea' style='display:inline;'></div>";
 									}
 									else if(blockLoggedInList.includes(u.profileUserId)){
+										if('<%=userLoggedIn.getUserId()%>' == '<%=mypage %>' || blockedLoggedInList.includes(u.profileUserId)) return;
 										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'></div>";
 										html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblocker(this);''>Unblock</button></div>";
 									}
 									else {
 										html+="<div class='whiteArea' style='display:inline; margin-right:2px;'><button type='button' class='btn btn-success' value='"+u.profileUserId+"' onclick='follower(this);'>Follow</button></div>";
-										html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='block(this);'>Block</button></div>";
+										html+="<div class='darkArea' style='display:inline;'><button type='button' class='btn btn-dark' value='"+u.profileUserId+"' onclick='blocker(this);'>Block</button></div>";
 									}
 								}else if(u.profileUserId == '<%=userLoggedIn.getUserId()%>'){
 									
@@ -467,11 +491,13 @@ function unfollower(btn){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
+				
+				followLoggedInList.pop(followLoggedInList.indexOf($(btn).val()));
 				if('<%=userLoggedIn.getUserId()%>'=='<%=mypage %>'){
 					$(btn).parent().parent().parent().remove();
 					return;
 				}
-				followLoggedInList.pop($(btn).val())
+				
 				
 				$(btn).parent().next().html("<button type='button' class='btn btn-dark' value='"+$(btn).val()+"' onclick='blocker(this);'>Block</button>");
 				
@@ -511,7 +537,7 @@ function follower(btn){
 		success : function(data){	
 			
 			
-			followLoggedInList.push($(btn).val())
+			followLoggedInList.push($(btn).val());
 
 			if('<%=userLoggedIn.getUserId()%>'=='<%=mypage %>'){
 				$(btn).parent().parent().parent().remove();
@@ -552,7 +578,12 @@ function blocker(btn){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
-				blockLoggedInList.push($(btn).val())
+					blockLoggedInList.push($(btn).val());
+					
+					if('<%=userLoggedIn.getUserId()%>'=='<%=mypage %>'){
+						$(btn).parent().parent().parent().remove();
+						return;
+					}
 				
 					$(btn).parent().prev().children().remove();
 					$(btn).removeClass("btn-dark");
@@ -586,7 +617,7 @@ function unblocker(btn){
 			dataType: 'json',
 			type : 'post',
 			success : function(data){
-				blockLoggedInList.pop($(btn).val())
+				blockLoggedInList.pop(blockLoggedInList.IndexOf($(btn).val()));
 				
 				$(btn).parent().prev().html("<button type='button' class='btn btn-success' value='"+$(btn).val()+"' onclick='follower(this);'>Follow</button>");
 
@@ -610,8 +641,15 @@ function unblocker(btn){
 }
 
 </script>
-
  <div id="follower-container">
+ <br>
+<div id="followerSearch">
+ 			<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" width='20' height='20'/>
+			<label for='followSearch' style='float:left; margin:0px 5px 0px 2px;'>전체 유저검색</label>
+			<input type="search" name="followerSearch" class="followerSearch" id='followSearch'/>
+ </div>
+ 
+ <br><br>
 			<ul class="tab">
 			<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)){ %>
 				<li class="current" data-tab="tab1"><a>팔로우</a></li>
@@ -626,9 +664,7 @@ function unblocker(btn){
 		
 			<div id="tab1" class="tabcontent current">
 				<div class="followListContainer">
-					<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" alt="" width='20' height='20'/>
-					<input type="search" name="followerSearch" class="followerSearch" id="followerSearch1" />
-					
+
 					<table class="followList" id="followerList">
 					
 					</table>
@@ -637,8 +673,7 @@ function unblocker(btn){
 		
 			<div id="tab2" class="tabcontent">
 				<div class="followListContainer">
-				<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" width='20' height='20'/>
-					<input type="search" name="followerSearch" class="followerSearch" id="followerSearch2" />
+	
 					<table class="followList" id="followingList">
 					
 					</table>
@@ -647,16 +682,14 @@ function unblocker(btn){
 			<div id="tab3" class="tabcontent">
 			<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)){ %>
 				<div class="followListContainer">
-					<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" width='20' height='20'/>
-					<input type="search" name="followerSearch" class="followerSearch" id="followerSearch3" />
+			
 					<table class="followList" id="followedList">
 					
 					</table>
 		    	</div>
 		    <% } else{%>
 		    	<div class="followListContainer">
-					<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" width='20' height='20'/>
-					<input type="search" name="followerSearch" class="followerSearch" id="followerSearch4" />
+
 					<table class="followList" id="followerWithList">
 					
 					</table>

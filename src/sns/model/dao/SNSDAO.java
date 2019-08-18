@@ -1,6 +1,6 @@
 package sns.model.dao;
 
-import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -702,12 +702,12 @@ public class SNSDAO {
 		return likeSNSList;
 	}
 
-	public List<CommentSNS> selectCommentSNS(Connection conn, int boardNo) {
+	public List<CommentSNS> selectCommentSNSList(Connection conn, int boardNo) {
 		List<CommentSNS> commentSNSList=new ArrayList<>();
 		CommentSNS commentSNS = null;
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
-		String sql=prop.getProperty("selectCommentSNS");
+		String sql=prop.getProperty("selectCommentSNSList");
 		
 		try {
 			pstmt=conn.prepareStatement(sql);
@@ -719,13 +719,17 @@ public class SNSDAO {
 			while(rset.next()) {
 				commentSNS = new CommentSNS();
 				
+				commentSNS.setCommentNo(rset.getInt("comment_no"));
 				commentSNS.setBoardNo(rset.getInt("board_no"));
 				commentSNS.setCommentLevel(rset.getInt("comment_level"));
 				commentSNS.setCommentWriter(rset.getString("comment_writer"));
+				commentSNS.setCommentNickname(rset.getString("comment_nickname"));
+				commentSNS.setCommentProfile(rset.getString("comment_profile"));
 				commentSNS.setCommentContent(rset.getString("comment_content"));
 				commentSNS.setBoardNo(boardNo);
 				commentSNS.setCommentRef(rset.getInt("comment_ref"));
 				commentSNS.setCommentDate(rset.getTimestamp("comment_date"));
+				commentSNS.setCommentUpdateDate(rset.getTimestamp("comment_update_date"));
 				
 				commentSNSList.add(commentSNS);
 			}
@@ -1012,6 +1016,65 @@ public class SNSDAO {
 		return result;
 	}
 
+
+	public int selectCommentSNSLastSeq(Connection conn) {
+		PreparedStatement pstmt = null;
+		int commentNo = 0;
+		ResultSet rset = null;
+		String sql = "select seq_comment_no.currval from dual";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				commentNo = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return commentNo;
+	}
+
+	public CommentSNS selectCommentSNS(Connection conn, int commentNo) {
+		PreparedStatement pstmt = null;
+		CommentSNS commentSNS = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectCommentSNS");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, commentNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				commentSNS = new CommentSNS();
+				
+				commentSNS.setCommentNo(rset.getInt("comment_no"));
+				commentSNS.setCommentLevel(rset.getInt("comment_level"));
+				commentSNS.setCommentWriter(rset.getString("comment_writer"));
+				commentSNS.setCommentNickname(rset.getString("comment_nickname"));
+				commentSNS.setCommentProfile(rset.getString("comment_profile"));
+				commentSNS.setCommentContent(rset.getString("comment_content"));
+				commentSNS.setBoardNo(rset.getInt("board_no"));
+				commentSNS.setCommentRef(rset.getInt("comment_ref"));
+				commentSNS.setCommentRef(rset.getInt("comment_ref"));
+				commentSNS.setCommentUpdateDate(rset.getTimestamp("comment_update_date"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return commentSNS;
+	}
+	
 	public int updateSetting(Connection conn, ProfileSNS ps) {
 		int result = 0; 
 		PreparedStatement pstmt = null; 
@@ -1042,6 +1105,82 @@ public class SNSDAO {
 		
 		return result;
 	}
+
+	public int updateCommentSNS(Connection conn, int commentNo, String commentNickname, String commentProfile, String commentContent) {
+		int result = 0; 
+		PreparedStatement pstmt = null; 
+		String sql =prop.getProperty("updateCommentSNS");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, commentNickname);
+			pstmt.setString(2, commentProfile);
+			pstmt.setString(3, commentContent);
+			pstmt.setInt(4, commentNo);
+			
+		
+			result = pstmt.executeUpdate(); 
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); 
+		}
+		return result;
+	}
+
+	public int deleteCommentSNS(Connection conn, int commentNo) {
+		int result = 0; 
+		PreparedStatement pstmt = null; 
+		String sql =prop.getProperty("deleteCommentSNS");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, commentNo);
+			
+			result = pstmt.executeUpdate(); 
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt); 
+		}
+		
+		
+		return result;
+	}
+
+	public int insertCommentSNS(Connection conn, CommentSNS commentSNS) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertCommentSNS");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, commentSNS.getCommentLevel());
+			pstmt.setString(2, commentSNS.getCommentWriter());
+			pstmt.setString(3, commentSNS.getCommentNickname());
+			pstmt.setString(4, commentSNS.getCommentProfile());
+			pstmt.setString(5, commentSNS.getCommentContent());
+			pstmt.setInt(6, commentSNS.getBoardNo());
+			pstmt.setInt(7, commentSNS.getCommentRef());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 
 	
 	

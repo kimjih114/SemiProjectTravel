@@ -68,7 +68,7 @@ public class AjaxSnsBoardMyListServlet extends HttpServlet {
 				
 				gradeSNSList = new SNSService().selectGradeSNS(bs.getBoardNo());
 				
-				commentSNSList = new SNSService().selectCommentSNS(bs.getBoardNo());
+				commentSNSList = new SNSService().selectCommentSNSList(bs.getBoardNo());
 				
 				likeSNSList = new SNSService().selectLikeSNSList(bs.getBoardNo());
 				

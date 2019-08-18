@@ -8,7 +8,6 @@ import static common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
-import board.model.dao.Board_QuestionDAO;
 import sns.model.dao.SNSDAO;
 import sns.model.vo.BoardSNS;
 import sns.model.vo.CommentSNS;
@@ -201,9 +200,9 @@ public class SNSService {
 		return likeSNSList;
 	}
 
-	public List<CommentSNS> selectCommentSNS(int boardNo) {
+	public List<CommentSNS> selectCommentSNSList(int boardNo) {
 		Connection conn=getConnection();
-		List<CommentSNS> commentSNSList=new SNSDAO().selectCommentSNS(conn, boardNo);
+		List<CommentSNS> commentSNSList=new SNSDAO().selectCommentSNSList(conn, boardNo);
 		close(conn);
 		return commentSNSList;
 	}
@@ -269,8 +268,6 @@ public class SNSService {
 		if(result>0) commit(conn);
 		else rollback(conn);
 		close(conn);
-		
-		
 	}
 
 	public List<LikeSNS> insertLikeSNS(String userId, int boardNo) {
@@ -299,6 +296,15 @@ public class SNSService {
 		return list;
 	}
 
+	
+
+	public CommentSNS selectCommentSNS(int commentNo) {
+		Connection conn=getConnection();
+		CommentSNS commentSNS=new SNSDAO().selectCommentSNS(conn, commentNo);
+		close(conn);
+		return commentSNS;
+	}
+
 
 	public int updateSetting(ProfileSNS ps) {
 		Connection conn= getConnection(); 
@@ -314,6 +320,44 @@ public class SNSService {
 		return result;
 	}
 
+	public int updateCommentSNS(int commentNo, String commentNickname, String commentProfile, String commentContent) {
+		Connection conn= getConnection(); 
+		int result = new SNSDAO().updateCommentSNS(conn, commentNo, commentNickname, commentProfile, commentContent); 
+		if(result>0) {
+			commit(conn); 
+		}else 
+			rollback(conn); 
+		close(conn); 
+		
+		
+		return result;
+	}
+
+	public int deleteCommentSNS(int commentNo) {
+		Connection conn= getConnection(); 
+		int result = new SNSDAO().deleteCommentSNS(conn, commentNo); 
+		if(result>0) {
+			commit(conn); 
+		}else 
+			rollback(conn); 
+		close(conn); 
+		
+		
+		return result;
+	}
+
+	public int insertCommentSNS(CommentSNS commentSNS) {
+		Connection conn=getConnection();
+		int result=new SNSDAO().insertCommentSNS(conn, commentSNS);
+		int commentNo = 0;
+		if(result>0) {
+			commentNo = new SNSDAO().selectCommentSNSLastSeq(conn); 
+			commit(conn);
+		}
+		else rollback(conn);
+		close(conn);
+		return commentNo;
+	}
 
 	
 	

@@ -14,7 +14,7 @@
 #rightNav {
     text-align: center;
     top: 10px;
-    left: 769px;
+    left: 548px;
     display: -webkit-box;
     display: -ms-flexbox;
     /*display: fixed;*/
@@ -349,7 +349,7 @@
 
 			</div>
 		
-		<!--  <table id="rightNav">
+		<table id="rightNav">
 			<tr>
 				<td><input type="search" id="searchSNS" placeholder="검색" onfocus='popupSearchFrm' /></td>
 			</tr>
@@ -364,7 +364,7 @@
 				</td>
 			</tr>
 			
-	    </table>-->
+	    </table>
 		
 	
 	</div>

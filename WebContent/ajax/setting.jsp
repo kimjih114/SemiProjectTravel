@@ -1,3 +1,4 @@
+<%@page import="java.util.List"%>
 <%@page import="user.model.vo.User"%>
 <%@page import="sns.model.service.SNSService"%>
 <%@page import="sns.model.vo.ProfileSNS"%>
@@ -6,8 +7,22 @@
 <%
 	User userLoggedIn = (User) session.getAttribute("userLoggedIn");
 	ProfileSNS profile = new SNSService().selectOneProfile(userLoggedIn.getUserId());
+	List<String> blockLoggedInList = new SNSService().selectOneIdBlock(userLoggedIn.getUserId());
 %>
 <style>
+table.blackList{
+	width: 527px;
+	border:1px solid black;
+	
+}
+table.blackList td{
+	width: 527px;
+	padding: 8px;
+}
+table.blackList tr{
+	width: 527px;
+	border:1px solid black;
+}
 #setting-container {
 	width: 1000px;
 	margin: 0 auto;
@@ -22,10 +37,13 @@
 	font-size: 1.5em;
 	font-weight: 700px;
 	float: left;
+		text-align: left;
 }
 
 .sectionContent {
 	margin-left: 20px;
+	flost: left;
+	text-align: left;
 }
 
 #setting-container td {
@@ -56,9 +74,114 @@
 	width: 100px;
 	padding: 0px;
 }
+
+.firstRow{
+	margin-left: 5px;
+	color: gray;
+	float: left;
+	diplay:inline;
+	font-size:0.8em;
+}
+
+.firstRow .blackURL{
+	font-weight: 700;
+	font-size: 1.2em;
+	color: black;
+}
+
+.ub-btns{
+	display:inline;
+	float:right;
+}
+
 </style>
 
+<script>
 
+var blockLoggedInList = new Array();
+
+$(()=>{
+
+	<%if(blockLoggedInList!=null){%>
+	<%for(String id : blockLoggedInList){%>
+		blockLoggedInList.push('<%=id%>');
+	<%} }%>
+	
+	console.log(blockLoggedInList);
+	
+	var param = {
+			userBlocking : '<%=userLoggedIn.getUserId()%>'
+	}
+	
+	$.ajax({
+		url:"<%=request.getContextPath() %>/gson/sns/blackList.do",
+		type:"get",
+		data:param,
+		dataType:"json",
+		success: function(data){
+			$(data).each((i,u)=>{
+				var html = '';
+				
+				html+="<tr>";
+				html+="<td>";
+				html+="<div class='firstRow'>";
+				html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
+				html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.profileUserId+"' class='blackURL'>"+u.profileUserNickname+"</a>";
+				if(u.profileUserType=='S'){
+					html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
+				}		
+				html+="&nbsp;<span class='blackIntro'>@"+u.profileUserId+"</span>";
+				html+="</div>"
+				html+="<div class='ub-btns'>"
+
+				html+="<div class='darkArea' style='display:inline;'><button type='button' value='"+u.profileUserId+"' class='btn btn-light' onclick='unblockerr(this);''>Unblock</button></div>";
+
+				html+="</div>";	
+				html+="</td>";
+				html+="</tr>";
+				
+				$("#blackList").append(html);
+			});
+			
+		},
+		error: function(jqxhr, textStatus, errorThrown){
+			console.log("ajax처리실패!");
+			console.log(jqxhr, textStatus, errorThrown);
+		}
+	});
+
+});
+
+
+
+function unblockerr(btn){
+	var param={
+			userBlocking : '<%=userLoggedIn.getUserId() %>',
+			userBlocked : $(btn).val()    		
+		}
+
+		$.ajax({
+			url : '<%=request.getContextPath()%>/gson/sns/unblock.do',
+			data : param,
+			dataType: 'json',
+			type : 'post',
+			success : function(data){
+				blockLoggedInList.pop($(btn).val());
+				
+				$(btn).parent().parent().parent().remove();
+			},
+			error : function(data){
+				console.log("ajax처리실패");
+			},
+			complete: function(data){
+				blockLoggedInList = [];
+				
+			}
+		}) 
+	
+}
+
+</script>
 
 
 
@@ -71,7 +194,7 @@
 				<td>
 					<table>
 						<tr>
-							<td><span class="sectionTitle">프로필 수정</span></td>
+							<th><span class="sectionTitle">프로필 수정</span></th>
 						</tr>
 						<tr>
 							<td class="sectionContent">닉네임 
@@ -86,7 +209,7 @@
 							<input type="file" name="SmodifyProfile" id="SmodifyProfile" class="btn btn-outline-secondary"/> <br />
 							  <span id="fname"> 
 					 		 <%=profile.getProfileOriginalFilename()!=null? profile.getProfileRenamedFilename():""%>
-					  		</span> <%--첨부파일이 있는 경우 기존파일 삭제용 --%>
+					  		</span>
 					   		<%if(profile.getProfileOriginalFilename()!=null){ %><br /> 
 							<input type="checkbox" name="delFile" id="delFile" /> 
 							<label for="delFile">첨부파일삭제</label>
@@ -104,21 +227,23 @@
 			<tr>
 				<td>
 					<table>
-						<tr>
-							
-							<th class="sectionTitle">레이아웃</th>
-							<td>
+						<tr style='width:510px;'>
+							<th class="sectionTitle" style='width:510px;'>레이아웃</th>
+						</tr>
+						<tr style='width:510px;'>
+							<td class="sectionContent" style='width:510px;'>
+								헤더 텍스트
 								<input type="text" name="SmodifyText" id="SmodifyText"
-								value='<%=profile.getHeaderText()%>'/>
+								value='<%=profile.getHeaderText()%>' style="width:300px"/>
 							
 							</td>
 
 						</tr>
-						<tr>
-							<td class="sectionContent">헤더 이미지 <img
+						<tr style='width:510px;'>
+							<td class="sectionContent" style='width:510px;'>헤더 이미지 <img
 								src='<%=request.getContextPath()%>/upload/profile/<%=profile.getHeaderRenamedFilename()%>'
 								class='header-profile' width='40' height='40' /> 
-								<input type="file" name="SmodifyHeader" id="SmodifyHeader" /> <br />
+							 <input type="file" name="SmodifyHeader" id="SmodifyHeader" />
 							 <span id="fname"> 
 					 		 <%=profile.getHeaderOriginalFilename()!=null? profile.getHeaderRenamedFilename():""%>
 					  		</span> <%--첨부파일이 있는 경우 기존파일 삭제용 --%>
@@ -132,23 +257,37 @@
 
 							</td>
 						</tr>
-						<tr>
-							<td class="sectionContent">테마 
-							<input type="radio" value="#fec503"  name="themaColor"  id="themaColor" class="orange"
+						<tr style='width:510px;'>
+							<td class="sectionContent" style='width:510px; padding: 10px;'>테마 
+							<input type="radio" value="#fec503"  name="themaColor"  id="themaColor" class="orange" style="margin: 0px 5px;"
 							<% if(profile.getThemeColor() == null){%>checked<%}%>/>기본
-							<input type="radio" value="red"  name="themaColor"   id="themaColor" class="red"
+							<input type="radio" value="red"  name="themaColor"   id="themaColor" class="red" style="margin: 0px 5px;"
 							 <% if("red".equals(profile.getThemeColor())){%>checked<%}%>/>빨강
-							<input type="radio" value="#007bff"  name="themaColor"   id="themaColor" class="red"
+							<input type="radio" value="#007bff"  name="themaColor"   id="themaColor" class="red" style="margin: 0px 5px;"
 							 <% if("#007bff".equals(profile.getThemeColor())){%>checked<%}%>/>파랑
-							<input type="radio" value="green"  name="themaColor"   id="themaColor" class="red"
+							<input type="radio" value="green"  name="themaColor"   id="themaColor" class="red" style="margin: 0px 5px;"
 							 <% if("green".equals(profile.getThemeColor())){%>checked<%}%>/>초록
 						</tr>
 						
-						<tr>
+						<tr style='width:510px;'>
 							<th colspan="2"><input type="submit" class="btn btn-outline-warning" value="변경하기"/></th>
 						
 						</tr>
 					</table>
+				</td>
+			</tr>
+			<tr>
+				<th class="sectionTitle">블랙리스트 
+				</th>
+			</tr>
+			<tr><td class="sectionContent">
+				<div class="BlackListContainer">
+	
+					<table class="blackList" id="blackList">
+	
+					</table>
+		    
+				</div>
 				</td>
 			</tr>
 

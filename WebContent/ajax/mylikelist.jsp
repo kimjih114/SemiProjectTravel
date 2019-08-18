@@ -87,7 +87,7 @@ function pageMore(boardNo){
 			mypage:'<%=mypage %>'
 	}
 	$.ajax({
-		url: "<%=request.getContextPath()%>/gson/sns/myLikeList.do",
+		url: "<%=request.getContextPath()%>/gson/sns/myLikeSNSList.do",
 		data: param,
 		type: "get",
 		dataType: "json",

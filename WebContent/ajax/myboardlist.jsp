@@ -9,7 +9,7 @@
 <%
 	String mypage = request.getParameter("mypage");
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
-	
+	ProfileSNS userLoggedInProfile = new SNSService().selectOneProfile(userLoggedIn.getUserId());
 %>
 
 <script>
@@ -26,6 +26,311 @@ var mcontentoldfilenames = new Array();
 $(()=>{
 	pageMore(10000);
 });
+
+
+function openCoCo(btn) {
+	if($(btn).parent().parent().parent().next().css("display") == "none"){
+		$(btn).parent().parent().parent().next().css("display", "block");
+		$(btn).removeClass('btn-primary').addClass('btn-dark');
+		$(btn).text('취소');
+	}
+	else if($(btn).parent().parent().parent().next().css("display") == "block"){
+		$(btn).parent().parent().parent().next().css("display", "none");
+		$(btn).removeClass('btn-dark').addClass('btn-primary');
+		$(btn).text('답글');
+	}
+	
+	
+}
+function openComment(comment){
+
+	if($(comment).parent().next().css("display") == "none"){
+		$(comment).parent().next().css("display", "block");
+	}
+	else if($(comment).parent().next().css("display") == "block"){
+		$(comment).parent().next().css("display", "none");
+	}
+	
+}
+
+function updateCommentFrm(btn){
+	console.log($(btn).val());
+	var commentNo = $(btn).val();
+	var content = $(btn).attr('content');
+	var html = '';
+	
+	var oldHtml = $(btn).parent().parent().html();
+	
+	if($(btn).parent().parent().parent().attr('class')=='level2'){
+		html+="<div class='comment-editor'>"
+			html+="<textarea style='float:left;' name='boardCommentContent' class='boardCommentContent' cols='36' rows='3'>"+content+"</textarea>";
+			html+="<button type='button' class='btn btn-dark' onclick='cancelUpdateComment(this);' value='"+oldHtml+"' style='float:right; width:63px; height:63px; margin: 0 2px;'>취소</button>";	
+			html+="<button type='button' class='btn btn-primary' onclick='updateComment(this)' value='"+commentNo+"' style='float:right; width:63px; height:63px;  margin: 0 2px;'>수정</button>";	
+			
+	}
+	else{
+	html+="<div class='comment-editor'>"
+	html+="<textarea style='float:left;' name='boardCommentContent' class='boardCommentContent' cols='42' rows='3'>"+content+"</textarea>";
+	html+="<button type='button' class='btn btn-dark' onclick='cancelUpdateComment(this);' value='"+oldHtml+"' style='float:right; width:66px; height:63px; margin: 0 2px;'>취소</button>";	
+	html+="<button type='button' class='btn btn-primary' onclick='updateComment(this)' value='"+commentNo+"' style='float:right; width:66px; height:63px;  margin: 0 2px;'>수정</button>";	
+	}
+	html+="</div>";
+	html+="<table class='tbl-comment'>";
+		
+	$(btn).parent().parent().html(html);
+	
+}
+
+function updateComment(btn){
+	var commentNo = $(btn).val();
+	var commentContent = $(btn).prev().prev().val();
+	var commentNickname = '<%=userLoggedInProfile.getProfileUserNickname() %>';
+	var commentProfile = '<%=userLoggedInProfile.getProfileRenamedFilename() %>';
+
+	console.log(commentNo);
+	console.log(commentContent);
+	console.log(commentNickname);
+	console.log(commentProfile);
+	
+	
+	var param = {
+			commentNo : commentNo,
+			commentNickname : commentNickname,
+			commentProfile : commentProfile,
+			commentContent : commentContent
+	}
+			$.ajax({
+				url: "<%=request.getContextPath() %>/gson/sns/updateComment.do", 
+				data : param,
+				dataType: 'json',
+				type : 'post',
+				success: function(data){
+					var html =''
+					if(data.level==1){
+					html+="<td class='timeline-boardcontent-sns' style='width:529px;'>";
+					html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
+					html+="<span class='comment-date' style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
+					html+="<br />";
+					html+="<span style='padding: 10px;'>"+data.commentContent+"</span>";
+					html+="<div>"
+							html+="<button class='btn btn-primary' value='' onclick='openCoCo(this)' style='float:right;'>답글</button>";
+							html+="<button class='btn btn-danger' value='"+data.commentNo+"' boardNo='"+data.boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
+							html+="<button class='btn btn-success' onclick='updateCommentFrm(this)' value='"+data.commentNo+"' style='float:right; margin-right: 2px;'>수정</button>	";	
+							html+="</div>"
+						html+="</td>";
+					}
+					
+					else{
+					
+						html+="<td class='timeline-boardcontent-sns' style='float:right; width:472px;'>";
+						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
+						html+="<span class='comment-date'  style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
+						html+="<br />";
+						html+="<span style='padding: 10px;'>"+data.commentContent+"</span>";
+							html+="<div>"
+							html+="<button class='btn btn-danger' value='"+data.commentNo+"' boardNo='"+data.boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
+							html+="<button class='btn btn-success' value='"+data.commentNo+"' content='"+data.commentContent+"' onclick='updateCommentFrm(this)' style='float:right; margin-right: 2px;'>수정</button>	";	
+							html+="</div>";
+							html+="</td>";
+						}
+						
+						
+					
+					$("#comment"+data.commentNo).html(html);
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					console.log("ajax처리실패!");
+					console.log(jqxhr, textStatus, errorThrown);
+				},
+				complete:function(data){	
+					$(btn).prev().val('');
+				}
+			});
+	
+	
+}
+
+function deleteComment(btn){
+	var commentNo = $(btn).val();
+	var boardNo = $(btn).attr('boardNo');
+	if(confirm("해당 댓글을 삭제하시겠습니까?")){
+		$.ajax({
+			url: "<%=request.getContextPath() %>/gson/sns/deleteComment.do", 
+			data : "commentNo="+commentNo,
+			dataType: 'json',
+			type : 'post',
+			success: function(data){
+				$("#comment"+commentNo).css("display", "none");
+				
+				var cntString = $('#commentcnt'+boardNo).html().substring(3, $('#commentcnt'+boardNo).html().indexOf(')'));
+				var cnt = Number($('#commentcnt'+boardNo).html().substring(3, $('#commentcnt'+boardNo).html().indexOf(')')));
+			
+				$('#commentcnt'+boardNo).html('댓글('+(cnt-1)+')');
+			},
+			error: function(jqxhr, textStatus, errorThrown){
+				console.log("ajax처리실패!");
+				console.log(jqxhr, textStatus, errorThrown);
+			},
+			complete:function(data){	
+				$(btn).prev().val('');
+			}
+		});
+	}
+	
+}
+
+
+
+
+function cancelUpdateComment(btn){
+	
+	$(btn).parent().parent().html($(btn).val());
+	
+}
+
+
+
+
+
+function insertComment(btn){
+	var commentContent = $(btn).prev().val();
+	
+	if(commentContent.length==0){
+		alert("내용을 입력해주세요.");
+		return;
+	}
+	
+	if(commentContent.length>300){
+		alert("최대 300글자까지 가능합니다.");
+		return;
+	}
+	
+	var param = {
+			boardNo : $(btn).val(),
+			commentWriter : '<%=userLoggedIn.getUserId() %>',
+			commentLevel : 1,
+			commentNickname : '<%=userLoggedInProfile.getProfileUserNickname() %>',
+			commentProfile : '<%=userLoggedInProfile.getProfileRenamedFilename() %>', 
+			commentContent : commentContent
+			
+	}
+			$.ajax({
+				url: "<%=request.getContextPath() %>/gson/sns/insertComment.do", 
+				data : param,
+				dataType: 'json',
+				type : 'post',
+				success: function(data){
+					
+					var html =''
+						html+="<tr class=level1 id='comment"+data.commentNo+"'>";
+						html+="<td class='timeline-boardcontent-sns' style='width:529px;'>";
+						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
+						html+="<span class='comment-date' style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
+						html+="<br />";
+						html+="<span style='padding: 10px;'>"+data.commentContent+"</span>";
+						html+="<div>"
+							html+="<button class='btn btn-primary' value='' onclick='openCoCo(this)' style='float:right;'>답글</button>";
+							html+="<button class='btn btn-danger' value='"+data.commentNo+"' boardNo='"+data.boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
+							html+="<button class='btn btn-success' onclick='updateCommentFrm(this)' content='"+data.commentContent+"' value='"+data.commentNo+"' style='float:right; margin-right: 2px;'>수정</button>	";	
+							html+="</div>"
+						html+="</td>";
+						html+="</tr>";
+						
+					
+						html+="<tr style='display:none; float:right;'><td>"
+							html+="<div class='comment-editor'>"
+								html+="<textarea style='margin:7px 2px; float:left;' name='boardCommentContent' class='boardCommentContent' cols='45' rows='3'></textarea>";
+								html+="<button type='button' class='btn btn-primary' onclick='insertCoCo(this)' value='"+data.boardNo+"' style='width:77px; height:68px; margin:5px 2px;'>등록</button>";	
+							html+="</div>";
+						html+="</td>";
+						html+="</tr>";
+						
+						
+						var cntString = $('#commentcnt'+$(btn).val()).html().substring(3, $('#commentcnt'+$(btn).val()).html().indexOf(')'));
+						var cnt = Number($('#commentcnt'+$(btn).val()).html().substring(3, $('#commentcnt'+$(btn).val()).html().indexOf(')')));
+					
+						$('#commentcnt'+$(btn).val()).html('댓글('+(cnt+1)+')');
+						
+						$(btn).parent().next().append(html);
+					
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					console.log("ajax처리실패!");
+					console.log(jqxhr, textStatus, errorThrown);
+				},
+				complete:function(data){	
+					$(btn).prev().val('');
+				}
+			});
+	
+}
+function insertCoCo(btn){
+	var commentContent = $(btn).prev().val();
+
+	var level = 2;
+	
+	var commentRef = $(btn).parent().parent().parent().prev().attr('id').substring(7);
+	
+	if(commentContent.length==0){
+		alert("내용을 입력해주세요.");
+		return;
+	}
+	
+	if(commentContent.length>300){
+		alert("최대 300글자까지 가능합니다.");
+		return;
+	}
+	
+	var param = {
+			boardNo : $(btn).val(),
+			commentWriter : '<%=userLoggedIn.getUserId() %>',
+			commentLevel : 2,
+			commentRef: commentRef,
+			commentNickname : '<%=userLoggedInProfile.getProfileUserNickname() %>',
+			commentProfile : '<%=userLoggedInProfile.getProfileRenamedFilename() %>', 
+			commentContent : commentContent
+			
+	}
+			$.ajax({
+				url: "<%=request.getContextPath() %>/gson/sns/insertComment.do", 
+				data : param,
+				dataType: 'json',
+				type : 'post',
+				success: function(data){
+					console.log(data);
+					var html =''
+						html+="<tr class=level2 id='comment"+data.commentNo+"'>";
+						html+="<td class='timeline-boardcontent-sns' style='width:472px;'>";
+						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
+						html+="<span class='comment-date' style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
+						html+="<br />";
+						html+="<span style='padding: 10px;'>"+data.commentContent+"</span>";
+						html+="<div>"
+							html+="<button class='btn btn-danger' value='"+data.commentNo+"' boardNo='"+data.boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
+							html+="<button class='btn btn-success' onclick='updateCommentFrm(this)' content='"+data.commentContent+"' value='"+data.commentNo+"' style='float:right; margin-right: 2px;'>수정</button>	";	
+							html+="</div>"
+						html+="</td>";
+						html+="</tr>";
+						
+						var cntString = $('#commentcnt'+$(btn).val()).html().substring(3, $('#commentcnt'+$(btn).val()).html().indexOf(')'));
+						var cnt = Number($('#commentcnt'+$(btn).val()).html().substring(3, $('#commentcnt'+$(btn).val()).html().indexOf(')')));
+					
+						$('#commentcnt'+$(btn).val()).html('댓글('+(cnt+1)+')');
+						
+						$(btn).parent().parent().html(html);
+					
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					console.log("ajax처리실패!");
+					console.log(jqxhr, textStatus, errorThrown);
+				},
+				complete:function(data){	
+					$(btn).prev().val('');
+				}
+			});
+	
+}
+
 
 function like(img){
 	var boardNo =$(img).attr('boardNo');
@@ -196,16 +501,15 @@ function updateBoardSNSFrm(boardNo){
 						 	var filename = data.imageSNSList[t].originalFileName;
 						 	
 						 	if(filename.length>7){
-						 		var dot = filename.substring(filename.indexOf('.'));
+						 		var dot = filename.substring(filename.lastIndexOf('.'));
 						 		filename = filename.substr(0, 7) + "..." +  dot;
 						 	}
 						 	html+="<span>"+filename+"</span></div>";
-							html += "</div>";
 						}
-						html+="<input type='checkbox' name='delFile' id='delFile' />";
-						html+="<label for='delFile'>첨부파일삭제</label>";
 					}
 					html += "</div>";
+					html+="<input type='checkbox' name='delFile' id='delFile' />";
+					html+="<label for='delFile'>첨부파일삭제</label>";
 					html += "</td>";
 					html +="</tr>";
 					html += "<tr>";
@@ -452,8 +756,8 @@ function updateBoardSNS(boardNo){
 								html+="<table class='tbl-boardsns' id='boardNo"+data.boardSNS.boardNo+"'>"
 								html+="<tr>";
 								html+="<td class='timeline-boardcontent-sns'>";
-								html+="<img src='<%=request.getContextPath()%>/upload/profile/"+data.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
-								html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>"+data.profileSNS.profileUserNickname+"</a></span>";
+								html+="<a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'><img src='<%=request.getContextPath()%>/upload/profile/"+data.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
+								html+="<span style='font-weight: 600'>"+data.profileSNS.profileUserNickname+"</span></a><";
 								html+="<span style='font-size: 0.8em; color: gray;''>"+data.boardSNS.boardUpdateDate+"</span>";
 								html+="<span style='float: right;'>";
 								if(data.boardSNS.boardWriter=='<%=userLoggedIn.getUserId()%>'){
@@ -533,7 +837,6 @@ function updateBoardSNS(boardNo){
 
 							
 									if(data.LikeSNSList.length>0){
-									
 											html+="<span style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/afterlike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span>"+data.likeSNSList.length+"</span></span>";
 										
 									}else{
@@ -542,19 +845,20 @@ function updateBoardSNS(boardNo){
 										
 									}
 									
-									
-									
-									
 									html+="</td>";
 									html+="</tr>";
 								}
 							
 								html+="<tr>";
 								if(data.commentSNSList.length>0){
-									html+="<td class='timeline-boardcontent-sns' style='cursor:pointer; onclick='openComment()'' >댓글("+data.commentSNSList.length+")</td>";
+									html+="<td class='timeline-boardcontent-sns' style='cursor:pointer;' onclick='openComment(this)' >댓글("+data.commentSNSList.length+")</td>";
 								} else{
 									html+="<td class='timeline-boardcontent-sns' style='cursor:pointer;'>댓글(0)</td>";
 								}
+								
+								
+								
+								
 								html+="</tr>";
 								html+="<tr>";
 								html+="<td class='timeline-boardcontent-sns'>";
@@ -626,8 +930,8 @@ function pageMore(boardNo){
 					html+="<table class='tbl-boardsns' id='boardNo"+tl.boardSNS.boardNo+"'>"
 					html+="<tr>";
 					html+="<td class='timeline-boardcontent-sns'>";
-					html+="<img src='<%=request.getContextPath()%>/upload/profile/"+tl.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
-					html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'>"+tl.profileSNS.profileUserNickname+"</a></span>";
+					html+="<a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'><img src='<%=request.getContextPath()%>/upload/profile/"+tl.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
+					html+="<span style='font-weight: 600'>"+tl.profileSNS.profileUserNickname+"</span></a>";
 					html+="<span style='font-size: 0.8em; color: gray;''>"+tl.boardSNS.boardUpdateDate+"</span>";
 					html+="<span style='float: right;'>";
 					if(tl.boardSNS.boardWriter=='<%=userLoggedIn.getUserId()%>'){
@@ -718,10 +1022,10 @@ function pageMore(boardNo){
 								}
 								
 								if(cnt>0){
-									html+="<span style='float: right; margin-right:10px; cursor:pointer' ><img class='likes' onclick='like(this);' boardNo='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/afterlike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>"+tl.likeSNSList.length+"</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+									html+="<span style='float: right; margin-right:10px; cursor:pointer' ><img class='likes' onclick='like(this);' boardNo='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/afterlike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>"+tl.likeSNSList.length+"</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px; cursor:pointer;'/></span>";
 								}
 								else {
-									html+="<span style='float: right; margin-right:10px; cursor:pointer' ><img class='likes' onclick='like(this);' boardNo='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>"+tl.likeSNSList.length+"</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+									html+="<span style='float: right; margin-right:10px; cursor:pointer' ><img class='likes' onclick='like(this);' boardNo='"+tl.boardSNS.boardNo+"' src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span class='likeCnt'>"+tl.likeSNSList.length+"</span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px; cursor:pointer;'/></span>";
 								}
 							}
 						}else{
@@ -736,60 +1040,83 @@ function pageMore(boardNo){
 						html+="</td>";
 						html+="</tr>";
 					}
-					
-					
-				
 					html+="<tr>";
 					if(tl.commentSNSList.length>0){
-						html+="<td class='timeline-boardcontent-sns' style='cursor:pointer; onclick=openComment();'>댓글("+tl.commentSNSList.length+")</td>";
+						html+="<td id='commentcnt"+tl.boardSNS.boardNo+"' value='"+tl.commentSNSList.length+"' class='timeline-boardcontent-sns' style='cursor:pointer;' onclick='openComment(this);'>댓글("+tl.commentSNSList.length+")</td>";
 					} else{
-						html+="<td class='timeline-boardcontent-sns' style='cursor:pointer;'>댓글(0)</td>";
+						html+="<td id='commentcnt"+tl.boardSNS.boardNo+"' value='"+tl.commentSNSList.length+"' class='timeline-boardcontent-sns' style='cursor:pointer;' onclick='openComment(this);'>댓글(0)</td>";
 					}
-					
-					html+="<div class='comment-editor'>"
-					html+="<form action='' name='boardCommentFrm'method='post'>";
-					html+="<input type='hidde'" name='boardRef' value='' />";
-					html+="<input type='hidden' name='boardCommentWriter' value='' />";
-					html+="<input type='hidden' name="boardCommentLevel' value='1' />";
-					html+="<input type='hidden' name='boardCommentRef' value='0' />";
-					html+="<textarea name='boardCommentContent' class='boardCommentContent' cols='60' rows='3'></textarea>";
-					html+="<button type='button' clss='btn-insert'>등록</button>";	
-					html+="</form>";
-					html+="</div>";
-					<!-- 댓글목록테이블 -->
-					html+="<table class='tbl-comment'>";
-					html+="<tr class=level1>";
-					html+="<td class='timeline-boardcontent-sns' style='width:508px;'>";
-					html+="<span class=comment-writer>작성자</span>";
-					html+="<span class=comment-date>대댓날짜</span>";
-					html+="<br />";
-					html+="여긴 내용";
-					html+="<button class='btn-reply' value='' style='float:right;'>답글</button>";
-					html+="<button class='btn-delete' value="" style='float:right;'>삭제</button>	";	
-					html+="</td>";
-					html+="</tr>";
-					html+="<tr class=level2>";
-					html+="<td>";
-					html+="<span class=comment-writer>대댓작성자</span>";
-					html+="<span class=comment-date>대댓날짜 </span>";
-					html+="<br />";
-					html+="여기내용";
-					html+="<button class='btn-delete' value="" style='float:right;'>삭제</button>";
-					html+="</td>";
-					html+="</tr>";
-				
-				
-					html+="</table>";
-					
-					
-					
-					
-					
-					
-					
-					
 					html+="</td>";		
 					html+="</tr>";
+					html+="<tr style='display:none;'><td>"
+						html+="<div class='comment-editor'>"
+							
+						html+="<textarea style='float:left; margin:5px;' name='boardCommentContent' class='boardCommentContent' cols='51' rows='3'></textarea>";
+						html+="<button type='button' class='btn btn-primary' onclick='insertComment(this);' value='"+tl.boardSNS.boardNo+"' style='float:right; width:77px; height:68px; margin:5px 5px 5px 2px;'>등록</button>";	
+					
+						html+="</div>";
+						html+="<table class='tbl-comment'>";
+						if(tl.commentSNSList.length>0){
+							for(var y=0; y<tl.commentSNSList.length; y++){
+								if(tl.commentSNSList[y].commentLevel==1){
+									html+="<tr class=level1 id='comment"+tl.commentSNSList[y].commentNo+"'>";
+									html+="<td class='timeline-boardcontent-sns' style='width:529px;'>";
+									html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.commentSNSList[y].commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+tl.commentSNSList[y].commentProfile+"' class='header-profile-circle' width='30' height='30' />"+tl.commentSNSList[y].commentNickname+"@"+tl.commentSNSList[y].commentWriter+"</a>";
+									html+="<span class='comment-date'  style='font-size:0.8em; color:gray'>"+tl.commentSNSList[y].commentUpdateDate+"</span>";
+									html+="<br />";
+									html+="<span style='padding: 10px;'>"+tl.commentSNSList[y].commentContent+"</span>";
+									if('<%=userLoggedIn.getUserId() %>' == tl.commentSNSList[y].commentWriter){
+										html+="<div>"
+										html+="<button class='btn btn-primary' value='"+tl.commentSNSList[y].commentNo+"' onclick='openCoCo(this);' style='float:right;'>답글</button>";
+										html+="<button class='btn btn-danger' value='"+tl.commentSNSList[y].commentNo+"' boardNo='"+tl.commentSNSList[y].boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
+										html+="<button class='btn btn-success' value='"+tl.commentSNSList[y].commentNo+"' content='"+tl.commentSNSList[y].commentContent+"' onclick='updateCommentFrm(this)' style='float:right; margin-right: 2px;'>수정</button>	";	
+										html+="</div>"
+									} else{
+										html+="<div>"
+										html+="<button class='btn btn-primary' onclick='openCoCo(this);' value='"+tl.commentSNSList[y].commentNo+"' style='float:right;'>답글</button>";
+										html+="</div>"
+									}
+									html+="</td>";
+									html+="</tr>";
+									
+									<!--여기 -->
+									html+="<tr style='display:none; float:right;'><td>"
+										html+="<div class='comment-editor'>"
+											html+="<textarea style='margin:7px 2px; float:left;' name='boardCommentContent' class='boardCommentContent' cols='45' rows='3'></textarea>";
+											html+="<button type='button' class='btn btn-primary' onclick='insertCoCo(this)' value='"+tl.boardSNS.boardNo+"' style='width:77px; height:68px; margin:5px 2px;'>등록</button>";	
+										html+="</div>";
+									html+="</td>";
+									html+="</tr>";
+									
+								}
+								if(tl.commentSNSList[y].commentLevel==2){
+									html+="<tr class='level2' id='comment"+tl.commentSNSList[y].commentNo+"'>";
+									html+="<td class='timeline-boardcontent-sns' style='float:right; width:472px;'>";
+									html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.commentSNSList[y].commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+tl.commentSNSList[y].commentProfile+"' class='header-profile-circle' width='30' height='30' />"+tl.commentSNSList[y].commentNickname+"@"+tl.commentSNSList[y].commentWriter+"</a>";
+									html+="<span class='comment-date'  style='font-size:0.8em; color:gray'>"+tl.commentSNSList[y].commentUpdateDate+"</span>";
+									html+="<br />";
+									html+="<span style='padding: 10px;'>"+tl.commentSNSList[y].commentContent+"</span>";
+									if('<%=userLoggedIn.getUserId() %>' == tl.commentSNSList[y].commentWriter){
+										html+="<div>"
+										html+="<button class='btn btn-danger' value='"+tl.commentSNSList[y].commentNo+"' boardNo='"+tl.commentSNSList[y].boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
+										html+="<button class='btn btn-success' value='"+tl.commentSNSList[y].commentNo+"' content='"+tl.commentSNSList[y].commentContent+"' onclick='updateCommentFrm(this)' style='float:right; margin-right: 2px;'>수정</button>	";	
+										html+="</div>"
+									} else{
+										html+="<div>"
+										html+="<button class='btn btn-primary' onclick='openCoCo(this);' value='"+tl.commentSNSList[y].commentNo+"' style='float:right;'>답글</button>";
+										html+="</div>"
+									}
+									html+="</td>";
+									html+="</tr>";
+								}
+							}
+						}
+							html+="</table>";
+						
+		
+					
+					html+="</td></tr>"
+					
 					html+="</table>"
 					html+="</div>";
 					

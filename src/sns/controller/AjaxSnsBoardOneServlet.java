@@ -62,7 +62,7 @@ public class AjaxSnsBoardOneServlet extends HttpServlet {
 				
 			gradeSNSList = new SNSService().selectGradeSNS(boardSNS.getBoardNo());
 				
-			commentSNSList = new SNSService().selectCommentSNS(boardSNS.getBoardNo());
+			commentSNSList = new SNSService().selectCommentSNSList(boardSNS.getBoardNo());
 				
 			likeSNSList = new SNSService().selectLikeSNSList(boardSNS.getBoardNo());
 				

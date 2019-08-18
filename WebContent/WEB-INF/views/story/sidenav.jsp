@@ -59,6 +59,11 @@ function updateIntroduce(){
 function headerTextModify(){
 	var headertext = $("#headerAfter").val();
 
+	if(headertext.length==0){
+		alert('내용을 입력해주세요.');
+		return;
+	}
+	
 	if(headertext.length>20){
 		alert('최대 20글자까지 가능합니다.');
 		return;
@@ -95,6 +100,11 @@ function headerTextModify(){
 }
 function nickNameModify(){
 	var nickname = $("#nickAfter").val();
+
+	if(nickname.length==0){
+		alert('닉네임을 입력해주세요.');
+		return;
+	}
 	
 
 	if(nickname.length>8){
@@ -134,6 +144,12 @@ function nickNameModify(){
 }
 function introModify(){
 	var intro = $("#introAfter").val();
+	
+
+	if(intro.length==0){
+		alert('닉네임을 입력해주세요.');
+		return;
+	}
 	
 
 	if(intro.length>20){
