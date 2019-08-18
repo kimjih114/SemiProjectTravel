@@ -209,19 +209,20 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
    			<td id="business_List" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 목록</td>
    		</tr>
    		<tr>
-   			<td>공지사항 메시지</td>
+   			<td id="gomsg">공지사항 메시지</td>
    		</tr>
    		<tr>
-   			<td>문의관리</td>
+   			<td id="QuestionList">문의관리</td>
    		</tr>
-   		<tr>
-   			<td>사업자 전환</td>
+		<tr>
+   			<td id="business_change" onclick="location.href='<%=request.getContextPath()%>/admin/changeBusiness'">사업자 전환</td>
    		</tr>
+   		
    	</table>
 
   </nav>   
  
-  	<div id="content"style="top:20%; text-align : center;width:600px;">
+  	<div id="content"style="top:10%; text-align : center;width:600px;">
   		<h2>회원 목록</h2>
   		<br><br>
   		<div id="head-wrapper">

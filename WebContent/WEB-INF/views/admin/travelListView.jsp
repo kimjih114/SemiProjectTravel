@@ -235,9 +235,9 @@ numPerPage{
 
    </div>
 
-   <table id="tbl-usermenu0">
+<table id="tbl-usermenu0">
    	 <tr>
-	<td id="modifyUserInfo" onclick="location.href='<%=request.getContextPath()%>/admin/adminUpdateView'">관리자 정보 수정</td>
+   		<td id="modifyUserInfo" onclick="location.href='<%=request.getContextPath()%>/admin/adminUpdateView'">관리자 정보 수정</td>
    	</tr>
 	<tr>
    		<td id="userList" onclick="location.href='<%=request.getContextPath()%>/admin/adminUserList'">회원보기</td>
@@ -250,19 +250,20 @@ numPerPage{
    			<td id="business_List" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 목록</td>
    		</tr>
    		<tr>
-   			<td>공지사항 메시지</td>
+   			<td id="gomsg">공지사항 메시지</td>
    		</tr>
    		<tr>
-   			<td>문의관리</td>
+   			<td id="QuestionList">문의관리</td>
    		</tr>
-   		<tr>
-   			<td>사업자 전환</td>
+		<tr>
+   			<td id="business_change" onclick="location.href='<%=request.getContextPath()%>/admin/changeBusiness'">사업자 전환</td>
    		</tr>
+   		
    	</table>
 
   </nav>   
  
-  	<div id="content" style="top:20%; text-align : center">
+  	<div id="content" style="top:10%; text-align : center">
   		<h2>업체 목록</h2>
   		<br><br>
   		<div id="head-wrapper">

@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import user.model.service.UserService;
-import user.model.vo.User;
 
 /**
- * Servlet implementation class ChangeBusinessEndServlet
+ * Servlet implementation class ChangeUserServlet
  */
-@WebServlet("/admin/businessChangeEnd")
-public class ChangeBusinessEndServlet extends HttpServlet {
+@WebServlet("/admin/userChangeEnd")
+public class ChangeUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangeBusinessEndServlet() {
+    public ChangeUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +30,20 @@ public class ChangeBusinessEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
+request.setCharacterEncoding("utf-8");
 		
 		String userId = request.getParameter("userId");
 		
-		int result = new UserService().changeUser(userId);
+		int result = new UserService().changeBusiness(userId);
 		
 		String view = "/WEB-INF/views/common/msg.jsp";
 		String msg = "";
-		String loc = "/admin/changeBusiness";
+		String loc = "/";
 		
 		if(result>0)
-			msg = "사업자 전환이 완료되었습니다.";
+			msg = "일반 유저 전환이 완료되었습니다.";
 		else
-			msg="사업자 전환에 실패하였습니다.";
+			msg="일반 유저 전환에 실패하였습니다.";
 		
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
@@ -52,7 +51,6 @@ public class ChangeBusinessEndServlet extends HttpServlet {
 
 		RequestDispatcher reqDispatcher = request.getRequestDispatcher(view);
 		reqDispatcher.forward(request, response);
-		
 	}
 
 	/**

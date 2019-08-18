@@ -206,4 +206,23 @@ public class UserDAO {
 		return result;
 	}
 
+
+
+
+	public int changeBusiness(Connection conn, String userId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("changeUser");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

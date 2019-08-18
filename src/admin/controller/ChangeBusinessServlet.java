@@ -63,7 +63,7 @@ public class ChangeBusinessServlet extends HttpServlet {
 			pageBar += "<span>[이전]</span>";
 		}
 		else {
-			pageBar +="<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'>[이전]</a>";
+			pageBar +="<a href='"+request.getContextPath()+"/admin/changeBusiness?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'>[이전]</a>";
 		}
 		
 		while(pageNo<=pageEnd && pageNo <= totalPage) {
@@ -71,7 +71,7 @@ public class ChangeBusinessServlet extends HttpServlet {
 				pageBar +="<span class='cPage'>"+pageNo+"</span>";
 			}
 			else {
-				pageBar +="<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a>";
+				pageBar +="<a href='"+request.getContextPath()+"/admin/changeBusiness?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a>";
 			}
 			
 			pageNo++;
@@ -81,7 +81,7 @@ public class ChangeBusinessServlet extends HttpServlet {
 			pageBar += "<span>[다음]</span>";
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>[다음]</a>";
+			pageBar += "<a href='"+request.getContextPath()+"/admin/changeBusiness?cPage="+pageNo+"&numPerPage="+numPerPage+"'>[다음]</a>";
 		}
 		
 		System.out.println("pageBar="+pageBar);

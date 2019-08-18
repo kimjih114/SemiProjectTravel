@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
 <%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
-
+<%
+	List<User> list = (List<User>)request.getAttribute("list");
+	String searchType = request.getParameter("searchType");
+	String searchKeyword = request.getParameter("searchKeyword");
+	String pageBar = (String)request.getAttribute("pageBar");
+%>
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -28,6 +34,8 @@
 
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
+
+
  <style>
 .page-top{
 	width: 1024px;
@@ -161,6 +169,11 @@ section#page-top{
     </div>
   </header>
   
+    
+  <form action="" name="memomsgFrm">
+	<input type="hidden" name="userId" />
+</form>
+  
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
@@ -169,7 +182,7 @@ section#page-top{
 
    </div>
 
-  <table id="tbl-usermenu0">
+   <table id="tbl-usermenu0">
    	 <tr>
    		<td id="modifyUserInfo" onclick="location.href='<%=request.getContextPath()%>/admin/adminUpdateView'">관리자 정보 수정</td>
    	</tr>
@@ -196,110 +209,125 @@ section#page-top{
    	</table>
 
   </nav>   
- 
-  	<div id="content" style="margin-left : 80px;">
-  	<form action="<%=request.getContextPath()%>/travel/travelEnrollEnd"
-  		  name="travelEnrollFrm"
-  		  id="travelEnrollFrm"
-  		  method = "post"
-  		  enctype="multipart/form-data"
-  		  style="width:500px;">
-  	 <div class="form-group">
-     <label for="exampleInputEmail1">시설 명칭 입력</label>
-    <input type="text" class="form-control" id="travelName" aria-describedby="emailHelp" placeholder="Name" name="travelName" required>
-    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-  </div>
-  <div class="form-group">
-   <label for="exampleInputEmail1">상세 주소 입력</label>
-    <input type="text" class="form-control" id="travelLocation" aria-describedby="emailHelp" placeholder="Location" name="travelLocation" required>
-    <small id="emailHelp" class="form-text text-muted">도로명 주소를 적어주세요.</small>
-  </div>
-	<div class="form-group">
-    <label for="exampleInputEmail1">사진등록</label><br />
-    <input type="file" name="fileName" id="fileName" style="text-align:center;"/>
-  </div>
-  <div class="form-group">
-  <label for="exampleInputEmail1">사업 등록자 이름</label>
-    <input type="text" class="form-control" id="officierName" aria-describedby="emailHelp" placeholder="Officier" name="officierName" required>
-  </div>
-  <div class="form-group">
-  	<label for="exampleInputEmail1">사업 등록자 전화번호</label>
-    <input type="text" class="form-control" id="officierPhone" aria-describedby="emailHelp" 
-    maxlength="11" placeholder="Phone" name="officierPhone" required>
-  </div>
-  	<div class="form-group">
-    <label for="exampleInputEmail1" id="userDefaultActivity">여행 타입</label><br />
-    <input type="checkbox" name="program" id="program1" value="P"  onclick="doOpenCheck(this);"/>
-					<label for="program1">여행지</label>
-					<input type="checkbox" name="program" id="program2" value="A" onclick="doOpenCheck(this);"/>
-					<label for="program2">숙소</label>
-					<input type="checkbox" name="program" id="program3" value="R" onclick="doOpenCheck(this);"/>
-					<label for="program3">맛집</label>
-					<input type="checkbox" name="program" id="program4" value="E" onclick="doOpenCheck(this);"/>
-					<label for="program4">놀거리</label>
-					<input type="checkbox" name="program" id="program5" value="S" onclick="doOpenCheck(this);" />
-					<label for="program5">쇼핑</label>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">시설 소개 내용</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="7"></textarea>
-  </div>
+  	 	<div id="content" style="top:10%; text-align : center">
+  		<h2>사업자 전환</h2>
+  		<br><br>
+  		<div id="head-wrapper">
+  			<div id="search-container">	
+  			<div id="search-userId" class="searchFrm">
+  				<form action="<%=request.getContextPath()%>/admin/findChangeBusiness">
+  				<input type="hidden"
+  						name="searchType" 
+  						value="userId"/>
+  				회원 아이디 :
+  				<input type="search"
+  					  name="searchKeyword"
+  					  size="25"
+  					  placeholder="회원 아이디를 입력하세요"/>
+  				<input type="submit" value="검색"/>  
+  			</form>
+  			</div>
+  			</div>
+  		<div id="numPerPage-container" class="wrapper">
+  		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
+  		<br>
+  		</form>
+  		
+  		</div>
+  		</div>
+  		<br><br><br>
+  		<table id="tbl-user" style="margin:0 auto; width:700px;">
+  			<thead>
+  			<tr>
+  				<th>아이디</th>
+  				<th>닉네임</th>
+  				<th>이름</th>
+  				<th>성별</th>
+  				<th>이메일</th>
+  				<th>핸드폰 번호</th>
+  				<th>유저 타입</th>
+  				<th>사업자 전환</th>
+  			</tr>
+  			</thead>
+  			<tbody>
+  			<% if(list==null|| list.isEmpty()){%>
+  			<tr>
+  				<td colspan="9" align="center"> 검색 결과가 없습니다.</td>
+  			</tr>
+  			<%
+  			}
+  			else{
+  				for(User u : list){
+  			%>
+  			<tr>
+  				<td id="userId_">
+  					<%=u.getUserId() %></a>
+  				</td>
+  				<td><%=u.getUsernickName() %></td>
+  				<td><%=u.getUserName() %></td>
+  				<td><%="M".equals(u.getUserGender())?"남":"여" %></td>
+  				<td><%=u.getUserEmail() %></td>
+  				<td><%=u.getUserPhone() %></td>
+  				<td><%switch(u.getUserType()){
+  				case "D" :%>일반 유저<%;break;
+  				case "S" :%>사업자<%;break;
+  				case "A" :%>관리자<%;break;
+  				}%></td>
+  				
+  				<td><%if("D".equals(u.getUserType())){%> <button class="btn btn-primary" style="float:right;"
+					onclick="location.href='<%=request.getContextPath()%>/admin/businessChangeEnd?userId=<%=u.getUserId()%>'">전환</button>
+					<%}else if("S".equals(u.getUserType())){ %><button class="btn btn-primary" style="float:right;"
+					onclick="location.href='<%=request.getContextPath()%>/admin/userChangeEnd?userId=<%=u.getUserId()%>'">전환</button>
+					<%} %></td>
+  			</tr>
+  			<%		
+  				}
+  			}
+  			%>
+  			</tbody>
+  		</table>
+  		<br><br>
+  		<div id="pageBar" style="text-align:center">
+  			<%=pageBar %>
+  		</div>
+  	</div>
 
-	<div id="putt" style="text-align:center;">
-
-  <button type="submit" class="btn btn-primary" >등록</button>
-  <button type="reset" class="btn btn-primary" >초기화</button>
- </div>
-<br><br><br><br>
- </form>
-   	</div>
  </section>
-<script>
-function doOpenCheck(chk){
-    var obj = document.getElementsByName("program");
-    for(var i=0; i<obj.length; i++){
-        if(obj[i] != chk){
-            obj[i].checked = false;
-        }
-    }
-}
-$("#userList").click(()=>{
-	$.ajax({
-		url:"<%=request.getContextPath()%>/jquery/gson/admin/selectAll.do",
-		type: "get",
-		dataType: "json",
-		success: function(data){
-			console.log(data);
-			
-			var $table = $("<table><th>아이디</th><th>닉네임</th><th>이름</th><th>성별</th><th>생년월일</th><th>이메일</th><th>여행지</th><th>활동</th><th>등록일</th></table>");
-			$(data).each((i,u)=>{
-				
-				var html = "<tr>";
-				html += "<td>"+u.userId+"</td>";
-				html += "<td>"+u.usernickName+"</td>";
-				html += "<td>"+u.userName+"</td>";
-				html += "<td>"+u.userGender+"</td>";
-				html += "<td>"+u.userBirth+"</td>";
-				html += "<td>"+u.userEmail+"</td>";
-				html += "<td>"+u.userDefaultPlace+"</td>";
-				html += "<td>"+u.userDefaultActivity+"</td>";
-				html += "<td>"+u.userEnrollDate+"</td>";
-				html += "</tr>";
-				console.log(html);
-				$table.append(html);
-			});
-			
-			$("#content").html($table);
-			
-			
-		},
-		error: function(jqxhr, textStatus, errorThrown){
-			console.log("ajax 처리 실패!");
-			console.log(jqxhr, textStatus, errorThrown);
-		}
-	});
-});
-</script>
 
+ <script>
+ 
+ $("#QuestionList").on("click", function(){
+		var userId = '<%=userLoggedIn.getUserId() %>';	
+		console.log("userLoggedIn"+userId);
+		location.href="<%=request.getContextPath()%>/boardquestion/adminboardList"; 
+	});
+	
+	$("#gomsg").on("click", function(){
+			var userId = '<%=userLoggedIn.getUserId() %>';	
+			console.log("userLoggedIn"+userId);
+		 	
+		 	
+			var url="<%=request.getContextPath()%>/chat/chatroom.do?userId="+userId;
+			var title="popup"; 
+			var status = "width=600px, height=400px, left=150px, top=0px";
+			var popup = open("", title, status);
+			
+			var frm = document.memomsgFrm;
+			frm.userId.value= userId;
+			frm.action = url;
+			frm.target=title;
+			frm.method= "post"; 
+			frm.submit();
+		
+	});
+ 
+ 
+ </script>
+
+<style>
+#travelName{
+text-align : center;
+}
+</style>
 </body>
 </html>

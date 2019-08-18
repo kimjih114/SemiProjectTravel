@@ -248,13 +248,13 @@ numPerPage{
    			<td>문의관리</td>
    		</tr>
    		<tr>
-   			<td>사업자 전환</td>
+   			<td id="business_change" onclick="location.href='<%=request.getContextPath()%>/admin/changeBusiness'">사업자 전환</td>
    		</tr>
    	</table>
 
   </nav>   
  
-  	<div id="content" style="top:20%; text-align : center">
+  	<div id="content" style="top:10%; text-align : center">
   		<h2>회원 목록</h2>
   		<br><br>
   		<div id="head-wrapper">

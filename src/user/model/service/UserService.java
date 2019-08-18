@@ -74,4 +74,15 @@ public class UserService {
 		return result;
 	}
 
+	public int changeBusiness(String userId) {
+		Connection conn = getConnection();
+		int result = new UserDAO().changeBusiness(conn, userId);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+
 }

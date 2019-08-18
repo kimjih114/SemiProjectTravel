@@ -1,21 +1,14 @@
-<%@page import="user.model.dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
+<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <%
 	List<User> list=(List<User>)request.getAttribute("list");
 	String pageBar = (String)request.getAttribute("pageBar");
 	int numPerPage = (int)request.getAttribute("numPerPage");
-	
-	String userId = request.getParameter("userId");
 	System.out.println("numPerpage"+numPerPage);
-	User user = new UserService().selectOne(userId);
 	
 %>
-<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
-<link rel="stylesheet" href="selectbox.min.css">
-<script src="selectbox.min.js"></script>
-
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -43,44 +36,8 @@
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
 
-<script>
 
-$(()=>{
-	$("#numPerPage").on("change",()=>{
-		$("#numPerPageFrm").submit();
-	});
-	
-	
-	$("#searchType").on("change", (e)=>{
-		var type = $(e.target).val();
-		
-		$(".searchFrm").hide();
-		$("#search-"+type).css('display','inline-block');
-		
-	});
-	
-	
-});
-
-	$("#modifyUserInfo").click(function(){
-		$.ajax({
-	        type : "GET",
-	        url : "<%=request.getContextPath() %>/my",
-	        dataType : "text",
-	        error : function() {
-	          alert('통신실패!!');
-	        },
-	        success : function(data) {
-	          $('#Context').html(data);
-	        }
-	 
-	  });
-	
-})
-
-
-</script>
-  <style>
+ <style>
 .page-top{
 	width: 1024px;
 	position : relative;
@@ -137,7 +94,7 @@ table{
 	margin-bottom: 30px;
 }
 
-#tbl-usermenu0 tr :hover{
+table tr :hover{
 	cursor: pointer;
 	color: orangered;
 	
@@ -177,7 +134,7 @@ section#page-top{
 }
 #content{
 	position : absolute;
-	top : 9%;
+	top : 5%;
 	left : 28%;
 }
 #content table{
@@ -201,17 +158,6 @@ section#page-top{
 #content table tr:nth-child(2n){
 	background-color:#f7f2eb;
 }
-div#search-container{
-	margin : 0 0 10px;
-	padding : 3px;
-}
-div#search-userId{display: inline-block;}
-div#search-userName{display: none;}
-div#search-userPhone{display:none;}
-numPerPage{
-	float : right;
-}
-
 </style>
   
  <header class="masthead" style="height:300px;">
@@ -223,6 +169,11 @@ numPerPage{
      </div>
     </div>
   </header>
+  
+    
+  <form action="" name="memomsgFrm">
+	<input type="hidden" name="userId" />
+</form>
   
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
@@ -247,28 +198,29 @@ numPerPage{
    			<td id="business_List" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 목록</td>
    		</tr>
    		<tr>
-   			<td>공지사항 메시지</td>
+   			<td id="gomsg">공지사항 메시지</td>
    		</tr>
    		<tr>
-   			<td>문의관리</td>
+   			<td id="QuestionList">문의관리</td>
    		</tr>
-   		<tr>
+		<tr>
    			<td id="business_change" onclick="location.href='<%=request.getContextPath()%>/admin/changeBusiness'">사업자 전환</td>
    		</tr>
+   		
    	</table>
 
   </nav>   
- 
-  	<div id="content" style="top:20%; text-align : center">
+  	 	<div id="content" style="top:10%; text-align : center">
   		<h2>사업자 전환</h2>
   		<br><br>
   		<div id="head-wrapper">
   			<div id="search-container">	
   			<div id="search-userId" class="searchFrm">
-  				<form action="<%=request.getContextPath()%>/admin/userFineder">
+  				<form action="<%=request.getContextPath()%>/admin/findChangeBusiness">
   				<input type="hidden"
   						name="searchType" 
   						value="userId"/>
+  				회원 아이디 :
   				<input type="search"
   					  name="searchKeyword"
   					  size="25"
@@ -294,6 +246,7 @@ numPerPage{
   				<th>성별</th>
   				<th>이메일</th>
   				<th>핸드폰 번호</th>
+  				<th>유저 타입</th>
   				<th>사업자 전환</th>
   			</tr>
   			</thead>
@@ -308,7 +261,7 @@ numPerPage{
   				for(User u : list){
   			%>
   			<tr>
-  				<td>
+  				<td id="userId_">
   					<%=u.getUserId() %></a>
   				</td>
   				<td><%=u.getUsernickName() %></td>
@@ -316,7 +269,17 @@ numPerPage{
   				<td><%="M".equals(u.getUserGender())?"남":"여" %></td>
   				<td><%=u.getUserEmail() %></td>
   				<td><%=u.getUserPhone() %></td>
-  				<td> <button class="btn btn-primary" style="float:right;" onclick="fun_confirm()">전환</button></td>
+  				<td><%switch(u.getUserType()){
+  				case "D" :%>일반 유저<%;break;
+  				case "S" :%>사업자<%;break;
+  				case "A" :%>관리자<%;break;
+  				}%></td>
+  				
+  				<td><%if("D".equals(u.getUserType())){%> <button class="btn btn-primary" style="float:right;"
+					onclick="location.href='<%=request.getContextPath()%>/admin/businessChangeEnd?userId=<%=u.getUserId()%>'">전환</button>
+					<%}else if("S".equals(u.getUserType())){ %><button class="btn btn-primary" style="float:right;"
+					onclick="location.href='<%=request.getContextPath()%>/admin/userChangeEnd?userId=<%=u.getUserId()%>'">전환</button>
+					<%} %></td>
   			</tr>
   			<%		
   				}
@@ -331,28 +294,38 @@ numPerPage{
   	</div>
 
  </section>
+
  <script>
-function fun_confirm(){
-	
-	if(confirm("사업자로 전환하시겠습니까?")==true){
-		location.href='<%=request.getContextPath()%>/admin/businessChangeEnd?userId=<%=user.getUserId() %>'
-		
-	}else{
-		return;
-	}
-}
  
-</script>
+ $("#QuestionList").on("click", function(){
+		var userId = '<%=userLoggedIn.getUserId() %>';	
+		console.log("userLoggedIn"+userId);
+		location.href="<%=request.getContextPath()%>/boardquestion/adminboardList"; 
+	});
+	
+	$("#gomsg").on("click", function(){
+			var userId = '<%=userLoggedIn.getUserId() %>';	
+			console.log("userLoggedIn"+userId);
+		 	
+		 	
+			var url="<%=request.getContextPath()%>/chat/chatroom.do?userId="+userId;
+			var title="popup"; 
+			var status = "width=600px, height=400px, left=150px, top=0px";
+			var popup = open("", title, status);
+			
+			var frm = document.memomsgFrm;
+			frm.userId.value= userId;
+			frm.action = url;
+			frm.target=title;
+			frm.method= "post"; 
+			frm.submit();
+		
+	});
+ 
+ 
+ </script>
+
 <style>
-
-#numPerPageFrm{
-	text-align : center;
-}
-#numPerPage{
-	border-color : orange;
-	size : 20px;
-}
-
 #travelName{
 text-align : center;
 }
