@@ -314,7 +314,7 @@ div#search-userPhone{display: <%="userPhone".equals(searchType)?"inline-block":"
   		</table>
   		<br><br>
   		<div id="pageBar">
-  			<%=pageBar %>
+  			<%-- <%=pageBar %> --%>
   		</div>
   	</div>
 

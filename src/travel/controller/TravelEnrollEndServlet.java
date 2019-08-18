@@ -84,7 +84,7 @@ public class TravelEnrollEndServlet extends HttpServlet {
 		
 		String view = "/WEB-INF/views/common/msg.jsp";
 		String msg = "";
-		String loc = "/";
+		String loc = "/travel/travelList";
 		
 		if(result>0)
 			msg="입력되었습니다. : )";

@@ -280,6 +280,7 @@ section#page-top{
 	<div id="putt" style="text-align:center;">
  	<button type="submit" class="btn btn-primary"  >관리자정보 수정</button>&nbsp;&nbsp;&nbsp;
  	 <button type="reset" class="btn btn-primary" >초기화</button>
+ 	 <br><br>
  	 </div>
  	 </form>
  	</div>
@@ -311,5 +312,6 @@ $("#fileUpdate").change(function(){
 text-align : center;
 }
 </style>
+
 </body>
 </html>

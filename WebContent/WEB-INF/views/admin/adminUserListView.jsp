@@ -356,6 +356,7 @@ numPerPage{
   		<br><br>
   		<div id="pageBar" style="text-align:center">
   			<%=pageBar %>
+  			<br><br>
   		</div>
   	</div>
 

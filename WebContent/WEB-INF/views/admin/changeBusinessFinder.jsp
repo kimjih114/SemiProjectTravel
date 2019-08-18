@@ -228,9 +228,11 @@ section#page-top{
   			</form>
   			</div>
   			</div>
+  			
   		<div id="numPerPage-container" class="wrapper">
   		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
   		<br>
+  		
   		</form>
   		
   		</div>

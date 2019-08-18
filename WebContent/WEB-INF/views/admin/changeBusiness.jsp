@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
-<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
 <%
 	List<User> list=(List<User>)request.getAttribute("list");
 	String pageBar = (String)request.getAttribute("pageBar");
 	int numPerPage = (int)request.getAttribute("numPerPage");
 	System.out.println("numPerpage"+numPerPage);
-	
 %>
+<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
+<link rel="stylesheet" href="selectbox.min.css">
+<script src="selectbox.min.js"></script>
+
  <!-- Bootstrap core CSS -->
   <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -36,8 +38,44 @@
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
 
+<script>
 
- <style>
+$(()=>{
+	$("#numPerPage").on("change",()=>{
+		$("#numPerPageFrm").submit();
+	});
+	
+	
+	$("#searchType").on("change", (e)=>{
+		var type = $(e.target).val();
+		
+		$(".searchFrm").hide();
+		$("#search-"+type).css('display','inline-block');
+		
+	});
+	
+	
+});
+
+	$("#modifyUserInfo").click(function(){
+		$.ajax({
+	        type : "GET",
+	        url : "<%=request.getContextPath() %>/my",
+	        dataType : "text",
+	        error : function() {
+	          alert('통신실패!!');
+	        },
+	        success : function(data) {
+	          $('#Context').html(data);
+	        }
+	 
+	  });
+	
+})
+
+
+</script>
+  <style>
 .page-top{
 	width: 1024px;
 	position : relative;
@@ -94,7 +132,7 @@ table{
 	margin-bottom: 30px;
 }
 
-table tr :hover{
+#tbl-usermenu0 tr :hover{
 	cursor: pointer;
 	color: orangered;
 	
@@ -134,7 +172,7 @@ section#page-top{
 }
 #content{
 	position : absolute;
-	top : 5%;
+	top : 9%;
 	left : 28%;
 }
 #content table{
@@ -158,6 +196,17 @@ section#page-top{
 #content table tr:nth-child(2n){
 	background-color:#f7f2eb;
 }
+div#search-container{
+	margin : 0 0 10px;
+	padding : 3px;
+}
+div#search-userId{display: inline-block;}
+div#search-userName{display: none;}
+div#search-userPhone{display:none;}
+numPerPage{
+	float : right;
+}
+
 </style>
   
  <header class="masthead" style="height:300px;">
@@ -169,11 +218,6 @@ section#page-top{
      </div>
     </div>
   </header>
-  
-    
-  <form action="" name="memomsgFrm">
-	<input type="hidden" name="userId" />
-</form>
   
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
@@ -198,19 +242,18 @@ section#page-top{
    			<td id="business_List" onclick="location.href='<%=request.getContextPath()%>/travel/travelList'">업체 목록</td>
    		</tr>
    		<tr>
-   			<td id="gomsg">공지사항 메시지</td>
+   			<td>공지사항 메시지</td>
    		</tr>
    		<tr>
-   			<td id="QuestionList">문의관리</td>
+   			<td>문의관리</td>
    		</tr>
-		<tr>
+   		<tr>
    			<td id="business_change" onclick="location.href='<%=request.getContextPath()%>/admin/changeBusiness'">사업자 전환</td>
    		</tr>
-   		
    	</table>
 
   </nav>   
-  	 	<div id="content" style="top:10%; text-align : center">
+ 	<div id="content" style="top:10%; text-align : center">
   		<h2>사업자 전환</h2>
   		<br><br>
   		<div id="head-wrapper">
@@ -232,6 +275,12 @@ section#page-top{
   		<div id="numPerPage-container" class="wrapper">
   		<form name="numPerPageFrm" id="numPerPageFrm" style="float:right;">
   		<br>
+  		페이지 당 회원 수 
+  		<select name="numPerPage" id="numPerPage">
+  			<option value="20" <%=numPerPage==20?"selected":"" %>>20</option>
+  			<option value="10" <%=numPerPage==10?"selected":"" %>>10</option>
+  			<option value="5" <%=numPerPage==5?"selected":"" %>>5</option>
+  		</select>
   		</form>
   		
   		</div>
@@ -290,42 +339,25 @@ section#page-top{
   		<br><br>
   		<div id="pageBar" style="text-align:center">
   			<%=pageBar %>
+  			<br><br>
   		</div>
   	</div>
+  	
 
  </section>
 
- <script>
  
- $("#QuestionList").on("click", function(){
-		var userId = '<%=userLoggedIn.getUserId() %>';	
-		console.log("userLoggedIn"+userId);
-		location.href="<%=request.getContextPath()%>/boardquestion/adminboardList"; 
-	});
-	
-	$("#gomsg").on("click", function(){
-			var userId = '<%=userLoggedIn.getUserId() %>';	
-			console.log("userLoggedIn"+userId);
-		 	
-		 	
-			var url="<%=request.getContextPath()%>/chat/chatroom.do?userId="+userId;
-			var title="popup"; 
-			var status = "width=600px, height=400px, left=150px, top=0px";
-			var popup = open("", title, status);
-			
-			var frm = document.memomsgFrm;
-			frm.userId.value= userId;
-			frm.action = url;
-			frm.target=title;
-			frm.method= "post"; 
-			frm.submit();
-		
-	});
- 
- 
- </script>
 
 <style>
+
+#numPerPageFrm{
+	text-align : center;
+}
+#numPerPage{
+	border-color : orange;
+	size : 20px;
+}
+
 #travelName{
 text-align : center;
 }

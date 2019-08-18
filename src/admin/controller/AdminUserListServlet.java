@@ -61,28 +61,28 @@ public class AdminUserListServlet extends HttpServlet {
 		int pageNo = pageStart;
 		
 		if(pageNo ==1) {
-			pageBar += "<span>[이전]</span>";
+			pageBar += "<span>[이전]&nbsp;&nbsp;</span>";
 		}
 		else {
-			pageBar +="<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'>[이전]</a>";
+			pageBar +="&nbsp;&nbsp;<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+(pageNo-1)+"&numPerPage="+numPerPage+"'>[이전]&nbsp;&nbsp;</a>";
 		}
 		
 		while(pageNo<=pageEnd && pageNo <= totalPage) {
 			if(pageNo == cPage) {
-				pageBar +="<span class='cPage'>"+pageNo+"</span>";
+				pageBar +="&nbsp;&nbsp;<span class='cPage'>"+pageNo+"</span>&nbsp;&nbsp;";
 			}
 			else {
-				pageBar +="<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"</a>";
+				pageBar +="&nbsp;&nbsp;<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>"+pageNo+"&nbsp;&nbsp;</a>";
 			}
 			
 			pageNo++;
 		}
 		
 		if(pageNo>totalPage) {
-			pageBar += "<span>[다음]</span>";
+			pageBar += "<span>&nbsp;&nbsp;[다음]</span>";
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>[다음]</a>";
+			pageBar += "&nbsp;&nbsp;<a href='"+request.getContextPath()+"/admin/adminUserList?cPage="+pageNo+"&numPerPage="+numPerPage+"'>&nbsp;&nbsp;[다음]</a>";
 		}
 		
 		System.out.println("pageBar="+pageBar);

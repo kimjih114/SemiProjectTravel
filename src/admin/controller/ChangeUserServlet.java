@@ -38,7 +38,7 @@ request.setCharacterEncoding("utf-8");
 		
 		String view = "/WEB-INF/views/common/msg.jsp";
 		String msg = "";
-		String loc = "/";
+		String loc = "/admin/changeBusiness";
 		
 		if(result>0)
 			msg = "일반 유저 전환이 완료되었습니다.";
