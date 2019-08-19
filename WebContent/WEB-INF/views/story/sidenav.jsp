@@ -147,7 +147,7 @@ function introModify(){
 	
 
 	if(intro.length==0){
-		alert('닉네임을 입력해주세요.');
+		alert('소개를 입력해주세요.');
 		return;
 	}
 	

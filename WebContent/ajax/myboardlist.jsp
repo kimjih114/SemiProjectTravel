@@ -234,9 +234,9 @@ function insertComment(btn){
 						html+="</tr>";
 						
 					
-						html+="<tr style='display:none; float:right;'><td>"
-							html+="<div class='mcomment-editor' style='float:right;'>"
-								html+="<textarea style='margin:7px 2px; float:left;' name='boardCommentContent' class='boardCommentContent' cols='45' rows='3'></textarea>";
+						html+="<tr style='float:right;'><td>"
+							html+="<div class='mcomment-editor' style='display:none; float: right;'>"
+ 								html+="<textarea style='margin:7px 2px; float:left;' name='boardCommentContent' class='boardCommentContent' cols='45' rows='3'></textarea>";
 								html+="<button type='button' class='btn btn-primary' onclick='insertCoCo(this)' value='"+data.boardNo+"' style='width:76px; height:68px; margin:5px 2px;'>등록</button>";	
 							html+="</div>";
 						html+="</td>";
@@ -944,6 +944,24 @@ function pageMore(boardNo){
 					html+="<td class='timeline-boardcontent-sns'>";
 					html+="<a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'><img src='<%=request.getContextPath()%>/upload/profile/"+tl.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
 					html+="<span style='font-weight: 600'>"+tl.profileSNS.profileUserNickname+"</span></a>";
+					
+					var type = '';
+					if(tl.boardSNS.boardType=='P'){
+						type = '';
+					}
+					
+					if(tl.boardSNS.boardType=='F'){
+						type = '(팔로워 공개)';
+					}
+					
+					if(tl.boardSNS.boardType=='L'){
+						type = '(비공개)'
+					}
+					
+					
+					html+="<span style='font-weight: 600; color:black;'>"+type+"</span>";
+					
+					
 					html+="<span style='font-size: 0.8em; color: gray;''>"+tl.boardSNS.boardUpdateDate+"</span>";
 					html+="<span style='float: right;'>";
 					if(tl.boardSNS.boardWriter=='<%=userLoggedIn.getUserId()%>'){
