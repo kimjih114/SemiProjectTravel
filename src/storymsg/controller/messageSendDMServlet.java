@@ -37,7 +37,7 @@ public class messageSendDMServlet extends HttpServlet {
 		response.setContentType("application/json; charset=utf-8");
 		
 		String dm = request.getParameter("dm"); 
-		Map<String, Object> dmMap = new Gson().fromJson(dm,Map.class); 
+		Map<String, Object> dmMap = new Gson().fromJson(dm, Map.class); 
 		System.out.println("dmMap="+dmMap);
 		
 		Map<String, Session> clients = messageChatsocket.clients; 

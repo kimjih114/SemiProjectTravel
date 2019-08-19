@@ -51,8 +51,10 @@
 
 <style>
 header.masthead{
-background-image:url('<%=request.getContextPath()%>/img/header-new.jpg');
-  			
+<%-- background-image:url('<%=request.getContextPath()%>/img/header-new.jpg'); --%>
+
+background-image:<%=userLoggedIn!=null && profile!=null?"url('"+request.getContextPath()+"/upload/profile/"+profile.getHeaderRenamedFilename()+"')":"url('"+request.getContextPath()+"/img/header-new.jpg');"%>
+  				/* 로그인한 상태이고 이 유저의 profile.getheaderimg가 널이 아닐때  유저가 바꾼 renamed헤더 이미지로 바꾸고 싶음!  */		
 
 }
 .header-profile-circle{
