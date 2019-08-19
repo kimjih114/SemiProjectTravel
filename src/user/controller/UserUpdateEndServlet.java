@@ -141,7 +141,7 @@ public class UserUpdateEndServlet extends HttpServlet {
 		String msg = "";
 		String loc = "/";
 		
-		if(result>0&&profile>0)
+		if(result>0)
 			msg = "회원 수정이 되었습니다.";
 		else
 			msg="회원 수정에 실패하였습니다.";
