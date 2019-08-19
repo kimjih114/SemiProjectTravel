@@ -198,5 +198,12 @@ public class TravelService {
 		close(conn);
 		return basket;
 	}
+
+	public List<String> weekendDay(String startDate, String endDate) {
+		Connection conn=getConnection();
+		List<String> weekend=new TravelDAO().weekendDay(conn,startDate,endDate);
+		close(conn);
+		return weekend;
+	}
 	
 }

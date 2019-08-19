@@ -97,16 +97,7 @@
 			        $("#sdate").datepicker( "option", "maxDate", selectedDate );
 			    });
 			    	
-			    /*
-			    var startdate=$("#sdate").val().split("-");			    
-			    var day=startdate[2];			    
-			    if(Number(day)+1<10){
-			    	day="0"+(Number(day)+1);
-			    }
 			    
-			    var enddate=startdate[0]+"-"+startdate[1]+"-"+day;
-			    $("#edate").val(enddate);
-			    */
 			    
 				if("basket"=="<%=basket%>"){
 					$("#search").css("display","block");
@@ -114,6 +105,10 @@
 					 $("#sdate").datepicker( "setDate", "<%=sDate%>");
 					 $("#edate").datepicker( "setDate", "<%=eDate%>");
 					var day=0;
+					var weekend1=0; //주말여부1
+					var weekend2=0; //주말여부2
+					var numberMonth1=0;
+					var numberMonth2=0;
 					var roomList=new Array;
 					
 					$.ajax({
@@ -141,6 +136,31 @@
 						async : false,
 						success:function(data){
 							day=data;
+							
+						},
+						error:function(jqxhr,textStatus,errorThrown){
+							
+						}
+						
+					});
+					
+					//주말여부 
+					$.ajax({
+						type : "get",
+						url : "<%=request.getContextPath()%>/travel/weekendDay.do?sDate=<%=sDate%>&eDate=<%=eDate%>",
+						dataType : "json",
+						async : false,
+						success:function(data){
+							weekend1=data[0];
+							weekend2=data[1];
+							
+							var month1="<%=sDate%>";
+							var month2="<%=eDate%>";
+							
+							numberMonth1=Number(month1.split("-")[1]);
+							numberMonth2=Number(month2.split("-")[1]);
+							console.log(numberMonth1);
+							console.log(numberMonth2);
 							
 						},
 						error:function(jqxhr,textStatus,errorThrown){
@@ -212,12 +232,20 @@
 											html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
 											html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";															
 																			
-											<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-											html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
-											<%}else{%>
+											if(((numberMonth1<7||numberMonth1>8)&&(numberMonth2<7||numberMonth2>8))&&((weekend1!=1&&weekend1!=7)&&(weekend2!=1&&weekend2!=7))){
 											html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></span>";
-											<%}%>
 											html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+											}else if(((numberMonth1<7||numberMonth1>8)&&(numberMonth2<7||numberMonth2>8))&&((weekend1==1||weekend1==7)||(weekend2==1||weekend2==7))){
+											html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roompeakseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roompeakseasonminfee1").text()*day+"원 예약하기</button></span>";
+											html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roompeakseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+											}else if(((numberMonth1==7||numberMonth1==8)||(numberMonth2==7||numberMonth2==8))&&((weekend1!=1&&weekend1!=7)&&(weekend2!=1&&weekend2!=7))){
+											html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
+											html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+											}else if(((numberMonth1==7||numberMonth1==8)||(numberMonth2==7||numberMonth2==8))&&((weekend1==1||weekend1==7)||(weekend2==1||weekend2==7))){
+											html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roompeakseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roompeakseasonminfee2").text()*day+"원 예약하기</button></span>";	
+											html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roompeakseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+											}
+											
 											
 											html1+="</div></div>";
 											html1+="<h3 class='my-4'></h3>";	
@@ -243,12 +271,19 @@
 										html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
 										html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";							
 										html1+="<input type='hidden' id='roomTitle' value='"+$(m).find("roomtitle").text()+"'>";									
-										<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-										html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
-										<%}else{%>
+										if(((numberMonth1<7||numberMonth1>8)&&(numberMonth2<7||numberMonth2>8))&&((weekend1!=1&&weekend1!=7)&&(weekend2!=1&&weekend2!=7))){
 										html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></span>";
-										<%}%>
 										html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+										}else if(((numberMonth1<7||numberMonth1>8)&&(numberMonth2<7||numberMonth2>8))&&((weekend1==1||weekend1==7)||(weekend2==1||weekend2==7))){
+										html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roompeakseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roompeakseasonminfee1").text()*day+"원 예약하기</button></span>";
+										html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roompeakseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+										}else if(((numberMonth1==7||numberMonth1==8)||(numberMonth2==7||numberMonth2==8))&&((weekend1!=1&&weekend1!=7)&&(weekend2!=1&&weekend2!=7))){
+										html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
+										html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+										}else if(((numberMonth1==7||numberMonth1==8)||(numberMonth2==7||numberMonth2==8))&&((weekend1==1||weekend1==7)||(weekend2==1||weekend2==7))){
+										html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roompeakseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roompeakseasonminfee2").text()*day+"원 예약하기</button></span>";	
+										html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roompeakseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+										}
 										
 										html1+="</div></div>";
 										html1+="<h3 class='my-4'></h3>";	
@@ -276,7 +311,11 @@
 	function search(){
 		$("#search").css("display","block");
 		$("#h5").css("margin-left","350px");
-		var day=0;
+		var day=0; // 일수여부
+		var weekend1=0; //주말여부1
+		var weekend2=0; //주말여부2
+		var numberMonth1=0;
+		var numberMonth2=0;
 		var roomList=new Array;
 		var queryString = $("form[name=searchForm]").serialize();
 		
@@ -308,6 +347,26 @@
 			async : false,
 			success:function(data){
 				day=data;
+				
+			},
+			error:function(jqxhr,textStatus,errorThrown){
+				
+			}
+			
+		});
+		//주말여부 
+		$.ajax({
+			type : "get",
+			url : "<%=request.getContextPath()%>/travel/weekendDay.do?sDate="+sDate+"&eDate="+eDate+"",
+			dataType : "json",
+			async : false,
+			success:function(data){
+				weekend1=data[0];
+				weekend2=data[1];
+				var month1=sDate.split("-")[1];
+				var month2=eDate.split("-")[1];
+				numberMonth1=Number(month1);
+				numberMonth2=Number(month2);
 				
 			},
 			error:function(jqxhr,textStatus,errorThrown){
@@ -379,13 +438,21 @@
 								html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
 								html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";															
 																
-								<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-								html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
-								<%}else{%>
+								if(((numberMonth1<7||numberMonth1>8)&&(numberMonth2<7||numberMonth2>8))&&((weekend1!=1&&weekend1!=7)&&(weekend2!=1&&weekend2!=7))){
 								html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></span>";
-								<%}%>
 								html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+								}else if(((numberMonth1<7||numberMonth1>8)&&(numberMonth2<7||numberMonth2>8))&&((weekend1==1||weekend1==7)||(weekend2==1||weekend2==7))){
+								html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roompeakseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roompeakseasonminfee1").text()*day+"원 예약하기</button></span>";
+								html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roompeakseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+								}else if(((numberMonth1==7||numberMonth1==8)||(numberMonth2==7||numberMonth2==8))&&((weekend1!=1&&weekend1!=7)&&(weekend2!=1&&weekend2!=7))){
+								html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
+								html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+								}else if(((numberMonth1==7||numberMonth1==8)||(numberMonth2==7||numberMonth2==8))&&((weekend1==1||weekend1==7)||(weekend2==1||weekend2==7))){
+								html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roompeakseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roompeakseasonminfee2").text()*day+"원 예약하기</button></span>";	
+								html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roompeakseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+								}
 								
+											
 								html1+="</div></div>";
 								html1+="<h3 class='my-4'></h3>";	
 								html1+="<div class='row'>";
@@ -410,12 +477,19 @@
 							html1+="<p>비수기주중최소:"+$(m).find("roomoffseasonminfee1").text()+"(성수기:"+$(m).find("roomoffseasonminfee2").text()+")</p>";
 							html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";							
 							html1+="<input type='hidden' id='roomTitle' value='"+$(m).find("roomtitle").text()+"'>";									
-							<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-							html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
-							<%}else{%>
+							if(((numberMonth1<7||numberMonth1>8)&&(numberMonth2<7||numberMonth2>8))&&((weekend1!=1&&weekend1!=7)&&(weekend2!=1&&weekend2!=7))){
 							html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></span>";
-							<%}%>
 							html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+							}else if(((numberMonth1<7||numberMonth1>8)&&(numberMonth2<7||numberMonth2>8))&&((weekend1==1||weekend1==7)||(weekend2==1||weekend2==7))){
+							html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roompeakseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roompeakseasonminfee1").text()*day+"원 예약하기</button></span>";
+							html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roompeakseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+							}else if(((numberMonth1==7||numberMonth1==8)||(numberMonth2==7||numberMonth2==8))&&((weekend1!=1&&weekend1!=7)&&(weekend2!=1&&weekend2!=7))){
+							html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
+							html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+							}else if(((numberMonth1==7||numberMonth1==8)||(numberMonth2==7||numberMonth2==8))&&((weekend1==1||weekend1==7)||(weekend2==1||weekend2==7))){
+							html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roompeakseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roompeakseasonminfee2").text()*day+"원 예약하기</button></span>";	
+							html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roompeakseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
+							}
 							
 							html1+="</div></div>";
 							html1+="<h3 class='my-4'></h3>";	
@@ -611,18 +685,7 @@
 		    /* buyer_postcode : '123-456', */
 		    /* m_redirect_url : 'https://www.yourdomain.com/payments/complete' */
 		}, function(rsp) {
-		    if ( rsp.success ) {
-		        var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
-		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
-		        msg += '카드 승인번호 : ' + rsp.apply_num;
-		    } else {
-		        var msg = '결제에 실패하였습니다.';
-		        msg += '에러내용 : ' + rsp.error_msg;
-		    }
-		    alert(msg);
-	    
+		    	    
 			var startDate=$("#sdate").val();
 			var endDate=$("#edate").val();
 			var friendId=$("#search").val();
@@ -730,7 +793,7 @@ padding: .8em .5em; /* 여백 설정 */
 
 	</div>
 </div>
-<!-- SELECT to_char(to_date('2019-08-22'), 'D') FROM DUAL; 가격정보 확실히 가져오자!! 집가서 하자 -->
+
 	
 </body>
 </html>

@@ -744,4 +744,31 @@ public class TravelDAO {
 		}
 		return basket;
 	}
+
+	public List<String> weekendDay(Connection conn, String startDate, String endDate) {
+		List<String> weekend=new ArrayList<String>();
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		String sql=prop.getProperty("weekendDay");
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, startDate);
+			pstmt.setString(2, endDate);
+			rset=pstmt.executeQuery();
+			
+			if(rset.next()) {
+				String sd=rset.getString("startDate");
+				String ed=rset.getString("endDate");
+				weekend.add(sd);
+				weekend.add(ed);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return weekend;
+	}
 }
