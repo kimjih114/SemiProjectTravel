@@ -27,8 +27,47 @@
 
   <!-- Custom scripts for this template -->
   <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
- 
+ <style>
+ #contents img{
+ 	width: 300px;
+ 	height: 230px;
+ }
+ </style>
   <script>
+  $(function(){
+		$.ajax({
+			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=12&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=6&pageNo=1",
+			type: "get",
+			dataType: "xml",
+			success:function(data){
+				console.log("data값은?"+data);
+				var $root=$(data).find(":root");
+				
+				var $items=$root.find("item");
+				var html="";
+				
+				$items.each(function(i,m){							
+						
+					html+="<div class='col-md-4 col-sm-6 portfolio-item'>";
+					html+="<a class='portfolio-link' href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find("contenttypeid").text()+"'>";
+					html+="<div class='portfolio-hover'><div class='portfolio-hover-content'><i class='fas fa-plus fa-3x'></i></div></div>";
+					html+="<img class='img-fluid' src='"+$(m).find("firstimage").text()+"' alt=''></a>";
+					html+="<div class='portfolio-caption'>";
+					html+="<h4>"+$(m).find("title").text()+"</h4>";
+					html+="<p class='text-muted'>"+$(m).find("addr1").text()+"</p></div></div>";
+				
+				});
+				
+				$("#contents").html(html);
+				
+			},
+			error:function(jqxhr,textStatus,errorThrown){
+				
+			}
+		});
+	});
+  
+  
  	function searchGo(e){
  		
  		if(e.key=="Enter"){
@@ -84,7 +123,7 @@
         <div class="intro-heading text-uppercase">지금 다양한 국내 여행지를 검색하세요.</div>
          <input type="search" size="50" style="height:50px;" placeholder="찾으시는 구/군을 입력해주세요." id="searchKwd" onkeyup="searchGo(event);"/>
        		<br>
-       	 <span class="intro-lead-in">7월의 추천검색어 : <a href='#' style='color: orangered'>#해운대</a> <a href='#' style='color: orangered'>#강릉</a>  <a href='#' style='color: orangered'>#정선</a></span>
+       	 
         
     </div>
   </header>
@@ -94,7 +133,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">7월의 여행테마 : 여름 바캉스</h2>
+          <h2 class="section-heading text-uppercase">8월의 여행테마 : 여름 바캉스</h2>
           <h3 class="section-subheading text-muted" style="margin-bottom:100px;">무더위를 피해 
           	<a href='#' style='color: orangered'>#해운대</a> 
           	<a href='#' style='color: orangered'>#강릉</a> 
@@ -139,91 +178,8 @@
           <h3 class="section-subheading text-muted" style="margin-bottom:100px;">인기 여행지를 한눈에!</h3>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/01-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Threads</h4>
-            <p class="text-muted">Illustration</p>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/02-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Explore</h4>
-            <p class="text-muted">Graphic Design</p>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/03-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Finish</h4>
-            <p class="text-muted">Identity</p>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal4">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/04-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Lines</h4>
-            <p class="text-muted">Branding</p>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/05-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Southwest</h4>
-            <p class="text-muted">Website Design</p>
-          </div>
-        </div>
-        <div class="col-md-4 col-sm-6 portfolio-item">
-          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
-            <div class="portfolio-hover">
-              <div class="portfolio-hover-content">
-                <i class="fas fa-plus fa-3x"></i>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/06-thumbnail.jpg" alt="">
-          </a>
-          <div class="portfolio-caption">
-            <h4>Window</h4>
-            <p class="text-muted">Photography</p>
-          </div>
-        </div>
+      <div class="row" id="contents">
+        
       </div>
     </div>
   </section>
