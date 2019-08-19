@@ -271,8 +271,7 @@ section#page-top{
    <span id="fname"><%=rUser.getFileName()!=null?rUser.getFileName():"" %></span>
    <%if(rUser.getFileName()!=null){ %>
    <br>
-   <input type="checkbox" name="delFile" id="delFile">
-   <label for="exampleInputEmail1">파일 삭제</label>
+
    <%} %>
    <input type="hidden" name="oldOName" value="<%=rUser.getOriginalFileName()!=null?rUser.getOriginalFileName():"" %>" />
    <input type="hidden" name="oldRName" value="<%=rUser.getFileName()!=null?rUser.getFileName():"" %>" />
@@ -304,6 +303,36 @@ $("#fileUpdate").change(function(){
 	}
 });
 </script>
+ <script>
+ 
+ 
+ $("#QuestionList").on("click", function(){
+		var userId = '<%=userLoggedIn.getUserId() %>';	
+		console.log("userLoggedIn"+userId);
+		location.href="<%=request.getContextPath()%>/boardquestion/adminboardList"; 
+	});
+	
+	$("#gomsg").on("click", function(){
+			var userId = '<%=userLoggedIn.getUserId() %>';	
+			console.log("userLoggedIn"+userId);
+		 	
+		 	
+			var url="<%=request.getContextPath()%>/chat/chatroom.do?userId="+userId;
+			var title="popup"; 
+			var status = "width=600px, height=400px, left=150px, top=0px";
+			var popup = open("", title, status);
+			
+			var frm = document.memomsgFrm;
+			frm.userId.value= userId;
+			frm.action = url;
+			frm.target=title;
+			frm.method= "post"; 
+			frm.submit();
+		
+	});
+ 
+ 
+ </script>
 
  
 
