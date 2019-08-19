@@ -29,16 +29,23 @@ $(()=>{
 
 
 function openCoCo(btn) {
+	if ($(".mcomment-editor").css("display") == "none"){
+		$(".mcomment-editor").css("display", "block");
+		$(btn).removeClass('btn-dark').addClass('btn-primary');
+		$(btn).text('답글');
+		return;
+	}
+	
 	if($(btn).parent().parent().parent().next().css("display") == "none"){
 		$(btn).parent().parent().parent().next().css("display", "block");
 		$(btn).removeClass('btn-primary').addClass('btn-dark');
 		$(btn).text('취소');
 	}
 	else if($(btn).parent().parent().parent().next().css("display") == "block"){
-		$(btn).parent().parent().parent().next().css("display", "none");
+		$(".mcomment-editor").css("display", "none");
 		$(btn).removeClass('btn-dark').addClass('btn-primary');
 		$(btn).text('답글');
-	}
+	} 
 	
 	
 }
@@ -105,23 +112,23 @@ function updateComment(btn){
 				dataType: 'json',
 				type : 'post',
 				success: function(data){
+			
 					var html =''
-					if(data.level==1){
-					html+="<td class='timeline-boardcontent-sns' style='width:529px;'>";
-					html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
-					html+="<span class='comment-date' style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
-					html+="<br />";
-					html+="<span style='padding: 10px;'>"+data.commentContent+"</span>";
-					html+="<div>"
-							html+="<button class='btn btn-primary' value='' onclick='openCoCo(this)' style='float:right;'>답글</button>";
-							html+="<button class='btn btn-danger' value='"+data.commentNo+"' boardNo='"+data.boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
-							html+="<button class='btn btn-success' onclick='updateCommentFrm(this)' value='"+data.commentNo+"' style='float:right; margin-right: 2px;'>수정</button>	";	
-							html+="</div>"
-						html+="</td>";
+					if(data.commentLevel==1){
+						html+="<td class='timeline-boardcontent-sns' style='width:529px;'>";
+						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
+						html+="<span class='comment-date' style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
+						html+="<br />";
+						html+="<span style='padding: 10px;'>"+data.commentContent+"</span>";
+						html+="<div>"
+								html+="<button class='btn btn-primary' value='' onclick='openCoCo(this)' style='float:right;'>답글</button>";
+								html+="<button class='btn btn-danger' value='"+data.commentNo+"' boardNo='"+data.boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
+								html+="<button class='btn btn-success' onclick='updateCommentFrm(this)' value='"+data.commentNo+"' style='float:right; margin-right: 2px;'>수정</button>	";	
+								html+="</div>"
+							html+="</td>";
 					}
 					
 					else{
-					
 						html+="<td class='timeline-boardcontent-sns' style='float:right; width:472px;'>";
 						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
 						html+="<span class='comment-date'  style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
@@ -160,12 +167,15 @@ function deleteComment(btn){
 			dataType: 'json',
 			type : 'post',
 			success: function(data){
-				$("#comment"+commentNo).css("display", "none");
+				
+				$("#comment"+commentNo).remove();
 				
 				var cntString = $('#commentcnt'+boardNo).html().substring(3, $('#commentcnt'+boardNo).html().indexOf(')'));
 				var cnt = Number($('#commentcnt'+boardNo).html().substring(3, $('#commentcnt'+boardNo).html().indexOf(')')));
 			
 				$('#commentcnt'+boardNo).html('댓글('+(cnt-1)+')');
+				
+				
 			},
 			error: function(jqxhr, textStatus, errorThrown){
 				console.log("ajax처리실패!");
@@ -221,13 +231,13 @@ function insertComment(btn){
 				type : 'post',
 				success: function(data){
 					
-					var html =''
-						html+="<tr class=level1 id='comment"+data.commentNo+"'>";
+					var html ='';
+						html+="<tr class='level1' newL1='newL1' id='comment"+data.commentNo+"'>";
 						html+="<td class='timeline-boardcontent-sns' style='width:529px;'>";
 						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
 						html+="<span class='comment-date' style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
 						html+="<br />";
-						html+="<span style='padding: 10px;'>"+data.commentContent+"</span>";
+						html+="<span style='padding: 10px;'><span style='color:red; font-weight:700;'>new</span>&nbsp;"+data.commentContent+"</span>";
 						html+="<div>"
 							html+="<button class='btn btn-primary' value='' onclick='openCoCo(this)' style='float:right;'>답글</button>";
 							html+="<button class='btn btn-danger' value='"+data.commentNo+"' boardNo='"+data.boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
@@ -238,7 +248,7 @@ function insertComment(btn){
 						
 					
 						html+="<tr style='display:none; float:right;'><td>"
-							html+="<div class='comment-editor'>"
+							html+="<div class='mcomment-editor'>"
 								html+="<textarea style='margin:7px 2px; float:left;' name='boardCommentContent' class='boardCommentContent' cols='45' rows='3'></textarea>";
 								html+="<button type='button' class='btn btn-primary' onclick='insertCoCo(this)' value='"+data.boardNo+"' style='width:77px; height:68px; margin:5px 2px;'>등록</button>";	
 							html+="</div>";
@@ -251,8 +261,8 @@ function insertComment(btn){
 					
 						$('#commentcnt'+$(btn).val()).html('댓글('+(cnt+1)+')');
 						
-						$(btn).parent().next().append(html);
-					
+						$(btn).parent().parent().append(html);
+						
 				},
 				error: function(jqxhr, textStatus, errorThrown){
 					console.log("ajax처리실패!");
@@ -281,6 +291,7 @@ function insertCoCo(btn){
 		return;
 	}
 	
+	
 	var param = {
 			boardNo : $(btn).val(),
 			commentWriter : '<%=userLoggedIn.getUserId() %>',
@@ -297,28 +308,40 @@ function insertCoCo(btn){
 				dataType: 'json',
 				type : 'post',
 				success: function(data){
-					console.log(data);
+					
 					var html =''
-						html+="<tr class=level2 id='comment"+data.commentNo+"'>";
-						html+="<td class='timeline-boardcontent-sns' style='width:472px;'>";
+					
+						//html+="<tr class=level2 id='comment"+data.commentNo+"'>";
+						html+="<td class='timeline-boardcontent-sns' style='width:472px; float:right'>";
 						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
 						html+="<span class='comment-date' style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
 						html+="<br />";
-						html+="<span style='padding: 10px;'>"+data.commentContent+"</span>";
+						html+="<span style='padding: 10px;'><span style='color:red; font-weight:700;'>new</span>&nbsp;"+data.commentContent+"</span>";
 						html+="<div>"
 							html+="<button class='btn btn-danger' value='"+data.commentNo+"' boardNo='"+data.boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
 							html+="<button class='btn btn-success' onclick='updateCommentFrm(this)' content='"+data.commentContent+"' value='"+data.commentNo+"' style='float:right; margin-right: 2px;'>수정</button>	";	
 							html+="</div>"
 						html+="</td>";
-						html+="</tr>";
+						//html+="</tr>";
 						
 						var cntString = $('#commentcnt'+$(btn).val()).html().substring(3, $('#commentcnt'+$(btn).val()).html().indexOf(')'));
 						var cnt = Number($('#commentcnt'+$(btn).val()).html().substring(3, $('#commentcnt'+$(btn).val()).html().indexOf(')')));
 					
 						$('#commentcnt'+$(btn).val()).html('댓글('+(cnt+1)+')');
 						
-						$(btn).parent().parent().html(html);
-					
+						//$(btn).parent().parent().parent().append(html);
+						
+//console.log($(btn).parent().parent().parent().siblings().last());
+//console.log($(btn).parent().parent().parent().nextUntil($(".level1")));
+						//$(btn).parent().parent().parent().last($('tr')).append(html);
+						//$(btn).parent().parent().parent().siblings().last();
+				
+					if($(btn).parent().parent().parent().prev().attr('newL1')=='newL1'){
+						$(btn).parent().parent().parent().append(html);
+					} else{
+						$(btn).parent().parent().parent().nextUntil($(".level1")).last('tr').append(html);
+					}
+						
 				},
 				error: function(jqxhr, textStatus, errorThrown){
 					console.log("ajax처리실패!");
@@ -1081,7 +1104,7 @@ function pageMore(boardNo){
 									
 									<!--여기 -->
 									html+="<tr style='display:none; float:right;'><td>"
-										html+="<div class='comment-editor'>"
+										html+="<div class='mcomment-editor'>"
 											html+="<textarea style='margin:7px 2px; float:left;' name='boardCommentContent' class='boardCommentContent' cols='45' rows='3'></textarea>";
 											html+="<button type='button' class='btn btn-primary' onclick='insertCoCo(this)' value='"+tl.boardSNS.boardNo+"' style='width:77px; height:68px; margin:5px 2px;'>등록</button>";	
 										html+="</div>";

@@ -59,7 +59,6 @@ public class AjaxSnsCommentInsertServlet extends HttpServlet {
 			commentSNS.setBoardNo(boardNo);
 			commentSNS.setCommentRef(commentRef);
 			
-			System.out.println(commentSNS);
 			
 			//2.business logic
 			int commentNo = new SNSService().insertCommentSNS(commentSNS);
