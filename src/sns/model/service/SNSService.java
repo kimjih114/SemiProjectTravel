@@ -359,6 +359,14 @@ public class SNSService {
 		return commentNo;
 	}
 
+
+	public List<Integer> selectLikeBoardNoList(String mypage) {
+		Connection conn=getConnection();
+		List<Integer> likeBoardNoList=new SNSDAO().selectLikeBoardNoList(conn, mypage);
+		close(conn);
+		return likeBoardNoList;
+	}
+	
 	public int updateProfile(User u) {
 		Connection conn = getConnection();
 		int result = new SNSDAO().updateProfile(conn,u);
@@ -368,7 +376,7 @@ public class SNSService {
 			rollback(conn);
 		return result;
 	}
-
+	
 	public int changetype(User u) {
 		Connection conn = getConnection();
 		int result = new SNSDAO().changetype(conn,u);
@@ -378,6 +386,8 @@ public class SNSService {
 			rollback(conn);
 		return result;
 	}
+
+	
 
 	
 	

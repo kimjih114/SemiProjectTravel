@@ -18,13 +18,13 @@ import sns.model.vo.LikeSNS;
  * Servlet implementation class AjaxSnsLikeServlet
  */
 @WebServlet("/gson/sns/like.do")
-public class AjaxSnsLikeServlet extends HttpServlet {
+public class AjaxSnsBoardLikeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxSnsLikeServlet() {
+    public AjaxSnsBoardLikeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

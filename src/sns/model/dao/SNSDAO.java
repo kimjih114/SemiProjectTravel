@@ -1182,6 +1182,35 @@ public class SNSDAO {
 		return result;
 	}
 
+	
+
+	public List<Integer> selectLikeBoardNoList(Connection conn, String mypage) {
+		PreparedStatement pstmt = null;
+		int boardNo = 0;
+		List<Integer> selectLikeBoardNoList = new ArrayList<>();
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectLikeBoardNoList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mypage);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				boardNo = rset.getInt(1);
+				
+				selectLikeBoardNoList.add(boardNo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return selectLikeBoardNoList;
+	}
+
 	public int updateProfile(Connection conn, User u) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -1193,7 +1222,6 @@ public class SNSDAO {
 			pstmt.setString(2, u.getOriginalFileName());
 			pstmt.setString(3, u.getFileName());
 			pstmt.setString(4, u.getUserId());
-			pstmt.setString(5, u.getUserType());
 		
 			result = pstmt.executeUpdate();
 			
@@ -1204,42 +1232,8 @@ public class SNSDAO {
 		}
 		return result;
 	}
-
-	public int changetype(Connection conn, User u) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		if("D".equals(u.getUserType())) {
-		String sql = prop.getProperty("changeType");
-		try{
-			pstmt= conn.prepareStatement(sql);
-			pstmt.setString(1, "S");
-			pstmt.setString(2, u.getUserId());
-			result = pstmt.executeUpdate();
-			
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
-		}
-		else if("S".equals(u.getUserType())) {
-			String sql=prop.getProperty("changeType");
-			try {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1,"D");
-				pstmt.setString(2, u.getUserId());
-				result = pstmt.executeUpdate();
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}finally{
-				close(pstmt);
-			}
-		}
-		return result;
-	}
-
-
+	
+	
 	
 	
 	

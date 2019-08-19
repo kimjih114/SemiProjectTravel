@@ -14,7 +14,7 @@
 #rightNav {
     text-align: center;
     top: 10px;
-    left: 548px;
+    left: 768px;
     display: -webkit-box;
     display: -ms-flexbox;
     /*display: fixed;*/
@@ -210,143 +210,42 @@
 			</ul>
 		
 			<div id="tab1" class="tabcontent current">
-
-	
-	
-
-				<div class="timeline-sns">
-					<table class="timeline-board-sns">
-						<tr>
-							<td class="timeline-boardcontent-sns"><img src="<%=request.getContextPath() %>/img/profile.jpg" class="header-profile-circle"  width="30" height="30" />
-							    <span style="font-weight:600">@닉네임 </span><span style="font-size:0.8em; color:gray;">2019/08/11</span>
-							  	<span style="float:right;">메뉴</span>
-						</tr>
-						<tr>
-							<td class="timeline-boardcontent-sns" id="boardcontent_img">
-								<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-								  <div class="carousel-inner">
-								    <div class="carousel-item active">
-								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
-								    </div>
-								    <div class="carousel-item">
-								      <img src="<%=request.getContextPath() %>/img/profile.jpg" class="d-block w-100" alt="...">
-								    </div>
-								    <div class="carousel-item">
-								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
-								    </div>
-								    <div class="carousel-item">
-								      <img src="<%=request.getContextPath() %>/img/profile.jpg" class="d-block w-100" alt="...">
-								    </div>
-								    <div class="carousel-item">
-								      <img src="<%=request.getContextPath() %>/img/이동욱.jpg" class="d-block w-100" alt="...">
-								    </div>
-								  </div>
-								  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								    <span class="sr-only">Previous</span>
-								  </a>
-								  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-								    <span class="sr-only">Next</span>
-								  </a>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<table style="border: 1px solid;">
-									<tr>
-										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 1</td>
-										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 2</td>
-										<td style="width: 175.67px; height: 175.67px; border:1px solid;">관련여행지 3</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-						<tr>
-							<td class="timeline-boardcontent-sns">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A tempore labore atque tenetur dolore recusandae nemo sunt commodi aliquid aut voluptatum hic nostrum velit aperiam consectetur temporibus eius harum cumque?</td>
-						</tr>
-						<tr>
-							<td class="timeline-boardcontent-sns"><span style="float:right;">좋아요(12)&nbsp;&nbsp;스크랩(2)</span></td>
-						</tr>
-						<tr>
-				
-							<td class="timeline-boardcontent-sns">
-								<div id="comment-container">
-		<div class="comment-editor">
-			<form action=""
-				  name="boardCommentFrm"
-				  method="post">
-				<input type="hidden" name="boardRef" 
-					   value="" />
-				<input type="hidden" name="boardCommentWriter" 
-					   value="" />
-				<input type="hidden" name="boardCommentLevel" 
-					   value="1" />
-				<input type="hidden" name="boardCommentRef" 
-					   value="0" /> <!-- 댓글인 경우 참조댓글이 없으므로 0으로 초기화 -->
-				<textarea name="boardCommentContent" 
-						  id="boardCommentContent" 
-						  cols="60" rows="3"></textarea>
-				<button type="submit"
-					    id="btn-insert">등록</button>			
-			</form>
-		</div>
-		<!-- 댓글목록테이블 -->
-		<table id="tbl-comment">
-			<tr class=level1>
-					<td class='timeline-boardcontent-sns'  style='width:508px;;'>
-						<span class=comment-writer>작성자</span>
-						<span class=comment-date>대댓날짜</span>
-						<br />
-							여긴 내용
-						<button class="btn-reply" 
-								value=""
-								style='float:right;'>답글</button>
-						<button class="btn-delete" value="" style='float:right;'>삭제</button>		
-					</td>
-			</tr>
-					<tr class=level2>
-						<td>
-							<span class=comment-writer>대댓작성자</span>
-							<span class=comment-date>대댓날짜 </span>
-							<br />
-								여기내용
-							<button class="btn-delete" value="" style='float:right;'>삭제</button>
-						</td>
-					
-					</tr>
-		
-		
-		</table>
-		
-							
-							
-							</td>
-							</tr>
-					</table>
-		    	</div>
+			
+				<div class='timeline-board-sns' id='newPost1'>
 				
 				
+				</div>	
+				
+				<div id="tab1Content">
 				
 				
-				
-				
+				</div>
 			</div>
-		
+			
 			<div id="tab2" class="tabcontent">
 				
-			<div class='timeline-board-sns' id='newPost'>
-			
-			
-			</div>	
-			
-			<div id="tab2Content"></div>
+				<div class='timeline-board-sns' id='newPost2'>
+				
+				
+				</div>	
+				
+				<div id="tab2Content">
+				
+				
+				</div>
 			
 			</div>
 		
+		
+		
 			<div id="tab3" class="tabcontent">
-
+			
+			
+				<div id="tab3Content"></div>
+				
+				</div>
+		
+	
 			</div>
 		
 		<table id="rightNav">
@@ -381,27 +280,62 @@ document.addEventListener('keydown', function(event) {
 var filesTempArr = [];
 
 $(function() {
+	$.ajax({
+		url: "<%=request.getContextPath() %>/ajax/mytimeline.jsp", 
+		data: "mypage="+'<%=mypage %>',
+		type: "get",
+		dataType: "html",
+		success: function(data){
+			$("#tab1Content").html(data);
+			$("#newPost1").html('');
+		},
+		error: function(jqxhr, textStatus, errorThrown){
+			console.log("ajax처리실패!");
+			console.log(jqxhr, textStatus, errorThrown);
+		}
+	});
+
+	
+	
+	
 	$('ul.tab li').click(function() {
 		var activeTab = $(this).attr('data-tab');
 		$('ul.tab li').removeClass('current');
 		$('.tabcontent').removeClass('current');
 		$(this).addClass('current');
 		$('#' + activeTab).addClass('current');
-		
 
-		 if($(this).attr('data-tab')=='tab2'){
-			var param = {
-					mypage : '<%=mypage %>'
+		if($(this).attr('data-tab')=='tab1'){
+			 
+				$.ajax({
+					url: "<%=request.getContextPath() %>/ajax/mytimeline.jsp", 
+					data: "mypage="+'<%=mypage %>',
+					type: "get",
+					dataType: "html",
+					success: function(data){
+						$("#tab1Content").html(data);
+						$("#newPost1").html('');
+					},
+					error: function(jqxhr, textStatus, errorThrown){
+						console.log("ajax처리실패!");
+						console.log(jqxhr, textStatus, errorThrown);
+					}
+				});
+
+			
 			}
+		
+		
+		 if($(this).attr('data-tab')=='tab2'){
 			
 				$.ajax({
 					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
-					data: param,
+					data: "mypage="+'<%=mypage %>',
 					type: "get",
 					dataType: "html",
 					success: function(data){
 						$("#tab2Content").html(data);
-						$("#newPost").html('');
+						$("#newPost2").html('');
 					},
 					error: function(jqxhr, textStatus, errorThrown){
 						console.log("ajax처리실패!");
@@ -413,18 +347,15 @@ $(function() {
 		}
 		
 		if($(this).attr('data-tab')=='tab3'){
-			var param = {
-					mypage : '<%=mypage %>'
-			}
-			
+		
 				$.ajax({
-					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
-					data: param,
+					url: "<%=request.getContextPath() %>/ajax/mylikelist.jsp", 
+					data: "mypage="+'<%=mypage %>',
 					type: "get",
 					dataType: "html",
 					success: function(data){
-						$("#tab2Content").html(data);
-						$("#newPost").html('');
+						$("#tab3Content").html(data);
+			
 					},
 					error: function(jqxhr, textStatus, errorThrown){
 						console.log("ajax처리실패!");
@@ -639,6 +570,25 @@ $("#btnSubmit").click(function(event){
 								html+="<td class='timeline-boardcontent-sns'>";
 								html+="<img src='<%=request.getContextPath()%>/upload/profile/"+data.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
 								html+="<span style='font-weight: 600'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>"+data.profileSNS.profileUserNickname+"</a></span>";
+								
+								if(data.profileUserType=='S'){
+									html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt=''  width='20' height='20'  />";
+								}		
+								var type = '';
+								if(data.boardSNS.boardType=='P'){
+									type = '';
+								}
+								
+								if(data.boardSNS.boardType=='F'){
+									type = '(팔로워 공개)';
+								}
+								
+								if(data.boardSNS.boardType=='L'){
+									type = '(비공개)'
+								}
+							
+								
+								html+="<span style='font-weight: 600; color:black;'>"+type+"</span>";
 								html+="<span style='font-size: 0.8em; color: gray;''>"+data.boardSNS.boardUpdateDate+"</span>";
 								html+="<span style='float: right;'>";
 								if(data.boardSNS.boardWriter=='<%=userLoggedIn.getUserId()%>'){
@@ -717,31 +667,97 @@ $("#btnSubmit").click(function(event){
 									html+="<td class='timeline-boardcontent-sns' style='text-align:left; padding: 10px; margin:10px;'><a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'>@"+data.boardSNS.boardWriter+"</a>&nbsp;"+data.boardSNS.boardContent;
 									
 									if('<%=userLoggedIn.getUserId() %>' == data.boardSNS.boardWriter){
-										html+="<span class='likes' style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span></span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+										html+="<span class='likes' style='float: right; margin-right:10px;' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/>0</span>";
 									} else{
-										html+="<span class='likes' value='"+tl.boardSNS.boardNo+"' style='float: right; margin-right:10px; cursor:pointer' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/><span></span>&nbsp;&nbsp;<img src='<%=request.getContextPath() %>/img/alarm.png' alt='' style='width: 20px; height:20px'/></span>";
+										html+="<span class='likes' value='"+tl.boardSNS.boardNo+"' style='float: right; margin-right:10px; cursor:pointer' ><img src='<%=request.getContextPath() %>/img/beforelike.png' alt='' style='padding-top:2px; padding-bottom:-2px; width: 20px; height:20px'/>0</span>";
 									}
 									
 									html+="</td>";
 									html+="</tr>";
+									
 								}
-							
+								
+
 								html+="<tr>";
-								html+="<td class='timeline-boardcontent-sns' >댓글(3)</td>";
-								html+="</tr>";
-								html+="<tr>";
-								html+="<td class='timeline-boardcontent-sns'>";
-								html+="<span class='nick_sns'>@abcde</span>&nbsp;";
-								html+="<span style='float:right;'>좋아요&nbsp;&nbsp;신고</span>";
+
+								if(data.commentSNSList.length>0){
+									html+="<td id='commentcnt"+data.boardSNS.boardNo+"' value='"+data.commentSNSList.length+"' class='timeline-boardcontent-sns' style='cursor:pointer;' onclick='openComment(this);'>댓글("+data.commentSNSList.length+")</td>";
+								} else{
+									html+="<td id='commentcnt"+data.boardSNS.boardNo+"' value='"+data.commentSNSList.length+"' class='timeline-boardcontent-sns' style='cursor:pointer;' onclick='openComment(this);'>댓글(0)</td>";
+								}
+								
 								html+="</td>";		
 								html+="</tr>";
+								html+="<tr style='display:none;'><td>"
+									html+="<div class='comment-editor'>"
+								
+								html+="<textarea style='float:left; margin:5px;' name='boardCommentContent' class='boardCommentContent' cols='51' rows='3'></textarea>";
+								html+="<button type='button' class='btn btn-primary' onclick='insertComment(this);' value='"+data.boardSNS.boardNo+"' style='float:right; width:76px; height:68px; margin:5px 5px 5px 2px;'>등록</button>";	
+							
+								html+="</div>";
+								html+="<table class='tbl-comment'>";
+								if(data.commentSNSList.length>0){
+									for(var y=0; y<data.commentSNSList.length; y++){
+										if(data.commentSNSList[y].commentLevel==1){
+											html+="<tr class=level1 id='comment"+data.commentSNSList[y].commentNo+"'>";
+											html+="<td class='timeline-boardcontent-sns' style='width:529px;'>";
+											html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentSNSList[y].commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentSNSList[y].commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentSNSList[y].commentNickname+"@"+data.commentSNSList[y].commentWriter+"</a>";
+											html+="<span class='comment-date'  style='font-size:0.8em; color:gray'>"+data.commentSNSList[y].commentUpdateDate+"</span>";
+											html+="<br />";
+											html+="<span style='padding: 10px;'>"+data.commentSNSList[y].commentContent+"</span>";
+											if('<%=userLoggedIn.getUserId() %>' == data.commentSNSList[y].commentWriter){
+												html+="<div>"
+												html+="<button class='btn btn-primary' value='"+data.commentSNSList[y].commentNo+"' onclick='openCoCo(this);' style='float:right;'>답글</button>";
+												html+="<button class='btn btn-danger' value='"+data.commentSNSList[y].commentNo+"' boardNo='"+data.commentSNSList[y].boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
+												html+="<button class='btn btn-success' value='"+data.commentSNSList[y].commentNo+"' content='"+data.commentSNSList[y].commentContent+"' onclick='updateCommentFrm(this)' style='float:right; margin-right: 2px;'>수정</button>	";	
+												html+="</div>"
+											} else{
+												html+="<div>"
+												html+="<button class='btn btn-primary' onclick='openCoCo(this);' value='"+data.commentSNSList[y].commentNo+"' style='float:right;'>답글</button>";
+												html+="</div>"
+											}
+											html+="</td>";
+											html+="</tr>";
+											
+											html+="<tr style='display:none; float:right;'><td>"
+												html+="<div class='mcomment-editor' style='float:right; display:none'>"
+													html+="<textarea style='margin:7px 2px; float:left;' name='boardCommentContent' class='boardCommentContent' cols='45' rows='3'></textarea>";
+													html+="<button type='button' class='btn btn-primary' onclick='insertCoCo(this)' value='"+data.boardSNS.boardNo+"' style='width:76px; height:68px; margin:5px 2px;'>등록</button>";	
+												html+="</div>";
+											html+="</td>";
+											html+="</tr>";
+											
+										}
+										if(data.commentSNSList[y].commentLevel==2){
+											html+="<tr class='level2' id='comment"+data.commentSNSList[y].commentNo+"'>";
+											html+="<td class='timeline-boardcontent-sns' style='float:right; width:472px;'>";
+											html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentSNSList[y].commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentSNSList[y].commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentSNSList[y].commentNickname+"@"+data.commentSNSList[y].commentWriter+"</a>";
+											html+="<span class='comment-date'  style='font-size:0.8em; color:gray'>"+data.commentSNSList[y].commentUpdateDate+"</span>";
+											html+="<br />";
+											html+="<span style='padding: 10px;'>"+data.commentSNSList[y].commentContent+"</span>";
+											if('<%=userLoggedIn.getUserId() %>' == data.commentSNSList[y].commentWriter){
+												html+="<div>"
+												html+="<button class='btn btn-danger' value='"+data.commentSNSList[y].commentNo+"' boardNo='"+data.commentSNSList[y].boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
+												html+="<button class='btn btn-success' value='"+data.commentSNSList[y].commentNo+"' content='"+data.commentSNSList[y].commentContent+"' onclick='updateCommentFrm(this)' style='float:right; margin-right: 2px;'>수정</button>	";	
+												html+="</div>"
+											}
+											html+="</td>";
+											html+="</tr>";
+										}
+									}
+								}
+							html+="</table>";
+							html+="</td></tr>"
+							
 								html+="</table>";
 								html+="</div>";
 							}
 						
 						html += newPostHtml;
 						
-						$("#newPost").html(html);
+						$("#newPost1").html(html);
+						$("#newPost2").html(html);
+				
 				
 						
 						newPostHtml = html;

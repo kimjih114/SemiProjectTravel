@@ -23,24 +23,33 @@ var mfilesTempArr = new Array();
 var mcontentgrades = new Array();
 var mcontentoldfilenames = new Array();
 
+var blockingList = new Array();
+var blockedList = new Array();
+var followerList = new Array();
+
 $(()=>{
 	pageMore(10000);
 });
 
 
 function openCoCo(btn) {
-	if ($(".mcomment-editor").css("display") == "none"){
+	// $(btn).parent().parent().parent().next().children() td
+	console.log($(btn).parent().parent().parent().next().children().children());
+	if ($(btn).parent().parent().parent().next().children().children().css("display") == "none"){
+		
 		$(btn).parent().parent().parent().next().css("display", "block");
-		$(".mcomment-editor").css("display", "block");
+		$(btn).parent().parent().parent().next().children().children().css("display", "block");
 		$(btn).removeClass('btn-primary').addClass('btn-dark');
 		$(btn).text('취소');
 	}
-	else if ($(".mcomment-editor").css("display") == "block"){
+	else if ($(btn).parent().parent().parent().next().children().children().css("display") == "block"){
+		
 		$(btn).parent().parent().parent().next().css("display", "block");
-		$(".mcomment-editor").css("display", "none");
+		$(btn).parent().parent().parent().next().children().children().css("display", "none");
 		$(btn).removeClass('btn-dark').addClass('btn-primary');
 		$(btn).text('답글');
 	}
+	
 	
 
 }
@@ -219,8 +228,8 @@ function insertComment(btn){
 				success: function(data){
 					
 					var html ='';
-						html+="<tr class='level1' newL1='newL1' id='comment"+data.commentNo+"'>";
-						html+="<td class='timeline-boardcontent-sns' style='width:529px;'>";
+						html+="<tr class='level1' newL1='newL1'>";
+						html+="<td class='timeline-boardcontent-sns' style='width:529px;' id='comment"+data.commentNo+"'>";
 						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
 						html+="<span class='comment-date' style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
 						html+="<br />";
@@ -298,8 +307,8 @@ function insertCoCo(btn){
 					
 					var html =''
 					
-						html+="<tr class=level2 id='comment"+data.commentNo+"' style='float:right;'>";
-						html+="<td class='timeline-boardcontent-sns'  style='width:472px; float:right'>";
+						html+="<tr class=level2 style='float:right;'>";
+						html+="<td class='timeline-boardcontent-sns'  style='width:472px; float:right' id='comment"+data.commentNo+"'>";
 						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
 						html+="<span class='comment-date' style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
 						html+="<br />";
@@ -346,8 +355,8 @@ console.log($(btn).parent().parent().parent().prev().attr('newL1'));
 
 function like(img){
 	var boardNo =$(img).attr('boardNo');
-	console.log($(img).prop('src'));
-	if($(img).prop('src')== 'http://localhost:8080/trav/img/beforelike.png'){
+	
+	if($(img).prop('src')=='http://localhost:9090/trav/img/beforelike.png'){
 		var param = {
 				boardNo : boardNo,
 				userId : '<%=userLoggedIn.getUserId() %>'
@@ -358,7 +367,8 @@ function like(img){
 					dataType: 'json',
 					type : 'post',
 					success: function(data){
-						$(img).prop('src', '<%=request.getContextPath() %>/img/afterlike.png');
+						console.log(data);
+						$(img).prop('src', 'http://localhost:9090/trav/img/afterlike.png');
 						$(img).next().html(data.length);
 						
 					},
@@ -371,7 +381,8 @@ function like(img){
 					}
 				});
 	}
-	else if ($(img).prop('src')== 'http://localhost:8080/trav/img/afterlike.png'){
+	else if ($(img).prop('src')=='http://localhost:9090/trav/img/afterlike.png'){
+		console.log('<%=request.getContextPath() %>/img/beforelike.png');
 		var param = {
 				boardNo : boardNo,
 				userId : '<%=userLoggedIn.getUserId() %>'
@@ -382,7 +393,7 @@ function like(img){
 					dataType: 'json',
 					type : 'post',
 					success: function(data){
-						$(img).prop('src', '<%=request.getContextPath() %>/img/beforelike.png');
+						$(img).prop('src', 'http://localhost:9090/trav/img/beforelike.png');
 						$(img).next().html(data.length);
 						
 					},
@@ -899,8 +910,8 @@ function updateBoardSNS(boardNo){
 								if(data.commentSNSList.length>0){
 									for(var y=0; y<data.commentSNSList.length; y++){
 										if(data.commentSNSList[y].commentLevel==1){
-											html+="<tr class=level1 id='comment"+data.commentSNSList[y].commentNo+"'>";
-											html+="<td class='timeline-boardcontent-sns' style='width:529px;'>";
+											html+="<tr class=level1 >";
+											html+="<td class='timeline-boardcontent-sns' style='width:529px;' id='comment"+data.commentSNSList[y].commentNo+"'>";
 											html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentSNSList[y].commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentSNSList[y].commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentSNSList[y].commentNickname+"@"+data.commentSNSList[y].commentWriter+"</a>";
 											html+="<span class='comment-date'  style='font-size:0.8em; color:gray'>"+data.commentSNSList[y].commentUpdateDate+"</span>";
 											html+="<br />";
@@ -929,8 +940,8 @@ function updateBoardSNS(boardNo){
 											
 										}
 										if(data.commentSNSList[y].commentLevel==2){
-											html+="<tr class='level2' id='comment"+data.commentSNSList[y].commentNo+"'>";
-											html+="<td class='timeline-boardcontent-sns' style='float:right; width:472px;'>";
+											html+="<tr class='level2'>";
+											html+="<td class='timeline-boardcontent-sns' style='float:right; width:472px;' id='comment"+data.commentSNSList[y].commentNo+"'>";
 											html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentSNSList[y].commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentSNSList[y].commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentSNSList[y].commentNickname+"@"+data.commentSNSList[y].commentWriter+"</a>";
 											html+="<span class='comment-date'  style='font-size:0.8em; color:gray'>"+data.commentSNSList[y].commentUpdateDate+"</span>";
 											html+="<br />";
@@ -1009,6 +1020,47 @@ function pageMore(boardNo){
 				var html = "";
 				
 				$.each(data,(i,tl)=>{
+					console.log(tl.followerSNSList);
+					if(tl.blockingSNSList.length>0){
+						for(var f=0; f<tl.blockingSNSList.length; f++){
+							if(tl.blockingSNSList[g]=='<%=userLoggedIn.getUserId() %>')
+							blockingList.push(tl.blockingSNSList[f]);
+						}
+					}
+					
+					if(tl.blockedSNSList.length>0){
+						for(var g=0; g<tl.blockedSNSList.length; g++){
+							if(tl.blockedSNSList[g]=='<%=userLoggedIn.getUserId() %>')
+							blockedList.push(tl.blockedSNSList[g]);
+						}
+					}
+					
+					if(tl.followerSNSList.length>0){
+						for(var z=0; z<tl.followerSNSList.length; z++){
+							if(tl.followerSNSList[z]=='<%=userLoggedIn.getUserId() %>')
+								followerList.push(tl.followerSNSList[z]);
+						}
+					}
+					
+					
+					//블록막기
+					if(tl.boardSNS.boardWriter!='<%=userLoggedIn.getUserId() %>' && (blockedList.length>0 || blockedList.length>0)){
+						return;
+					}
+					//팔로워 공개일때 팔로워가 아니면 막기
+					if(tl.boardSNS.boardWriter!='<%=userLoggedIn.getUserId() %>' && (followerList.length==0 && tl.boardSNS.boardType == 'F')){
+						return;
+					}
+						
+					//비공개일 때막기
+					if(tl.boardSNS.boardWriter!='<%=userLoggedIn.getUserId() %>' && tl.boardSNS.boardType=='L' ){
+						return;
+					}
+					
+					followerList = [];
+					blockedList = [];
+					blockingList = [];
+					
 					html+="<div id='container"+tl.boardSNS.boardNo+"'>";
 					html+="<table class='tbl-boardsns' id='boardNo"+tl.boardSNS.boardNo+"'>"
 					html+="<tr>";
@@ -1235,8 +1287,16 @@ function pageMore(boardNo){
 			
 			//마지막 페이지인 경우, 더보기 버튼 비활성화
 			if(<%=new SNSService().selectBoardSNSCnt(mypage)>0 %>){
-				if($('.tbl-boardsns').last().attr('id').substr(7) <= <%=new SNSService().selectLastBoardNo(mypage) %>){
+				if($('.tbl-boardsns').length>0){
+					if($('.tbl-boardsns').last().attr('id').substr(7) <= <%=new SNSService().selectLastBoardNo(mypage) %>){
+							$("#trMore").remove();
+					}
+					else{
 						$("#trMore").remove();
+					} 			
+			}
+ 				else{
+					$("#trMore").remove();
 				}
 			}
 			
