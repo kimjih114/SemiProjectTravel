@@ -316,7 +316,7 @@ numPerPage{
   		</select>
   		<br><br>
   		</form>
-  		<table id="tbl-user" style="margin:0 auto; width:600px;">
+  		<table id="tbl-user" style="margin:0 auto; width:680px;">
   			<thead>
   			<tr>
   				<th>아이디</th>
@@ -325,6 +325,7 @@ numPerPage{
   				<th>성별</th>
   				<th>이메일</th>
   				<th>핸드폰 번호</th>
+  				<th>회원탈퇴</th>
   			</tr>
   			</thead>
   			<tbody>
@@ -346,6 +347,8 @@ numPerPage{
   				<td><%="M".equals(u.getUserGender())?"남":"여" %></td>
   				<td><%=u.getUserEmail() %></td>
   				<td><%=u.getUserPhone() %></td>
+  				<td><button class="btn btn-primary" style="float:right;"
+					onclick="location.href='<%=request.getContextPath()%>/admin/userwithdraw?userId=<%=u.getUserId()%>'">탈퇴</button></td>
   			</tr>
   			<%		
   				}
