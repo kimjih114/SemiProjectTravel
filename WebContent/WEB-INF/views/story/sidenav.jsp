@@ -700,7 +700,7 @@ mypage : '<%=mypage%>'
 		 	
  			var url="<%=request.getContextPath()%>/chat/chatroom.do?userId="+userId;
  			var title="popup"; 
- 			var status = "width=600px, height=400px, left=150px, top=0px";
+ 			var status = "width=420px, height=400px, left=150px, top=0px";
  			var popup = open("", title, status);
  			
  			var frm = document.memomsgFrm;

@@ -181,6 +181,14 @@ function unblockerr(btn){
 	
 }
 
+var htext  =$("#SmodifyText").val();
+ 
+if(htext.length>20){
+	alert('최대 20글자까지 가능합니다.'); 
+	$("#SmodifyText").focus();
+	return;
+}
+
 function headerTextModify(){
 	
 	var headertext = $("#SmodifyText").val();
@@ -227,10 +235,10 @@ function headerTextModify(){
 							<input type="file" name="SmodifyProfile" id="SmodifyProfile" class="btn btn-outline-secondary"/> <br />
 							  <span id="fname"> 
 					 		 <%=profile.getProfileOriginalFilename()!=null? profile.getProfileRenamedFilename():""%>
-					  		</span>
+					  	</span> <%--첨부파일이 있는 경우 기존파일 삭제용 --%>
 					   		<%if(profile.getProfileOriginalFilename()!=null){ %><br /> 
-							<input type="checkbox" name="delFile" id="delFile" /> 
-							<label for="delFile">첨부파일삭제</label>
+							<input type="checkbox" name="delpFile" id="delFile" /> 
+							<label for="delpFile">첨부파일삭제</label>
 							 <% } %> 
 							<input type="hidden" name="oldprofileOName" value="<%=profile.getProfileOriginalFilename()!=null?profile.getProfileOriginalFilename():""%>" />
 							<input type="hidden" name="oldprofileRName" value="<%=profile.getProfileRenamedFilename()!=null?profile.getProfileRenamedFilename():""%>" />
@@ -245,9 +253,7 @@ function headerTextModify(){
 			<tr>
 				<td>
 					<table>
-						<tr style='width:510px;'>
-							<th class="sectionTitle" style='width:510px;'>레이아웃</th>
-						</tr>
+						
 						<tr style='width:510px;'>
 							<td class="sectionContent" style='width:510px;'>
 								헤더 텍스트
@@ -270,8 +276,8 @@ function headerTextModify(){
 					 		 <%=profile.getHeaderOriginalFilename()!=null? profile.getHeaderRenamedFilename():""%>
 					  		</span> <%--첨부파일이 있는 경우 기존파일 삭제용 --%>
 					   		<%if(profile.getHeaderOriginalFilename()!=null){ %><br /> 
-							<input type="checkbox" name="delFile" id="delFile" /> 
-							<label for="delFile">첨부파일삭제</label>
+							<input type="checkbox" name="delhFile" id="delFile" /> 
+							<label for="delhFile">첨부파일삭제</label>
 							 <% } %> 
 							<input type="hidden" name="oldHeaderOName" value="<%=profile.getProfileOriginalFilename()!=null?profile.getProfileOriginalFilename():""%>" />
 							<input type="hidden" name="oldHeaderRName" value="<%=profile.getHeaderRenamedFilename()!=null?profile.getProfileRenamedFilename():""%>" />
@@ -323,11 +329,11 @@ function headerTextModify(){
 			//사용자가 파일선택한경우 
 			if(($this).val() != ""){
 				$("#fname").hide(); 
-				$("#delFile").hide().next().hide();
+				$("#delhFile").hide().next().hide();
 			}else{
 				$("#fname").show();
 				
-				$("#delFile").show().next().show();
+				$("#delhFile").show().next().show();
 			}
 		});
 	$("[name=SmodifyProfile]").change(function(){
@@ -335,11 +341,11 @@ function headerTextModify(){
 			//사용자가 파일선택한경우 
 			if(($this).val() != ""){
 				$("#fname").hide(); 
-				$("#delFile").hide().next().hide();
+				$("#delpFile").hide().next().hide();
 			}else{
 				$("#fname").show();
 				
-				$("#delFile").show().next().show();
+				$("#delpFile").show().next().show();
 			}
 		});
 	
