@@ -38,6 +38,7 @@
 	if(userLoggedIn!=null){
 		loggedIn = new UserService().selectOne(userLoggedIn.getUserId());
 	}
+	ProfileSNS profile = (ProfileSNS)request.getAttribute("profileSNS");
 %>
 <head>
   <meta charset="utf-8">
@@ -50,8 +51,8 @@
 
 <style>
 header.masthead{
-background-image:url(<%=request.getContextPath()%>/img/header-new.jpg);
-
+background-image:url('<%=request.getContextPath()%>/img/header-new.jpg');
+  			
 
 }
 .header-profile-circle{

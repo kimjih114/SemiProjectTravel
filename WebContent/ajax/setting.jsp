@@ -181,6 +181,24 @@ function unblockerr(btn){
 	
 }
 
+function headerTextModify(){
+	
+	var headertext = $("#SmodifyText").val();
+
+	if(headertext.length==0){
+		alert('내용을 입력해주세요.');
+		return;
+	}
+	
+	if(headertext.length>20){
+		alert('최대 20글자까지 가능합니다.');
+		return;
+	}
+	
+	
+	
+}
+
 </script>
 
 
@@ -233,9 +251,13 @@ function unblockerr(btn){
 						<tr style='width:510px;'>
 							<td class="sectionContent" style='width:510px;'>
 								헤더 텍스트
-								<input type="text" name="SmodifyText" id="SmodifyText"
+								<%if(profile.getHeaderText() !=null){%>
+								<input type="text" name="SmodifyText" onclick='headerTextModify();' id="SmodifyText"
 								value='<%=profile.getHeaderText()%>' style="width:300px"/>
-							
+								<%} else{%>
+								<input type="text" name="SmodifyText" onclick='headerTextModify();' id="SmodifyText"
+								value='텍스트를 바꿔주세요!(20자 이내)' style="width:300px"/>
+								<%} %>							
 							</td>
 
 						</tr>

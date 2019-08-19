@@ -147,9 +147,11 @@ p.userprofile-userId{
     </div>
   </header>
   
+  
   <form action="" name="memomsgFrm">
 	<input type="hidden" name="userId" />
 </form>
+  
   
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
@@ -175,9 +177,6 @@ p.userprofile-userId{
    		</tr>
    		<tr>
    			<td><a href="<%=request.getContextPath()%>/mypage/myBasketView?userId=<%=userLoggedIn.getUserId()%>">장바구니</a></td>
-   		</tr>
-   		<tr>
-   			<td>위시리스트</td>
    		</tr>
    	</table>
 
