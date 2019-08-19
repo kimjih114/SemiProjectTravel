@@ -213,11 +213,11 @@
 											html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";															
 																			
 											<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-											html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></h3>";
+											html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
 											<%}else{%>
-											html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></h3>";
+											html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></span>";
 											<%}%>
-											html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
+											html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
 											
 											html1+="</div></div>";
 											html1+="<h3 class='my-4'></h3>";	
@@ -244,11 +244,11 @@
 										html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";							
 										html1+="<input type='hidden' id='roomTitle' value='"+$(m).find("roomtitle").text()+"'>";									
 										<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-										html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></h3>";
+										html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
 										<%}else{%>
-										html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></h3>";
+										html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></span>";
 										<%}%>
-										html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
+										html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
 										
 										html1+="</div></div>";
 										html1+="<h3 class='my-4'></h3>";	
@@ -380,11 +380,11 @@
 								html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";															
 																
 								<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-								html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></h3>";
+								html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
 								<%}else{%>
-								html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></h3>";
+								html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></span>";
 								<%}%>
-								html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
+								html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
 								
 								html1+="</div></div>";
 								html1+="<h3 class='my-4'></h3>";	
@@ -411,11 +411,11 @@
 							html1+="<p>비수기주말최소:"+$(m).find("roompeakseasonminfee1").text()+"(성수기:"+$(m).find("roompeakseasonminfee2").text()+")</p>";							
 							html1+="<input type='hidden' id='roomTitle' value='"+$(m).find("roomtitle").text()+"'>";									
 							<%if((date.getMonth()+1)>=7&&(date.getMonth()+1)<=9){%>
-							html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></h3>";
+							html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee2").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee2").text()*day+"원 예약하기</button></span>";
 							<%}else{%>
-							html1+="<h3 class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></h3>";
+							html1+="<span class='my-3'><button type='button' onclick='rsvCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>"+day+"박:"+$(m).find("roomoffseasonminfee1").text()*day+"원 예약하기</button></span>";
 							<%}%>
-							html1+="<h3 class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></h3>";
+							html1+="<span class='my-3'><button type='button' onclick='basketCheck("+$(m).find("roomoffseasonminfee1").text()*day+","+'"'+$(m).find("roomtitle").text()+'"'+");'>장바구니 담기</button></span>";
 							
 							html1+="</div></div>";
 							html1+="<h3 class='my-4'></h3>";	
@@ -730,7 +730,7 @@ padding: .8em .5em; /* 여백 설정 */
 
 	</div>
 </div>
-
+<!-- SELECT to_char(to_date('2019-08-22'), 'D') FROM DUAL; 가격정보 확실히 가져오자!! 집가서 하자 -->
 	
 </body>
 </html>
