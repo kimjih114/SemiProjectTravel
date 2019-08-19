@@ -35,12 +35,6 @@
 	  
  </section>
  
- 
 
-
-	
 </body>
 </html>
-
-
-

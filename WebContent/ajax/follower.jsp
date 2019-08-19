@@ -179,7 +179,7 @@ $(()=>{
 				html+="<img src='<%=request.getContextPath() %>/upload/profile/"+u.profileRenamedFilename+"' class='header-profile-circle'  width='40' height='40' />";
 				html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+u.profileUserId+"' class='followerURL'>"+u.profileUserNickname+"</a>";
 				if(u.profileUserType=='S'){
-					html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt='''  width='20' height='20'  />";
+					html+="<img src='<%=request.getContextPath() %>/img/checkmark.png' alt=''  width='20' height='20'  />";
 				}		
 				html+="&nbsp;<span class='followerIntro'>@"+u.profileUserId+"</span>";
 				html+="</div>"
