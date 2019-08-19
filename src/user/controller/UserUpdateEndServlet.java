@@ -17,6 +17,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 import common.util.MVCRenamePolicy;
+import sns.model.service.SNSService;
 import user.model.service.UserService;
 import user.model.vo.User;
 
@@ -134,14 +135,17 @@ public class UserUpdateEndServlet extends HttpServlet {
 		
 		int result = new UserService().updateUser(u);
 		
+		int profile = new SNSService().updateProfile(u);
+		
 		String view = "/WEB-INF/views/common/msg.jsp";
 		String msg = "";
 		String loc = "/";
 		
-		if(result>0)
+		if(result>0&&profile>0)
 			msg = "회원 수정이 되었습니다.";
 		else
 			msg="회원 수정에 실패하였습니다.";
+		
 		
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);

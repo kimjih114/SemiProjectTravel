@@ -20,6 +20,7 @@ import sns.model.vo.GradeSNS;
 import sns.model.vo.ImageSNS;
 import sns.model.vo.LikeSNS;
 import sns.model.vo.ProfileSNS;
+import user.model.vo.User;
 
 public class SNSDAO {
 
@@ -1174,6 +1175,28 @@ public class SNSDAO {
 			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateProfile(Connection conn, User u) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateProfile");
+		System.out.println("u"+u);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, u.getUsernickName());
+			pstmt.setString(2, u.getOriginalFileName());
+			pstmt.setString(3, u.getFileName());
+			pstmt.setString(4, u.getUserId());
+		
+			result = pstmt.executeUpdate();
+			
+		}catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);

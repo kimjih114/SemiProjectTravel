@@ -359,6 +359,16 @@ public class SNSService {
 		return commentNo;
 	}
 
+	public int updateProfile(User u) {
+		Connection conn = getConnection();
+		int result = new SNSDAO().updateProfile(conn,u);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
+
 	
 	
 }
