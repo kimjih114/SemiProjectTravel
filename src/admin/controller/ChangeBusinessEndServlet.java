@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sns.model.service.SNSService;
 import user.model.service.UserService;
 import user.model.vo.User;
 
@@ -37,16 +38,21 @@ public class ChangeBusinessEndServlet extends HttpServlet {
 		
 		int result = new UserService().changeUser(userId);
 		
+		User u = new UserService().selectOne(userId);
+		
+		int profile = new SNSService().changetype(u);
+		System.out.println("profile="+profile);
 		String view = "/WEB-INF/views/common/msg.jsp";
 		String msg = "";
 		String loc = "/admin/changeBusiness";
 		
-		if(result>0)
+		if(result>0&&profile>0)
 			msg = "사업자 전환이 완료되었습니다.";
 		else
 			msg="사업자 전환에 실패하였습니다.";
 		
 		request.setAttribute("msg", msg);
+		
 		request.setAttribute("loc", loc);
 		
 
