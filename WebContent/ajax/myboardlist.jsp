@@ -94,11 +94,6 @@ function updateComment(btn){
 	var commentNickname = '<%=userLoggedInProfile.getProfileUserNickname() %>';
 	var commentProfile = '<%=userLoggedInProfile.getProfileRenamedFilename() %>';
 
-	console.log(commentNo);
-	console.log(commentContent);
-	console.log(commentNickname);
-	console.log(commentProfile);
-	
 	
 	var param = {
 			commentNo : commentNo,
@@ -1123,10 +1118,6 @@ function pageMore(boardNo){
 										html+="<div>"
 										html+="<button class='btn btn-danger' value='"+tl.commentSNSList[y].commentNo+"' boardNo='"+tl.commentSNSList[y].boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
 										html+="<button class='btn btn-success' value='"+tl.commentSNSList[y].commentNo+"' content='"+tl.commentSNSList[y].commentContent+"' onclick='updateCommentFrm(this)' style='float:right; margin-right: 2px;'>수정</button>	";	
-										html+="</div>"
-									} else{
-										html+="<div>"
-										html+="<button class='btn btn-primary' onclick='openCoCo(this);' value='"+tl.commentSNSList[y].commentNo+"' style='float:right;'>답글</button>";
 										html+="</div>"
 									}
 									html+="</td>";
