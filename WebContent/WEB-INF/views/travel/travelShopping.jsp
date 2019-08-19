@@ -346,7 +346,7 @@ function searchList(e){
   </header>
 	<div class="container">
 
-		<h1 class="font-weight-light text-center text-lg-left mt-4 mb-0" id="header">
+		<h1 class="font-weight-light text-center text-lg-left mt-4 mb-0" id="header" style="margin-left: 10px;">
 			<a href="<%=request.getContextPath() %>/">홈</a>
 			<a href="<%=request.getContextPath() %>/travel/travelView?sido1=<%=sido%>&gugun1=<%=gugun%>">여행지</a> 
 			<a href="<%=request.getContextPath() %>/travel/travelFood?sido1=<%=sido%>&gugun1=<%=gugun%>">맛집</a> 
@@ -360,8 +360,8 @@ function searchList(e){
 				
 				
 				<h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">
-				<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" /> 
-					<ul id="autoComplete">
+				<input type="search" name="search" id="search" placeholder="검색어입력" onkeyup="searchList(event);" style="margin-left: 210px;"/> 
+					<ul id="autoComplete" style="margin-left: 210px;">
 					
 					</ul>	
 				

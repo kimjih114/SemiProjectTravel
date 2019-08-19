@@ -296,9 +296,7 @@ p.userprofile-userId{
    		<tr>
    			<td><a href="<%=request.getContextPath()%>/mypage/myBasketView?userId=<%=userLoggedIn.getUserId()%>">장바구니</a></td>
    		</tr>
-   		<tr>
-   			<td>위시리스트</td>
-   		</tr>
+   		
    	</table>
 
 	<table id="tbl-usermenu4" style="margin-bottom:0px; !important">

@@ -299,9 +299,7 @@ p.userprofile-userId{
    		<tr>
    			<td><a href="<%=request.getContextPath()%>/mypage/myBasketView?userId=<%=userLoggedIn.getUserId()%>">장바구니</a></td>
    		</tr>
-   		<tr>
-   			<td>위시리스트</td>
-   		</tr>
+   		
    	</table>
 
 	<table id="tbl-usermenu4" style="margin-bottom:0px; !important">
@@ -321,7 +319,7 @@ p.userprofile-userId{
 	
 	<div id="content">
   		<h2 style="margin-left: 100px;">예약 내역</h2>
-  		<table id="tbl-user" style="margin-left: 100px; width: 600px;">
+  		<table id="tbl-user" style="margin-left: 100px; width: 670px;">
   			<thead>
   			<tr>
   				<th>숙소이름</th>

@@ -32,6 +32,11 @@
  	width: 300px;
  	height: 230px;
  }
+ #contents2 img{
+ 	width: 300px;
+ 	height: 230px;
+ 
+ }
  </style>
   <script>
   $(function(){
@@ -65,6 +70,42 @@
 				
 			}
 		});
+		
+		$.ajax({
+			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?ServiceKey=Q3FUrD0IPezrGaAAYbNChhRz7RbeL7Iz0iFE1bEgU1NqkrU8PJw6M2yp%2BC0y7cdykSInV0eNP1Tl0ClQP9TDjw%3D%3D&contentTypeId=12&areaCode=6&sigunguCode=16&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&arrange=A&numOfRows=22&pageNo=1",
+			type: "get",
+			dataType: "xml",
+			success:function(data){
+				console.log("data값은?"+data);
+				var $root=$(data).find(":root");
+				
+				var $items=$root.find("item");
+				var html2="";
+				
+				$items.each(function(i,m){							
+					if($(m).find("title").text()=="송정해수욕장"||$(m).find("title").text()=="해운대해수욕장"||$(m).find("title").text()=="부산 티파니21 크루즈 유람선"){
+						html2+="<div class='col-md-4 col-sm-6 portfolio-item'>";
+						html2+="<a class='portfolio-link' href='<%=request.getContextPath()%>/travel/detailPage?contentId="+$(m).find("contentid").text()+"&contentTypeId="+$(m).find("contenttypeid").text()+"'>";
+						html2+="<div class='portfolio-hover'><div class='portfolio-hover-content'><i class='fas fa-plus fa-3x'></i></div></div>";
+						html2+="<img class='img-fluid' src='"+$(m).find("firstimage").text()+"' alt=''></a>";
+						html2+="<div class='portfolio-caption'>";
+						html2+="<h4>"+$(m).find("title").text()+"</h4>";
+						html2+="<p class='text-muted'>"+$(m).find("addr1").text()+"</p></div></div>";	
+					}
+		
+				});
+				
+				$("#contents2").html(html2);
+				
+			},
+			error:function(jqxhr,textStatus,errorThrown){
+				
+			}
+		});
+		
+		
+		
+		
 	});
   
   
@@ -129,42 +170,19 @@
   </header>
 
   <!-- Services -->
-  <section class="page-section" id="services">
+  <section class="bg-light page-section" id="portfolio">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
           <h2 class="section-heading text-uppercase">8월의 여행테마 : 여름 바캉스</h2>
           <h3 class="section-subheading text-muted" style="margin-bottom:100px;">무더위를 피해 
-          	<a href='#' style='color: orangered'>#해운대</a> 
-          	<a href='#' style='color: orangered'>#강릉</a> 
-          	<a href='#' style='color: orangered'>#정선</a>으로 떠나요!</h3>
+          	<a href='#' style='color: orangered'>#부산</a> 
+          	<a href='#' style='color: orangered'>#해운대</a>로 떠나요!</h3>         	
         </div>
       </div>
-      <div class="row text-center">
-        <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-            <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="service-heading">E-Commerce</h4>
-          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-        </div>
-        <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-            <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="service-heading">Responsive Design</h4>
-          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-        </div>
-        <div class="col-md-4">
-          <span class="fa-stack fa-4x">
-            <i class="fas fa-circle fa-stack-2x text-primary"></i>
-            <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
-          </span>
-          <h4 class="service-heading">Web Security</h4>
-          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-        </div>
+      <div class="row text-center" id="contents2">
+        
+     
       </div>
     </div>
   </section>
@@ -174,12 +192,21 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">인기 여행지 Top10</h2>
+          <h2 class="section-heading text-uppercase">인기 여행지 Top6</h2>
           <h3 class="section-subheading text-muted" style="margin-bottom:100px;">인기 여행지를 한눈에!</h3>
         </div>
       </div>
       <div class="row" id="contents">
-        
+        <!--
+					<div class="col-md-4">
+			          <span class="fa-stack fa-4x">
+			            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+			            <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
+			          </span>
+			          <h4 class="service-heading">E-Commerce</h4>
+			          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+			        </div>
+					-->
       </div>
     </div>
   </section>
@@ -265,142 +292,7 @@
     </div>
   </section>
  -->
-  <!-- Team -->
-  <section class="bg-light page-section" id="team">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">실시간 여행이야기</h2>
-          <h3 class="section-subheading text-muted" style="margin-bottom:100px;"><a href='#' style="color: orangered;">로그인</a>해서 당신의 여행이야기를 들려주세요.</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="team-member">
-            <img class="mx-auto rounded-circle" src="img/team/1.jpg" alt="">
-            <h4>Kay Garland</h4>
-            <p class="text-muted">Lead Designer</p>
-            <ul class="list-inline social-buttons">
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fab fa-twitter"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="team-member">
-            <img class="mx-auto rounded-circle" src="img/team/2.jpg" alt="">
-            <h4>Larry Parker</h4>
-            <p class="text-muted">Lead Marketer</p>
-            <ul class="list-inline social-buttons">
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fab fa-twitter"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="team-member">
-            <img class="mx-auto rounded-circle" src="img/team/3.jpg" alt="">
-            <h4>Diana Pertersen</h4>
-            <p class="text-muted">Lead Developer</p>
-            <ul class="list-inline social-buttons">
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fab fa-twitter"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8 mx-auto text-center">
-          <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Contact -->
-  <section class="page-section" id="contact">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Contact Us</h2>
-          <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <form id="contactForm" name="sentMessage" novalidate="novalidate">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <input class="form-control" id="name" type="text" placeholder="Your Name *" required="required" data-validation-required-message="Please enter your name.">
-                  <p class="help-block text-danger"></p>
-                </div>
-                <div class="form-group">
-                  <input class="form-control" id="email" type="email" placeholder="Your Email *" required="required" data-validation-required-message="Please enter your email address.">
-                  <p class="help-block text-danger"></p>
-                </div>
-                <div class="form-group">
-                  <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" required="required" data-validation-required-message="Please enter your phone number.">
-                  <p class="help-block text-danger"></p>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <textarea class="form-control" id="message" placeholder="Your Message *" required="required" data-validation-required-message="Please enter a message."></textarea>
-                  <p class="help-block text-danger"></p>
-                </div>
-              </div>
-              <div class="clearfix"></div>
-              <div class="col-lg-12 text-center">
-                <div id="success"></div>
-                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
+ 
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
