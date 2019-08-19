@@ -30,24 +30,19 @@ $(()=>{
 
 function openCoCo(btn) {
 	if ($(".mcomment-editor").css("display") == "none"){
-		$(".mcomment-editor").css("display", "block");
-		$(btn).removeClass('btn-dark').addClass('btn-primary');
-		$(btn).text('답글');
-		return;
-	}
-	
-	if($(btn).parent().parent().parent().next().css("display") == "none"){
 		$(btn).parent().parent().parent().next().css("display", "block");
+		$(".mcomment-editor").css("display", "block");
 		$(btn).removeClass('btn-primary').addClass('btn-dark');
 		$(btn).text('취소');
 	}
-	else if($(btn).parent().parent().parent().next().css("display") == "block"){
+	else if ($(".mcomment-editor").css("display") == "block"){
+		$(btn).parent().parent().parent().next().css("display", "block");
 		$(".mcomment-editor").css("display", "none");
 		$(btn).removeClass('btn-dark').addClass('btn-primary');
 		$(btn).text('답글');
-	} 
+	}
 	
-	
+
 }
 function openComment(comment){
 
@@ -240,9 +235,9 @@ function insertComment(btn){
 						
 					
 						html+="<tr style='display:none; float:right;'><td>"
-							html+="<div class='mcomment-editor'>"
+							html+="<div class='mcomment-editor' style='float:right;'>"
 								html+="<textarea style='margin:7px 2px; float:left;' name='boardCommentContent' class='boardCommentContent' cols='45' rows='3'></textarea>";
-								html+="<button type='button' class='btn btn-primary' onclick='insertCoCo(this)' value='"+data.boardNo+"' style='width:77px; height:68px; margin:5px 2px;'>등록</button>";	
+								html+="<button type='button' class='btn btn-primary' onclick='insertCoCo(this)' value='"+data.boardNo+"' style='width:76px; height:68px; margin:5px 2px;'>등록</button>";	
 							html+="</div>";
 						html+="</td>";
 						html+="</tr>";
@@ -323,6 +318,7 @@ function insertCoCo(btn){
 						
 						//$(btn).parent().parent().parent().append(html);
 						
+console.log($(btn).parent().parent().parent().prev().attr('newL1'));
 //console.log($(btn).parent().parent().parent().siblings().last());
 //console.log($(btn).parent().parent().parent().nextUntil($(".level1")));
 						//$(btn).parent().parent().parent().last($('tr')).append(html);
@@ -331,6 +327,7 @@ function insertCoCo(btn){
 					if($(btn).parent().parent().parent().prev().attr('newL1')=='newL1'){
 						$(btn).parent().parent().parent().append(html);
 					} else{
+						//$(btn).parent().parent().parent().append(html);
 						$(btn).parent().parent().parent().nextUntil($(".level1")).last('tr').append(html);
 					}
 						
@@ -1067,7 +1064,7 @@ function pageMore(boardNo){
 						html+="<div class='comment-editor'>"
 							
 						html+="<textarea style='float:left; margin:5px;' name='boardCommentContent' class='boardCommentContent' cols='51' rows='3'></textarea>";
-						html+="<button type='button' class='btn btn-primary' onclick='insertComment(this);' value='"+tl.boardSNS.boardNo+"' style='float:right; width:77px; height:68px; margin:5px 5px 5px 2px;'>등록</button>";	
+						html+="<button type='button' class='btn btn-primary' onclick='insertComment(this);' value='"+tl.boardSNS.boardNo+"' style='float:right; width:76px; height:68px; margin:5px 5px 5px 2px;'>등록</button>";	
 					
 						html+="</div>";
 						html+="<table class='tbl-comment'>";
@@ -1096,9 +1093,9 @@ function pageMore(boardNo){
 									
 									<!--여기 -->
 									html+="<tr style='display:none; float:right;'><td>"
-										html+="<div class='mcomment-editor'>"
+										html+="<div class='mcomment-editor' style='float:right; display:none'>"
 											html+="<textarea style='margin:7px 2px; float:left;' name='boardCommentContent' class='boardCommentContent' cols='45' rows='3'></textarea>";
-											html+="<button type='button' class='btn btn-primary' onclick='insertCoCo(this)' value='"+tl.boardSNS.boardNo+"' style='width:77px; height:68px; margin:5px 2px;'>등록</button>";	
+											html+="<button type='button' class='btn btn-primary' onclick='insertCoCo(this)' value='"+tl.boardSNS.boardNo+"' style='width:76px; height:68px; margin:5px 2px;'>등록</button>";	
 										html+="</div>";
 									html+="</td>";
 									html+="</tr>";
