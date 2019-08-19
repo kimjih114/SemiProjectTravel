@@ -42,7 +42,6 @@ public class AjaxCommentDeleteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1.parameter
 				int commentNo = Integer.parseInt(request.getParameter("commentNo"));
-				
 				int result = new SNSService().deleteCommentSNS(commentNo);
 			
 				

@@ -44,8 +44,6 @@ public class AjaxSnsCommentUpdateServlet extends HttpServlet {
 				//2.business logic
 				int result = new SNSService().updateCommentSNS(commentNo, commentNickname, commentProfile, commentContent);
 				
-				
-				
 				commentSNS =  new SNSService().selectCommentSNS(commentNo);	
 	
 				//view단 작성
