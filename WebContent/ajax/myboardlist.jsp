@@ -118,7 +118,7 @@ function updateComment(btn){
 						html+="<div>"
 								html+="<button class='btn btn-primary' value='' onclick='openCoCo(this)' style='float:right;'>답글</button>";
 								html+="<button class='btn btn-danger' value='"+data.commentNo+"' boardNo='"+data.boardNo+"' onclick='deleteComment(this);' style='float:right; margin-right: 2px;'>삭제</button>	";	
-								html+="<button class='btn btn-success' onclick='updateCommentFrm(this)' value='"+data.commentNo+"' style='float:right; margin-right: 2px;'>수정</button>	";	
+								html+="<button class='btn btn-success' content='"+data.commentContent+"' onclick='updateCommentFrm(this)' value='"+data.commentNo+"' style='float:right; margin-right: 2px;'>수정</button>	";	
 								html+="</div>"
 							html+="</td>";
 					}
@@ -192,9 +192,6 @@ function cancelUpdateComment(btn){
 	$(btn).parent().parent().html($(btn).val());
 	
 }
-
-
-
 
 
 function insertComment(btn){
@@ -306,8 +303,8 @@ function insertCoCo(btn){
 					
 					var html =''
 					
-						//html+="<tr class=level2 id='comment"+data.commentNo+"'>";
-						html+="<td class='timeline-boardcontent-sns' style='width:472px; float:right'>";
+						html+="<tr class=level2 id='comment"+data.commentNo+"' style='float:right;'>";
+						html+="<td class='timeline-boardcontent-sns'  style='width:472px; float:right'>";
 						html+="<a href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.commentWriter+"'class='comment-writer' style='color:black; font-weight:700; font-size:1.2em; margin-right:3px;'><img src='<%=request.getContextPath()%>/upload/profile/"+data.commentProfile+"' class='header-profile-circle' width='30' height='30' />"+data.commentNickname+"@"+data.commentWriter+"</a>";
 						html+="<span class='comment-date' style='font-size:0.8em; color:gray'>"+data.commentUpdateDate+"</span>";
 						html+="<br />";
@@ -317,7 +314,7 @@ function insertCoCo(btn){
 							html+="<button class='btn btn-success' onclick='updateCommentFrm(this)' content='"+data.commentContent+"' value='"+data.commentNo+"' style='float:right; margin-right: 2px;'>수정</button>	";	
 							html+="</div>"
 						html+="</td>";
-						//html+="</tr>";
+						html+="</tr>";
 						
 						var cntString = $('#commentcnt'+$(btn).val()).html().substring(3, $('#commentcnt'+$(btn).val()).html().indexOf(')'));
 						var cnt = Number($('#commentcnt'+$(btn).val()).html().substring(3, $('#commentcnt'+$(btn).val()).html().indexOf(')')));
