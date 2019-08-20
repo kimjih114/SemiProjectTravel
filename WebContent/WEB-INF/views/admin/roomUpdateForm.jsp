@@ -245,7 +245,7 @@ section#page-top{
   <div class="form-group">
     <label for="exampleInputEmail1">방 사진1:</label><br />
     <input type="file" name="fileName1" id="fileName1" />
-    <span id="fname1"><%=image.get(0).getOriginalFileName1() %></span>
+    <span id="fname1" style="position:absolute; left:90px;background-color:white;width:200px;"><%=image.get(0).getOriginalFileName1() %></span>
     <br />
     <input type="checkbox" name="delFile1" id="delFile1">
    <label for="exampleInputEmail1">파일 삭제</label>
@@ -256,7 +256,7 @@ section#page-top{
 	<div class="form-group">
     <label for="exampleInputEmail1">방 사진2:</label><br />
     <input type="file" name="fileName2" id="fileName2" />
-    <span id="fname2"><%=image.get(0).getOriginalFileName2() %></span>
+    <span id="fname2" style="position:absolute; left:90px;background-color:white;width:200px;"><%=image.get(0).getOriginalFileName2() %></span>
     <br />
     <input type="checkbox" name="delFile2" id="delFile2">
    <label for="exampleInputEmail1">파일 삭제</label>
@@ -267,7 +267,7 @@ section#page-top{
 	<div class="form-group">
     <label for="exampleInputEmail1">방 사진3:</label><br />
     <input type="file" name="fileName3" id="fileName3" />
-    <span id="fname3"><%=image.get(0).getOriginalFileName3() %></span>
+    <span id="fname3" style="position:absolute; left:90px;background-color:white;width:200px;"><%=image.get(0).getOriginalFileName3() %></span>
     <br />
     <input type="checkbox" name="delFile3" id="delFile3">
    <label for="exampleInputEmail1">파일 삭제</label>

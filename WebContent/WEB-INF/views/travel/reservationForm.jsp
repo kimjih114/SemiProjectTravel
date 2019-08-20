@@ -667,9 +667,9 @@
 			
 		});
 
-		location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
 		
-		<%-- var IMP = window.IMP;
+		
+		var IMP = window.IMP;
 		IMP.init('imp68757717');
 
 		IMP.request_pay({
@@ -685,13 +685,16 @@
 		    /* buyer_postcode : '123-456', */
 		    /* m_redirect_url : 'https://www.yourdomain.com/payments/complete' */
 		}, function(rsp) {
-		    	    
-			var startDate=$("#sdate").val();
-			var endDate=$("#edate").val();
-			var friendId=$("#search").val();
+			
+			if ( rsp.success ) {
+				location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
+		    } else {
+		        return;
+		    }
+			
+			
 		    
-		    location.href="<%=request.getContextPath()%>/travel/reservationInsert?title=<%=title%>&roomTitle="+roomTitle+"&startDate="+startDate+"&endDate="+endDate+"&friendId="+friendId+"&price="+price+"&userId=<%=userLoggedIn.getUserId()%>&contentId=<%=contentId%>&contentTypeId=<%=contentTypeId%>";
-		});  --%>
+		});
 		
 	}
 </script>
