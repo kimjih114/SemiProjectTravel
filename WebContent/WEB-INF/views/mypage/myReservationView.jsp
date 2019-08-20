@@ -277,7 +277,7 @@ p.userprofile-userId{
   <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
-      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/img/profile.jpg" alt="">
+     <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt=""></img>
       <p class="userprofile-userId"><span style="font-weight: 700;">@닉네임</span>님, 환영합니다!
       <button>여행이야기 홈</button>
    </div>
@@ -311,9 +311,7 @@ p.userprofile-userId{
     	<td id="QuestionList">1:1문의</td>
     </tr>
     
-    <tr>
-    	<td>공지사항</td>
-    </tr> 	
+    	
 	</table>
   </nav>  
 	
@@ -373,7 +371,37 @@ p.userprofile-userId{
 
  </section>
   
+  <script>
   
+
+  $("#QuestionList").on("click", function(){
+  	var userId = '<%=userLoggedIn.getUserId() %>';	
+  	console.log("userLoggedIn"+userId);
+  	location.href="<%=request.getContextPath()%>/boardquestion/boardList?userId="+userId; 
+  });
+
+  $("#gomsg").on("click", function(){
+  		var userId = '<%=userLoggedIn.getUserId() %>';	
+  		console.log("userLoggedIn"+userId);
+  	 	
+  	 	
+  			var url="<%=request.getContextPath()%>/chat/chatroom.do?userId="+userId;
+  			var title="popup"; 
+  			var status = "width=400px, height=500px, left=150px, top=0px";
+  			var popup = open("", title, status);
+  			
+  			var frm = document.memomsgFrm;
+  			frm.userId.value= userId;
+  			frm.action = url;
+  			frm.target=title;
+  			frm.method= "post"; 
+  			frm.submit();
+  		
+  	});
+
+  
+  
+  </script>
   
 </body>
 </html>

@@ -156,7 +156,7 @@ p.userprofile-userId{
 <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
-      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/img/profile.jpg" alt="">
+     <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt=""></img>
       <p class="userprofile-userId"><span style="font-weight: 700;">@닉네임</span>님, 환영합니다!
       <button>여행이야기 홈</button>
    </div>
@@ -189,9 +189,7 @@ p.userprofile-userId{
     	<td id="QuestionList">1:1문의</td>
     </tr>
     
-    <tr>
-    	<td>공지사항</td>
-    </tr> 	
+    	
 	</table>
   </nav>   
 

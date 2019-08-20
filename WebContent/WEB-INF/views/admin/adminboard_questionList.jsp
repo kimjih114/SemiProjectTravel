@@ -224,7 +224,7 @@ text-align:left;
 <header class="masthead">
 	<div class="container">
 		<div class="intro-text" style="padding-top:100px;">
-			<h1>1:1문의</h1>
+			<h1>1:1문의</h1> <div><a onclick="location.href='<%=request.getContextPath() %>/mypage/mypageView'" style="color:#fed136">마이페이지</a></div>
 			<!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"> -->
 		</div>
 	</div>
