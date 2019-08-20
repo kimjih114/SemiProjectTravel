@@ -84,7 +84,7 @@ public class UserDAO {
 		ResultSet rset = null; 
 		String sql = prop.getProperty("loginCheck");
 		try {
-			pstmt =conn.prepareStatement(sql);
+			pstmt =conn.prepareStatement(sql);		
 			pstmt.setString(1, user.getUserId());
 			pstmt.setString(2, user.getUserPassword());
 			pstmt.setString(3, user.getUserId());
