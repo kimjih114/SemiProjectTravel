@@ -364,19 +364,19 @@ function searchKeyword(){
   <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
-      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/img/profile.jpg" alt="">
+      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/upload/profile/<%=loggedIn.getFileName() %>" alt=""></a>
       <p class="userprofile-userId"><span style="font-weight: 700;">@닉네임</span>님, 환영합니다!
       <button>여행이야기 홈</button>
    </div>
 
+   
    <table id="tbl-usermenu0">
    	 <tr>
-   		<td id="modifyUserInfo">회원정보수정</td>
+   		<td id="modifyUserInfo"><a href="<%=request.getContextPath()%>/user/userUpdateView?userId=<%=userLoggedIn.getUserId()%>">회원정보수정</a></td>
    	</tr>
 	<tr>
    		<td id="gomsg">메시지</td>
    	</tr>
-   	</table>
    	<table id="tbl-usermenu1">
    		<tr>
    			<td><a href="<%=request.getContextPath()%>/mypage/myReservationView?userId=<%=userLoggedIn.getUserId()%>">예약내역</a></td>
@@ -387,7 +387,7 @@ function searchKeyword(){
    		<tr>
    			<td><a href="<%=request.getContextPath()%>/mypage/myBasketView?userId=<%=userLoggedIn.getUserId()%>">장바구니</a></td>
    		</tr>
-   	</table>
+   	</table>	
 
 	<table id="tbl-usermenu4" style="margin-bottom:0px; !important">
 	<tr>
@@ -397,10 +397,7 @@ function searchKeyword(){
     <tr>
     	<td id="QuestionList">1:1문의</td>
     </tr>
-    
-    <tr>
-    	<td>공지사항</td>
-    </tr> 	
+ 
 	</table>
   </nav>
 <section id="content">

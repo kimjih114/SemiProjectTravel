@@ -308,9 +308,7 @@ p.userprofile-userId{
     	<td id="QuestionList">1:1문의</td>
     </tr>
     
-    <tr>
-    	<td>공지사항</td>
-    </tr> 	
+   
 	</table>
   </nav>  
 	

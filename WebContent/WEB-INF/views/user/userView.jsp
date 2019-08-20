@@ -257,7 +257,7 @@ p.userprofile-userId{
       <button>여행이야기 홈</button>
    </div>
 
-   <table id="tbl-usermenu0">
+  <table id="tbl-usermenu0">
    	 <tr>
    		<td id="modifyUserInfo"><a href="<%=request.getContextPath()%>/user/userUpdateView?userId=<%=userLoggedIn.getUserId()%>">회원정보수정</a></td>
    	</tr>
@@ -269,23 +269,23 @@ p.userprofile-userId{
    			<td><a href="<%=request.getContextPath()%>/mypage/myReservationView?userId=<%=userLoggedIn.getUserId()%>">예약내역</a></td>
    		</tr>
    		<tr>
-   			<td>장바구니</td>
+   			<td><a href="<%=request.getContextPath()%>/mypage/myReservationDelView?userId=<%=userLoggedIn.getUserId()%>">취소내역</a></td>
    		</tr>
    		<tr>
-   			<td>위시리스트</td>
+   			<td><a href="<%=request.getContextPath()%>/mypage/myBasketView?userId=<%=userLoggedIn.getUserId()%>">장바구니</a></td>
    		</tr>
    	</table>
 
 	<table id="tbl-usermenu4" style="margin-bottom:0px; !important">
     <tr>
-    	<td >FAQ</td>
+    	<td><a href="<%=request.getContextPath()%>/search/FAQ">FAQ</a></td>
     </tr>
     
     <tr>
     	<td id="QuestionList">1:1문의</td>
     </tr>
     
-   	
+    	
 	</table>
   </nav>   
 
