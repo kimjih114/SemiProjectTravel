@@ -33,12 +33,12 @@
 <%
 
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
-	System.out.println("userLoggedIn@userLogin.jsp=" + userLoggedIn);
 	User loggedIn = null;
+		  ProfileSNS profile = null;
 	if(userLoggedIn!=null){
 		loggedIn = new UserService().selectOne(userLoggedIn.getUserId());
+		profile = new SNSService().selectOneProfile(loggedIn.getUserId());
 	}
-		ProfileSNS profile = new SNSService().selectOneProfile(userLoggedIn.getUserId());
 	
 %>
 <head>
@@ -54,7 +54,7 @@
 header.masthead{
 <%-- background-image:url('<%=request.getContextPath()%>/img/header-new.jpg'); --%>
 
-background-image:<%=userLoggedIn!=null && profile.getHeaderRenamedFilename()!=null?"url('"+request.getContextPath()+"/upload/profile/"+profile.getHeaderRenamedFilename()+";')":"url('"+request.getContextPath()+"/img/header-new.jpg');" %>
+background-image:<%=profile!=null && profile.getHeaderRenamedFilename()!=null?"url('"+request.getContextPath()+"/upload/profile/"+profile.getHeaderRenamedFilename()+";')":"url('"+request.getContextPath()+"/img/header-new.jpg');" %>
 }
 .header-profile-circle{
     border: 0px;
