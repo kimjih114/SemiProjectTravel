@@ -757,7 +757,7 @@ $("#searchSNS2").keyup(e=>{
    			return;
    		}else{
    			$.ajax({
-   				url: "<%=request.getContextPath() %>/gson/sns/profileSNSList.do?search=+"search",
+   				url: "<%=request.getContextPath() %>/gson/sns/profileSNSList.do?search="+search,
    				type: "get",
    				dataType: "json",
    				success:function(data){
@@ -778,6 +778,9 @@ $("#searchSNS2").keyup(e=>{
    						$("#searchSNS2").val($(e.target).text());
    						//#autoComplete 감춤
    						$("#autoS2").hide().children().remove();
+   						
+   						location.href='<%=request.getContextPath() %>/story/storyMain?mypage='+$(e.target).text().substring($(e.target).text().lastIndexOf('@')+1);
+
   
    					})).hover(e=>{
    						$(e.target).addClass("sel").siblings().removeClass("sel");			

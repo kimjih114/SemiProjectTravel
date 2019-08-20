@@ -324,6 +324,7 @@ $(function() {
 		url: "<%=request.getContextPath() %>/ajax/mytimeline.jsp", 
 		data: "mypage="+'<%=mypage %>',
 		type: "get",
+		async : false,
 		dataType: "html",
 		success: function(data){
 			$("#tab1Content").html(data);
@@ -333,7 +334,7 @@ $(function() {
 			console.log("ajax처리실패!");
 			console.log(jqxhr, textStatus, errorThrown);
 		}, complete: function(){
-				removeAllScreen()
+				
 			}
 	});
 
@@ -348,11 +349,12 @@ $(function() {
 		$('#' + activeTab).addClass('current');
 
 		if($(this).attr('data-tab')=='tab1'){
-			addAllScreen();
+			
 				$.ajax({
 					url: "<%=request.getContextPath() %>/ajax/mytimeline.jsp", 
 					data: "mypage="+'<%=mypage %>',
 					type: "get",
+					async : false,
 					dataType: "html",
 					success: function(data){
 						$("#tab1Content").html(data);
@@ -362,7 +364,7 @@ $(function() {
 						console.log("ajax처리실패!");
 						console.log(jqxhr, textStatus, errorThrown);
 					}, complete: function(){
-	 					removeAllScreen()
+	 					
 	 				}
 				});
 
@@ -371,11 +373,12 @@ $(function() {
 		
 		
 		 if($(this).attr('data-tab')=='tab2'){
-			 addAllScreen();
+			
 				$.ajax({
 					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
 					data: "mypage="+'<%=mypage %>',
 					type: "get",
+					async : false,
 					dataType: "html",
 					success: function(data){
 						$("#tab2Content").html(data);
@@ -385,7 +388,7 @@ $(function() {
 						console.log("ajax처리실패!");
 						console.log(jqxhr, textStatus, errorThrown);
 					}, complete: function(){
-	 					removeAllScreen()
+	 					
 	 				}
 				});
 
@@ -393,11 +396,12 @@ $(function() {
 		}
 		
 		if($(this).attr('data-tab')=='tab3'){
-			addAllScreen();
+		
 				$.ajax({
 					url: "<%=request.getContextPath() %>/ajax/mylikelist.jsp", 
 					data: "mypage="+'<%=mypage %>',
 					type: "get",
+					async : false,
 					dataType: "html",
 					success: function(data){
 						$("#tab3Content").html(data);
@@ -407,7 +411,7 @@ $(function() {
 						console.log("ajax처리실패!");
 						console.log(jqxhr, textStatus, errorThrown);
 					}, complete: function(){
-	 					removeAllScreen()
+	 					
 	 				}
 				});
 
@@ -429,6 +433,7 @@ $(()=>{
  				url: "<%=request.getContextPath() %>/ajax/travelsrch.jsp", 
  				type: "get",
  				dataType: "html",
+ 				async : false,
  				success: function(data){
  					$(this).removeClass('unlikes');
  					$(this).addClass('likes');
@@ -601,6 +606,7 @@ $("#btnSubmit").click(function(event){
 	     enctype:"multipart/form-data",
 	     processData: false,
 	     contentType: false,
+	     async : false,
 	     success : function(data) {
 	         alert("게시글 등록 성공 :D!");
 	         <%if(userLoggedIn.getUserId().equals(mypage)){%>
@@ -864,28 +870,6 @@ $("#btnSubmit").click(function(event){
 });
 
 
-	
-function addAllScreen() {
-    console.log( "addAllScreen" );
-    var mh = $( document ).height();
-    var mw = $( window ).width();
-    var html = "<div id='mask'></div>";
-    $( 'body' ).append( html );
-    var maskCss = { 'width': mw,
-                    'height':mh,
-                    'position':'absolute',
-                    'left':'0',
-                    'top':'0',
-                    'z-index':'9000',
-                    'background-color':'#000',
-                    'dispaly':'none'
-                };
-    $( "#mask" ).css( maskCss ).fadeIn( 1000 ).fadeTo( "show", 0.8 );
-}
-function removeAllScreen() {
-    console.log( "removeAllScreen" );
-    $( '#mask' ).remove();
-}
 
 $(function(){
 	  $(".return-top").hide(); 
@@ -954,6 +938,7 @@ $("#searchSNS1").keyup(e=>{
    				url: "<%=request.getContextPath() %>/gson/sns/profileSNSList.do?search="+search,
    				type: "get",
    				dataType: "json",
+   				async : false,
    				success:function(data){
    					var html = "";
    					if(data==null || data.length==0){						
@@ -972,6 +957,9 @@ $("#searchSNS1").keyup(e=>{
    						$("#searchSNS1").val($(e.target).text());
    						//#autoComplete 감춤
    						$("#autoS").hide().children().remove();
+   						
+   						location.href='<%=request.getContextPath() %>/story/storyMain?mypage='+$(e.target).text().substring($(e.target).text().lastIndexOf('@')+1);
+
   
    					})).hover(e=>{
    						$(e.target).addClass("sel").siblings().removeClass("sel");			
