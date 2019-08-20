@@ -16,6 +16,61 @@
     
 %>
 <style>
+.rightNav {
+ 	position: fixed;
+    text-align: center;
+    top: 300px;
+    left: 768px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    /*display: fixed;*/
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+
+    /*height: 100vh;*/
+	padding:5px;
+    
+}
+
+.return-top{
+	border:1px solid black;
+	width:100px;
+	text-align: center;
+	left: 800px;
+	bottom:313px;
+	position:fixed;
+ 	font-weight:700;
+ 	cursor:pointer
+
+}
+
+#autoS2{
+	display:none;
+	z-index:10;
+	background: white;
+	width: 173px;
+	overflow:hidden;
+	border: 1px solid gray;
+	position: absolute;
+	top: 78px;
+	left: 31px;
+	padding: 0;
+	margin: 0;
+	text-align:left;
+}
+#autoS2 li{
+	padding: 0 10px;
+	list-style: none;
+	z-index:10;
+	cursor: pointer;
+	width:173px;
+}
+#autoS2 li.sel{
+	background: gray;
+	color: white;
+	z-index:10;
+}
 #followerSearch {
 	width:540px;
 	margin:0 auto;
@@ -640,16 +695,112 @@ function unblocker(btn){
 	
 }
 
+$(function(){
+	  $(".return-top").hide(); 
+	     
+	     $(window).scroll(function () {
+	         if ($(this).scrollTop() > 100) { 
+	             $('.return-top').fadeIn();
+	         } else {
+	             $('.return-top').fadeOut();
+	         }
+	     });
+	             
+	     $('.return-top').click(function () {
+	         $('body,html').animate({
+	             scrollTop: 0 
+	         }, 1000);  
+	         return false;
+	     });
+	}); 
+
+
+$("#searchSNS2").keyup(e=>{
+	
+   	var $sel = $(".sel");
+   	var $li = $("#autoS2 li");
+   	
+   	if(e.key == "ArrowDown"){
+   		if($sel.length == 0){
+   			$li.eq(0).addClass("sel");
+   		}	
+   		else if($sel.is($li.last())){
+   			
+   		}
+   		else{
+   			$sel.removeClass("sel").next().addClass("sel");
+   		}
+   	}
+   	else if(e.key == "ArrowUp"){
+   		if($sel.length == 0){
+   			
+   		}	
+   		else if($sel.is($li.first())){
+   			$sel.removeClass("sel");
+   		}
+   		else{
+   			$sel.removeClass("sel").prev().addClass("sel");
+   		}
+   	}
+   	
+   	else if(e.key == "Enter"){
+   		$(e.target).val($sel.text());
+   		$("#searchSNS2").val($(e.target).text());
+   		$("#autoS2").hide().children().remove();
+   		
+   		location.href='<%=request.getContextPath() %>/story/storyMain?mypage='+$sel.text().substring($sel.text().lastIndexOf('@')+1);
+
+   	}
+   	else{
+   		var search = $("#searchSNS2").val().trim();
+   		if(search.length == 0){
+   			return;
+   		}else{
+   			$.ajax({
+   				url: "<%=request.getContextPath() %>/gson/sns/profileSNSList.do",
+   				type: "get",
+   				dataType: "json",
+   				success:function(data){
+   					var html = "";
+   					if(data==null || data.length==0){						
+							$("#autoS2").hide();
+   					}
+   					else{	
+   					$.each(data,(i,p)=>{				
+   						html += "<li><img src='<%=request.getContextPath() %>/upload/profile/"+p.profileRenamedFilename+"' class='header-profile-circle'  width='20' height='20' />"+p.profileUserNickname+"@"+p.profileUserId+"</li>";		
+   					});
+						
+					$("#autoS2").html(html)
+							.fadeIn(200);
+   					}	
+   					
+   					$("#autoS2 li").on("click", (e=>{						
+   						$("#searchSNS2").val($(e.target).text());
+   						//#autoComplete 감춤
+   						$("#autoS2").hide().children().remove();
+  
+   					})).hover(e=>{
+   						$(e.target).addClass("sel").siblings().removeClass("sel");			
+   					}, e=>{
+   						$(e.target).removeClass("sel");
+   					});
+   					
+   				},
+   				error:function(){
+   					
+   				}
+   			
+   			});	
+   		}
+   	};
+  
+
+
+});
 </script>
  <div id="follower-container">
- <br>
-<div id="followerSearch">
- 			<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" width='20' height='20'/>
-			<label for='followSearch' style='float:left; margin:0px 5px 0px 2px;'>전체 유저검색</label>
-			<input type="search" name="followerSearch" class="followerSearch" id='followSearch'/>
- </div>
  
- <br><br>
+ 
 			<ul class="tab">
 			<%if(userLoggedIn!=null && userLoggedIn.getUserId().equals(mypage)){ %>
 				<li class="current" data-tab="tab1"><a>팔로우</a></li>
@@ -696,5 +847,24 @@ function unblocker(btn){
 		    	</div>
 		   	<%} %>
 		    </div>
-
+		    
 		</div>
+<table class="rightNav">
+		<tr>
+			<th style='font-size: 2em; float:left; padding-left:27px;'>빠른유저검색</th>
+		</tr>
+			<tr>
+				<td><div>
+						<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" width='20' height='20'/>
+						<input type="search" class="searchSNS" id="searchSNS2" style='display:abolute;' />
+						<ul id="autoS2" style="z-index:99;">
+						
+						</ul>
+					</div>
+				</td>
+			</tr>
+	    </table>
+	    
+	   <div class='return-top'>맨 위로 가기</div>
+
+		

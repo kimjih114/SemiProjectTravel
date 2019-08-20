@@ -1266,6 +1266,164 @@ public class SNSDAO {
 		}
 		return result;
 	}
+
+	public List<Integer> selectBoardNoList(Connection conn, String mypage) {
+		PreparedStatement pstmt = null;
+		int boardNo = 0;
+		List<Integer> selectBoardNoList = new ArrayList<>();
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoardNoList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mypage);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				boardNo = rset.getInt(1);
+				
+				selectBoardNoList.add(boardNo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return selectBoardNoList;
+	}
+
+	public List<Integer> selectFollowerBoardNoList(Connection conn, List<String> followerSNSList) {
+		PreparedStatement pstmt = null;
+		int boardNo = 0;
+		List<Integer> list = new ArrayList<>();
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoardNoList");
+		try {
+			
+			for(String f : followerSNSList) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, f);
+			
+				rset = pstmt.executeQuery();
+
+				if(rset.next()) {
+					boardNo = rset.getInt(1);
+					
+					list.add(boardNo);
+				}
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<Integer> selectFollowLikeBoardNoList(Connection conn, List<String> followerSNSList) {
+		PreparedStatement pstmt = null;
+		int boardNo = 0;
+		List<Integer> list = new ArrayList<>();
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectLikeBoardNoList");
+		try {
+			
+			for(String f : followerSNSList) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, f);
+			
+				rset = pstmt.executeQuery();
+
+				if(rset.next()) {
+					boardNo = rset.getInt(1);
+					
+					list.add(boardNo);
+				}
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<BoardSNS> selectBoardSNSAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		List<BoardSNS> list = new ArrayList<>();
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoardSNSAll");
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {
+				BoardSNS bs = new BoardSNS();
+
+				bs.setBoardNo(rset.getInt("board_no"));
+				bs.setBoardWriter(rset.getString("board_writer"));
+				bs.setBoardContent(rset.getString("board_content"));
+				bs.setBoardType(rset.getString("board_type"));
+				bs.setBoardUpdateDate(rset.getTimestamp("board_update_date"));
+				bs.setBoardDate(rset.getTimestamp("board_date"));
+				
+				list.add(bs);
+			}
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<ProfileSNS> selectProfileSNSAll(Connection conn) {
+		PreparedStatement pstmt = null;
+		List<ProfileSNS> list = new ArrayList<>();
+		ProfileSNS profileSNS = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectProfileSNSAll");
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {
+				profileSNS = new ProfileSNS();
+				
+				profileSNS.setProfileUserId(rset.getString("profile_user_id"));
+				profileSNS.setProfileUserNickname(rset.getString("profile_user_nickname"));
+				profileSNS.setProfileUserIntroduce(rset.getString("profile_user_introduce"));
+				profileSNS.setProfileUserType(rset.getString("profile_user_type"));
+				profileSNS.setProfileOriginalFilename(rset.getString("profile_original_filename"));
+				profileSNS.setProfileRenamedFilename(rset.getString("profile_renamed_filename"));
+				profileSNS.setHeaderOriginalFilename(rset.getString("header_original_filename"));
+				profileSNS.setHeaderRenamedFilename(rset.getString("header_renamed_filename"));
+				profileSNS.setHeaderText(rset.getString("header_text"));
+				profileSNS.setThemeColor(rset.getString("theme_color"));
+				
+				list.add(profileSNS);
+			}
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 	
 	
 	

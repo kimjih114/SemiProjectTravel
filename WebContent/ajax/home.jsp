@@ -11,9 +11,10 @@
 %>
 
 <style>
-#rightNav {
+.rightNav {
+ 	position: fixed;
     text-align: center;
-    top: 10px;
+    top: 300px;
     left: 768px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -21,12 +22,52 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    width: 230px;
+
     /*height: 100vh;*/
-	border: 1px solid;
- 	position: absolute;
+	padding:5px;
     
 }
+
+.return-top{
+	border:1px solid black;
+	width:100px;
+	text-align: center;
+	left: 800px;
+	bottom:313px;
+	position:fixed;
+ 	font-weight:700;
+ 	cursor:pointer
+
+}
+
+#autoS{
+	display:none;
+	z-index:10;
+	background: white;
+	width: 173px;
+	overflow:hidden;
+	border: 1px solid gray;
+	position: absolute;
+	top: 78px;
+	left: 31px;
+	padding: 0;
+	margin: 0;
+	text-align:left;
+}
+#autoS li{
+	padding: 0 10px;
+	list-style: none;
+	z-index:10;
+	cursor: pointer;
+	width:173px;
+}
+#autoS li.sel{
+	background: gray;
+	color: white;
+	z-index:10;
+}
+
+
 
 #tab-container {
 	width:540px;
@@ -248,25 +289,24 @@
 	
 			</div>
 		
-		<table id="rightNav">
+		<table class="rightNav">
+		<tr>
+			<th style='font-size: 2em; float:left; padding-left:27px;'>빠른유저검색</th>
+		</tr>
 			<tr>
-				<td><input type="search" id="searchSNS" placeholder="검색" onfocus='popupSearchFrm' /></td>
-			</tr>
-			<tr>
-				<td>
-					<span>추천팔로워</span>
+				<td><div>
+						<img src="<%=request.getContextPath() %>/img/magnifying-glass.png" class="magni" width='20' height='20'/>
+						<input type="search" class="searchSNS" id="searchSNS1" style='display:abolute;' />
+						<ul id="autoS" style="z-index:99;">
+						
+						</ul>
+					</div>
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<span>추천리뷰</span>
-				</td>
-			</tr>
-			
 	    </table>
-		
-	
-	</div>
+	    
+	   <div class='return-top'>맨 위로 가기</div>
+
 		
 <script>
 var newPostHtml = '';
@@ -292,7 +332,9 @@ $(function() {
 		error: function(jqxhr, textStatus, errorThrown){
 			console.log("ajax처리실패!");
 			console.log(jqxhr, textStatus, errorThrown);
-		}
+		}, complete: function(){
+				removeAllScreen()
+			}
 	});
 
 	
@@ -306,7 +348,7 @@ $(function() {
 		$('#' + activeTab).addClass('current');
 
 		if($(this).attr('data-tab')=='tab1'){
-			 
+			addAllScreen();
 				$.ajax({
 					url: "<%=request.getContextPath() %>/ajax/mytimeline.jsp", 
 					data: "mypage="+'<%=mypage %>',
@@ -319,7 +361,9 @@ $(function() {
 					error: function(jqxhr, textStatus, errorThrown){
 						console.log("ajax처리실패!");
 						console.log(jqxhr, textStatus, errorThrown);
-					}
+					}, complete: function(){
+	 					removeAllScreen()
+	 				}
 				});
 
 			
@@ -327,7 +371,7 @@ $(function() {
 		
 		
 		 if($(this).attr('data-tab')=='tab2'){
-			
+			 addAllScreen();
 				$.ajax({
 					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
 					data: "mypage="+'<%=mypage %>',
@@ -340,14 +384,16 @@ $(function() {
 					error: function(jqxhr, textStatus, errorThrown){
 						console.log("ajax처리실패!");
 						console.log(jqxhr, textStatus, errorThrown);
-					}
+					}, complete: function(){
+	 					removeAllScreen()
+	 				}
 				});
 
 			
 		}
 		
 		if($(this).attr('data-tab')=='tab3'){
-		
+			addAllScreen();
 				$.ajax({
 					url: "<%=request.getContextPath() %>/ajax/mylikelist.jsp", 
 					data: "mypage="+'<%=mypage %>',
@@ -360,7 +406,9 @@ $(function() {
 					error: function(jqxhr, textStatus, errorThrown){
 						console.log("ajax처리실패!");
 						console.log(jqxhr, textStatus, errorThrown);
-					}
+					}, complete: function(){
+	 					removeAllScreen()
+	 				}
 				});
 
 			
@@ -374,6 +422,9 @@ $(()=>{
  
  	$(".unlikes").on('click', function(){
  		if($(this).val()!=null){
+ 		
+ 			
+ 			
  			$.ajax({
  				url: "<%=request.getContextPath() %>/ajax/travelsrch.jsp", 
  				type: "get",
@@ -615,7 +666,7 @@ $("#btnSubmit").click(function(event){
 									}
 									html+="</div>";
 									html+="<a class='carousel-control-prev' href='#carouselExampleControls"+data.boardSNS.boardNo+"' role='button' data-slide='prev'>";
-									html+="<span class=;carousel-control-prev-icon' aria-hidden='true'></span>"
+									html+="<span class='carousel-control-prev-icon' aria-hidden='true'></span>"
 									html+="<span class='sr-only'>Previous</span>";
 									html+="</a>";
 									html+="<a class='carousel-control-next' href='#carouselExampleControls"+data.boardSNS.boardNo+"' role='button' data-slide='next'>";
@@ -755,8 +806,15 @@ $("#btnSubmit").click(function(event){
 						
 						html += newPostHtml;
 						
-						$("#newPost1").html(html);
-						$("#newPost2").html(html);
+						if($(".current").attr('data-tab')=='tab1'){
+							$("#newPost1").html(html);
+							
+						}else if($(".current").attr('data-tab')=='tab2'){
+							$("#newPost2").html(html);
+							
+						}
+						
+						
 				
 				
 						
@@ -807,9 +865,132 @@ $("#btnSubmit").click(function(event){
 
 
 	
+function addAllScreen() {
+    console.log( "addAllScreen" );
+    var mh = $( document ).height();
+    var mw = $( window ).width();
+    var html = "<div id='mask'></div>";
+    $( 'body' ).append( html );
+    var maskCss = { 'width': mw,
+                    'height':mh,
+                    'position':'absolute',
+                    'left':'0',
+                    'top':'0',
+                    'z-index':'9000',
+                    'background-color':'#000',
+                    'dispaly':'none'
+                };
+    $( "#mask" ).css( maskCss ).fadeIn( 1000 ).fadeTo( "show", 0.8 );
+}
+function removeAllScreen() {
+    console.log( "removeAllScreen" );
+    $( '#mask' ).remove();
+}
+
+$(function(){
+	  $(".return-top").hide(); 
+	     
+	     $(window).scroll(function () {
+	         if ($(this).scrollTop() > 100) { 
+	             $('.return-top').fadeIn();
+	         } else {
+	             $('.return-top').fadeOut();
+	         }
+	     });
+	             
+	     $('.return-top').click(function () {
+	         $('body,html').animate({
+	             scrollTop: 0 
+	         }, 1000);  
+	         return false;
+	     });
+	}); 
 
 
 
+
+$("#searchSNS1").keyup(e=>{
+	
+   	var $sel = $(".sel");
+   	var $li = $("#autoS li");
+   	
+   	if(e.key == "ArrowDown"){
+   		if($sel.length == 0){
+   			$li.eq(0).addClass("sel");
+   		}	
+   		else if($sel.is($li.last())){
+   			
+   		}
+   		else{
+   			$sel.removeClass("sel").next().addClass("sel");
+   		}
+   	}
+   	else if(e.key == "ArrowUp"){
+   		if($sel.length == 0){
+   			
+   		}	
+   		else if($sel.is($li.first())){
+   			$sel.removeClass("sel");
+   		}
+   		else{
+   			$sel.removeClass("sel").prev().addClass("sel");
+   		}
+   	}
+   	
+   	else if(e.key == "Enter"){
+   		$(e.target).val($sel.text());
+   		$("#searchSNS1").val($(e.target).text());
+   		$("#autoS").hide().children().remove();
+   		
+   		location.href='<%=request.getContextPath() %>/story/storyMain?mypage='+$sel.text().substring($sel.text().lastIndexOf('@')+1);
+
+   	}
+   	else{
+   		var search = $("#searchSNS1").val().trim();
+   		if(search.length == 0){
+   			return;
+   		}else{
+   			$.ajax({
+   				url: "<%=request.getContextPath() %>/gson/sns/profileSNSList.do",
+   				type: "get",
+   				dataType: "json",
+   				success:function(data){
+   					var html = "";
+   					if(data==null || data.length==0){						
+							$("#autoS").hide();
+   					}
+   					else{	
+   					$.each(data,(i,p)=>{				
+   						html += "<li><img src='<%=request.getContextPath() %>/upload/profile/"+p.profileRenamedFilename+"' class='header-profile-circle'  width='20' height='20' />"+p.profileUserNickname+"@"+p.profileUserId+"</li>";		
+   					});
+						
+					$("#autoS").html(html)
+							.fadeIn(200);
+   					}	
+   					
+   					$("#autoS li").on("click", (e=>{						
+   						$("#searchSNS1").val($(e.target).text());
+   						//#autoComplete 감춤
+   						$("#autoS").hide().children().remove();
+  
+   					})).hover(e=>{
+   						$(e.target).addClass("sel").siblings().removeClass("sel");			
+   					}, e=>{
+   						$(e.target).removeClass("sel");
+   					});
+   					
+   				},
+   				error:function(){
+   					
+   				}
+   			
+   			});	
+   		}
+   	};
+  
+
+
+});
 
 
 

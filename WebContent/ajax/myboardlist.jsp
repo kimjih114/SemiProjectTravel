@@ -757,7 +757,7 @@ function updateBoardSNS(boardNo){
 							var html = "";
 						
 								html+="<div id='container"+data.boardSNS.boardNo+"'>";
-								html+="<table class='tbl-boardsns' id='boardNo"+data.boardSNS.boardNo+"'>"
+								html+="<table class='tbl-boardsns2' id='boardNo"+data.boardSNS.boardNo+"'>"
 								html+="<tr>";
 								html+="<td class='timeline-boardcontent-sns'>";
 								html+="<a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'><img src='<%=request.getContextPath()%>/upload/profile/"+data.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
@@ -1005,7 +1005,7 @@ function pageMore(boardNo){
 				var html = "";
 				
 				$.each(data,(i,tl)=>{
-					console.log(tl.followerSNSList);
+					console.log(tl);
 					if(tl.blockingSNSList.length>0){
 						for(var f=0; f<tl.blockingSNSList.length; f++){
 							if(tl.blockingSNSList[g]=='<%=userLoggedIn.getUserId() %>')
@@ -1030,10 +1030,12 @@ function pageMore(boardNo){
 					
 					//블록막기
 					if(tl.boardSNS.boardWriter!='<%=userLoggedIn.getUserId() %>' && (blockedList.length>0 || blockedList.length>0)){
+					
 						return;
 					}
 					//팔로워 공개일때 팔로워가 아니면 막기
 					if(tl.boardSNS.boardWriter!='<%=userLoggedIn.getUserId() %>' && (followerList.length==0 && tl.boardSNS.boardType == 'F')){
+						
 						return;
 					}
 						
@@ -1047,7 +1049,7 @@ function pageMore(boardNo){
 					blockingList = [];
 					
 					html+="<div id='container"+tl.boardSNS.boardNo+"'>";
-					html+="<table class='tbl-boardsns' id='boardNo"+tl.boardSNS.boardNo+"'>"
+					html+="<table class='tbl-boardsns2' id='boardNo"+tl.boardSNS.boardNo+"'>"
 					html+="<tr>";
 					html+="<td class='timeline-boardcontent-sns'>";
 					html+="<a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'><img src='<%=request.getContextPath()%>/upload/profile/"+tl.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
@@ -1259,29 +1261,29 @@ function pageMore(boardNo){
 					
 				});
 				
-				if((<%=new SNSService().selectBoardSNSCnt(mypage) %> - $(".tbl-boardsns").length) >0){
-					html+="<div id='trMore'>더보기</div>";
+				if((<%=new SNSService().selectBoardSNSCnt(mypage) %> - $(".tbl-boardsns2").length) >0){
+					html+="<div id='trMore2'>더보기</div>";
 				}
 				
 			$("#myBoardList").append(html);
 	
-			$("#trMore").click(function(e){
+			$("#trMore2").click(function(e){
 				pageMore(parseInt($(this).prev().attr('id').substr(9)));
 				$(this).remove();
 			});
 			
 			//마지막 페이지인 경우, 더보기 버튼 비활성화
 			if(<%=new SNSService().selectBoardSNSCnt(mypage)>0 %>){
-				if($('.tbl-boardsns').length>0){
-					if($('.tbl-boardsns').last().attr('id').substr(7) <= <%=new SNSService().selectLastBoardNo(mypage) %>){
-							$("#trMore").remove();
+				if($('.tbl-boardsns2').length>0){
+					if($('.tbl-boardsns2').last().attr('id').substr(7) <= <%=new SNSService().selectLastBoardNo(mypage) %>){
+							$("#trMore2").remove();
 					}
 					else{
-						$("#trMore").remove();
+						$("#trMore2").remove();
 					} 			
 			}
  				else{
-					$("#trMore").remove();
+					$("#trMore2").remove();
 				}
 			}
 			
@@ -1515,7 +1517,7 @@ p.card-text{
 }					
 
 
-.tbl-boardsns{
+.tbl-boardsns2{
 	margin-bottom: 10px;
 	border: 1px solid black;
 }
@@ -1528,7 +1530,7 @@ p.card-text{
 
 
 
-#trMore{
+#trMore2{
 	cursor:pointer;
 	padding-bottom: 10px;
 }

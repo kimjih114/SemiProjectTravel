@@ -25,13 +25,13 @@ import sns.model.vo.TotalSNS;
  * Servlet implementation class AjaxSnsMyLikeListServlet
  */
 @WebServlet("/gson/sns/myLikeSNSList.do")
-public class AjaxSnsMyLikeListServlet extends HttpServlet {
+public class AjaxSnsBoardMyLikeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxSnsMyLikeListServlet() {
+    public AjaxSnsBoardMyLikeListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,13 +40,21 @@ public class AjaxSnsMyLikeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		
 		//1.parameter
 				String mypage = request.getParameter("mypage");
+				final int numPerPage = 5;
+				int cnt = Integer.parseInt(request.getParameter("cnt"));
+
 								
 				//2.업무로직
 				
 				//내가 좋아요 누른 번호 골라내기
 				List<Integer> likeBoardNoList = new SNSService().selectLikeBoardNoList(mypage);
+				
+				int totalContents = likeBoardNoList.size();
+				int totalPages = (int)Math.ceil(totalContents/(numPerPage*1.0));
 				
 				
 				BoardSNS boardSNS = null;
@@ -60,13 +68,13 @@ public class AjaxSnsMyLikeListServlet extends HttpServlet {
 				List<String> blockedSNSList = null;
 				
 				List<TotalSNS> totalSNSList = new ArrayList<>();
-				int cnt = 0;
+				List<TotalSNS> result = new ArrayList<>();
+				
+				
 				if(likeBoardNoList!=null) {
 					for(int ln : likeBoardNoList) {
-							
-									
 							boardSNS = new SNSService().selectBoardSNS(ln);
-							
+					
 							profileSNS = new SNSService().selectOneProfile(boardSNS.getBoardWriter());
 							
 							imageSNSList = new SNSService().selectImageSNS(boardSNS.getBoardNo());
@@ -86,13 +94,22 @@ public class AjaxSnsMyLikeListServlet extends HttpServlet {
 							TotalSNS totalSNS = new TotalSNS(boardSNS, profileSNS, imageSNSList, gradeSNSList, commentSNSList, likeSNSList, followerOneList, blockingSNSList, blockedSNSList);
 							
 							totalSNSList.add(totalSNS);
-							
-							
-						
 					}
 				}
 				
-				
+				if(cnt<totalPages) {
+					int idx = 0;
+					for(int i=(cnt-1)*5; i<cnt*5; i++) {
+						result.add(idx, totalSNSList.get(i));
+						idx++;
+					}
+				} else if (cnt==totalPages) {
+					int idx = 0;
+					for(int i=(cnt-1)*5; i<totalContents; i++) {
+						result.add(idx, totalSNSList.get(i));
+						idx++;
+					}
+				}
 			
 				
 				//3.view단처리

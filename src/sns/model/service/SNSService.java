@@ -387,6 +387,41 @@ public class SNSService {
 		return result;
 	}
 
+	public List<Integer> selectBoardNoList(String mypage) {
+		Connection conn=getConnection();
+		List<Integer> list=new SNSDAO().selectBoardNoList(conn, mypage);
+		close(conn);
+		return list;
+	}
+
+	public List<Integer> selectFollowerBoardNoList(List<String> followerSNSList) {
+		Connection conn=getConnection();
+		List<Integer> list=new SNSDAO().selectFollowerBoardNoList(conn, followerSNSList);
+		close(conn);
+		return list;
+	}
+
+	public List<Integer> selectFollowLikeBoardNoList(List<String> followerSNSList) {
+		Connection conn=getConnection();
+		List<Integer> list=new SNSDAO().selectFollowLikeBoardNoList(conn, followerSNSList);
+		close(conn);
+		return list;
+	}
+
+	public List<BoardSNS> selectBoardSNSAll() {
+		Connection conn=getConnection();
+		List<BoardSNS> list=new SNSDAO().selectBoardSNSAll(conn);
+		close(conn);
+		return list;
+	}
+
+	public List<ProfileSNS> selectProfileSNSAll() {
+		Connection conn=getConnection();
+		List<ProfileSNS> list=new SNSDAO().selectProfileSNSAll(conn);
+		close(conn);
+		return list;
+	}
+
 	
 
 	

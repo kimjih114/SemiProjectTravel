@@ -27,8 +27,11 @@ var blockingList = new Array();
 var blockedList = new Array();
 var followerList = new Array();
 
+
+var cnt = 1;
+
 $(()=>{
-	pageMore(10000);
+	pageMore(cnt);
 });
 
 
@@ -757,7 +760,7 @@ function updateBoardSNS(boardNo){
 							var html = "";
 						
 								html+="<div id='container"+data.boardSNS.boardNo+"'>";
-								html+="<table class='tbl-boardsns' id='boardNo"+data.boardSNS.boardNo+"'>"
+								html+="<table class='tbl-boardsns3' id='boardNo"+data.boardSNS.boardNo+"'>"
 								html+="<tr>";
 								html+="<td class='timeline-boardcontent-sns'>";
 								html+="<a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+data.boardSNS.boardWriter+"'><img src='<%=request.getContextPath()%>/upload/profile/"+data.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
@@ -989,13 +992,13 @@ function updateBoardSNS(boardNo){
 	})
 }
 
-function pageMore(boardNo){
+function pageMore(cnt){
 	var param = {
-			boardNo : boardNo,
+			cnt: cnt,
 			mypage:'<%=mypage %>'
 	}
 	$.ajax({
-		url: "<%=request.getContextPath()%>/gson/sns/myBoardSNSList.do",
+		url: "<%=request.getContextPath()%>/gson/sns/myLikeSNSList.do",
 		data: param,
 		type: "get",
 		dataType: "json",
@@ -1005,7 +1008,7 @@ function pageMore(boardNo){
 				var html = "";
 				
 				$.each(data,(i,tl)=>{
-					console.log(tl.followerSNSList);
+					console.log(tl);
 					if(tl.blockingSNSList.length>0){
 						for(var f=0; f<tl.blockingSNSList.length; f++){
 							if(tl.blockingSNSList[g]=='<%=userLoggedIn.getUserId() %>')
@@ -1030,15 +1033,18 @@ function pageMore(boardNo){
 					
 					//블록막기
 					if(tl.boardSNS.boardWriter!='<%=userLoggedIn.getUserId() %>' && (blockedList.length>0 || blockedList.length>0)){
+						console.log("1");
 						return;
 					}
 					//팔로워 공개일때 팔로워가 아니면 막기
 					if(tl.boardSNS.boardWriter!='<%=userLoggedIn.getUserId() %>' && (followerList.length==0 && tl.boardSNS.boardType == 'F')){
+						console.log("2");
 						return;
 					}
 						
 					//비공개일 때막기
 					if(tl.boardSNS.boardWriter!='<%=userLoggedIn.getUserId() %>' && tl.boardSNS.boardType=='L' ){
+						console.log("3");
 						return;
 					}
 					
@@ -1047,7 +1053,7 @@ function pageMore(boardNo){
 					blockingList = [];
 					
 					html+="<div id='container"+tl.boardSNS.boardNo+"'>";
-					html+="<table class='tbl-boardsns' id='boardNo"+tl.boardSNS.boardNo+"'>"
+					html+="<table class='tbl-boardsns3' id='boardNo"+tl.boardSNS.boardNo+"'>"
 					html+="<tr>";
 					html+="<td class='timeline-boardcontent-sns'>";
 					html+="<a class='nickname-sns' href='<%=request.getContextPath() %>/story/storyMain?mypage="+tl.boardSNS.boardWriter+"'><img src='<%=request.getContextPath()%>/upload/profile/"+tl.profileSNS.profileRenamedFilename+"' class='header-profile-circle' width='30' height='30' />";
@@ -1247,7 +1253,7 @@ function pageMore(boardNo){
 								}
 							}
 						}
-							html+="</table>";
+						html+="</table>";
 						
 		
 					
@@ -1258,38 +1264,28 @@ function pageMore(boardNo){
 					
 					
 				});
-				
-				if((<%=new SNSService().selectBoardSNSCnt(mypage) %> - $(".tbl-boardsns").length) >0){
-					html+="<div id='trMore'>더보기</div>";
+					if(data.length!=0){
+						html+="<div id='trMore3'>더보기</div>";
+					}
 				}
 				
-			$("#myBoardList").append(html);
-	
-			$("#trMore").click(function(e){
-				pageMore(parseInt($(this).prev().attr('id').substr(9)));
+			$("#myLikeList").append(html);
+			
+			if($('.tbl-boardsns3').length>0){
+				if(($('.tbl-boardsns3').length)<cnt*5){
+					$("#trMore3").remove();
+				}
+			}
+			
+			$("#trMore3").click(function(e){
+				cnt = cnt+1;
+				pageMore(cnt);
 				$(this).remove();
 			});
-			
-			//마지막 페이지인 경우, 더보기 버튼 비활성화
-			if(<%=new SNSService().selectBoardSNSCnt(mypage)>0 %>){
-				if($('.tbl-boardsns').length>0){
-					if($('.tbl-boardsns').last().attr('id').substr(7) <= <%=new SNSService().selectLastBoardNo(mypage) %>){
-							$("#trMore").remove();
-					}
-					else{
-						$("#trMore").remove();
-					} 			
-			}
- 				else{
-					$("#trMore").remove();
-				}
-			}
+		
 			
 			
-			}
-			
-		},
-		error: function(jqxhr, textStatus, errorThrown){
+		}, error: function(jqxhr, textStatus, errorThrown){
 			console.log("ajax처리실패!");
 			console.log(jqxhr, textStatus, errorThrown);
 			
@@ -1515,7 +1511,7 @@ p.card-text{
 }					
 
 
-.tbl-boardsns{
+.tbl-boardsns3{
 	margin-bottom: 10px;
 	border: 1px solid black;
 }
@@ -1528,7 +1524,7 @@ p.card-text{
 
 
 
-#trMore{
+#trMore3{
 	cursor:pointer;
 	padding-bottom: 10px;
 }
@@ -1538,7 +1534,7 @@ p.card-text{
 </style>
 
 	
-<div class="timeline-board-sns" id="myBoardList">
+<div class="timeline-board-sns" id="myLikeList">
 
 
 

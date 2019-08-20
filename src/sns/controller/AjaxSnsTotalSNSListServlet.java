@@ -22,16 +22,16 @@ import sns.model.vo.ProfileSNS;
 import sns.model.vo.TotalSNS;
 
 /**
- * Servlet implementation class AjaxMyBoardSNSListServlet
+ * Servlet implementation class AjaxSnsTotalSNSListServlet
  */
-@WebServlet("/gson/sns/myBoardSNSList.do")
-public class AjaxSnsBoardMyListServlet extends HttpServlet {
+@WebServlet("/gson/sns/totalSNSList.do")
+public class AjaxSnsTotalSNSListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxSnsBoardMyListServlet() {
+    public AjaxSnsTotalSNSListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,13 +42,8 @@ public class AjaxSnsBoardMyListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 		
-		//1.parameter
-		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-		int numPerPage = 5;
-		String mypage = request.getParameter("mypage");
-						
 		//2.업무로직
-		List<BoardSNS> boardSNSList = new SNSService().selectBoardSNSMore(mypage, boardNo, numPerPage);
+		List<BoardSNS> boardSNSList = new SNSService().selectBoardSNSAll();
 		
 		ProfileSNS profileSNS = null;
 		List<ImageSNS> imageSNSList = null;
@@ -63,7 +58,7 @@ public class AjaxSnsBoardMyListServlet extends HttpServlet {
 		
 		if(boardSNSList!=null) {
 			for(BoardSNS bs : boardSNSList) {
-				if(bs==null) return;
+			
 				profileSNS = new SNSService().selectOneProfile(bs.getBoardWriter());
 				
 				imageSNSList = new SNSService().selectImageSNS(bs.getBoardNo());
@@ -88,7 +83,6 @@ public class AjaxSnsBoardMyListServlet extends HttpServlet {
 		//3.view단처리
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(totalSNSList, response.getWriter());
-			
 	}
 
 	/**
