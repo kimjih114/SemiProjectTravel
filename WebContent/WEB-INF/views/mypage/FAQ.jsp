@@ -369,7 +369,6 @@ function searchKeyword(){
       <button>여행이야기 홈</button>
    </div>
 
-   
    <table id="tbl-usermenu0">
    	 <tr>
    		<td id="modifyUserInfo"><a href="<%=request.getContextPath()%>/user/userUpdateView?userId=<%=userLoggedIn.getUserId()%>">회원정보수정</a></td>
@@ -425,7 +424,6 @@ function searchKeyword(){
 			</div>
 		</div>
 	</div>
-  </div>
 	
 	
 	<input type="search" id="search-term" placeholder="종합 검색" aria-label="검색"/>
@@ -925,6 +923,8 @@ function searchKeyword(){
 		</div>
 	</div>
   </div>
+ 
+ </div>
  </section>
 </section>
 
