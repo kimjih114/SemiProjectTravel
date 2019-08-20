@@ -430,9 +430,7 @@ function unblock(){
 		   			<td id="gomsg">메시지</td>
 		   		</tr>
 	   		<%} %>
-	   		<tr>
-	   			<td>검색</td>
-	   		</tr>
+	   
 	   		
 	   		<%if((userLoggedIn!=null && mypage.equals(userLoggedIn.getUserId())) ||  !mypage.equals(userLoggedIn.getUserId()) && followLoggedInList.contains(mypage)){%>
 		   		<tr class="followerTr">
