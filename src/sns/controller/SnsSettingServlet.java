@@ -162,7 +162,7 @@ public class SnsSettingServlet extends HttpServlet {
 		
 		if(result >0) {
 			msg ="설정변경 성공"; 
-			loc = "/";/*"/ajax/"+result;  */  //view로 간다    
+			loc = "/story/storyMain?mypage="+profileUserId;   
 		}else {
 			msg="설정변경 실패"; 
 		}

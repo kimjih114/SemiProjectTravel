@@ -35,7 +35,7 @@ public class MessageListServlet extends HttpServlet {
 		
 		Map<String, Session> clients =  messageChatsocket.clients; 
 		Set<String> userIdSet =  clients.keySet(); 
-		System.out.println("userIdKEYSET!!@@@@msgLISTSERVELT="+userIdSet);
+		System.out.println("userIdKEYSET!!@msgLISTSERVELT="+userIdSet);
 		
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(userIdSet, response.getWriter()); 

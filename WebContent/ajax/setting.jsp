@@ -181,15 +181,14 @@ function unblockerr(btn){
 	
 }
 
-var htext  =$("#SmodifyText").val();
+/* var htext  =$("#SmodifyText").val();
  
 if(htext.length>20){
 	alert('최대 20글자까지 가능합니다.'); 
 	$("#SmodifyText").focus();
 	return;
-}
-
-function headerTextModify(){
+} */
+ function headerTextModify(){
 	
 	var headertext = $("#SmodifyText").val();
 
@@ -205,7 +204,7 @@ function headerTextModify(){
 	
 	
 	
-}
+} 
 
 </script>
 
@@ -268,15 +267,15 @@ function headerTextModify(){
 
 						</tr>
 						<tr style='width:510px;'>
-							<td class="sectionContent" style='width:510px;'>헤더 이미지 <img
+							<td class="sectionContent">헤더 이미지 <img
 								src='<%=request.getContextPath()%>/upload/profile/<%=profile.getHeaderRenamedFilename()%>'
 								class='header-profile' width='40' height='40' /> 
-							 <input type="file" name="SmodifyHeader" id="SmodifyHeader" />
+								<input type="file" name="SmodifyHeader" id="SmodifyHeader" /> <br />
 							 <span id="fname"> 
 					 		 <%=profile.getHeaderOriginalFilename()!=null? profile.getHeaderRenamedFilename():""%>
 					  		</span> <%--첨부파일이 있는 경우 기존파일 삭제용 --%>
 					   		<%if(profile.getHeaderOriginalFilename()!=null){ %><br /> 
-							<input type="checkbox" name="delhFile" id="delFile" /> 
+							<input type="checkbox" name="delFile" id="delFile" /> 
 							<label for="delhFile">첨부파일삭제</label>
 							 <% } %> 
 							<input type="hidden" name="oldHeaderOName" value="<%=profile.getProfileOriginalFilename()!=null?profile.getProfileOriginalFilename():""%>" />
