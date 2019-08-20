@@ -38,10 +38,11 @@
 	width:100px;
 	text-align: center;
 	left: 800px;
-	bottom:313px;
+	bottom:220px;
 	position:fixed;
  	font-weight:700;
- 	cursor:pointer
+ 	cursor:pointer;
+ 	 	z-index:-2;
 
 }
 
@@ -49,7 +50,7 @@
 	display:none;
 	z-index:10;
 	background: white;
-	width: 173px;
+	width: 182px;
 	overflow:hidden;
 	border: 1px solid gray;
 	position: absolute;
@@ -64,7 +65,7 @@
 	list-style: none;
 	z-index:10;
 	cursor: pointer;
-	width:173px;
+	width:182px;
 }
 #autoS2 li.sel{
 	background: gray;

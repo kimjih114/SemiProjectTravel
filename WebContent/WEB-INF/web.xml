@@ -4,4 +4,11 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+
+<resource-ref>
+    <description>SemiProject Oracle DataSource</description>
+    <res-ref-name>jdbc/myoracle</res-ref-name>
+    <res-type>javax.sql.DateSource</res-type>
+    <res-auth>Container</res-auth>
+</resource-ref>
 </web-app>
