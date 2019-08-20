@@ -325,7 +325,6 @@ $(function() {
 		url: "<%=request.getContextPath() %>/ajax/mytimeline.jsp", 
 		data: "mypage="+'<%=mypage %>',
 		type: "get",
-		async : false,
 		dataType: "html",
 		success: function(data){
 			$("#tab1Content").html(data);
@@ -355,7 +354,6 @@ $(function() {
 					url: "<%=request.getContextPath() %>/ajax/mytimeline.jsp", 
 					data: "mypage="+'<%=mypage %>',
 					type: "get",
-					async : false,
 					dataType: "html",
 					success: function(data){
 						$("#tab1Content").html(data);
@@ -379,7 +377,6 @@ $(function() {
 					url: "<%=request.getContextPath() %>/ajax/myboardlist.jsp", 
 					data: "mypage="+'<%=mypage %>',
 					type: "get",
-					async : false,
 					dataType: "html",
 					success: function(data){
 						$("#tab2Content").html(data);
@@ -402,7 +399,6 @@ $(function() {
 					url: "<%=request.getContextPath() %>/ajax/mylikelist.jsp", 
 					data: "mypage="+'<%=mypage %>',
 					type: "get",
-					async : false,
 					dataType: "html",
 					success: function(data){
 						$("#tab3Content").html(data);
@@ -434,7 +430,6 @@ $(()=>{
  				url: "<%=request.getContextPath() %>/ajax/travelsrch.jsp", 
  				type: "get",
  				dataType: "html",
- 				async : false,
  				success: function(data){
  					$(this).removeClass('unlikes');
  					$(this).addClass('likes');
@@ -939,7 +934,6 @@ $("#searchSNS1").keyup(e=>{
    				url: "<%=request.getContextPath() %>/gson/sns/profileSNSList.do?search="+search,
    				type: "get",
    				dataType: "json",
-   				async : false,
    				success:function(data){
    					var html = "";
    					if(data==null || data.length==0){						
