@@ -7,7 +7,8 @@
 	String contentId  = request.getParameter("travelContentId");
 	
 	Travel trav = new TravelService().selectTravel(contentId);
-	System.out.println("Trav"+trav);
+	System.out.println("Trav"+trav.getTravelType());
+	
 	
 %>
  <!-- Bootstrap core CSS -->
@@ -252,15 +253,15 @@ section#page-top{
   </div>
   	<div class="form-group">
     <label for="exampleInputEmail1" id="userDefaultActivity">여행 타입</label><br />
-    <input type="checkbox" name="program" id="program1" value="P" onclick="doOpenCheck(this);"/>
+    <input type="checkbox" name="program" id="program1" value="P" onclick="doOpenCheck(this); <%=trav.getTravelType().equals("P")?"checked":""%>"/>
 	<label for="program1">여행지</label>
-	<input type="checkbox" name="program" id="program2" value="A" onclick="doOpenCheck(this);"/>
+	<input type="checkbox" name="program" id="program2" value="A" onclick="doOpenCheck(this);" <%=trav.getTravelType().equals("A")?"checked":""%>/>
 	<label for="program2">숙소</label>
-	<input type="checkbox" name="program" id="program3" value="R" onclick="doOpenCheck(this);"/>
+	<input type="checkbox" name="program" id="program3" value="R" onclick="doOpenCheck(this);" <%=trav.getTravelType().equals("R")?"checked":""%>/>
 	<label for="program3">맛집</label>
-	<input type="checkbox" name="program" id="program4" value="E" onclick="doOpenCheck(this);"/>
+	<input type="checkbox" name="program" id="program4" value="E" onclick="doOpenCheck(this);" <%=trav.getTravelType().equals("E")?"checked":""%>/>
 	<label for="program4">놀거리</label>
-	<input type="checkbox" name="program" id="program5" value="S" onclick="doOpenCheck(this);" />
+	<input type="checkbox" name="program" id="program5" value="S" onclick="doOpenCheck(this);" <%=trav.getTravelType().equals("S")?"checked":""%>/>
 	<label for="program5">쇼핑</label>
   </div>
   <div class="form-group">
