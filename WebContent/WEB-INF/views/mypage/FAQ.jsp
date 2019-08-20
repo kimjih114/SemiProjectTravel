@@ -33,7 +33,7 @@
 	width: 1024px;
 	position : relative;
 }
-  
+
 #profile-header{
 	padding-bottom: 20px;
 	margin: 0;
@@ -54,13 +54,6 @@
 	width: 250px;
     /*height: 100vh;*/
     background: #fed136; 
-}
-
-/* 테스트 */
-#sideNav .faq_page{
-	padding: 13px 0;
-	border: 3px solid brown;
-	background: lightgray;
 }
 
 .profile-circle{
@@ -132,8 +125,8 @@ section#page-top{
 }
 #content{
 	position : absolute;
-	top : 5%;
-	left : 22%;
+	top : -15%;
+	left : 22.5%;
 }
 #content table{
 	border-collapse : collapse;
@@ -148,7 +141,7 @@ section#page-top{
 	background : orange;
 }
 #content table td{
-	vartical-align : top;
+	vertical-align : top;
 	border-collapse: collapse;
 	border-bottom : 1px solid orange;
 }
@@ -158,12 +151,21 @@ section#page-top{
 }
 
 
+
 /* FAQ */
-/* #sideNav .faq_page{
+a{
+	color : black;
+}
+
+section#content{
+	width: 950px;
+}
+
+.faq_page{
 	padding: 13px 0;
 	border: 3px solid brown;
 	background: lightgray;
-} */
+}
 
 .container_out{
 	color: green;
@@ -357,8 +359,8 @@ function searchKeyword(){
   
   <form action="" name="memomsgFrm">
 	<input type="hidden" name="userId" />
-</form>
-  
+  </form>
+
   <section id="page-top" style="padding:0px; !important;">
   <nav id="sideNav">
 	<div id="profile-header">
@@ -372,7 +374,7 @@ function searchKeyword(){
    		<td id="modifyUserInfo">회원정보수정</td>
    	</tr>
 	<tr>
-   		<td  id="gomsg">메시지</td>
+   		<td id="gomsg">메시지</td>
    	</tr>
    	</table>
    	<table id="tbl-usermenu1">
@@ -385,7 +387,6 @@ function searchKeyword(){
    		<tr>
    			<td><a href="<%=request.getContextPath()%>/mypage/myBasketView?userId=<%=userLoggedIn.getUserId()%>">장바구니</a></td>
    		</tr>
-   		
    	</table>
 
 	<table id="tbl-usermenu4" style="margin-bottom:0px; !important">
@@ -397,10 +398,13 @@ function searchKeyword(){
     	<td id="QuestionList">1:1문의</td>
     </tr>
     
-   	
+    <tr>
+    	<td>공지사항</td>
+    </tr> 	
 	</table>
   </nav>
-<div class="faq_page">
+<section id="content">
+  <div class="faq_page">
 	<div class="container_out">
 		<div class="container_in">
 			<h2 class="h_title">자주 하는 질문</h2>
@@ -424,6 +428,7 @@ function searchKeyword(){
 			</div>
 		</div>
 	</div>
+  </div>
 	
 	
 	<input type="search" id="search-term" placeholder="종합 검색" aria-label="검색"/>
@@ -923,11 +928,10 @@ function searchKeyword(){
 		</div>
 	</div>
   </div>
-
+ </section>
 </section>
 
 <script>
-
 $("#QuestionList").on("click", function(){
 	var userId = '<%=userLoggedIn.getUserId() %>';	
 	console.log("userLoggedIn"+userId);
@@ -950,12 +954,8 @@ $("#gomsg").on("click", function(){
 			frm.target=title;
 			frm.method= "post"; 
 		frm.submit();
-		
 	});
-
 </script>
-	
-	
-</div>
+
 </body>
 </html>

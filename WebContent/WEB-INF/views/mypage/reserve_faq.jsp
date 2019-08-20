@@ -1,12 +1,166 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>상품 예약/결제</title>
-<script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
+<%@ include file="/WEB-INF/views/common/header-menu.jsp" %>
+ <!-- Bootstrap core CSS -->
+  <link href="<%=request.getContextPath() %>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="<%=request.getContextPath() %>/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="<%=request.getContextPath() %>/css/agency.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap core JavaScript -->
+  <script src="<%=request.getContextPath() %>/vendor/jquery/jquery.min.js"></script>
+  <script src="<%=request.getContextPath() %>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="<%=request.getContextPath() %>/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="<%=request.getContextPath() %>/js/jqBootstrapValidation.js"></script>
+  <script src="<%=request.getContextPath() %>/js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="<%=request.getContextPath() %>/js/agency.min.js"></script>
+
 <style>
+.page-top{
+	width: 1024px;
+	position : relative;
+}
+
+#profile-header{
+	padding-bottom: 20px;
+	margin: 0;
+	background-color:#fed136;
+} 
+  
+#sideNav {
+    text-align: center;
+    top: 0;
+    left: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: fixed;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+	width: 250px;
+    /*height: 100vh;*/
+    background: #fed136; 
+}
+
+.profile-circle{
+	max-width: 10rem;
+    max-height: 10rem;
+    border: 0.5rem solid #212529;
+    border-radius: 100%;
+    min-width: 0;
+    min-height: 0;
+}
+#sideNav .navbar-nav .nav-item .nav-link {
+  font-weight: 800;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+}
+
+#sideNav .navbar-toggler:focus {
+  outline-color: #d48a6e;
+}
+
+a .nav-link js-scroll-trigger{
+	color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+
+}
+table{
+	margin: 10 auto;
+	margin-bottom: 30px;
+}
+
+table tr :hover{
+	cursor: pointer;
+	color: orangered;
+	
+}
+
+table td{
+	padding: 10px;
+	border-bottom: 1px solid #212529;
+	border-collapse: collapse;
+    border-right: 0;
+    border-left:0;
+    height: 50px;
+}
+
+#sideNav, table {
+	font-size: 90%;
+    font-weight: 400;
+   /* padding: .75em 0;*/
+    letter-spacing: 1px;
+}
+
+div#profile-header{
+	margin: 0 auto;
+}
+
+section#page-top{
+	position: relative;
+}
+
+.myPost{
+	position: absolute;
+	top:0;
+	left: 260px;
+	border:1px solid;
+	padding: 10px;
+	
+}
+#content{
+	position : absolute;
+	top : -15%;
+	left : 22.5%;
+}
+#content table{
+	border-collapse : collapse;
+	text-align : center;
+	line-height:1.5;
+	border-top : 1px solid #ccc;
+}
+#content table th{
+	font-weight : bold;
+	vertical-align : top;
+	color : #fff;
+	background : orange;
+}
+#content table td{
+	vertical-align : top;
+	border-collapse: collapse;
+	border-bottom : 1px solid orange;
+}
+
+#content table tr:nth-child(2n){
+	background-color:#f7f2eb;
+}
+
+
+
+/* FAQ */
+a{
+	color : black;
+}
+
+section#content{
+	width: 950px;
+}
+
 .faq_page{
 	padding: 13px 0;
 	border: 3px solid brown;
@@ -42,36 +196,6 @@ h2 h_title{
 </style>
 <script>
 function searchKeyword(){
-	$("#q1_1").css("display","block");
-	$("#q1_2").css("display","block");
-	$("#q2_1").css("display","block");
-	$("#q2_2").css("display","block");
-	$("#q3_1").css("display","block");
-	$("#q3_2").css("display","block");
-	$("#q4_1").css("display","block");
-	$("#q4_2").css("display","block");
-	$("#q5_1").css("display","block");
-	$("#q5_2").css("display","block");
-	$("#q6_1").css("display","block");
-	$("#q6_2").css("display","block");
-	$("#q7_1").css("display","block");
-	$("#q7_2").css("display","block");
-	$("#q8_1").css("display","block");
-	$("#q8_2").css("display","block");
-	$("#q9_1").css("display","block");
-	$("#q9_2").css("display","block");
-	$("#q10_1").css("display","block");
-	$("#q10_2").css("display","block");
-	$("#q11_1").css("display","block");
-	$("#q11_2").css("display","block");
-	$("#q12_1").css("display","block");
-	$("#q12_2").css("display","block");
-	$("#q13_1").css("display","block");
-	$("#q13_2").css("display","block");
-	$("#q14_1").css("display","block");
-	$("#q14_2").css("display","block");
-	$("#q15_1").css("display","block");
-	$("#q15_2").css("display","block");
 	$("#q16_1").css("display","block");
 	$("#q16_2").css("display","block");
 	$("#q17_1").css("display","block");
@@ -80,99 +204,9 @@ function searchKeyword(){
 	$("#q18_2").css("display","block");
 	
 	var searchKwd = $("#search-term").val();
-	var q1 = $("#q1").val();
-	var q2 = $("#q2").val();
-	var q3 = $("#q3").val();
-	var q4 = $("#q4").val();
-	var q5 = $("#q5").val();
-	var q6 = $("#q6").val();
-	var q7 = $("#q7").val();
-	var q8 = $("#q8").val();
-	var q9 = $("#q9").val();
-	var q10 = $("#q10").val();
-	var q11 = $("#q11").val();
-	var q12 = $("#q12").val();
-	var q13 = $("#q13").val();
-	var q14 = $("#q14").val();
-	var q15 = $("#q15").val();
 	var q16 = $("#q16").val();
 	var q17 = $("#q17").val();
 	var q18 = $("#q18").val();
-	
-	if(q1.indexOf(searchKwd) == -1){
-		$("#q1_1").css("display","none");
-		$("#q1_2").css("display","none");
-	}
-	
-	if(q2.indexOf(searchKwd) == -1){
-		$("#q2_1").css("display","none");
-		$("#q2_2").css("display","none");
-	}
-	
-	if(q3.indexOf(searchKwd) == -1){
-		$("#q3_1").css("display","none");
-		$("#q3_2").css("display","none");
-	}
-	
-	if(q4.indexOf(searchKwd) == -1){
-		$("#q4_1").css("display","none");
-		$("#q4_2").css("display","none");
-	}
-	
-	if(q5.indexOf(searchKwd) == -1){
-		$("#q5_1").css("display","none");
-		$("#q5_2").css("display","none");
-	}
-	
-	if(q6.indexOf(searchKwd) == -1){
-		$("#q6_1").css("display","none");
-		$("#q6_2").css("display","none");
-	}
-	
-	if(q7.indexOf(searchKwd) == -1){
-		$("#q7_1").css("display","none");
-		$("#q7_2").css("display","none");
-	}
-	
-	if(q8.indexOf(searchKwd) == -1){
-		$("#q8_1").css("display","none");
-		$("#q8_2").css("display","none");
-	}
-	
-	if(q9.indexOf(searchKwd) == -1){
-		$("#q9_1").css("display","none");
-		$("#q9_2").css("display","none");
-	}
-	
-	if(q10.indexOf(searchKwd) == -1){
-		$("#q10_1").css("display","none");
-		$("#q10_2").css("display","none");
-	}
-	
-	if(q11.indexOf(searchKwd) == -1){
-		$("#q11_1").css("display","none");
-		$("#q11_2").css("display","none");
-	}
-	
-	if(q12.indexOf(searchKwd) == -1){
-		$("#q12_1").css("display","none");
-		$("#q12_2").css("display","none");
-	}
-	
-	if(q13.indexOf(searchKwd) == -1){
-		$("#q13_1").css("display","none");
-		$("#q13_2").css("display","none");
-	}
-	
-	if(q14.indexOf(searchKwd) == -1){
-		$("#q14_1").css("display","none");
-		$("#q14_2").css("display","none");
-	}
-	
-	if(q15.indexOf(searchKwd) == -1){
-		$("#q15_1").css("display","none");
-		$("#q15_2").css("display","none");
-	}
 	
 	if(q16.indexOf(searchKwd) == -1){
 		$("#q16_1").css("display","none");
@@ -192,7 +226,65 @@ function searchKeyword(){
 </script>
 </head>
 <body>
-<div class="faq_page">
+
+<header class="masthead" style="height:300px;">
+    <div class="container">
+      <div class="intro-text" style="padding-top:140px; !important">
+        <div class="intro-heading text-uppercase">
+       		예약내역
+        </div>
+     </div>
+    </div>
+  </header>
+  
+  <form action="" name="memomsgFrm">
+	<input type="hidden" name="userId" />
+  </form>
+  
+  <section id="page-top" style="padding:0px; !important;">
+  <nav id="sideNav">
+	<div id="profile-header">
+      <img class="profile-circle"  style="margin: 50px auto 12px;" src="<%=request.getContextPath() %>/img/profile.jpg" alt="">
+      <p class="userprofile-userId"><span style="font-weight: 700;">@닉네임</span>님, 환영합니다!
+      <button>여행이야기 홈</button>
+   </div>
+
+   <table id="tbl-usermenu0">
+   	 <tr>
+   		<td id="modifyUserInfo">회원정보수정</td>
+   	</tr>
+	<tr>
+   		<td id="gomsg">메시지</td>
+   	</tr>
+   	</table>
+   	<table id="tbl-usermenu1">
+   		<tr>
+   			<td><a href="<%=request.getContextPath()%>/mypage/myReservationView?userId=<%=userLoggedIn.getUserId()%>">예약내역</a></td>
+   		</tr>
+   		<tr>
+   			<td><a href="<%=request.getContextPath()%>/mypage/myReservationDelView?userId=<%=userLoggedIn.getUserId()%>">취소내역</a></td>
+   		</tr>
+   		<tr>
+   			<td><a href="<%=request.getContextPath()%>/mypage/myBasketView?userId=<%=userLoggedIn.getUserId()%>">장바구니</a></td>
+   		</tr>
+   	</table>
+
+	<table id="tbl-usermenu4" style="margin-bottom:0px; !important">
+	<tr>
+    	<td><a href="<%=request.getContextPath()%>/search/FAQ">FAQ</a></td>
+    </tr>
+    
+    <tr>
+    	<td id="QuestionList">1:1문의</td>
+    </tr>
+    
+    <tr>
+    	<td>공지사항</td>
+    </tr> 	
+	</table>
+  </nav>
+<section id="content">
+  <div class="faq_page">
 	<div class="container_out">
 		<div class="container_in">
 			<h2 class="h_title">자주 하는 질문</h2>
@@ -299,7 +391,36 @@ function searchKeyword(){
 		</div>
 	</div>
   </div>
+  
+ </div>
+ </section>
+</section>
 
-</div>
+<script>
+$("#QuestionList").on("click", function(){
+	var userId = '<%=userLoggedIn.getUserId() %>';	
+	console.log("userLoggedIn"+userId);
+	location.href="<%=request.getContextPath()%>/boardquestion/boardList?userId="+userId; 
+});
+
+$("#gomsg").on("click", function(){
+		var userId = '<%=userLoggedIn.getUserId() %>';	
+		console.log("userLoggedIn"+userId);
+	 	
+	 	
+			var url="<%=request.getContextPath()%>/chat/chatroom.do?userId="+userId;
+			var title="popup"; 
+			var status = "width=420px, height=400px, left=150px, top=0px";
+			var popup = open("", title, status);
+			
+			var frm = document.memomsgFrm;
+			frm.userId.value= userId;
+			frm.action = url;
+			frm.target=title;
+			frm.method= "post"; 
+		frm.submit();
+	});
+</script>
+
 </body>
 </html>
