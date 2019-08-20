@@ -38,15 +38,11 @@ public class ChangeBusinessEndServlet extends HttpServlet {
 		
 		int result = new UserService().changeUser(userId);
 		
-		User u = new UserService().selectOne(userId);
-		
-		int profile = new SNSService().changetype(u);
-		System.out.println("profile="+profile);
 		String view = "/WEB-INF/views/common/msg.jsp";
 		String msg = "";
 		String loc = "/admin/changeBusiness";
 		
-		if(result>0&&profile>0)
+		if(result>0)
 			msg = "사업자 전환이 완료되었습니다.";
 		else
 			msg="사업자 전환에 실패하였습니다.";

@@ -35,7 +35,7 @@ request.setCharacterEncoding("utf-8");
 		String userId = request.getParameter("userId");
 		
 		int result = new UserService().changeBusiness(userId);
-		
+		System.out.println("result2222"+result);
 		String view = "/WEB-INF/views/common/msg.jsp";
 		String msg = "";
 		String loc = "/admin/changeBusiness";
