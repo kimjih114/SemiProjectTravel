@@ -415,9 +415,9 @@ public class SNSService {
 		return list;
 	}
 
-	public List<ProfileSNS> selectProfileSNSAll() {
+	public List<ProfileSNS> selectProfileSNSAll(String search) {
 		Connection conn=getConnection();
-		List<ProfileSNS> list=new SNSDAO().selectProfileSNSAll(conn);
+		List<ProfileSNS> list=new SNSDAO().selectProfileSNSAll(conn, search);
 		close(conn);
 		return list;
 	}

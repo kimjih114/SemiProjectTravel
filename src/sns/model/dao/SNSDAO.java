@@ -1387,7 +1387,7 @@ public class SNSDAO {
 		return list;
 	}
 
-	public List<ProfileSNS> selectProfileSNSAll(Connection conn) {
+	public List<ProfileSNS> selectProfileSNSAll(Connection conn, String search) {
 		PreparedStatement pstmt = null;
 		List<ProfileSNS> list = new ArrayList<>();
 		ProfileSNS profileSNS = null;
@@ -1396,6 +1396,8 @@ public class SNSDAO {
 		try {
 			
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setString(2, "%"+search+"%");
 			rset = pstmt.executeQuery();
 
 			while(rset.next()) {

@@ -757,7 +757,7 @@ $("#searchSNS2").keyup(e=>{
    			return;
    		}else{
    			$.ajax({
-   				url: "<%=request.getContextPath() %>/gson/sns/profileSNSList.do",
+   				url: "<%=request.getContextPath() %>/gson/sns/profileSNSList.do?search=+"search",
    				type: "get",
    				dataType: "json",
    				success:function(data){

@@ -37,7 +37,9 @@ public class AjaxSnsProfileSNSListServlet extends HttpServlet {
 		response.setContentType("application/json; charset=utf-8");
 						
 		//2.business logic
-		List<ProfileSNS> list = new SNSService().selectProfileSNSAll();
+		String search = request.getParameter("search");
+		
+		List<ProfileSNS> list = new SNSService().selectProfileSNSAll(search);
 		
 				
 		response.setContentType("application/json; charset=utf-8");
