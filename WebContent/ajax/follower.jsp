@@ -38,7 +38,7 @@
 	width:100px;
 	text-align: center;
 	left: 800px;
-	bottom:220px;
+	bottom:468px;
 	position:fixed;
  	font-weight:700;
  	cursor:pointer;

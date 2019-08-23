@@ -33,7 +33,7 @@
 	width:100px;
 	text-align: center;
 	left: 800px;
-	bottom:220px;
+	bottom:468px;
 	position:fixed;
  	font-weight:700;
  	cursor:pointer;
@@ -602,7 +602,6 @@ $("#btnSubmit").click(function(event){
 	     enctype:"multipart/form-data",
 	     processData: false,
 	     contentType: false,
-	     async : false,
 	     success : function(data) {
 	         alert("게시글 등록 성공 :D!");
 	         <%if(userLoggedIn.getUserId().equals(mypage)){%>
